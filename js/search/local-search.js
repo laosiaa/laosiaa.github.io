@@ -119,7 +119,7 @@ window.addEventListener("load", () => {
       dataObj.then(data => {
         data.forEach(data => {
           let isMatch = true;
-          let dataTitle = data.title ? data.title.trim().toLowerCase() : "";
+          let dataTitle = data.title ? data.title.trim().replace(/<[^>]+>/g, "").toLowerCase() : "";
           let dataTags = data.tags;
           let oneImage = data.oneImage ?? "";
           const dataContent = data.content
@@ -190,7 +190,7 @@ window.addEventListener("load", () => {
 
               str += '<div class="local-search__hit-item">';
               if (oneImage) {
-                str += `<div class="search-left"><img src=${oneImage} alt=${dataTitle} data-fancybox='gallery'>`;
+                str += `<div class="search-left"><img src="${oneImage}" alt="${dataTitle}" data-fancybox="gallery">`;
               } else {
                 str += '<div class="search-left" style="width:0">';
               }
@@ -219,7 +219,7 @@ window.addEventListener("load", () => {
                 str +=
                   '<p class="search-result" onclick="pjax.loadUrl(`' +
                   dataUrl +
-                  '`)">' +
+                  '`)" >' +
                   pre +
                   matchContent +
                   post +
