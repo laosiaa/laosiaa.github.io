@@ -22361,7 +22361,7 @@ body[data-type="essay"] #page .author-content-item .card-content .banner-button-
 #bbTimeList {
   background: var(--anzhiyu-white);
   color: var(--anzhiyu-fontcolor);
-  padding: 0.5rem 1rem;
+  padding: 8px 1rem;
   border-radius: 12px;
   box-shadow: var(--anzhiyu-shadow-lightblack);
   display: flex;
@@ -22369,7 +22369,8 @@ body[data-type="essay"] #page .author-content-item .card-content .banner-button-
   margin: 1rem auto 0;
   border: var(--style-border);
   align-items: center;
-  height: 50px;
+  justify-content: flex-start;
+  height: 32px;
   width: 100%;
   max-width: calc(1400px - 3rem);
   animation: slide-in .6s 0s backwards;
@@ -22390,13 +22391,15 @@ body[data-type="essay"] #page .author-content-item .card-content .banner-button-
 }
 #bbtalk {
   width: 100%;
+  height: 24px;
+  overflow: hidden;
 }
 #bber-talk {
   width: 100%;
-  height: 30px;
-  line-height: 30px;
+  height: 100%;
+  line-height: 24px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
 }
 i.bber-logo {
   font-size: 2rem;
@@ -22420,14 +22423,17 @@ i.bber-gotobb {
 #bber-talk .li-style {
   width: 100%;
   max-width: 100%;
-  text-align: center;
+  text-align: left;
   overflow: hidden;
   text-overflow: ellipsis;
   transition: 0.3s;
   font-weight: 700;
-  margin: auto;
+  margin: 0;
+  padding: 0;
   cursor: pointer;
   white-space: nowrap;
+  line-height: 24px;
+  height: 24px;
 }
 #bber-talk .li-style:hover {
   color: var(--anzhiyu-main);
@@ -22438,7 +22444,6 @@ i.bber-gotobb {
   box-shadow: var(--anzhiyu-shadow-main);
 }
 
-/* 文章页H1-H6图标样式效果 */
 @-webkit-keyframes rotate {
   0% {
     -webkit-transform: rotate(0deg);
@@ -22798,6 +22803,14 @@ i.bber-gotobb {
   text-decoration: none !important;
   border-radius: 10px;
   column-gap: var(--anzhiyu-ahoverbg);
+}
+#page #article-container .bangumi-info .bangumi-title a,
+#page #article-container .bangumi-info .bangumi-title a:link,
+#page #article-container .bangumi-info .bangumi-title a:visited,
+#page #article-container .bangumi-info .bangumi-title a:hover,
+#page #article-container .bangumi-info .bangumi-title a:active {
+  text-decoration: none !important;
+  border-bottom: none !important;
 }
 #page #article-container .bangumi-pagination a.bangumi-button {
   border-bottom: none;

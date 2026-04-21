@@ -467,6 +467,9 @@ const anzhiyu = {
           delay: 3000,
         },
         mousewheel: true,
+        slidesPerView: 1,
+        spaceBetween: 0,
+        height: 24,
       });
 
       let essay_bar_comtainer = document.getElementById("bbtalk");
