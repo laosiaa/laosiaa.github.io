@@ -33,11 +33,23 @@
     setTimeout(function () { ticking = false; scan(); }, 120);
   }
 
+  var beats = 0;
   function boot() {
     scan();
     setTimeout(scan, 300);
     setTimeout(scan, 1200);
-    setTimeout(scan, 2500);
+    // 兜底轮询：不依赖 scroll 事件（某些内嵌/后台环境里 scroll 不派发）
+    if (!window.__llTimer) {
+      window.__llTimer = setInterval(function () {
+        beats++;
+        scan();
+        if (beats > 150 || !document.querySelector("img[data-lazy-src]")) {
+          clearInterval(window.__llTimer);
+          window.__llTimer = null;
+          beats = 0;
+        }
+      }, 400);
+    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
