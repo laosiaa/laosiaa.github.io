@@ -65,3 +65,6 @@
 #ai-summary .ai-summary-body { color: var(--anzhiyu-fontcolor, inherit); opacity: 1; font-weight: 500; }
 #ai-summary.ai-summary-card { background: linear-gradient(135deg, rgba(30,120,220,0.14), rgba(120,80,220,0.14)); }
 #ai-summary .ai-summary-toggle { opacity: 0.8; }
+
+/* 懒加载修复：去掉残留的模糊占位样式 */
+img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
