@@ -29,7 +29,8 @@
   function onScroll() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(function () { ticking = false; scan(); });
+    // 不用 rAF：后台标签页/无焦点窗口里 rAF 会被暂停，导致永远不再扫描
+    setTimeout(function () { ticking = false; scan(); }, 120);
   }
 
   function boot() {
