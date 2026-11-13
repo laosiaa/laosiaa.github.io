@@ -4,6 +4,7 @@
 
   var API = "https://events.vercount.one/api/v2/log";
   var pending = false;
+  var lastReq = 0;
 
   function uvCookieName() {
     return "vercount_uv_" + (location.host || "unknown-host").replace(/[^a-zA-Z0-9_-]/g, "_");
@@ -31,13 +32,15 @@
   }
 
   function hit() {
-    if (pending) return;
+    // 上一个请求卡住超过 8 秒就允许重来（pjax 连点时不会互相挡住）
+    if (pending && Date.now() - lastReq < 8000) return;
     // 只有在页面上真的存在计数元素时才请求，避免无谓调用
     if (!document.getElementById("busuanzi_value_page_pv") &&
         !document.getElementById("busuanzi_value_site_pv") &&
         !document.getElementById("busuanzi_value_site_uv")) return;
 
     pending = true;
+    lastReq = Date.now();
     var isNew = isNewVisitor();
     if (isNew) markVisitor();
 
@@ -71,7 +74,16 @@
       .then(function () { pending = false; });
   }
 
-  function run() { setTimeout(hit, 60); }
+  function stillLoading() {
+    var el = document.getElementById("busuanzi_value_page_pv");
+    return !!(el && el.querySelector(".anzhiyu-icon-spinner"));
+  }
+
+  function run() {
+    setTimeout(hit, 80);
+    // pjax 之后 DOM 可能还没稳定，再补一次
+    setTimeout(function () { if (stillLoading()) { pending = false; hit(); } }, 1200);
+  }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", run);
   else run();
