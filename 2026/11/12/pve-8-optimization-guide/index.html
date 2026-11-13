@@ -1,0 +1,848 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件 | Laosia</title><meta name="keywords" content="技术,教程,PVE,优化,虚拟化"><meta name="author" content="Laosia"><meta name="copyright" content="Laosia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#18171d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><meta name="application-name" content="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#18171d"><meta property="og:type" content="article"><meta property="og:title" content="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><meta property="og:url" content="http://example.com/2026/11/12/pve-8-optimization-guide/index.html"><meta property="og:site_name" content="Laosia"><meta property="og:description" content="从换源、CPU 类型、虚拟磁盘与网卡参数，到 ZFS ARC、内核 sysctl、GPU 直通与备份策略，一份可直接照做的 PVE 8.x 调优清单，附基线测试与常见问题速查表。"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://img.521251.xyz/file/美女/横版/KZX3GFQP.jpg"><meta property="article:author" content="Laosia"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://img.521251.xyz/file/美女/横版/KZX3GFQP.jpg"><meta name="description" content="从换源、CPU 类型、虚拟磁盘与网卡参数，到 ZFS ARC、内核 sysctl、GPU 直通与备份策略，一份可直接照做的 PVE 8.x 调优清单，附基线测试与常见问题速查表。"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2026/11/12/pve-8-optimization-guide/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//events.vercount.one"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://upload-bbs.miyoushe.com/upload/2024/07/27/125766904/ba62475f396df9de3316a08ed9e65d86_5680958632268053399..png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: Laosia","link":"链接: ","source":"来源: Laosia","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Laosia',
+  title: 'Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件',
+  postAI: '',
+  pageFillDescription: '一、优化优先级：先做收益最大的那几件, 二、装机后必做的基础配置, 2.1 换国内源, 2.2 去掉无有效订阅弹窗, 2.3 基础工具, 2.4 减少无谓的写盘, 三、CPU 与内存优化, 3.1 CPU 类型务必设为 host, 3.2 vCPU 拓扑尽量贴合物理结构, 3.3 CPU 频率策略改为 performance, 3.4 内存：气球 vs 大页 vs KSM, 3.5 内核内存参数, 四、存储：最容易出瓶颈的地方, 4.1 磁盘控制器选型对照, 4.2 推荐的磁盘配置, 4.3 ZFS 一定要限制 ARC, 4.4 定期 fstrim, 4.5 挂载参数加 noatime, 五、网络优化, 5.1 网卡模型与多队列, 5.2 宿主机网卡 offload, 5.3 巨型帧（可选）, 5.4 内核网络参数 + BBR, 5.5 带宽验证, 六、透明大页与内核细节, 七、GPU x2F PCI 直通要点, 八、备份、快照与容灾, 九、基线测试与监控, 9.1 存储基线, 9.2 常用监控命令, 十、常见问题速查, 十一、优化检查清单, 结语适用版本适用场景家用小工作室单机宿主机跑软路由与虚拟机容器原则先测基线再动参数一次只改一项没有基线就没有优化只有玄学一优化优先级先做收益最大的那几件优先级调整项预期收益风险换国内源去订阅提示更新到最新装包速度安全补丁无类型设为指令集直通跨代迁移受限磁盘控制器随机显著提升无网卡多队列千兆以上带宽跑满无上限释放被吃满的内存需重启降低延迟抖动功耗略升抖动网络吞吐低取舍内存效率大页命中需评估绑定极限场景几个百分点配置复杂易错绝大多数人做完虚拟机体验就已经和裸机接近了属于折腾范畴二装机后必做的基础配置换国内源默认用的是企业源需要订阅不换源会一直报错先注释掉企业源新增社区源清华速度较快再换掉系统源中科大注意对应写错代号会出现大面积依赖冲突别照旧教程抄去掉无有效订阅弹窗清一下浏览器缓存再刷新界面即可升级会覆盖这个文件升级后重跑一次基础工具让中断在多核之间均衡对多网卡高负载机器收益明显减少无谓的写盘如果是装在盘卡上的机器把也加上日志只放内存三与内存优化类型务必设为默认的会屏蔽等指令集家用单机不存在跨代迁移需求直接让虚拟机拿到全部指令集加解密和压缩性能差别非常明显需要在不同代之间迁移或者开了集群才用这类级别化类型需要嵌套虚拟化时拓扑尽量贴合物理结构物理机是路核就别配成正确写法是多核心避免内部跨通信走路径频率策略改为服务器场景不追求省电追求的是延迟稳定如果里能关设为一并关掉的唤醒延迟是虚拟化抖动的主要来源之一内存气球大页机制说明建议动态回收空闲内存内存充足时关闭避免内存在回收时抖动大页减少大型数据库编译机有明显收益单位页数跨虚拟机合并相同内存页内存吃紧时开会有额外开销内存富裕时关关闭气球驱动前提是宿主机内存够用内核内存参数尽量避免把虚拟机内存换出到磁盘换出是卡顿的头号来源控制脏页回写节奏减小突发写导致的卡顿四存储最容易出瓶颈的地方磁盘控制器选型对照控制器性能说明极差只在装老系统时用差兼容性最好性能最差好简单高效无语义很好支持直通最好每块盘独立队列可绑推荐的磁盘配置逐项解释磁盘交给独立线程不再占用高场景提升巨大绕过宿主机直连存储配合断电保护和是最佳实践写密集型可试有掉电丢数据风险内核起支持比在高并发下更稳让的透传到长期使用不掉速告诉这是会据此关闭碎片整理启用一定要限制默认会吃掉一半以上内存常见现象是宿主机内存满了虚拟机被挤爆按物理内存的给例限制为字节数常用数据集参数几乎不耗对文本日志类数据压缩比很高属于白嫖定期装了才能用否则在里自己跑挂载参数加中对应行加省掉每次读文件都写一次访问时间机械盘和低端收益明显五网络优化网卡模型与多队列一般设成等于数上限左右让收发软中断分散到多个核心内部还要开启多队列才会生效宿主机网卡网卡务必把环形缓冲区调大默认值在突发流量下会丢包巨型帧可选全链路交换机宿主机统一可降低占用提升大文件传输速度链路上任何一环不支持就会出怪问题非专业场景不建议折腾内核网络参数对跨境代理远程桌面大文件外网传输的效果立竿见影带宽验证宿主机另一台机器先量出基线再谈优化跑不到线速时优先怀疑和六透明大页与内核细节保持或不要设在内存对齐的情况下能吃到的好处设为反而会让虚拟机内存管理变慢容器的调优更简单直接限制资源即可容器共享宿主内核没有虚拟化开销是轻量服务的最优解七直通要点开启用加载并绑定设备挂给虚拟机确认分组注意显卡要整组直通音频开机前先开显示器再启动虚拟机否则某些卡会初始化失败八备份快照与容灾快照不是备份快照和原盘在同一存储上盘挂了两个一起没定时备份压缩保留策略界面数据中心备份添加可做全局定时任务推荐模式选不停机依赖冻结文件系统压缩选比快很多压缩率相当有条件上增量去重数据实际占用可能只有几十装了后备份一致性和显示都会正常在内安装并启用服务九基线测试与监控存储基线在改动前后各跑一次用数据说话常用监控命令命令用途自带的快速体检磁盘磁盘队列深度池实时吞吐与延迟查看是否被限流进程级定位网卡吞吐历史宿主机长期高于几乎一定是存储层的问题优先查再看是不是元数据池满了十常见问题速查现象原因处理虚拟机卡顿宿主机高未开策略不当内网大文件只有一半速度网卡单队列内宿主机内存吃满被挤无上限设用久了掉速没透传或定时虚拟机时间漂移未用内装时钟源用直通显卡后黑屏未整组直通未开检查分组加报企业源未注释注释备份失败提示文件系统不一致未装装十一优化检查清单装完机器照着勾一遍注释企业源加国内社区源去掉订阅弹窗按需设限流安装并定时备份保留策略记录基线数据结语的默认配置是保守可用而不是性能最优因为要兼顾集群一致性迁移能力和企业环境的稳定性家用单机把这些保守项逐条放开虚拟机的手感就会从有点像虚拟机变成基本等于裸机最后再强调一次改一项测一次记下来参数抄来抄去容易出了问题却找不到是哪一步造成的祝折腾愉快',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-13 10:46:24',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Laosia</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" target="_blank" rel="noopener" href="https://music.eooce.com/"><i class="anzhiyufont anzhiyu-icon-music _blank" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/air-conditioner/"><i class="anzhiyufont anzhiyu-icon-fan faa-tada" style="font-size: 0.9em;"></i><span> 小空调</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png" target="_blank"><img class="post-qr-code-img" alt="爱心" src="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png"/></a><div class="post-qr-code-desc">爱心</div></li><li class="reward-item"><a href="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png" target="_blank"><img class="post-qr-code-img" alt="奉献" src="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png"/></a><div class="post-qr-code-desc">奉献</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Cloudflare/" style="font-size: 1.05rem;">Cloudflare<sup>1</sup></a><a href="/tags/DNS/" style="font-size: 1.05rem;">DNS<sup>1</sup></a><a href="/tags/DNSSEC/" style="font-size: 1.05rem;">DNSSEC<sup>1</sup></a><a href="/tags/Debian11/" style="font-size: 1.05rem;">Debian11<sup>1</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>2</sup></a><a href="/tags/HiDNS/" style="font-size: 1.05rem;">HiDNS<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 1.05rem;">Markdown<sup>1</sup></a><a href="/tags/Mihomo/" style="font-size: 1.05rem;">Mihomo<sup>1</sup></a><a href="/tags/PVE/" style="font-size: 1.05rem;">PVE<sup>2</sup></a><a href="/tags/SSH/" style="font-size: 1.05rem;">SSH<sup>1</sup></a><a href="/tags/gcore/" style="font-size: 1.05rem;">gcore<sup>1</sup></a><a href="/tags/hexo/" style="font-size: 1.05rem;">hexo<sup>1</sup></a><a href="/tags/lxc/" style="font-size: 1.05rem;">lxc<sup>1</sup></a><a href="/tags/pve/" style="font-size: 1.05rem;">pve<sup>3</sup></a><a href="/tags/usb/" style="font-size: 1.05rem;">usb<sup>1</sup></a><a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 1.05rem;">优化<sup>1</sup></a><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 1.05rem;">分享<sup>1</sup></a><a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 1.05rem;">命令行<sup>1</sup></a><a href="/tags/%E5%9B%9E%E6%BA%90/" style="font-size: 1.05rem;">回源<sup>1</sup></a><a href="/tags/%E5%B1%B1%E6%B2%B3%E5%B0%8F%E4%BE%A0/" style="font-size: 1.05rem;">山河小侠<sup>1</sup></a><a href="/tags/%E6%88%90%E5%B0%B1%E6%8C%87%E5%8D%97/" style="font-size: 1.05rem;">成就指南<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 1.05rem;">技术<sup>6</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>2</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/" style="font-size: 1.05rem;">游戏攻略<sup>1</sup></a><a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 1.05rem;">维护<sup>1</sup></a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.05rem;">虚拟化<sup>1</sup></a><a href="/tags/%E8%AD%A6%E5%91%8A/" style="font-size: 1.05rem;">警告<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E6%8A%80%E6%9C%AF/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>技术</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a><a class="article-meta__tags" href="/tags/PVE/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>PVE</span></a><a class="article-meta__tags" href="/tags/%E4%BC%98%E5%8C%96/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>优化</span></a><a class="article-meta__tags" href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>虚拟化</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-12T01:16:58.000Z" title="发表于 2026-11-12 09:16:58">2026-11-12</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-13T02:46:24.000Z" title="更新于 2026-11-13 10:46:24">2026-11-13</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为南极"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>南极</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://img.521251.xyz/file/美女/横版/KZX3GFQP.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2026/11/12/pve-8-optimization-guide/"><header><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a><a href="/tags/%E6%8A%80%E6%9C%AF/" tabindex="-1" itemprop="url">技术</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><a href="/tags/PVE/" tabindex="-1" itemprop="url">PVE</a><a href="/tags/%E4%BC%98%E5%8C%96/" tabindex="-1" itemprop="url">优化</a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" tabindex="-1" itemprop="url">虚拟化</a><h1 id="CrawlerTitle" itemprop="name headline">Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Laosia</span><time itemprop="dateCreated datePublished" datetime="2026-11-12T01:16:58.000Z" title="发表于 2026-11-12 09:16:58">2026-11-12</time><time itemprop="dateCreated datePublished" datetime="2026-11-13T02:46:24.000Z" title="更新于 2026-11-13 10:46:24">2026-11-13</time></header><blockquote>
+<p>适用版本：Proxmox VE 8.0 ~ 8.4（Debian 12 Bookworm）<br>适用场景：家用 &#x2F; 小工作室单机宿主机，跑 NAS、软路由、Windows 与 Linux 虚拟机、LXC 容器<br>原则：<strong>先测基线，再动参数，一次只改一项</strong>。没有基线就没有优化，只有玄学。</p>
+</blockquote>
+<hr>
+<h2 id="一、优化优先级：先做收益最大的那几件"><a href="#一、优化优先级：先做收益最大的那几件" class="headerlink" title="一、优化优先级：先做收益最大的那几件"></a>一、优化优先级：先做收益最大的那几件</h2><table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>调整项</th>
+<th>预期收益</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>P0</td>
+<td>换国内源 + 去订阅提示 + 更新到最新</td>
+<td>装包速度、安全补丁</td>
+<td>无</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>CPU 类型设为 <code>host</code></td>
+<td>10%~30%（AES&#x2F;AVX 指令集直通）</td>
+<td>跨代迁移受限</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>磁盘控制器 <code>virtio-scsi-single</code> + <code>iothread</code></td>
+<td>随机 IOPS 显著提升</td>
+<td>无</td>
+</tr>
+<tr>
+<td>P0</td>
+<td>网卡 <code>virtio</code> + 多队列</td>
+<td>千兆以上带宽跑满</td>
+<td>无</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>ZFS ARC 上限</td>
+<td>释放被吃满的内存</td>
+<td>需重启</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>CPU governor &#x3D; performance</td>
+<td>降低延迟抖动</td>
+<td>功耗略升</td>
+</tr>
+<tr>
+<td>P1</td>
+<td>sysctl（swappiness &#x2F; dirty &#x2F; BBR）</td>
+<td>IO 抖动、网络吞吐</td>
+<td>低</td>
+</tr>
+<tr>
+<td>P2</td>
+<td>Hugepages、KSM 取舍</td>
+<td>内存效率 &#x2F; 大页命中</td>
+<td>需评估</td>
+</tr>
+<tr>
+<td>P3</td>
+<td>NUMA 绑定、CPU pinning</td>
+<td>极限场景几个百分点</td>
+<td>配置复杂，易错</td>
+</tr>
+</tbody></table>
+<p>绝大多数人做完 P0 + P1，虚拟机体验就已经和裸机接近了。P3 属于折腾范畴。</p>
+<hr>
+<h2 id="二、装机后必做的基础配置"><a href="#二、装机后必做的基础配置" class="headerlink" title="二、装机后必做的基础配置"></a>二、装机后必做的基础配置</h2><h3 id="2-1-换国内源"><a href="#2-1-换国内源" class="headerlink" title="2.1 换国内源"></a>2.1 换国内源</h3><p>PVE 默认用的是企业源（需要订阅），不换源会一直报错。先注释掉企业源：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/apt/sources.list.d/pve-enterprise.list</span></span><br><span class="line">sed -i <span class="string">&#x27;s/^deb/#deb/&#x27;</span> /etc/apt/sources.list.d/pve-enterprise.list</span><br><span class="line">sed -i <span class="string">&#x27;s/^deb/#deb/&#x27;</span> /etc/apt/sources.list.d/ceph.list 2&gt;/dev/null</span><br></pre></td></tr></table></figure>
+
+<p>新增社区源（清华 TUNA，速度较快）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/apt/sources.list.d/pve-no-sub.list &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">deb https://mirrors.tuna.tsinghua.edu.cn/proxmox/debian/pve bookworm pve-no-subscription</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>再换掉 Debian 系统源（中科大）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/apt/sources.list &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">deb https://mirrors.ustc.edu.cn/debian bookworm main contrib non-free non-free-firmware</span><br><span class="line">deb https://mirrors.ustc.edu.cn/debian bookworm-updates main contrib non-free non-free-firmware</span><br><span class="line">deb https://mirrors.ustc.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line">apt update &amp;&amp; apt dist-upgrade -y</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：PVE 8 对应 Debian 12（bookworm）。写错代号会出现大面积依赖冲突，别照旧教程抄 <code>bullseye</code>。</p>
+</blockquote>
+<h3 id="2-2-去掉”无有效订阅”弹窗"><a href="#2-2-去掉”无有效订阅”弹窗" class="headerlink" title="2.2 去掉”无有效订阅”弹窗"></a>2.2 去掉”无有效订阅”弹窗</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cp</span> /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js&#123;,.bak&#125;</span><br><span class="line">sed -i <span class="string">&quot;s/Ext.Msg.show(&#123;/Ext.Msg.noshow(&#123;/&quot;</span> \</span><br><span class="line">  /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js</span><br><span class="line">systemctl restart pveproxy</span><br></pre></td></tr></table></figure>
+
+<p>清一下浏览器缓存再刷新 Web 界面即可。<strong>pve-manager 升级会覆盖这个文件</strong>，升级后重跑一次。</p>
+<h3 id="2-3-基础工具"><a href="#2-3-基础工具" class="headerlink" title="2.3 基础工具"></a>2.3 基础工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">apt install -y htop iotop iftop lm-sensors nvme-cli fio sysstat irqbalance cpufrequtils</span><br><span class="line">systemctl <span class="built_in">enable</span> --now irqbalance</span><br></pre></td></tr></table></figure>
+
+<p><code>irqbalance</code> 让中断在多核之间均衡，对多网卡、NVMe 高负载机器收益明显。</p>
+<h3 id="2-4-减少无谓的写盘"><a href="#2-4-减少无谓的写盘" class="headerlink" title="2.4 减少无谓的写盘"></a>2.4 减少无谓的写盘</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/systemd/journald.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">SystemMaxUse=200M</span><br><span class="line">EOF</span><br><span class="line">systemctl restart systemd-journald</span><br></pre></td></tr></table></figure>
+
+<p>如果是装在 U 盘 &#x2F; SD 卡上的机器，把 <code>Storage=volatile</code> 也加上，日志只放内存。</p>
+<hr>
+<h2 id="三、CPU-与内存优化"><a href="#三、CPU-与内存优化" class="headerlink" title="三、CPU 与内存优化"></a>三、CPU 与内存优化</h2><h3 id="3-1-CPU-类型务必设为-host"><a href="#3-1-CPU-类型务必设为-host" class="headerlink" title="3.1 CPU 类型务必设为 host"></a>3.1 CPU 类型务必设为 host</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qm <span class="built_in">set</span> 100 --cpu host</span><br></pre></td></tr></table></figure>
+
+<p>默认的 <code>kvm64</code> 会屏蔽 AES-NI、AVX2、SSE4.2 等指令集。家用单机不存在跨代迁移需求，直接 <code>host</code> 让虚拟机拿到全部指令集，加解密和压缩性能差别非常明显。</p>
+<p>需要在不同代 CPU 之间迁移，或者开了 HA 集群，才用 <code>x86-64-v2-AES</code> 这类级别化类型。</p>
+<p>需要嵌套虚拟化时：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">qm <span class="built_in">set</span> 100 --cpu host,flags=+vmx    <span class="comment"># Intel</span></span><br><span class="line">qm <span class="built_in">set</span> 100 --cpu host,flags=+svm    <span class="comment"># AMD</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-vCPU-拓扑尽量贴合物理结构"><a href="#3-2-vCPU-拓扑尽量贴合物理结构" class="headerlink" title="3.2 vCPU 拓扑尽量贴合物理结构"></a>3.2 vCPU 拓扑尽量贴合物理结构</h3><p>物理机是「1 路 × 16 核」就别配成 4 sockets × 4 cores。正确写法是 1 socket 多核心，避免 Guest 内部跨 socket 通信走 NUMA 路径：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qm <span class="built_in">set</span> 100 --sockets 1 --cores 8</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-CPU-频率策略改为-performance"><a href="#3-3-CPU-频率策略改为-performance" class="headerlink" title="3.3 CPU 频率策略改为 performance"></a>3.3 CPU 频率策略改为 performance</h3><p>服务器场景不追求省电，追求的是延迟稳定：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;GOVERNOR=&quot;performance&quot;&#x27;</span> &gt; /etc/default/cpufrequtils</span><br><span class="line">systemctl restart cpufrequtils</span><br><span class="line">cpupower frequency-set -g performance</span><br></pre></td></tr></table></figure>
+
+<p>如果 BIOS 里能关 C-State &#x2F; 设 Power Profile 为 Maximum Performance，一并关掉。C-State 的唤醒延迟是虚拟化抖动的主要来源之一。</p>
+<h3 id="3-4-内存：气球-vs-大页-vs-KSM"><a href="#3-4-内存：气球-vs-大页-vs-KSM" class="headerlink" title="3.4 内存：气球 vs 大页 vs KSM"></a>3.4 内存：气球 vs 大页 vs KSM</h3><table>
+<thead>
+<tr>
+<th>机制</th>
+<th>说明</th>
+<th>建议</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Ballooning</td>
+<td>动态回收空闲内存</td>
+<td>内存充足时 <code>balloon: 0</code> 关闭，避免 Guest 内存在回收时抖动</td>
+</tr>
+<tr>
+<td>Hugepages</td>
+<td>2MB 大页，减少 TLB miss</td>
+<td>大型数据库&#x2F;编译机有明显收益，<code>qm set 100 --hugepages 2048</code>（单位：2MB 页数）</td>
+</tr>
+<tr>
+<td>KSM</td>
+<td>跨虚拟机合并相同内存页</td>
+<td>内存吃紧时开，CPU 会有额外开销；内存富裕时关</td>
+</tr>
+</tbody></table>
+<p>关闭气球驱动（前提是宿主机内存够用）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qm <span class="built_in">set</span> 100 --balloon 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-内核内存参数"><a href="#3-5-内核内存参数" class="headerlink" title="3.5 内核内存参数"></a>3.5 内核内存参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> &gt; /etc/sysctl.d/99-pve-tune.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">vm.swappiness = 10</span><br><span class="line">vm.dirty_background_ratio = 5</span><br><span class="line">vm.dirty_ratio = 15</span><br><span class="line">vm.vfs_cache_pressure = 50</span><br><span class="line">fs.inotify.max_user_watches = 524288</span><br><span class="line">EOF</span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>swappiness=10</code>：尽量避免把虚拟机内存换出到磁盘（换出是卡顿的头号来源）。</li>
+<li><code>dirty_ratio</code>：控制脏页回写节奏，减小突发写导致的 IO 卡顿。</li>
+</ul>
+<hr>
+<h2 id="四、存储：最容易出瓶颈的地方"><a href="#四、存储：最容易出瓶颈的地方" class="headerlink" title="四、存储：最容易出瓶颈的地方"></a>四、存储：最容易出瓶颈的地方</h2><h3 id="4-1-磁盘控制器选型对照"><a href="#4-1-磁盘控制器选型对照" class="headerlink" title="4.1 磁盘控制器选型对照"></a>4.1 磁盘控制器选型对照</h3><table>
+<thead>
+<tr>
+<th>控制器</th>
+<th>性能</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>IDE</td>
+<td>极差</td>
+<td>只在装老系统时用</td>
+</tr>
+<tr>
+<td>SATA</td>
+<td>差</td>
+<td>兼容性最好，性能最差</td>
+</tr>
+<tr>
+<td>VirtIO Block</td>
+<td>好</td>
+<td>简单高效，无 SCSI 语义</td>
+</tr>
+<tr>
+<td>VirtIO SCSI</td>
+<td>很好</td>
+<td>支持 discard、SCSI 直通</td>
+</tr>
+<tr>
+<td><strong>VirtIO SCSI single</strong></td>
+<td><strong>最好</strong></td>
+<td>每块盘独立队列，可绑 iothread</td>
+</tr>
+</tbody></table>
+<h3 id="4-2-推荐的磁盘配置"><a href="#4-2-推荐的磁盘配置" class="headerlink" title="4.2 推荐的磁盘配置"></a>4.2 推荐的磁盘配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">qm <span class="built_in">set</span> 100 --scsihw virtio-scsi-single</span><br><span class="line">qm <span class="built_in">set</span> 100 --iothreads 2</span><br><span class="line">qm <span class="built_in">set</span> 100 --scsi0 local-lvm:32,discard=on,ssd=1,iothread=1,cache=none,aio=io_uring</span><br></pre></td></tr></table></figure>
+
+<p>逐项解释：</p>
+<ul>
+<li><code>iothread=1</code>：磁盘 IO 交给独立线程，不再占用 vCPU，高 IOPS 场景提升巨大。</li>
+<li><code>cache=none</code>：绕过宿主机 page cache，直连存储，配合断电保护和 <code>iothread</code> 是最佳实践；写密集型可试 <code>cache=writeback</code>（有掉电丢数据风险）。</li>
+<li><code>aio=io_uring</code>：PVE 8.1+ 内核 6.8 起支持，比 <code>native</code> 在高并发下更稳。</li>
+<li><code>discard=on</code>：让 Guest 的 TRIM 透传到 LVM-thin &#x2F; ZFS，SSD 长期使用不掉速。</li>
+<li><code>ssd=1</code>：告诉 Guest 这是 SSD，Windows 会据此关闭碎片整理、启用 TRIM。</li>
+</ul>
+<h3 id="4-3-ZFS-一定要限制-ARC"><a href="#4-3-ZFS-一定要限制-ARC" class="headerlink" title="4.3 ZFS 一定要限制 ARC"></a>4.3 ZFS 一定要限制 ARC</h3><p>ZFS 默认会吃掉一半以上内存，常见现象是「宿主机内存满了，虚拟机被挤爆」。按物理内存的 25%~50% 给 ARC：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 例：限制为 8GB（字节数）</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;options zfs zfs_arc_max=8589934592&quot;</span> &gt; /etc/modprobe.d/zfs.conf</span><br><span class="line">update-initramfs -u -k all</span><br></pre></td></tr></table></figure>
+
+<p>常用数据集参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">zfs <span class="built_in">set</span> compression=lz4 atime=off xattr=sa rpool/data</span><br><span class="line">zfs <span class="built_in">set</span> recordsize=128K rpool/data</span><br></pre></td></tr></table></figure>
+
+<p><code>lz4</code> 几乎不耗 CPU，对文本、日志类数据压缩比很高，属于白嫖。</p>
+<h3 id="4-4-定期-fstrim"><a href="#4-4-定期-fstrim" class="headerlink" title="4.4 定期 fstrim"></a>4.4 定期 fstrim</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/cron.weekly/fstrim-pve</span></span><br><span class="line"><span class="comment">#!/bin/sh</span></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">id</span> <span class="keyword">in</span> $(qm list | awk <span class="string">&#x27;NR&gt;1&#123;print $1&#125;&#x27;</span>); <span class="keyword">do</span></span><br><span class="line">  qm guest cmd <span class="variable">$id</span> fstrim 2&gt;/dev/null</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>装了 QEMU Guest Agent 才能用；否则在 Guest 里自己跑 <code>fstrim -av</code>。</p>
+<h3 id="4-5-挂载参数加-noatime"><a href="#4-5-挂载参数加-noatime" class="headerlink" title="4.5 挂载参数加 noatime"></a>4.5 挂载参数加 noatime</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># /etc/fstab 中对应行加 noatime</span></span><br><span class="line"><span class="comment"># UUID=xxxx / ext4 defaults,noatime 0 1</span></span><br><span class="line">mount -o remount /</span><br></pre></td></tr></table></figure>
+
+<p><code>noatime</code> 省掉每次读文件都写一次访问时间，机械盘和低端 SSD 收益明显。</p>
+<hr>
+<h2 id="五、网络优化"><a href="#五、网络优化" class="headerlink" title="五、网络优化"></a>五、网络优化</h2><h3 id="5-1-网卡模型与多队列"><a href="#5-1-网卡模型与多队列" class="headerlink" title="5.1 网卡模型与多队列"></a>5.1 网卡模型与多队列</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qm <span class="built_in">set</span> 100 --net0 virtio=BC:24:11:00:00:01,bridge=vmbr0,queues=4</span><br></pre></td></tr></table></figure>
+
+<p><code>queues</code> 一般设成等于 vCPU 数（上限 8 左右），让收发软中断分散到多个核心。Guest 内部还要开启 RSS&#x2F;多队列才会生效：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Linux Guest</span></span><br><span class="line">ethtool -L ens18 combined 4</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-宿主机网卡-offload"><a href="#5-2-宿主机网卡-offload" class="headerlink" title="5.2 宿主机网卡 offload"></a>5.2 宿主机网卡 offload</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ethtool -K vmbr0 gro on gso on tso on</span><br><span class="line">ethtool -G eth0 rx 4096 tx 4096</span><br></pre></td></tr></table></figure>
+
+<p>10G&#x2F;2.5G 网卡务必把环形缓冲区调大，默认值在突发流量下会丢包。</p>
+<h3 id="5-3-巨型帧（可选）"><a href="#5-3-巨型帧（可选）" class="headerlink" title="5.3 巨型帧（可选）"></a>5.3 巨型帧（可选）</h3><p>全链路（交换机、宿主机、Guest）统一 MTU 9000，可降低 CPU 占用、提升大文件传输速度。<strong>链路上任何一环不支持就会出怪问题</strong>，非专业场景不建议折腾。</p>
+<h3 id="5-4-内核网络参数-BBR"><a href="#5-4-内核网络参数-BBR" class="headerlink" title="5.4 内核网络参数 + BBR"></a>5.4 内核网络参数 + BBR</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> tcp_bbr &gt; /etc/modules-load.d/bbr.conf</span><br><span class="line">modprobe tcp_bbr</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/sysctl.d/99-pve-tune.conf &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">net.core.default_qdisc = fq</span><br><span class="line">net.ipv4.tcp_congestion_control = bbr</span><br><span class="line">net.core.rmem_max = 16777216</span><br><span class="line">net.core.wmem_max = 16777216</span><br><span class="line">net.core.somaxconn = 4096</span><br><span class="line">EOF</span><br><span class="line">sysctl --system</span><br></pre></td></tr></table></figure>
+
+<p>对跨境代理、远程桌面、大文件外网传输，BBR 的效果立竿见影。</p>
+<h3 id="5-5-带宽验证"><a href="#5-5-带宽验证" class="headerlink" title="5.5 带宽验证"></a>5.5 带宽验证</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 宿主机</span></span><br><span class="line">iperf3 -s</span><br><span class="line"><span class="comment"># 另一台机器</span></span><br><span class="line">iperf3 -c 192.168.1.10 -P 4 -t 30</span><br></pre></td></tr></table></figure>
+
+<p>先量出基线，再谈优化；跑不到线速时优先怀疑 offload 和 queues。</p>
+<hr>
+<h2 id="六、透明大页与内核细节"><a href="#六、透明大页与内核细节" class="headerlink" title="六、透明大页与内核细节"></a>六、透明大页与内核细节</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /sys/kernel/mm/transparent_hugepage/enabled</span><br><span class="line"><span class="comment"># [always] madvise never  ← 保持 always 或 madvise，不要设 never</span></span><br></pre></td></tr></table></figure>
+
+<p>KVM 在内存对齐的情况下能吃到 THP 的好处，设为 <code>never</code> 反而会让虚拟机内存管理变慢。</p>
+<p>LXC 容器的调优更简单，直接限制资源即可：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pct <span class="built_in">set</span> 101 --cores 2 --memory 1024 --swap 512</span><br><span class="line">pct <span class="built_in">set</span> 101 --mp0 /mnt/data,mp=/data</span><br></pre></td></tr></table></figure>
+
+<p>容器共享宿主内核，没有虚拟化开销，是轻量服务的最优解。</p>
+<hr>
+<h2 id="七、GPU-PCI-直通要点"><a href="#七、GPU-PCI-直通要点" class="headerlink" title="七、GPU &#x2F; PCI 直通要点"></a>七、GPU &#x2F; PCI 直通要点</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 开启 IOMMU（Intel）</span></span><br><span class="line">sed -i <span class="string">&#x27;s/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT=&quot;quiet intel_iommu=on iommu=pt&quot;/&#x27;</span> /etc/default/grub</span><br><span class="line"><span class="comment"># AMD 用 amd_iommu=on</span></span><br><span class="line">update-grub</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 加载 vfio 并绑定设备</span></span><br><span class="line"><span class="built_in">cat</span> &gt;&gt; /etc/modules &lt;&lt;<span class="string">&#x27;EOF&#x27;</span></span><br><span class="line">vfio</span><br><span class="line">vfio_iommu_type1</span><br><span class="line">vfio_pci</span><br><span class="line">EOF</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;options vfio_iommu_type1 allow_unsafe_interrupts=1&quot;</span> &gt; /etc/modprobe.d/vfio.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&quot;options vfio-pci ids=10de:2484,10de:228b&quot;</span> &gt;&gt; /etc/modprobe.d/vfio.conf</span><br><span class="line">update-initramfs -u -k all</span><br><span class="line">reboot</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 挂给虚拟机</span></span><br><span class="line">qm <span class="built_in">set</span> 100 --machine q35 --bios ovmf --vga none \</span><br><span class="line">  --hostpci0 0000:01:00,pcie=1,x-vga=1</span><br></pre></td></tr></table></figure>
+
+<p>确认 IOMMU 分组：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find /sys/kernel/iommu_groups/ -<span class="built_in">type</span> l | <span class="built_in">sort</span> -V</span><br></pre></td></tr></table></figure>
+
+<p>注意：显卡要整组直通（GPU + HDMI 音频），开机前先开显示器再启动虚拟机，否则某些卡会初始化失败。</p>
+<hr>
+<h2 id="八、备份、快照与容灾"><a href="#八、备份、快照与容灾" class="headerlink" title="八、备份、快照与容灾"></a>八、备份、快照与容灾</h2><p>快照不是备份。快照和原盘在同一存储上，盘挂了两个一起没。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定时备份（压缩 + 保留策略）</span></span><br><span class="line">vzdump 100 --storage backup --mode snapshot --compress zstd \</span><br><span class="line">  --prune-backups <span class="string">&#x27;keep-daily=7,keep-weekly=4,keep-monthly=6&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>Web 界面「数据中心 → 备份 → 添加」可做全局定时任务，推荐：</p>
+<ul>
+<li>模式选 <code>snapshot</code>（不停机，依赖 QEMU Agent 冻结文件系统）</li>
+<li>压缩选 <code>zstd</code>（比 gzip 快很多，压缩率相当）</li>
+<li>有条件上 <strong>Proxmox Backup Server</strong>：增量 + 去重，1TB 数据实际占用可能只有几十 GB</li>
+</ul>
+<p>装了 Guest Agent 后，备份一致性和 IP 显示都会正常：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">qm <span class="built_in">set</span> 100 --agent enabled=1</span><br></pre></td></tr></table></figure>
+
+<p>在 Guest 内安装 <code>qemu-guest-agent</code> 并启用服务。</p>
+<hr>
+<h2 id="九、基线测试与监控"><a href="#九、基线测试与监控" class="headerlink" title="九、基线测试与监控"></a>九、基线测试与监控</h2><h3 id="9-1-存储基线"><a href="#9-1-存储基线" class="headerlink" title="9.1 存储基线"></a>9.1 存储基线</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">fio --name=randread --ioengine=io_uring --direct=1 --rw=randread \</span><br><span class="line">    --bs=4k --numjobs=4 --iodepth=32 --size=1G --runtime=60 --group_reporting</span><br></pre></td></tr></table></figure>
+
+<p>在改动 <code>iothread</code>、<code>cache</code>、<code>aio</code> 前后各跑一次，用数据说话。</p>
+<h3 id="9-2-常用监控命令"><a href="#9-2-常用监控命令" class="headerlink" title="9.2 常用监控命令"></a>9.2 常用监控命令</h3><table>
+<thead>
+<tr>
+<th>命令</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>pveperf</code></td>
+<td>PVE 自带的快速体检（CPU&#x2F;磁盘&#x2F;fsync）</td>
+</tr>
+<tr>
+<td><code>iostat -x 2</code></td>
+<td>磁盘 util、await、队列深度</td>
+</tr>
+<tr>
+<td><code>zpool iostat -v 2</code></td>
+<td>ZFS 池实时吞吐与延迟</td>
+</tr>
+<tr>
+<td><code>qm monitor 100</code> + <code>info cpus</code></td>
+<td>查看 vCPU 是否被限流</td>
+</tr>
+<tr>
+<td><code>htop</code> &#x2F; <code>atop</code></td>
+<td>进程级定位</td>
+</tr>
+<tr>
+<td><code>sar -n DEV 1</code></td>
+<td>网卡吞吐历史</td>
+</tr>
+</tbody></table>
+<p>宿主机 <code>iowait</code> 长期高于 20%，几乎一定是存储层的问题：优先查 <code>iothread</code>、<code>cache</code>、<code>discard</code>，再看是不是 LVM-thin 元数据池满了。</p>
+<hr>
+<h2 id="十、常见问题速查"><a href="#十、常见问题速查" class="headerlink" title="十、常见问题速查"></a>十、常见问题速查</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>虚拟机卡顿、宿主机 iowait 高</td>
+<td>未开 iothread &#x2F; cache 策略不当</td>
+<td><code>iothread=1</code>、<code>aio=io_uring</code>、<code>cache=none</code></td>
+</tr>
+<tr>
+<td>内网大文件只有一半速度</td>
+<td>网卡单队列</td>
+<td><code>queues=N</code> + Guest 内 <code>ethtool -L</code></td>
+</tr>
+<tr>
+<td>宿主机内存吃满，VM 被挤</td>
+<td>ZFS ARC 无上限</td>
+<td>设 <code>zfs_arc_max</code></td>
+</tr>
+<tr>
+<td>SSD 用久了掉速</td>
+<td>TRIM 没透传</td>
+<td><code>discard=on</code> 或定时 fstrim</td>
+</tr>
+<tr>
+<td>虚拟机时间漂移</td>
+<td>未用 kvm-clock &#x2F; NTP</td>
+<td>Guest 内装 chrony，时钟源用 <code>kvm-clock</code></td>
+</tr>
+<tr>
+<td>直通显卡后黑屏</td>
+<td>未整组直通 &#x2F; 未开 <code>x-vga</code></td>
+<td>检查 IOMMU 分组，加 <code>x-vga=1</code></td>
+</tr>
+<tr>
+<td>apt update 报 401</td>
+<td>企业源未注释</td>
+<td>注释 <code>pve-enterprise.list</code></td>
+</tr>
+<tr>
+<td>备份失败提示文件系统不一致</td>
+<td>未装 Guest Agent</td>
+<td><code>--agent enabled=1</code> + 装 agent</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十一、优化检查清单"><a href="#十一、优化检查清单" class="headerlink" title="十一、优化检查清单"></a>十一、优化检查清单</h2><p>装完机器照着勾一遍：</p>
+<ul>
+<li><input disabled="" type="checkbox"> 注释企业源，加国内社区源，<code>apt dist-upgrade</code></li>
+<li><input disabled="" type="checkbox"> 去掉订阅弹窗</li>
+<li><input disabled="" type="checkbox"> <code>cpu: host</code></li>
+<li><input disabled="" type="checkbox"> <code>sockets=1</code>，cores 按需</li>
+<li><input disabled="" type="checkbox"> <code>scsihw: virtio-scsi-single</code> + <code>iothread</code></li>
+<li><input disabled="" type="checkbox"> <code>discard=on</code>、<code>ssd=1</code>、<code>cache=none</code>、<code>aio=io_uring</code></li>
+<li><input disabled="" type="checkbox"> <code>net0: virtio</code> + <code>queues</code></li>
+<li><input disabled="" type="checkbox"> ZFS 设 <code>zfs_arc_max</code></li>
+<li><input disabled="" type="checkbox"> <code>swappiness=10</code>、<code>dirty_ratio=15</code>、BBR</li>
+<li><input disabled="" type="checkbox"> CPU governor &#x3D; performance</li>
+<li><input disabled="" type="checkbox"> <code>noatime</code> + journald 限流</li>
+<li><input disabled="" type="checkbox"> 安装 qemu-guest-agent 并 <code>--agent enabled=1</code></li>
+<li><input disabled="" type="checkbox"> 定时备份 + 保留策略（3-2-1）</li>
+<li><input disabled="" type="checkbox"> fio &#x2F; iperf3 记录基线数据</li>
+</ul>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>PVE 的默认配置是「保守可用」而不是「性能最优」，因为要兼顾集群一致性、迁移能力和企业环境的稳定性。家用单机把这些保守项逐条放开，虚拟机的手感就会从「有点像虚拟机」变成「基本等于裸机」。</p>
+<p>最后再强调一次：<strong>改一项，测一次，记下来</strong>。参数抄来抄去容易，出了问题却找不到是哪一步造成的。祝折腾愉快。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744012340449_2020101722212318242.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744012340449_2020101722212318242.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Laosia</div><div class="post-copyright__author_desc">😤Laosia😚无聊时刻😤</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2026/11/12/pve-8-optimization-guide/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2026/11/12/pve-8-optimization-guide/')">Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png" alt="爱心"/></a><div class="post-qr-code-desc">爱心</div></li><li class="reward-item"><a href="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png" alt="奉献"/></a><div class="post-qr-code-desc">奉献</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2026/11/12/pve-8-optimization-guide/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件&amp;url=http://example.com/2026/11/12/pve-8-optimization-guide/&amp;pic=https://img.521251.xyz/file/美女/横版/KZX3GFQP.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Laosia</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E6%8A%80%E6%9C%AF/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>技术<span class="tagsPageCount">6</span></a><a class="post-meta__box__tags" href="/tags/%E6%95%99%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>教程<span class="tagsPageCount">2</span></a><a class="post-meta__box__tags" href="/tags/PVE/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>PVE<span class="tagsPageCount">2</span></a><a class="post-meta__box__tags" href="/tags/%E4%BC%98%E5%8C%96/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>优化<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>虚拟化<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://img.521251.xyz/file/美女/横版/bIYPMJOY.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2026/04/20/%E5%B1%B1%E6%B2%B3%E5%B0%8F%E4%BE%A0%E6%94%BB%E7%95%A5/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1746873550088_bizhihui_com_202504061743930988315122.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">山河小侠攻略</div></div></a></div><div class="next-post pull-right"><a href="/2026/11/13/linux-beginner-commands/"><img class="next-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/bIYPMJOY.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Linux 入门必会命令：从登录到排障的 30 个基本功</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2026/11/13/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/bIYPMJOY.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-13</div><div class="title">Linux 入门必会命令：从登录到排障的 30 个基本功</div></div></a></div><div><a href="/2025/05/09/Markdown%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="Markdown语法及快捷键"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1746873547353_bizhihui_com_202504061743931485875813.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-05-09</div><div class="title">Markdown语法及快捷键</div></div></a></div><div><a href="/2025/04/11/HiDNS/" title="将 HiDNS 免费域名托管到 gcore.com"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744342776196_girl16.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-11</div><div class="title">将 HiDNS 免费域名托管到 gcore.com</div></div></a></div><div><a href="/2025/04/11/CloudflareTunnel%E8%AE%BF%E9%97%AE%E5%8A%A0%E9%80%9F/" title="CloudflareTunnel访问加速 | 无需公网IP | SaaS 回源 | 优选域名 | 新手教程"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744342766750_girl13.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-11</div><div class="title">CloudflareTunnel访问加速 | 无需公网IP | SaaS 回源 | 优选域名 | 新手教程</div></div></a></div><div><a href="/2025/04/09/%E5%85%A8%E5%AE%B6%E6%A1%B6/" title="【Rin】基于 Cloudflare Pages + Workers + D1 + R2 全家桶"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/ae62475a131f3734a201c.png" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-04-09</div><div class="title">【Rin】基于 Cloudflare Pages + Workers + D1 + R2 全家桶</div></div></a></div><div><a href="/2025/05/07/%E7%94%A8Mihomo%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E4%BB%A3%E7%90%86%E6%9C%BA/" title="用Mihomo打造最强代理机"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744342769150_girl12.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2025-05-07</div><div class="title">用Mihomo打造最强代理机</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744012340449_2020101722212318242.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">产品、设计、开发</b>相关的问题和看法，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Laosia</h1><div class="author-info__desc">😤Laosia😚无聊时刻😤</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/laosiaa" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/233882124" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="card-widget card-countdown"><div class="item-headline"><i></i><span></span></div><div class="item-content"><div class="cd-count-left">
+  <span class="cd-text">距离</span>
+  <span class="cd-name" id="eventName"></span>
+  <span class="cd-time" id="daysUntil"></span>
+  <span class="cd-date" id="eventDate"></span>
+</div>
+<div id="countRight" class="cd-count-right"></div>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BC%98%E5%8C%96%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%9A%E5%85%88%E5%81%9A%E6%94%B6%E7%9B%8A%E6%9C%80%E5%A4%A7%E7%9A%84%E9%82%A3%E5%87%A0%E4%BB%B6"><span class="toc-text">一、优化优先级：先做收益最大的那几件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%A3%85%E6%9C%BA%E5%90%8E%E5%BF%85%E5%81%9A%E7%9A%84%E5%9F%BA%E7%A1%80%E9%85%8D%E7%BD%AE"><span class="toc-text">二、装机后必做的基础配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%8D%A2%E5%9B%BD%E5%86%85%E6%BA%90"><span class="toc-text">2.1 换国内源</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%8E%BB%E6%8E%89%E2%80%9D%E6%97%A0%E6%9C%89%E6%95%88%E8%AE%A2%E9%98%85%E2%80%9D%E5%BC%B9%E7%AA%97"><span class="toc-text">2.2 去掉”无有效订阅”弹窗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%9F%BA%E7%A1%80%E5%B7%A5%E5%85%B7"><span class="toc-text">2.3 基础工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%87%8F%E5%B0%91%E6%97%A0%E8%B0%93%E7%9A%84%E5%86%99%E7%9B%98"><span class="toc-text">2.4 减少无谓的写盘</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81CPU-%E4%B8%8E%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96"><span class="toc-text">三、CPU 与内存优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-CPU-%E7%B1%BB%E5%9E%8B%E5%8A%A1%E5%BF%85%E8%AE%BE%E4%B8%BA-host"><span class="toc-text">3.1 CPU 类型务必设为 host</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-vCPU-%E6%8B%93%E6%89%91%E5%B0%BD%E9%87%8F%E8%B4%B4%E5%90%88%E7%89%A9%E7%90%86%E7%BB%93%E6%9E%84"><span class="toc-text">3.2 vCPU 拓扑尽量贴合物理结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-CPU-%E9%A2%91%E7%8E%87%E7%AD%96%E7%95%A5%E6%94%B9%E4%B8%BA-performance"><span class="toc-text">3.3 CPU 频率策略改为 performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%86%85%E5%AD%98%EF%BC%9A%E6%B0%94%E7%90%83-vs-%E5%A4%A7%E9%A1%B5-vs-KSM"><span class="toc-text">3.4 内存：气球 vs 大页 vs KSM</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E5%86%85%E6%A0%B8%E5%86%85%E5%AD%98%E5%8F%82%E6%95%B0"><span class="toc-text">3.5 内核内存参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AD%98%E5%82%A8%EF%BC%9A%E6%9C%80%E5%AE%B9%E6%98%93%E5%87%BA%E7%93%B6%E9%A2%88%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">四、存储：最容易出瓶颈的地方</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%A3%81%E7%9B%98%E6%8E%A7%E5%88%B6%E5%99%A8%E9%80%89%E5%9E%8B%E5%AF%B9%E7%85%A7"><span class="toc-text">4.1 磁盘控制器选型对照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%8E%A8%E8%8D%90%E7%9A%84%E7%A3%81%E7%9B%98%E9%85%8D%E7%BD%AE"><span class="toc-text">4.2 推荐的磁盘配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-ZFS-%E4%B8%80%E5%AE%9A%E8%A6%81%E9%99%90%E5%88%B6-ARC"><span class="toc-text">4.3 ZFS 一定要限制 ARC</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%AE%9A%E6%9C%9F-fstrim"><span class="toc-text">4.4 定期 fstrim</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E6%8C%82%E8%BD%BD%E5%8F%82%E6%95%B0%E5%8A%A0-noatime"><span class="toc-text">4.5 挂载参数加 noatime</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%BD%91%E7%BB%9C%E4%BC%98%E5%8C%96"><span class="toc-text">五、网络优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%BD%91%E5%8D%A1%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%A4%9A%E9%98%9F%E5%88%97"><span class="toc-text">5.1 网卡模型与多队列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%BD%91%E5%8D%A1-offload"><span class="toc-text">5.2 宿主机网卡 offload</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%B7%A8%E5%9E%8B%E5%B8%A7%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-text">5.3 巨型帧（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%86%85%E6%A0%B8%E7%BD%91%E7%BB%9C%E5%8F%82%E6%95%B0-BBR"><span class="toc-text">5.4 内核网络参数 + BBR</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%B8%A6%E5%AE%BD%E9%AA%8C%E8%AF%81"><span class="toc-text">5.5 带宽验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%80%8F%E6%98%8E%E5%A4%A7%E9%A1%B5%E4%B8%8E%E5%86%85%E6%A0%B8%E7%BB%86%E8%8A%82"><span class="toc-text">六、透明大页与内核细节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81GPU-PCI-%E7%9B%B4%E9%80%9A%E8%A6%81%E7%82%B9"><span class="toc-text">七、GPU &#x2F; PCI 直通要点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%A4%87%E4%BB%BD%E3%80%81%E5%BF%AB%E7%85%A7%E4%B8%8E%E5%AE%B9%E7%81%BE"><span class="toc-text">八、备份、快照与容灾</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%9F%BA%E7%BA%BF%E6%B5%8B%E8%AF%95%E4%B8%8E%E7%9B%91%E6%8E%A7"><span class="toc-text">九、基线测试与监控</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E5%AD%98%E5%82%A8%E5%9F%BA%E7%BA%BF"><span class="toc-text">9.1 存储基线</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%B8%B8%E7%94%A8%E7%9B%91%E6%8E%A7%E5%91%BD%E4%BB%A4"><span class="toc-text">9.2 常用监控命令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E9%80%9F%E6%9F%A5"><span class="toc-text">十、常见问题速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E4%BC%98%E5%8C%96%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="toc-text">十一、优化检查清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-text">结语</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/11/13/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/bIYPMJOY.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门必会命令：从登录到排障的 30 个基本功"/></a><div class="content"><a class="title" href="/2026/11/13/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功">Linux 入门必会命令：从登录到排障的 30 个基本功</a><time datetime="2026-11-13T02:16:19.000Z" title="发表于 2026-11-13 10:16:19">2026-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/12/pve-8-optimization-guide/" title="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/KZX3GFQP.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"/></a><div class="content"><a class="title" href="/2026/11/12/pve-8-optimization-guide/" title="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件">Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件</a><time datetime="2026-11-12T01:16:58.000Z" title="发表于 2026-11-12 09:16:58">2026-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/04/20/%E5%B1%B1%E6%B2%B3%E5%B0%8F%E4%BE%A0%E6%94%BB%E7%95%A5/" title="山河小侠攻略"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1746873550088_bizhihui_com_202504061743930988315122.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="山河小侠攻略"/></a><div class="content"><a class="title" href="/2026/04/20/%E5%B1%B1%E6%B2%B3%E5%B0%8F%E4%BE%A0%E6%94%BB%E7%95%A5/" title="山河小侠攻略">山河小侠攻略</a><time datetime="2026-04-19T16:00:00.000Z" title="发表于 2026-04-20 00:00:00">2026-04-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/05/09/Markdown%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="Markdown语法及快捷键"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1746873547353_bizhihui_com_202504061743931485875813.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Markdown语法及快捷键"/></a><div class="content"><a class="title" href="/2025/05/09/Markdown%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%BF%AB%E6%8D%B7%E9%94%AE/" title="Markdown语法及快捷键">Markdown语法及快捷键</a><time datetime="2025-05-09T07:11:07.000Z" title="发表于 2025-05-09 15:11:07">2025-05-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/05/07/%E7%94%A8Mihomo%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E4%BB%A3%E7%90%86%E6%9C%BA/" title="用Mihomo打造最强代理机"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744342769150_girl12.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="用Mihomo打造最强代理机"/></a><div class="content"><a class="title" href="/2025/05/07/%E7%94%A8Mihomo%E6%89%93%E9%80%A0%E6%9C%80%E5%BC%BA%E4%BB%A3%E7%90%86%E6%9C%BA/" title="用Mihomo打造最强代理机">用Mihomo打造最强代理机</a><time datetime="2025-05-07T04:43:58.000Z" title="发表于 2025-05-07 12:43:58">2025-05-07</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/svg/1776658920718_Laosia-上班洗澡中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 - 2026 By <a class="footer-bar-link" href="/" title="Laosia" target="_blank">Laosia</a></div></div><div id="footer-type-tips"></div><div class="js-pjax"><script>function subtitleType () {
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      if (true) {
+        const from = '出自 ' + data.from
+        const sub = ["生活明朗&#44; 万物可爱&#44; 人间值得&#44; 未来可期."]
+        sub.unshift(data.hitokoto, from)
+        window.typed = new Typed('#footer-type-tips', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: true,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('footer-type-tips').innerHTML = data.hitokoto
+      }
+    })
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.cbd.int/typed.js@2.1.0/dist/typed.umd.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}
+</script></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="备案号">备案号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">14</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" target="_blank" rel="noopener" href="https://music.eooce.com/"><i class="anzhiyufont anzhiyu-icon-music _blank" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/air-conditioner/"><i class="anzhiyufont anzhiyu-icon-fan faa-tada" style="font-size: 0.9em;"></i><span> 小空调</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Cloudflare/" style="font-size: 0.88rem;">Cloudflare<sup>1</sup></a><a href="/tags/DNS/" style="font-size: 0.88rem;">DNS<sup>1</sup></a><a href="/tags/DNSSEC/" style="font-size: 0.88rem;">DNSSEC<sup>1</sup></a><a href="/tags/Debian11/" style="font-size: 0.88rem;">Debian11<sup>1</sup></a><a href="/tags/Docker/" style="font-size: 0.88rem;">Docker<sup>2</sup></a><a href="/tags/HiDNS/" style="font-size: 0.88rem;">HiDNS<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 0.88rem;">Markdown<sup>1</sup></a><a href="/tags/Mihomo/" style="font-size: 0.88rem;">Mihomo<sup>1</sup></a><a href="/tags/PVE/" style="font-size: 0.88rem;">PVE<sup>2</sup></a><a href="/tags/SSH/" style="font-size: 0.88rem;">SSH<sup>1</sup></a><a href="/tags/gcore/" style="font-size: 0.88rem;">gcore<sup>1</sup></a><a href="/tags/hexo/" style="font-size: 0.88rem;">hexo<sup>1</sup></a><a href="/tags/lxc/" style="font-size: 0.88rem;">lxc<sup>1</sup></a><a href="/tags/pve/" style="font-size: 0.88rem;">pve<sup>3</sup></a><a href="/tags/usb/" style="font-size: 0.88rem;">usb<sup>1</sup></a><a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 0.88rem;">优化<sup>1</sup></a><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 0.88rem;">分享<sup>1</sup></a><a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 0.88rem;">命令行<sup>1</sup></a><a href="/tags/%E5%9B%9E%E6%BA%90/" style="font-size: 0.88rem;">回源<sup>1</sup></a><a href="/tags/%E5%B1%B1%E6%B2%B3%E5%B0%8F%E4%BE%A0/" style="font-size: 0.88rem;">山河小侠<sup>1</sup></a><a href="/tags/%E6%88%90%E5%B0%B1%E6%8C%87%E5%8D%97/" style="font-size: 0.88rem;">成就指南<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 0.88rem;">技术<sup>6</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>2</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/" style="font-size: 0.88rem;">游戏攻略<sup>1</sup></a><a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 0.88rem;">维护<sup>1</sup></a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 0.88rem;">虚拟化<sup>1</sup></a><a href="/tags/%E8%AD%A6%E5%91%8A/" style="font-size: 0.88rem;">警告<sup>1</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/07/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Laosia 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("04/07/2025 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://img.521251.xyz/file/svg/1776659150666_Laosia-下班冥想中.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'laosiaa/blog_comments',
+      'data-repo-id': 'R_kgDOSL7O8A',
+      'data-category-id': 'DIC_kwDOSL7O8M4C7oiZ',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-lang":"zh-CN","data-mapping":"pathname","data-category":"Announcements","data-input-position":"top","data-reactions-enabled":1,"data-emit-metadata":1,"data-theme":"preferred_color_scheme","data-loading":"lazy"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  anzhiyu.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/static/countdown.js"></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script><script id="click-show-text" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="true" data-text="加油,真棒,厉害,优秀,学习,进步" data-fontsize="18px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script class="async" src="https://events.vercount.one/js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
