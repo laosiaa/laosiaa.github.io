@@ -88,6 +88,10 @@
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ key: key, content: text.slice(0, 6000) }),
+      signal: (function () {
+        try { var c = new AbortController(); window.__aiSummaryAbort = c; setTimeout(function () { c.abort(); }, 25000); return c.signal; }
+        catch (e) { return undefined; }
+      })(),
     })
       .then(function (r) { return r.json(); })
       .then(function (d) {
@@ -100,8 +104,13 @@
         }
       })
       .catch(function (e) {
-        mount(card, "AI 摘要生成失败：" + e.message);
-        card.classList.add("failed");
+        if (e && e.name === "AbortError") {
+          mount(card, "这篇文章的 AI 摘要还在生成中（首次约 10 秒），稍后刷新页面即可看到。");
+          card.classList.add("failed");
+        } else {
+          mount(card, "AI 摘要生成失败：" + e.message);
+          card.classList.add("failed");
+        }
       });
   }
 
