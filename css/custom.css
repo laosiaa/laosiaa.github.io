@@ -1,0 +1,29 @@
+/* 自定义样式：即刻横条科技风动态背景 */
+#bbTimeList {
+  background: linear-gradient(rgba(6, 10, 22, 0.62), rgba(6, 10, 22, 0.42)),
+              url("https://img.521251.xyz/file/bg/1794558077277_tech-bg.webp") center / cover no-repeat !important;
+  border-radius: 12px;
+  box-shadow: 0 6px 22px rgba(40, 120, 255, 0.18);
+  transition: box-shadow 0.3s ease;
+}
+#bbTimeList:hover {
+  box-shadow: 0 8px 28px rgba(40, 120, 255, 0.32);
+}
+#bbTimeList .bber-logo,
+#bbTimeList .li-style,
+#bbTimeList .bber-gotobb {
+  color: #e2f2ff !important;
+}
+#bbTimeList .li-style:hover,
+#bbTimeList .bber-logo:hover {
+  color: #7fd4ff !important;
+}
+#bbTimeList .bber-gotobb {
+  background: rgba(255, 255, 255, 0.14);
+  border-radius: 50%;
+}
+/* 深色主题下稍微压暗一点，避免过亮 */
+[data-theme="dark"] #bbTimeList {
+  background: linear-gradient(rgba(4, 8, 18, 0.7), rgba(4, 8, 18, 0.5)),
+              url("https://img.521251.xyz/file/bg/1794558077277_tech-bg.webp") center / cover no-repeat !important;
+}
