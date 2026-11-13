@@ -1,11 +1,11 @@
-/*! 修复：文章图片懒加载不触发（vanilla-lazyload 观察器不工作时，用自建 IntersectionObserver 兜底） */
+/*! 修复：文章图片懒加载不触发（用 rect 判断替代失效的观察器） */
 (function () {
   "use strict";
 
-  var io = null;
+  var MARGIN = 1200; // 视口上下各 1200px 内的图片直接加载
 
   function load(img) {
-    if (!img || img.dataset.llLoaded === "1") return;
+    if (img.dataset.llLoaded === "1") return;
     var src = img.getAttribute("data-lazy-src") || img.getAttribute("data-original");
     if (!src) return;
     img.dataset.llLoaded = "1";
@@ -15,45 +15,34 @@
   }
 
   function scan() {
-    var imgs = Array.prototype.slice.call(document.querySelectorAll("img[data-lazy-src]"));
+    var imgs = document.querySelectorAll("img[data-lazy-src]");
     if (!imgs.length) return;
-
-    if (!("IntersectionObserver" in window)) {
-      imgs.forEach(load);
-      return;
+    var vh = window.innerHeight || document.documentElement.clientHeight;
+    for (var i = 0; i < imgs.length; i++) {
+      var r = imgs[i].getBoundingClientRect();
+      // 1px 占位图高度极小，用 top/bottom 判断
+      if (r.bottom > -MARGIN && r.top < vh + MARGIN) load(imgs[i]);
     }
-    if (!io) {
-      io = new IntersectionObserver(
-        function (entries) {
-          for (var i = 0; i < entries.length; i++) {
-            if (entries[i].isIntersecting) {
-              load(entries[i].target);
-              io.unobserve(entries[i].target);
-            }
-          }
-        },
-        { rootMargin: "800px 0px" }
-      );
-    }
-    imgs.forEach(function (img) {
-      if (img.dataset.llLoaded !== "1") io.observe(img);
-    });
   }
 
-  /* 首屏立刻补一次；滚动/换页也补 */
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; scan(); });
+  }
+
   function boot() {
     scan();
-    setTimeout(scan, 600);
-    setTimeout(scan, 1800);
+    setTimeout(scan, 300);
+    setTimeout(scan, 1200);
+    setTimeout(scan, 2500);
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
 
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll, { passive: true });
   document.addEventListener("pjax:complete", function () { setTimeout(boot, 150); });
-  window.addEventListener("scroll", function () {
-    if (!window.__llScrollT) {
-      window.__llScrollT = setTimeout(function () { window.__llScrollT = null; scan(); }, 300);
-    }
-  }, { passive: true });
 })();
