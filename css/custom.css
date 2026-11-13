@@ -92,4 +92,6 @@
 #ai-summary .ai-summary-toggle:hover { opacity: 1; }
 #ai-summary.collapsed .ai-summary-body { display: none; }
 #ai-summary.failed { border-color: rgba(255, 120, 120, 0.45); opacity: 0.85; }
-#ai-summary .ai-summary-body { color: var(--anzhiyu-fontcolor, inherit); opacity: 0.92; }
+#ai-summary .ai-summary-body { color: var(--anzhiyu-fontcolor, inherit); opacity: 1; font-weight: 500; }
+#ai-summary.ai-summary-card { background: linear-gradient(135deg, rgba(30,120,220,0.14), rgba(120,80,220,0.14)); }
+#ai-summary .ai-summary-toggle { opacity: 0.8; }
