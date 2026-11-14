@@ -61,7 +61,7 @@ body {
 }
 
 #random-banner {
-  height: 380px !important;
+  height: 340px !important;
   flex: none;
   border-radius: var(--la-radius) !important;
   background: #16121d !important;
@@ -266,7 +266,7 @@ body {
   width: 100%;
   flex: 0 0 100%;
   text-align: center;
-  margin: 46px 0 16px;
+  margin: 36px 0 14px;
 }
 
 .section-head .section-eyebrow {
