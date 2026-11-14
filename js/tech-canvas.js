@@ -128,7 +128,7 @@
         '<div class="section-eyebrow">ARTICLES</div>' +
         '<h2 class="section-title">文章 · 记录 · 折腾</h2>' +
         '<p class="section-sub">现在觉得最好的事，来自琐碎的时光</p>';
-      posts.parentElement.insertBefore(head, posts);
+      posts.insertBefore(head, posts.firstChild);
     }
   }
 

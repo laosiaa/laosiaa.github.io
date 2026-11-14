@@ -315,10 +315,15 @@ body {
   letter-spacing: 0.03em;
 }
 
-.catalog-list-item.is-center {
+.catalog-list-item.select {
   background: var(--la-accent) !important;
   color: #fff !important;
   box-shadow: 0 8px 20px rgba(232, 125, 125, 0.28);
+}
+
+/* 「随便逛逛」和「开始浏览」语义重复，隐藏掉 */
+#random-hover {
+  display: none !important;
 }
 
 /* ---------------- 文章卡：白底大留白 ---------------- */
