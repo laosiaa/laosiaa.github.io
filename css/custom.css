@@ -300,12 +300,30 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   padding: 0 !important;
   margin: 0 !important;
 }
-/* JS 包出来的整卡容器 */
+/* JS 包出来的整卡容器（覆盖瀑布流写在它身上的绝对定位） */
 #essay_page .es-card {
   display: flex !important;
   flex-direction: column !important;
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  right: auto !important;
+  width: 100% !important;
+  height: auto !important;
   min-width: 0;
   break-inside: avoid;
+}
+#essay_page .es-card > li.bber-item {
+  width: 100% !important;
+  max-width: 100% !important;
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  height: auto !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 150px !important;
+  gap: 18px !important;
+  align-items: start !important;
 }
 #essay_page #waterfall > * {
   position: static !important;
