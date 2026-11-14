@@ -264,8 +264,14 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 
 /* ========== 即刻短文页：去横幅文字 + 单列卡片流 ========== */
-#essay_page .essayPage .card-content { visibility: hidden !important; }
-#essay_page .essayPage { min-height: 168px; }
+/* 整块横幅隐形：高度保留、背景透出（内容位置不变） */
+#essay_page .essayPage {
+  visibility: hidden !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
 
 #essay_page {
   --es-card: rgba(255, 255, 255, 0.76);
