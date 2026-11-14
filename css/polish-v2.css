@@ -263,8 +263,10 @@ body {
 
 /* ---------------- 区块标题（JS 注入的 .section-head） ---------------- */
 .section-head {
+  width: 100%;
+  flex: 0 0 100%;
   text-align: center;
-  margin: 64px 0 10px;
+  margin: 58px 0 18px;
 }
 
 .section-head .section-eyebrow {
