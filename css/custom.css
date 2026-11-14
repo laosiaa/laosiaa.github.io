@@ -262,3 +262,8 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   .ab-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ab-name { font-size: 26px !important; }
 }
+
+/* ========== 即刻短文页：隐藏顶部横幅 ========== */
+#essay_page .essayPage,
+#essay_page .author-content-item.essayPage { display: none !important; }
+#essay_page { padding-top: 4px; }
