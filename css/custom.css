@@ -385,3 +385,12 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   }
   #essay_page #waterfall > .bber-bottom { padding: 0 18px 16px !important; }
 }
+
+/* ========== 相册页：顶部横幅隐形（保留高度，位置不变） ========== */
+#album .author-content-item.album {
+  visibility: hidden !important;
+  background-image: none !important;
+  background-color: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
