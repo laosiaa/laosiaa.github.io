@@ -61,7 +61,7 @@ body {
 }
 
 #random-banner {
-  height: 340px !important;
+  height: 300px !important;
   flex: none;
   border-radius: var(--la-radius) !important;
   background: #16121d !important;
@@ -116,7 +116,7 @@ body {
   font-size: 13px;
   letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.78);
-  margin-bottom: 26px;
+  margin-bottom: 18px;
 }
 
 .hero-copy .hero-dot {
@@ -129,7 +129,7 @@ body {
 
 .hero-copy .hero-title {
   margin: 0 0 18px;
-  font-size: 44px;
+  font-size: 38px;
   line-height: 1.35;
   font-weight: 600;
   letter-spacing: 0.06em;
@@ -349,7 +349,7 @@ body {
 }
 
 #recent-posts .recent-post-item .post_cover {
-  height: 206px !important;
+  height: 180px !important;
   overflow: hidden;
 }
 
