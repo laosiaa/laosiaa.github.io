@@ -103,9 +103,27 @@
     });
   }
 
+  function injectCopy() {
+    var host = document.getElementById("random-banner");
+    if (!host || host.querySelector(".hero-copy")) return;
+
+    var wrap = document.createElement("div");
+    wrap.className = "hero-copy";
+    wrap.innerHTML =
+      '<div class="hero-eyebrow"><span class="hero-dot"></span>LAOSIA · 技术手记</div>' +
+      '<h1 class="hero-title">把踩过的坑<br>写成别人能直接用的东西</h1>' +
+      '<p class="hero-sub">污水处理设备调试 · Proxmox 虚拟化 · 自建服务与折腾记录</p>' +
+      '<div class="hero-actions">' +
+        '<a class="hero-btn hero-btn--primary" href="/archives/">浏览全部文章<i class="anzhiyufont anzhiyu-icon-arrow-right"></i></a>' +
+        '<a class="hero-btn hero-btn--ghost" href="/about/">关于我</a>' +
+      "</div>";
+    host.appendChild(wrap);
+  }
+
   function init() {
     var cv = document.getElementById("peoplecanvas");
     if (cv) start(cv);
+    injectCopy();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
