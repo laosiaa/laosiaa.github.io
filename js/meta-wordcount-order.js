@@ -155,23 +155,23 @@
     }
 
     // 1) 字数
-    if (count) item("anzhiyu-icon-file-word", count, "\u672c\u6587\u5171 " + count + " \u5b57\uff08\u4e2d\u6587\u9010\u5b57\u8ba1\uff0c\u82f1\u6587\u6309\u8bcd\u8ba1\uff09");
+    if (count) item("anzhiyu-icon-file-word", count, "数字总计");
 
     // 2) 约 X 分钟读完
     if (minText) {
       sep();
-      item("anzhiyu-icon-clock", "\u7ea6 " + minText + " \u5206\u949f\u8bfb\u5b8c", "\u9884\u8ba1\u9605\u8bfb\u65f6\u957f " + minText + " \u5206\u949f\uff08\u6309 350 \u5b57/\u5206\u949f\u4f30\u7b97\uff09");
+      item("anzhiyu-icon-clock", "约 " + minText + " 分钟读完", "预计阅读时长");
     }
 
     // 3) 日期
     if (pubText) {
       sep();
-      item("anzhiyu-icon-calendar-days", pubText, "\u6587\u7ae0\u53d1\u5e03\u4e8e " + pubText);
+      item("anzhiyu-icon-calendar-days", pubText, "文章发布日期");
     }
 
     // 4) IP 归属（悬停时补上运营商）
     sep();
-    var locEl = item("anzhiyu-icon-location-dot", "\u5b9a\u4f4d\u4e2d\u2026", "IP \u5f52\u5c5e\u83b7\u53d6\u4e2d\u2026");
+    var locEl = item("anzhiyu-icon-location-dot", "定位中…", "作者 IP 归属地");
 
     wc.dataset.mcMoved = "1";
     if (second) second.style.display = "none";
@@ -180,11 +180,11 @@
       .then(function (v) {
         locEl.textContent = v.loc;
         var t = "IP \u5f52\u5c5e\uff1a" + v.loc + (v.isp ? "\uff08" + v.isp + "\uff09" : "");
-        tip(locEl, t);
+        tip(locEl, "作者 IP 归属地");
       })
       .catch(function () {
         locEl.textContent = "\u672a\u77e5";
-        tip(locEl, "IP \u5f52\u5c5e\u83b7\u53d6\u5931\u8d25");
+        tip(locEl, "作者 IP 归属地");
       });
   }
 
