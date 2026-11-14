@@ -179,7 +179,6 @@
     resolveLocation()
       .then(function (v) {
         locEl.textContent = v.loc;
-        var t = "IP \u5f52\u5c5e\uff1a" + v.loc + (v.isp ? "\uff08" + v.isp + "\uff09" : "");
         tip(locEl, "作者 IP 归属地");
       })
       .catch(function () {
