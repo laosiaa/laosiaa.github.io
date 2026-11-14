@@ -52,21 +52,20 @@ body {
 
 #bannerGroup {
   position: relative;
-  height: 460px;
+  height: auto;
   display: flex;
   flex-direction: column;
-  border-radius: var(--la-radius) !important;
-  overflow: hidden;
-  background: #16121d;
-  box-shadow: var(--la-shadow);
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
 }
 
 #random-banner {
-  flex: 1 1 auto;
-  height: auto !important;
-  border-radius: 0 !important;
-  background: transparent !important;
-  box-shadow: none !important;
+  height: 420px !important;
+  flex: none;
+  border-radius: var(--la-radius) !important;
+  background: #16121d !important;
+  box-shadow: var(--la-shadow);
   overflow: hidden;
 }
 
@@ -214,24 +213,31 @@ body {
 /* ---------------- 分类胶囊：Hero 下方一排 ---------------- */
 .categoryGroup {
   position: static !important;
-  margin: 26px 0 0 !important;
+  margin: 22px 0 0 !important;
   display: flex !important;
   justify-content: center;
   flex-wrap: wrap;
   gap: 12px !important;
 }
 
-.categoryItem { box-shadow: none !important; }
+.categoryItem {
+  box-shadow: none !important;
+  width: auto !important;
+  flex: none !important;
+}
 
 .categoryButton {
+  width: auto !important;
+  flex: none !important;
   height: 44px !important;
-  padding: 0 22px !important;
+  padding: 0 24px !important;
   border-radius: 999px !important;
   background: #fff !important;
   border: 1px solid var(--la-line) !important;
   box-shadow: 0 4px 14px rgba(17, 17, 17, 0.04);
   display: inline-flex !important;
   align-items: center;
+  justify-content: center;
   gap: 8px;
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -255,39 +261,41 @@ body {
   font-size: 15px !important;
 }
 
-/* ---------------- 区块标题（伪元素大字水印） ---------------- */
+/* ---------------- 区块标题（JS 注入的 .section-head） ---------------- */
+.section-head {
+  text-align: center;
+  margin: 64px 0 10px;
+}
+
+.section-head .section-eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--la-accent);
+  margin-bottom: 10px;
+}
+
+.section-head .section-title {
+  margin: 0 0 10px;
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--la-accent);
+  border: none;
+}
+
+.section-head .section-sub {
+  margin: 0;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--la-ink-2);
+  opacity: 0.75;
+}
+
 #recent-posts {
   position: relative;
-  margin-top: 54px;
+  margin-top: 26px;
   padding-top: 0;
-}
-
-#recent-posts::before {
-  content: "ARTICLES";
-  position: absolute;
-  top: -46px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 108px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: rgba(232, 125, 125, 0.07);
-  pointer-events: none;
-  z-index: 0;
-  white-space: nowrap;
-}
-
-#recent-posts::after {
-  content: "文 章 · 记 录 · 折 腾";
-  position: absolute;
-  top: 6px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 13px;
-  letter-spacing: 0.42em;
-  color: var(--la-accent);
-  pointer-events: none;
-  z-index: 1;
 }
 
 /* 分类筛选条：变成低调的细线胶囊行 */
