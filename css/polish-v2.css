@@ -451,7 +451,14 @@ body {
 
 /* ---------------- 窄屏 ---------------- */
 @media screen and (max-width: 768px) {
-  #bannerGroup { height: 360px; }
+  /* 主题在窄屏会把 Hero 整块藏掉，这里强制保留一个紧凑版 */
+  #random-banner { display: block !important; height: 300px !important; }
+  .hero-copy { width: 88%; }
+  .hero-copy .hero-eyebrow { font-size: 11px; padding: 0 12px; height: 30px; margin-bottom: 14px; }
+  .hero-copy .hero-title { font-size: 24px !important; letter-spacing: 0.02em !important; }
+  .hero-copy .hero-sub { font-size: 12px; line-height: 1.8; margin-bottom: 18px; }
+  .hero-copy .hero-btn { height: 38px; padding: 0 18px; font-size: 13px; }
+  #bannerGroup { height: auto; }
   .hero-copy { width: 90%; }
   .hero-copy .hero-title { font-size: 26px; letter-spacing: 0.03em; }
   .hero-copy .hero-sub { font-size: 12.5px; }
