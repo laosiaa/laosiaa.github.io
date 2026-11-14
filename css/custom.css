@@ -293,11 +293,19 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   position: static !important;
   height: auto !important;
   min-height: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0 !important;
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  align-items: start !important;
   padding: 0 !important;
   margin: 0 !important;
+}
+/* JS 包出来的整卡容器 */
+#essay_page .es-card {
+  display: flex !important;
+  flex-direction: column !important;
+  min-width: 0;
+  break-inside: avoid;
 }
 #essay_page #waterfall > * {
   position: static !important;
@@ -310,12 +318,13 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 #essay_page #waterfall > hr { display: none !important; }
 
 /* 卡片上半：正文 + 配图 */
-#essay_page #waterfall > li.bber-item {
+#essay_page #waterfall > li.bber-item,
+#essay_page .es-card > li.bber-item {
   margin: 0 !important;
-  padding: 24px 26px 14px !important;
+  padding: 22px 22px 12px !important;
   height: auto !important;
   display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 200px !important;
+  grid-template-columns: minmax(0, 1fr) 150px !important;
   gap: 22px !important;
   align-items: start !important;
   background: var(--es-card) !important;
@@ -326,9 +335,10 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   transition: border-color .2s ease;
 }
 /* 卡片下半：日期 / 来源 / 地点 */
-#essay_page #waterfall > .bber-bottom {
-  margin: 0 0 18px !important;
-  padding: 0 26px 18px !important;
+#essay_page #waterfall > .bber-bottom,
+#essay_page .es-card > .bber-bottom {
+  margin: 0 0 0 !important;
+  padding: 0 22px 16px !important;
   background: var(--es-card);
   border: 1px solid var(--es-line);
   border-top: 0;
@@ -345,13 +355,13 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   color: var(--es-text); letter-spacing: .012em; text-align: justify;
 }
 /* 配图 */
-#essay_page .bber-container-img { width: 200px !important; display: block !important; margin: 0 !important; }
+#essay_page .bber-container-img { width: 150px !important; display: block !important; margin: 0 !important; }
 #essay_page .bber-content-img {
   display: block !important; width: 100% !important; max-width: 100% !important; height: auto !important;
 }
 #essay_page .bber-content-img img {
-  width: 200px !important; max-width: 200px !important; min-width: 200px !important;
-  height: 140px !important; max-height: 140px !important;
+  width: 150px !important; max-width: 150px !important; min-width: 150px !important;
+  height: 118px !important; max-height: 118px !important;
   object-fit: cover !important; border-radius: 12px; display: block; margin: 0 !important;
   transition: transform .25s ease;
 }
@@ -373,8 +383,12 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   color: var(--es-sub) !important; font-size: 12px !important; line-height: 1.5;
 }
 
+@media screen and (max-width: 900px) {
+  #essay_page #waterfall { grid-template-columns: minmax(0, 1fr) !important; }
+}
 @media screen and (max-width: 768px) {
-  #essay_page #waterfall > li.bber-item {
+  #essay_page #waterfall > li.bber-item,
+  #essay_page .es-card > li.bber-item {
     grid-template-columns: minmax(0, 1fr) 104px !important;
     gap: 14px !important; padding: 18px 18px 10px !important;
   }
