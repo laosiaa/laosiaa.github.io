@@ -18,9 +18,22 @@
       // 连同它前面的分隔符一起搬到「阅读量」后面
       var sep = wc.previousElementSibling;
       var hasSep = sep && sep.classList && sep.classList.contains("post-meta-separator");
-      if (hasSep) pv.after(sep);
       pv.after(wc);
+      if (hasSep) pv.after(sep);
       wc.dataset.mcMoved = "1";
+    }
+
+    // 去掉相邻的重复分隔符（搬动后可能出现两个连在一起）
+    for (var j = 0; j < lines.length; j++) {
+      var kids = lines[j].children;
+      for (var k = kids.length - 1; k > 0; k--) {
+        if (
+          kids[k].classList.contains("post-meta-separator") &&
+          kids[k - 1].classList.contains("post-meta-separator")
+        ) {
+          kids[k].remove();
+        }
+      }
     }
   }
 
