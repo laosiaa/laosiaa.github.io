@@ -68,3 +68,12 @@
 
 /* 懒加载修复：去掉残留的模糊占位样式 */
 img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
+
+/* 个人资料卡背景：换成科技风循环动图（animated webp） */
+#aside-content > .card-widget.card-info::before,
+#aside-content .card-widget.card-info::before {
+  background: url("https://img.521251.xyz/file/bg/1794670529064_card-tech.webp") center center / cover no-repeat !important;
+  animation: none !important;
+  background-size: cover !important;
+  opacity: 1 !important;
+}
