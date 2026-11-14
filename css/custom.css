@@ -340,9 +340,12 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 /* 配图 */
 #essay_page .bber-container-img { width: 200px !important; display: block !important; margin: 0 !important; }
-#essay_page .bber-content-img { display: block !important; }
+#essay_page .bber-content-img {
+  display: block !important; width: 100% !important; max-width: 100% !important; height: auto !important;
+}
 #essay_page .bber-content-img img {
-  width: 200px !important; height: 140px !important;
+  width: 200px !important; max-width: 200px !important; min-width: 200px !important;
+  height: 140px !important; max-height: 140px !important;
   object-fit: cover !important; border-radius: 12px; display: block; margin: 0 !important;
   transition: transform .25s ease;
 }
@@ -370,6 +373,9 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
     gap: 14px !important; padding: 18px 18px 10px !important;
   }
   #essay_page .bber-container-img { width: 104px !important; }
-  #essay_page .bber-content-img img { width: 104px !important; height: 104px !important; }
+  #essay_page .bber-content-img img {
+    width: 104px !important; max-width: 104px !important; min-width: 104px !important;
+    height: 104px !important; max-height: 104px !important;
+  }
   #essay_page #waterfall > .bber-bottom { padding: 0 18px 16px !important; }
 }
