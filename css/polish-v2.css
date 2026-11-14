@@ -233,8 +233,8 @@ body {
   padding: 0 24px !important;
   border-radius: 999px !important;
   background: #fff !important;
-  border: 1px solid var(--la-line) !important;
-  box-shadow: 0 4px 14px rgba(17, 17, 17, 0.04);
+  border: 1px solid rgba(232, 125, 125, 0.28) !important;
+  box-shadow: 0 6px 18px rgba(17, 17, 17, 0.06);
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
@@ -249,8 +249,8 @@ body {
 }
 
 .categoryButton .categoryButtonText {
-  font-size: 14px !important;
-  font-weight: 500 !important;
+  font-size: 14.5px !important;
+  font-weight: 600 !important;
   color: var(--la-ink) !important;
   letter-spacing: 0.04em;
 }
