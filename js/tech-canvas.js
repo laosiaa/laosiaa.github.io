@@ -103,39 +103,9 @@
     });
   }
 
-  function injectCopy() {
-    var host = document.getElementById("random-banner");
-    if (host && !host.querySelector(".hero-copy")) {
-      var wrap = document.createElement("div");
-      wrap.className = "hero-copy";
-      wrap.innerHTML =
-        '<div class="hero-eyebrow"><span class="hero-dot"></span>您好 ✦ 欢迎来到 Laosia 的小站</div>' +
-        '<h1 class="hero-title">把踩过的坑<br>写成<em>能直接用</em>的东西</h1>' +
-        '<p class="hero-sub">污水处理设备调试 · Proxmox 虚拟化 · 自建服务与折腾记录<br>热爱你来过的每次停留</p>' +
-        '<div class="hero-actions">' +
-          '<a class="hero-btn hero-btn--primary" href="/archives/">开始浏览</a>' +
-          '<a class="hero-btn hero-btn--ghost" href="/about/">关于我</a>' +
-        "</div>";
-      host.appendChild(wrap);
-    }
-
-    // 首页文章区标题（参考站那种 CATEGORIES / 精选分类 的居中标题块）
-    var posts = document.getElementById("recent-posts");
-    if (posts && posts.parentElement && !document.querySelector(".section-head")) {
-      var head = document.createElement("div");
-      head.className = "section-head";
-      head.innerHTML =
-        '<div class="section-eyebrow">ARTICLES</div>' +
-        '<h2 class="section-title">文章 · 记录 · 折腾</h2>' +
-        '<p class="section-sub">现在觉得最好的事，来自琐碎的时光</p>';
-      posts.insertBefore(head, posts.firstChild);
-    }
-  }
-
   function init() {
     var cv = document.getElementById("peoplecanvas");
     if (cv) start(cv);
-    injectCopy();
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
