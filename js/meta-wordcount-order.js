@@ -18,10 +18,8 @@
       // 连同它前面的分隔符一起搬到「阅读量」后面
       var sep = wc.previousElementSibling;
       var hasSep = sep && sep.classList && sep.classList.contains("post-meta-separator");
-      var frag = document.createDocumentFragment();
-      if (hasSep) frag.appendChild(sep);
-      frag.appendChild(wc);
-      pv.insertAdjacentElement("afterend", frag);
+      if (hasSep) pv.after(sep);
+      pv.after(wc);
       wc.dataset.mcMoved = "1";
     }
   }
