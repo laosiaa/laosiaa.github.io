@@ -77,3 +77,19 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   background-size: cover !important;
   opacity: 1 !important;
 }
+
+/* 文章页元信息单行显示（字数 · 约X分钟读完 · 日期 · IP归属） */
+.post-meta-date.meta-inline {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 2px;
+  white-space: nowrap;
+}
+.post-meta-date.meta-inline .post-meta-separator {
+  display: inline-block;
+  margin: 0 6px;
+}
+@media screen and (max-width: 768px) {
+  .post-meta-date.meta-inline { white-space: normal; }
+}
