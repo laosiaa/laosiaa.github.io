@@ -1,0 +1,879 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验 | Laosia</title><meta name="keywords" content="污水处理,设备调试,运行经验,叠螺机,污泥脱水"><meta name="author" content="Laosia"><meta name="copyright" content="Laosia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#18171d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"><meta name="application-name" content="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#18171d"><meta property="og:type" content="article"><meta property="og:title" content="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"><meta property="og:url" content="http://example.com/2026/11/14/duoluoji-guide/index.html"><meta property="og:site_name" content="Laosia"><meta property="og:description" content="叠螺式污泥脱水机的原理、选型算法、PAM 加药、参数调节、故障排查与十条现场心得，附参数速查卡。"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://img.521251.xyz/file/美女/横版/14nwO9kL.jpg"><meta property="article:author" content="Laosia"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://img.521251.xyz/file/美女/横版/14nwO9kL.jpg"><meta name="description" content="叠螺式污泥脱水机的原理、选型算法、PAM 加药、参数调节、故障排查与十条现场心得，附参数速查卡。"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/2026/11/14/duoluoji-guide/"><link rel="preconnect" href="//cdn.cbd.int"/><link rel="preconnect" href="//events.vercount.one"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"https://img.521251.xyz/file/bg/1794558626349_tech-emblem.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: {"apiurl":null},
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: Laosia","link":"链接: ","source":"来源: Laosia","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Laosia',
+  title: '叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验',
+  postAI: '',
+  pageFillDescription: '一、先搞清楚它到底靠什么把泥挤干, 和另外三种脱水机比什么时候该选它, 二、拆开看：五个部件各有各的脾气, 1. 叠片组（固定环 + 游动环）, 2. 螺旋轴, 3. 背压板与调节机构, 4. 絮凝搅拌槽（混合槽 + 絮凝槽）, 5. 驱动与喷淋系统, 三、选型：算干泥量不要看型号数字, 四、安装与首次调试（按这个顺序别跳步）, 五、PAM 加药：七成效果在这里, 选型对照, 配比与投加, 四个最常见的加药错误, 六、参数怎么调：五个旋钮的物理意义, 七、常见故障对照表, 八、维护保养计划, 九、十条实战心得, 十、几条不能碰的红线, 附：参数速查卡叠螺机是我见过最看起来简单调起来磨人的污水设备之一它不像离心机那样轰隆隆转也不像板框那样一套流程干半天就是个慢悠悠转的螺旋轴可是它出不出干泥滤液清不清费不费几乎全押在前面那两分钟泥和药有没有在絮凝槽里真正抱成团下面这份东西按先搞懂再选再装再调再养来写都是现场趟出来的尽量不写手册上能查到的空话一先搞清楚它到底靠什么把泥挤干叠螺机螺旋压榨式脱水机的核心只有三样东西一圈圈叠起来的过滤片穿在中间的螺旋轴卡在末端的背压板工作过程分三段很多人只知道最后一段所以调不好重力浓缩段泥水从进料口进入叠片区的前段水的自重先漏下去泥留在原地这一段靠的是叠片之间的滤缝一般也是为什么叠螺机不需要预浓缩池螺旋输送段螺旋轴的螺距从前往后越来越小轴径越来越粗泥被往前推的同时体积空间被不断压缩背压压榨段末端背压板挡住泥形成一个塞子靠这个阻力反推回来把前段的泥压得更实调背压板间隙本质上就是在调出水有多干机器有多费劲这对矛盾它的真实能力边界是这样的项目典型表现进泥含水率活性污泥可低到出泥含水率做得好能到滤液正常就要查适用泥种市政活性污泥气浮浮渣食品印染造纸生化泥部分物化泥不适用含大量砂石金属屑纤维长条的泥含油极重且未破乳的泥和另外三种脱水机比什么时候该选它机型出泥含水率占地冲洗水对泥质波动典型场景叠螺机小极少仅喷淋宽容中小水量低浓度泥无人值守带式压滤机大大一般大水量市政厂离心机小无敏感易堵大厂需高干度板框压滤机中中宽容要极干泥外运成本高一句话选型口诀水量小泥浓度低没人看着选叠螺要极致干度选板框要单机大处理量选离心二拆开看五个部件各有各的脾气叠片组固定环游动环这是叠螺机的灵魂固定环卡在轴上不动游动环套在环之间靠螺旋轴转动时被带着轻微摆动这个游动就是它自清洗不堵的根本原因也是它敢不加高压反冲洗的底气材质一般是不锈钢含氯离子高的泥要上或双相钢否则半年就点蚀滤缝适合活性污泥适合含砂稍多的泥别为了脱水更干去换的只会堵判断该换的信号滤缝被磨大滤液越来越浑且不是加药问题游动环卡死不摆动局部堆泥出泥忽干忽稀螺旋轴变径变螺距从进料端的大螺距小轴径到尾端的小螺距大轴径它的转速通常只有转分钟慢得让人怀疑它是不是没通电正因为慢扭矩大磨损小噪音低不需要高减速比的大功率电机但也意味着它对硬物毫无还手之力一颗螺丝钉一块石子进去轻则卡死重则把叠片顶变形背压板与调节机构背压板装在出泥口用弹簧或手轮调节间隙这是整台机器唯一需要你天天动的机械调节件间隙调小挤压更狠泥更干但扭矩上升滤液变浑需求变高间隙调大轻松滤液清但泥稀体积大外运费高经验值新机调试从最大间隙开始每次只调圈稳定运行小时再动下一次絮凝搅拌槽混合槽絮凝槽大多数叠螺机是双槽前面混合泥快速混匀后面絮凝慢速搅拌让絮体长大这两个槽的搅拌强度是分开设计的很多人图省事把两槽搅拌器接同一个变频结果就是要么混合不够白加要么絮凝被打碎泥和水一起跑驱动与喷淋系统减速电机链条联轴器外加一组冲洗喷淋管一般在叠片区上方用于停机冲洗和日常保湿喷淋看着不起眼实际上决定了你多久需要拆机清洗一次停机不冲洗是叠螺机最常见的人为故障三选型算干泥量不要看型号数字厂家样本上的只是系列号真正要算的是干泥量干泥量处理水量进泥浓度举例一套的生化系统剩余污泥量按排泥每天排干泥量叠螺机按的常见能力估算选级约比较稳妥选型三个最常见的坑只看处理量样本写指的是浓度的泥你进的泥处理量只剩三分之一不留余量泥量会随季节工艺波动涨选型至少留余量不核对配套进泥泵建议螺杆泵别用离心泵会把絮体打碎加药泵计量泵流量可调冲洗水接口排泥螺旋输送带一样缺了都开不起来四安装与首次调试按这个顺序别跳步第步基础与水平叠螺机对水平极敏感纵向横向都要校平否则螺旋轴受力不均半年后叠片就偏磨第步管路进泥口接螺杆泵出口装止回阀和压力表滤液口接回集水井别直接排正常滤液还有的回流程更合理冲洗口一定要接且水压第步空载试车分钟不接泥不接药只看转向对不对严禁反转有没有异响叠片是否正常游动电机电流是否在额定值以内第步清水试车通清水观察滤液排出是否均匀各叠片区有没有渗漏喷淋是否覆盖到位第步烧杯试验这一步决定了后面所有参数取现场污泥配三种浓度分别试阴离子阳离子分子量万万看哪个絮团最大上清液最清用量最少第步缓慢加泥从额定量的开始跑分钟加一直加到额定值急着一上来就满负荷是叠片堵塞的头号原因第步调背压板泥饼成型后开始调每调一次等分钟看效果记录电流泥饼含水率滤液第步记基准把稳定运行时的转速浓度流量进泥浓度背压间隙电流含水率全部记在本子上这份基准值将来出问题时能救命五加药七成效果在这里叠螺机本质上是个物理压榨设备但它能不能压干取决于进来的是絮团还是稀泥浆絮凝做不好后面全白搭选型对照泥种推荐离子型分子量备注市政活性污泥阳离子万万最常用离子度印染造纸生化泥阳离子万左右离子度偏高气浮浮渣阳离子万注意浮渣含油洗砂洗煤泥阴离子万万靠架桥作用偏酸性物化泥非离子弱阳离子万先小试配比与投加溶解浓度干粉兑吨水超过就很难溶解形成鱼眼胶团等于白扔钱熟化时间分钟用低速搅拌刚配好的溶液黏度还没起来直接投加效果差一半投加量吨干泥具体以烧杯试验为准超过还没效果说明型号选错了别硬加稀释后投加从储罐到投加点之间再稀释到混合更均匀四个最常见的加药错误浓度配太高以为浓一点效果好实际是黏度高扩散不开絮体长不大搅拌太快高速搅拌机把刚形成的絮团又打碎絮凝槽里看着翻得热闹其实全是碎絮投加点太远太近加在管道里混合距离不够或者直接倒进絮凝槽中间都会出现局部过药局部没药现配现用溶液要熟化反过来配好的溶液超过小时会降解失效夏天更短六参数怎么调五个旋钮的物理意义参数常规范围调大之后调小之后螺旋转速处理量泥饼变稀滤液变浑泥更干处理量易过载背压板间隙视机型出泥变稀电流出泥变干电流滤液变浑投加量絮体大滤液清过量则黏堵省药但絮体小跑泥进泥浓度处理量脱水难度太稀则絮凝差能耗高喷淋冲洗频率每一次叠片干净寿命长费水省水但易结垢堵缝调节顺序永远是先看滤液再看泥饼最后动背压滤液浑了先查加药别一上来就拧背压板七常见故障对照表现象最可能的原因处理滤液浑浊跑泥型号不对浓度过低絮凝被打碎重做烧杯试验降搅拌转速泥饼稀捏得出水背压间隙过大进泥太稀转速过快逐步关小背压提高进泥浓度叠片缝隙渗出泥条滤缝磨损变大换叠片或临时提高用量螺旋轴抱死不转硬物卡入长时间停机未冲洗结块断电反向盘车拆检取异物电机过载跳闸背压过紧进泥量过大轴承损坏松背压降负荷查轴承出泥忽干忽稀进泥浓度波动投加不稳加装浓度流量在线或增设调节池异响周期性咯噔游动环卡滞链条松动停机冲洗张紧链条用量突然翻倍泥质变化换工艺加药变化叠片堵先查上游工艺再拆检叠片冲洗水进不去喷淋孔堵水压不足拆喷嘴清通检查泵压八维护保养计划周期内容每班看电流听异响看滤液和泥饼确认喷淋正常每日停机前冲洗叠片区分钟清理絮凝槽浮渣每周检查链条张紧与润滑计量泵流量校准背压机构是否灵活每月拆检喷淋喷嘴检查减速机油位紧固地脚与管路法兰每季检查叠片磨损与游动环灵活性轴承加脂电机绝缘测试每年全面拆检叠片间隙测量螺旋轴磨损量更换密封件与易损件九十条实战心得先做烧杯试验再开机花分钟在实验室能省现场两天的瞎调宁稀勿浓宁慢勿快絮凝是养出来的不是打出来的停机必冲洗的叠片堵死都是停机不冲引起的冲分钟省一次拆机背压板一次只动圈想一步到位的人最后都在反复折腾记录基准参数出一身汗调好的参数不写下来下次换个人又得重来滤液一定要回流不要直排的直排环保一查一个准进泥泵用螺杆泵离心泵的剪切会把絮体打碎等于白加药叠片材质看氯离子含氯高的泥用半年就点蚀穿孔别指望它把泥做到叠螺机的舒适区是要更干就配板框或加石灰备件库里必须有游动环喷淋喷嘴链条密封件这四样坏了停机时间成倍增长十几条不能碰的红线严禁反转螺旋轴反转会把泥往进料口推直接顶死严禁空转超过分钟无泥状态下叠片干磨游动环磨损加倍严禁带电拆叠片断电挂牌泄压一样都不能省严禁把干粉直接倒进槽里结块后堵泵堵管堵喷嘴冬季必须防冻停机后排空管路和泵体溶液罐加保温冻裂的计量泵不便宜严禁超压运行进泥压力一般不超过超了说明后面堵了不是压得更干附参数速查卡项目参考值螺旋转速进泥浓度最佳左右出泥含水率滤液溶解浓度投加量熟化时间滤缝间隙冲洗水压进泥压力电机负载率额定电流每日冲洗停机前叠螺机不难伺候它只是要求你把简单的事每天都做到位药配好泥调匀背压别贪停机冲一冲做到了它能好几年安安静静给你出干泥做不到它就用堵用浑用一身泥浆教育你',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-14 18:30:00',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/custom.css"><meta name="ai-summary-endpoint" content="https://ai-summary.laosi-see.workers.dev"><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="https://npm.elemecdn.com/anzhiyu-blog-static@1.0.4/img/avatar.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src="https://img.521251.xyz/file/icon/1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Laosia</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" target="_blank" rel="noopener" href="https://music.eooce.com/"><i class="anzhiyufont anzhiyu-icon-music _blank" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/air-conditioner/"><i class="anzhiyufont anzhiyu-icon-fan faa-tada" style="font-size: 0.9em;"></i><span> 小空调</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png" target="_blank"><img class="post-qr-code-img" alt="爱心" src="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png"/></a><div class="post-qr-code-desc">爱心</div></li><li class="reward-item"><a href="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png" target="_blank"><img class="post-qr-code-img" alt="奉献" src="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png"/></a><div class="post-qr-code-desc">奉献</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Cloudflare/" style="font-size: 1.05rem;">Cloudflare<sup>1</sup></a><a href="/tags/DAF/" style="font-size: 1.05rem;">DAF<sup>1</sup></a><a href="/tags/DNS/" style="font-size: 1.05rem;">DNS<sup>1</sup></a><a href="/tags/DNSSEC/" style="font-size: 1.05rem;">DNSSEC<sup>1</sup></a><a href="/tags/Debian11/" style="font-size: 1.05rem;">Debian11<sup>1</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>2</sup></a><a href="/tags/HiDNS/" style="font-size: 1.05rem;">HiDNS<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 1.05rem;">Markdown<sup>1</sup></a><a href="/tags/Mihomo/" style="font-size: 1.05rem;">Mihomo<sup>1</sup></a><a href="/tags/PVE/" style="font-size: 1.05rem;">PVE<sup>2</sup></a><a href="/tags/SSH/" style="font-size: 1.05rem;">SSH<sup>1</sup></a><a href="/tags/gcore/" style="font-size: 1.05rem;">gcore<sup>1</sup></a><a href="/tags/hexo/" style="font-size: 1.05rem;">hexo<sup>1</sup></a><a href="/tags/lxc/" style="font-size: 1.05rem;">lxc<sup>1</sup></a><a href="/tags/pve/" style="font-size: 1.05rem;">pve<sup>3</sup></a><a href="/tags/usb/" style="font-size: 1.05rem;">usb<sup>1</sup></a><a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 1.05rem;">优化<sup>1</sup></a><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 1.05rem;">分享<sup>1</sup></a><a href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/" style="font-size: 1.05rem;">叠螺机<sup>1</sup></a><a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 1.05rem;">命令行<sup>1</sup></a><a href="/tags/%E5%9B%9E%E6%BA%90/" style="font-size: 1.05rem;">回源<sup>1</sup></a><a href="/tags/%E5%B1%B1%E6%B2%B3%E5%B0%8F%E4%BE%A0/" style="font-size: 1.05rem;">山河小侠<sup>1</sup></a><a href="/tags/%E6%88%90%E5%B0%B1%E6%8C%87%E5%8D%97/" style="font-size: 1.05rem;">成就指南<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 1.05rem;">技术<sup>6</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>2</sup></a><a href="/tags/%E6%B0%94%E6%B5%AE%E6%9C%BA/" style="font-size: 1.05rem;">气浮机<sup>1</sup></a><a href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/" style="font-size: 1.05rem;">污水处理<sup>2</sup></a><a href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/" style="font-size: 1.05rem;">污泥脱水<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">游戏<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/" style="font-size: 1.05rem;">游戏攻略<sup>1</sup></a><a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 1.05rem;">维护<sup>1</sup></a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.05rem;">虚拟化<sup>1</sup></a><a href="/tags/%E8%AD%A6%E5%91%8A/" style="font-size: 1.05rem;">警告<sup>1</sup></a><a href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/" style="font-size: 1.05rem;">设备调试<sup>2</sup></a><a href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/" style="font-size: 1.05rem;">运行经验<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>污水处理</span></a><a class="article-meta__tags" href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>设备调试</span></a><a class="article-meta__tags" href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>运行经验</span></a><a class="article-meta__tags" href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>叠螺机</span></a><a class="article-meta__tags" href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>污泥脱水</span></a></span></div></div><h1 class="post-title" itemprop="name headline">叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-14T10:30:00.000Z" title="发表于 2026-11-14 18:30:00">2026-11-14</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-14T10:30:00.000Z" title="更新于 2026-11-14 18:30:00">2026-11-14</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-pv-cv" id="" data-flag-title="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"><i class="anzhiyufont anzhiyu-icon-fw-eye post-meta-icon"></i><span class="post-meta-label" title="阅读量">阅读量:</span><span id="busuanzi_value_page_pv"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-spin"></i></span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为南极"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>南极</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://img.521251.xyz/file/美女/横版/14nwO9kL.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/2026/11/14/duoluoji-guide/"><header><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a><a href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/" tabindex="-1" itemprop="url">污水处理</a><a href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/" tabindex="-1" itemprop="url">设备调试</a><a href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/" tabindex="-1" itemprop="url">运行经验</a><a href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/" tabindex="-1" itemprop="url">叠螺机</a><a href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/" tabindex="-1" itemprop="url">污泥脱水</a><h1 id="CrawlerTitle" itemprop="name headline">叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Laosia</span><time itemprop="dateCreated datePublished" datetime="2026-11-14T10:30:00.000Z" title="发表于 2026-11-14 18:30:00">2026-11-14</time><time itemprop="dateCreated datePublished" datetime="2026-11-14T10:30:00.000Z" title="更新于 2026-11-14 18:30:00">2026-11-14</time></header><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/%E7%BE%8E%E5%A5%B3/%E6%A8%AA%E7%89%88/14nwO9kL.jpg" alt="叠螺式污泥脱水机使用心得封面"></p>
+<p>叠螺机是我见过最”看起来简单、调起来磨人”的污水设备之一。它不像离心机那样轰隆隆转，也不像板框那样一套流程干半天，就是个慢悠悠转的螺旋轴，可是它出不出干泥、滤液清不清、PAM 费不费，几乎全押在前面那两分钟——<strong>泥和药有没有在絮凝槽里真正抱成团</strong>。</p>
+<p>下面这份东西按”先搞懂—再选—再装—再调—再养”来写，都是现场趟出来的，尽量不写手册上能查到的空话。</p>
+<h2 id="一、先搞清楚它到底靠什么把泥挤干"><a href="#一、先搞清楚它到底靠什么把泥挤干" class="headerlink" title="一、先搞清楚它到底靠什么把泥挤干"></a>一、先搞清楚它到底靠什么把泥挤干</h2><p>叠螺机（螺旋压榨式脱水机）的核心只有三样东西：<strong>一圈圈叠起来的过滤片、穿在中间的螺旋轴、卡在末端的背压板</strong>。</p>
+<p>工作过程分三段，很多人只知道最后一段，所以调不好：</p>
+<ol>
+<li><strong>重力浓缩段</strong>：泥水从进料口进入叠片区的前段，水的自重先漏下去，泥留在原地。这一段靠的是叠片之间的滤缝（一般 0.3–0.5 mm），也是为什么叠螺机不需要”预浓缩池”。</li>
+<li><strong>螺旋输送段</strong>：螺旋轴的螺距从前往后越来越小、轴径越来越粗，泥被往前推的同时，体积空间被不断压缩。</li>
+<li><strong>背压压榨段</strong>：末端背压板挡住泥，形成一个”塞子”，靠这个阻力反推回来，把前段的泥压得更实。<strong>调背压板间隙，本质上就是在调”出水有多干、机器有多费劲”这对矛盾。</strong></li>
+</ol>
+<p>它的真实能力边界是这样的：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>典型表现</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>进泥含水率</td>
+<td>97%–99.5%（活性污泥），可低到 99.7%</td>
+</tr>
+<tr>
+<td>出泥含水率</td>
+<td>78%–82%，做得好能到 76%</td>
+</tr>
+<tr>
+<td>滤液 SS</td>
+<td>200–800 mg&#x2F;L（正常），&gt;1500 就要查</td>
+</tr>
+<tr>
+<td>适用泥种</td>
+<td>市政活性污泥、气浮浮渣、食品&#x2F;印染&#x2F;造纸生化泥、部分物化泥</td>
+</tr>
+<tr>
+<td>不适用</td>
+<td>含大量砂石、金属屑、纤维长条的泥；含油极重且未破乳的泥</td>
+</tr>
+</tbody></table>
+<h3 id="和另外三种脱水机比，什么时候该选它"><a href="#和另外三种脱水机比，什么时候该选它" class="headerlink" title="和另外三种脱水机比，什么时候该选它"></a>和另外三种脱水机比，什么时候该选它</h3><table>
+<thead>
+<tr>
+<th>机型</th>
+<th>出泥含水率</th>
+<th>占地</th>
+<th>冲洗水</th>
+<th>对泥质波动</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>叠螺机</strong></td>
+<td>78%–82%</td>
+<td>小</td>
+<td>极少（仅喷淋）</td>
+<td>宽容</td>
+<td>中小水量、低浓度泥、无人值守</td>
+</tr>
+<tr>
+<td>带式压滤机</td>
+<td>78%–80%</td>
+<td>大</td>
+<td>大</td>
+<td>一般</td>
+<td>大水量市政厂</td>
+</tr>
+<tr>
+<td>离心机</td>
+<td>75%–80%</td>
+<td>小</td>
+<td>无</td>
+<td>敏感（易堵）</td>
+<td>大厂、需高干度</td>
+</tr>
+<tr>
+<td>板框压滤机</td>
+<td>60%–70%</td>
+<td>中</td>
+<td>中</td>
+<td>宽容</td>
+<td>要极干泥、外运成本高</td>
+</tr>
+</tbody></table>
+<p>一句话选型口诀：<strong>水量小、泥浓度低、没人看着，选叠螺；要极致干度，选板框；要单机大处理量，选离心。</strong></p>
+<h2 id="二、拆开看：五个部件，各有各的脾气"><a href="#二、拆开看：五个部件，各有各的脾气" class="headerlink" title="二、拆开看：五个部件，各有各的脾气"></a>二、拆开看：五个部件，各有各的脾气</h2><h3 id="1-叠片组（固定环-游动环）"><a href="#1-叠片组（固定环-游动环）" class="headerlink" title="1. 叠片组（固定环 + 游动环）"></a>1. 叠片组（固定环 + 游动环）</h3><p>这是叠螺机的灵魂。固定环卡在轴上不动，游动环套在环之间，靠螺旋轴转动时被带着轻微摆动——<strong>这个”游动”就是它自清洗、不堵的根本原因</strong>，也是它敢不加高压反冲洗的底气。</p>
+<ul>
+<li>材质一般是 304&#x2F;316L 不锈钢，含氯离子高的泥要上 316L 或双相钢，否则半年就点蚀。</li>
+<li>滤缝 0.3 mm 适合活性污泥，0.5 mm 适合含砂稍多的泥。<strong>别为了”脱水更干”去换 0.2 mm 的，只会堵</strong>。</li>
+<li>判断该换的信号：滤缝被磨大（滤液越来越浑、且不是加药问题）、游动环卡死不摆动（局部堆泥、出泥忽干忽稀）。</li>
+</ul>
+<h3 id="2-螺旋轴"><a href="#2-螺旋轴" class="headerlink" title="2. 螺旋轴"></a>2. 螺旋轴</h3><p>变径变螺距，从进料端的大螺距小轴径，到尾端的小螺距大轴径。它的转速通常只有 <strong>1–3 转&#x2F;分钟</strong>，慢得让人怀疑它是不是没通电。</p>
+<p>正因为慢：扭矩大、磨损小、噪音低、不需要高减速比的大功率电机。但也意味着——<strong>它对”硬物”毫无还手之力</strong>。一颗螺丝钉、一块石子进去，轻则卡死，重则把叠片顶变形。</p>
+<h3 id="3-背压板与调节机构"><a href="#3-背压板与调节机构" class="headerlink" title="3. 背压板与调节机构"></a>3. 背压板与调节机构</h3><p>背压板装在出泥口，用弹簧或手轮调节间隙。这是整台机器<strong>唯一需要你天天动的机械调节件</strong>。</p>
+<ul>
+<li>间隙调小 → 挤压更狠 → 泥更干，但扭矩上升、滤液变浑、PAM 需求变高；</li>
+<li>间隙调大 → 轻松、滤液清，但泥稀、体积大、外运费高。</li>
+</ul>
+<p>经验值：新机调试从”最大间隙”开始，每次只调 1&#x2F;4 圈，稳定运行 2 小时再动下一次。</p>
+<h3 id="4-絮凝搅拌槽（混合槽-絮凝槽）"><a href="#4-絮凝搅拌槽（混合槽-絮凝槽）" class="headerlink" title="4. 絮凝搅拌槽（混合槽 + 絮凝槽）"></a>4. 絮凝搅拌槽（混合槽 + 絮凝槽）</h3><p>大多数叠螺机是双槽：前面混合（泥 + PAM 快速混匀），后面絮凝（慢速搅拌让絮体长大）。<strong>这两个槽的搅拌强度是分开设计的</strong>，很多人图省事把两槽搅拌器接同一个变频，结果就是：要么混合不够、PAM 白加，要么絮凝被打碎、泥和水一起跑。</p>
+<h3 id="5-驱动与喷淋系统"><a href="#5-驱动与喷淋系统" class="headerlink" title="5. 驱动与喷淋系统"></a>5. 驱动与喷淋系统</h3><p>减速电机 + 链条&#x2F;联轴器，外加一组冲洗喷淋管（一般在叠片区上方，用于停机冲洗和日常保湿）。</p>
+<p>喷淋看着不起眼，实际上决定了你多久需要拆机清洗一次。<strong>停机不冲洗，是叠螺机最常见的”人为故障”。</strong></p>
+<h2 id="三、选型：算干泥量，不要看型号数字"><a href="#三、选型：算干泥量，不要看型号数字" class="headerlink" title="三、选型：算干泥量，不要看型号数字"></a>三、选型：算干泥量，不要看型号数字</h2><p>厂家样本上的”XX-301、XX-302”只是系列号，真正要算的是<strong>干泥量（kgDS&#x2F;h）</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">干泥量 (kgDS/h) = 处理水量 (m³/h) × 进泥浓度 (%) × 10</span><br></pre></td></tr></table></figure>
+
+<p>举例：一套 200 m³&#x2F;d 的生化系统，剩余污泥量按 1.5% 排泥、每天排 40 m³：</p>
+<ul>
+<li>干泥量 &#x3D; 40 m³&#x2F;d ÷ 24 h × 1.5% × 1000 ≈ <strong>25 kgDS&#x2F;h</strong></li>
+<li>叠螺机按 <strong>3–5 kgDS&#x2F;(h·kW)</strong> 的常见能力估算，选 7.5 kW 级（约 30–35 kgDS&#x2F;h）比较稳妥</li>
+</ul>
+<p>选型三个最常见的坑：</p>
+<ol>
+<li><strong>只看”处理量 m³&#x2F;h”</strong>：样本写 10 m³&#x2F;h，指的是 1% 浓度的泥；你进 3% 的泥，处理量只剩三分之一。</li>
+<li><strong>不留余量</strong>：泥量会随季节、工艺波动涨 30%–50%，选型至少留 20%–30% 余量。</li>
+<li><strong>不核对配套</strong>：进泥泵（建议螺杆泵，别用离心泵，会把絮体打碎）、PAM 加药泵（计量泵，流量可调）、冲洗水接口、排泥螺旋&#x2F;输送带，一样缺了都开不起来。</li>
+</ol>
+<h2 id="四、安装与首次调试（按这个顺序，别跳步）"><a href="#四、安装与首次调试（按这个顺序，别跳步）" class="headerlink" title="四、安装与首次调试（按这个顺序，别跳步）"></a>四、安装与首次调试（按这个顺序，别跳步）</h2><p><strong>第 1 步：基础与水平。</strong> 叠螺机对水平极敏感，纵向、横向都要校平（≤1 mm&#x2F;m），否则螺旋轴受力不均，半年后叠片就偏磨。</p>
+<p><strong>第 2 步：管路。</strong> 进泥口接螺杆泵，出口装止回阀和压力表；滤液口接回集水井，<strong>别直接排</strong>（正常滤液还有 200–800 mg&#x2F;L 的 SS，回流程更合理）；冲洗口一定要接，且水压 ≥0.2 MPa。</p>
+<p><strong>第 3 步：空载试车 30 分钟。</strong> 不接泥、不接药，只看：转向对不对（<strong>严禁反转</strong>）、有没有异响、叠片是否正常游动、电机电流是否在额定值 60% 以内。</p>
+<p><strong>第 4 步：清水试车。</strong> 通清水，观察滤液排出是否均匀、各叠片区有没有渗漏、喷淋是否覆盖到位。</p>
+<p><strong>第 5 步：PAM 烧杯试验。</strong> 这一步决定了后面所有参数。取现场污泥，配 0.1%、0.2%、0.3% 三种浓度，分别试阴离子、阳离子（分子量 800 万–1200 万），看哪个絮团最大、上清液最清、用量最少。</p>
+<p><strong>第 6 步：缓慢加泥。</strong> 从额定量的 30% 开始，跑 20 分钟加 10%，一直加到额定值。急着一上来就满负荷，是叠片堵塞的头号原因。</p>
+<p><strong>第 7 步：调背压板。</strong> 泥饼成型后开始调，每调一次等 30 分钟看效果，记录电流、泥饼含水率、滤液 SS。</p>
+<p><strong>第 8 步：记基准。</strong> 把稳定运行时的转速、PAM 浓度&#x2F;流量、进泥浓度、背压间隙、电流、含水率全部记在本子上——<strong>这份基准值，将来出问题时能救命。</strong></p>
+<h2 id="五、PAM-加药：七成效果在这里"><a href="#五、PAM-加药：七成效果在这里" class="headerlink" title="五、PAM 加药：七成效果在这里"></a>五、PAM 加药：七成效果在这里</h2><p>叠螺机本质上是个”物理压榨”设备，但它能不能压干，取决于进来的是<strong>絮团</strong>还是<strong>稀泥浆</strong>。絮凝做不好，后面全白搭。</p>
+<h3 id="选型对照"><a href="#选型对照" class="headerlink" title="选型对照"></a>选型对照</h3><table>
+<thead>
+<tr>
+<th>泥种</th>
+<th>推荐离子型</th>
+<th>分子量</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>市政活性污泥</td>
+<td>阳离子</td>
+<td>800 万–1200 万</td>
+<td>最常用，离子度 40%–60%</td>
+</tr>
+<tr>
+<td>印染&#x2F;造纸生化泥</td>
+<td>阳离子</td>
+<td>1000 万左右</td>
+<td>离子度偏高</td>
+</tr>
+<tr>
+<td>气浮浮渣</td>
+<td>阳离子</td>
+<td>800 万</td>
+<td>注意浮渣含油</td>
+</tr>
+<tr>
+<td>洗砂&#x2F;洗煤泥</td>
+<td>阴离子</td>
+<td>1200 万–1800 万</td>
+<td>靠架桥作用</td>
+</tr>
+<tr>
+<td>偏酸性物化泥</td>
+<td>非离子&#x2F;弱阳离子</td>
+<td>800 万</td>
+<td>先小试</td>
+</tr>
+</tbody></table>
+<h3 id="配比与投加"><a href="#配比与投加" class="headerlink" title="配比与投加"></a>配比与投加</h3><ul>
+<li><strong>溶解浓度 0.1%–0.3%</strong>（1–3 kg 干粉兑 1 吨水）。超过 0.5% 就很难溶解，形成”鱼眼”胶团，等于白扔钱。</li>
+<li><strong>熟化时间 ≥40 分钟</strong>，用低速搅拌（60–100 rpm）。刚配好的 PAM 溶液黏度还没起来，直接投加效果差一半。</li>
+<li><strong>投加量 1–3 kg PAM &#x2F; 吨干泥</strong>，具体以烧杯试验为准。超过 5 kg&#x2F;t 还没效果，说明型号选错了，别硬加。</li>
+<li><strong>稀释后投加</strong>：从储罐到投加点之间再稀释到 0.05%–0.1%，混合更均匀。</li>
+</ul>
+<h3 id="四个最常见的加药错误"><a href="#四个最常见的加药错误" class="headerlink" title="四个最常见的加药错误"></a>四个最常见的加药错误</h3><ol>
+<li><strong>浓度配太高</strong>：以为”浓一点效果好”，实际是黏度高、扩散不开，絮体长不大。</li>
+<li><strong>搅拌太快</strong>：高速搅拌机把刚形成的絮团又打碎，絮凝槽里看着翻得热闹，其实全是碎絮。</li>
+<li><strong>投加点太远&#x2F;太近</strong>：加在管道里混合距离不够，或者直接倒进絮凝槽中间，都会出现”局部过药、局部没药”。</li>
+<li><strong>现配现用</strong>：PAM 溶液要熟化；反过来，配好的溶液超过 24 小时会降解失效，夏天更短。</li>
+</ol>
+<h2 id="六、参数怎么调：五个旋钮的物理意义"><a href="#六、参数怎么调：五个旋钮的物理意义" class="headerlink" title="六、参数怎么调：五个旋钮的物理意义"></a>六、参数怎么调：五个旋钮的物理意义</h2><table>
+<thead>
+<tr>
+<th>参数</th>
+<th>常规范围</th>
+<th>调大之后</th>
+<th>调小之后</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>螺旋转速</td>
+<td>1–3 rpm</td>
+<td>处理量↑、泥饼变稀、滤液变浑</td>
+<td>泥更干、处理量↓、易过载</td>
+</tr>
+<tr>
+<td>背压板间隙</td>
+<td>视机型</td>
+<td>出泥变稀、电流↓</td>
+<td>出泥变干、电流↑、滤液变浑</td>
+</tr>
+<tr>
+<td>PAM 投加量</td>
+<td>1–3 kg&#x2F;tDS</td>
+<td>絮体大、滤液清，过量则黏堵</td>
+<td>省药，但絮体小、跑泥</td>
+</tr>
+<tr>
+<td>进泥浓度</td>
+<td>1%–3%</td>
+<td>处理量↑、脱水难度↑</td>
+<td>太稀则絮凝差、能耗高</td>
+</tr>
+<tr>
+<td>喷淋冲洗频率</td>
+<td>每 2–4 h 一次</td>
+<td>叠片干净、寿命长，费水</td>
+<td>省水，但易结垢堵缝</td>
+</tr>
+</tbody></table>
+<p><strong>调节顺序永远是：先看滤液 → 再看泥饼 → 最后动背压。</strong> 滤液浑了先查加药，别一上来就拧背压板。</p>
+<h2 id="七、常见故障对照表"><a href="#七、常见故障对照表" class="headerlink" title="七、常见故障对照表"></a>七、常见故障对照表</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>最可能的原因</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>滤液浑浊、跑泥</td>
+<td>PAM 型号不对&#x2F;浓度过低&#x2F;絮凝被打碎</td>
+<td>重做烧杯试验，降搅拌转速</td>
+</tr>
+<tr>
+<td>泥饼稀、捏得出水</td>
+<td>背压间隙过大、进泥太稀、转速过快</td>
+<td>逐步关小背压、提高进泥浓度</td>
+</tr>
+<tr>
+<td>叠片缝隙渗出泥条</td>
+<td>滤缝磨损变大</td>
+<td>换叠片，或临时提高 PAM 用量</td>
+</tr>
+<tr>
+<td>螺旋轴抱死不转</td>
+<td>硬物卡入、长时间停机未冲洗结块</td>
+<td>断电反向盘车、拆检取异物</td>
+</tr>
+<tr>
+<td>电机过载跳闸</td>
+<td>背压过紧、进泥量过大、轴承损坏</td>
+<td>松背压、降负荷、查轴承</td>
+</tr>
+<tr>
+<td>出泥忽干忽稀</td>
+<td>进泥浓度波动、PAM 投加不稳</td>
+<td>加装浓度&#x2F;流量在线或增设调节池</td>
+</tr>
+<tr>
+<td>异响、周期性”咯噔”</td>
+<td>游动环卡滞、链条松动</td>
+<td>停机冲洗、张紧链条</td>
+</tr>
+<tr>
+<td>PAM 用量突然翻倍</td>
+<td>泥质变化（换工艺、加药变化）、叠片堵</td>
+<td>先查上游工艺，再拆检叠片</td>
+</tr>
+<tr>
+<td>冲洗水进不去</td>
+<td>喷淋孔堵、水压不足</td>
+<td>拆喷嘴清通，检查泵压</td>
+</tr>
+</tbody></table>
+<h2 id="八、维护保养计划"><a href="#八、维护保养计划" class="headerlink" title="八、维护保养计划"></a>八、维护保养计划</h2><table>
+<thead>
+<tr>
+<th>周期</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>每班</td>
+<td>看电流、听异响、看滤液和泥饼、确认喷淋正常</td>
+</tr>
+<tr>
+<td>每日</td>
+<td>停机前冲洗叠片区 5–10 分钟；清理絮凝槽浮渣</td>
+</tr>
+<tr>
+<td>每周</td>
+<td>检查链条张紧与润滑、PAM 计量泵流量校准、背压机构是否灵活</td>
+</tr>
+<tr>
+<td>每月</td>
+<td>拆检喷淋喷嘴、检查减速机油位、紧固地脚与管路法兰</td>
+</tr>
+<tr>
+<td>每季</td>
+<td>检查叠片磨损与游动环灵活性、轴承加脂、电机绝缘测试</td>
+</tr>
+<tr>
+<td>每年</td>
+<td>全面拆检：叠片间隙测量、螺旋轴磨损量、更换密封件与易损件</td>
+</tr>
+</tbody></table>
+<h2 id="九、十条实战心得"><a href="#九、十条实战心得" class="headerlink" title="九、十条实战心得"></a>九、十条实战心得</h2><ol>
+<li><strong>先做烧杯试验，再开机。</strong> 花 40 分钟在实验室，能省现场两天的瞎调。</li>
+<li><strong>PAM 宁稀勿浓、宁慢勿快。</strong> 絮凝是”养”出来的，不是”打”出来的。</li>
+<li><strong>停机必冲洗。</strong> 90% 的”叠片堵死”都是停机不冲引起的，冲 5 分钟省一次拆机。</li>
+<li><strong>背压板一次只动 1&#x2F;4 圈。</strong> 想一步到位的人，最后都在反复折腾。</li>
+<li><strong>记录基准参数。</strong> 出一身汗调好的参数不写下来，下次换个人又得重来。</li>
+<li><strong>滤液一定要回流，不要直排。</strong> 200–800 mg&#x2F;L 的 SS 直排，环保一查一个准。</li>
+<li><strong>进泥泵用螺杆泵。</strong> 离心泵的剪切会把絮体打碎，等于白加药。</li>
+<li><strong>叠片材质看氯离子。</strong> 含氯高的泥用 304，半年就点蚀穿孔。</li>
+<li><strong>别指望它把泥做到 70%。</strong> 叠螺机的舒适区是 78%–82%，要更干就配板框或加石灰。</li>
+<li><strong>备件库里必须有：游动环、喷淋喷嘴、链条、密封件。</strong> 这四样坏了，停机时间成倍增长。</li>
+</ol>
+<h2 id="十、几条不能碰的红线"><a href="#十、几条不能碰的红线" class="headerlink" title="十、几条不能碰的红线"></a>十、几条不能碰的红线</h2><ul>
+<li><strong>严禁反转</strong>：螺旋轴反转会把泥往进料口推，直接顶死。</li>
+<li><strong>严禁空转超过 10 分钟</strong>：无泥状态下叠片干磨，游动环磨损加倍。</li>
+<li><strong>严禁带电拆叠片</strong>：断电、挂牌、泄压，一样都不能省。</li>
+<li><strong>严禁把 PAM 干粉直接倒进槽里</strong>：结块后堵泵、堵管、堵喷嘴。</li>
+<li><strong>冬季必须防冻</strong>：停机后排空管路和泵体，PAM 溶液罐加保温，冻裂的计量泵不便宜。</li>
+<li><strong>严禁超压运行</strong>：进泥压力一般不超过 0.2 MPa，超了说明后面堵了，不是”压得更干”。</li>
+</ul>
+<h2 id="附：参数速查卡"><a href="#附：参数速查卡" class="headerlink" title="附：参数速查卡"></a>附：参数速查卡</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>参考值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>螺旋转速</td>
+<td>1–3 rpm</td>
+</tr>
+<tr>
+<td>进泥浓度</td>
+<td>1%–3%（最佳 2% 左右）</td>
+</tr>
+<tr>
+<td>出泥含水率</td>
+<td>78%–82%</td>
+</tr>
+<tr>
+<td>滤液 SS</td>
+<td>≤800 mg&#x2F;L</td>
+</tr>
+<tr>
+<td>PAM 溶解浓度</td>
+<td>0.1%–0.3%</td>
+</tr>
+<tr>
+<td>PAM 投加量</td>
+<td>1–3 kg&#x2F;tDS</td>
+</tr>
+<tr>
+<td>PAM 熟化时间</td>
+<td>≥40 min</td>
+</tr>
+<tr>
+<td>滤缝间隙</td>
+<td>0.3–0.5 mm</td>
+</tr>
+<tr>
+<td>冲洗水压</td>
+<td>≥0.2 MPa</td>
+</tr>
+<tr>
+<td>进泥压力</td>
+<td>≤0.2 MPa</td>
+</tr>
+<tr>
+<td>电机负载率</td>
+<td>≤80% 额定电流</td>
+</tr>
+<tr>
+<td>每日冲洗</td>
+<td>停机前 5–10 min</td>
+</tr>
+</tbody></table>
+<p>叠螺机不难伺候，它只是<strong>要求你把”简单的事”每天都做到位</strong>：药配好、泥调匀、背压别贪、停机冲一冲。做到了，它能好几年安安静静给你出干泥；做不到，它就用堵、用浑、用一身泥浆教育你。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744012340449_2020101722212318242.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744012340449_2020101722212318242.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Laosia</div><div class="post-copyright__author_desc">😤Laosia😚无聊时刻😤</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/2026/11/14/duoluoji-guide/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/2026/11/14/duoluoji-guide/')">叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744176418672_abd5f05e3184da58b1011e95291912c9.png" alt="爱心"/></a><div class="post-qr-code-desc">爱心</div></li><li class="reward-item"><a href="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744176417197_6d068684c49e74e9b5948dd1fc2358e8.png" alt="奉献"/></a><div class="post-qr-code-desc">奉献</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/2026/11/14/duoluoji-guide/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验&amp;url=http://example.com/2026/11/14/duoluoji-guide/&amp;pic=https://img.521251.xyz/file/美女/横版/14nwO9kL.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">Laosia</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>污水处理<span class="tagsPageCount">2</span></a><a class="post-meta__box__tags" href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>设备调试<span class="tagsPageCount">2</span></a><a class="post-meta__box__tags" href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>运行经验<span class="tagsPageCount">2</span></a><a class="post-meta__box__tags" href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>叠螺机<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>污泥脱水<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://img.521251.xyz/file/美女/横版/uHvLAzUq.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/2026/11/13/daf-machine-guide/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/uHvLAzUq.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">气溶式气浮机使用攻略与实战心得：从安装调试到长期运行</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/2026/11/13/daf-machine-guide/" title="气溶式气浮机使用攻略与实战心得：从安装调试到长期运行"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/uHvLAzUq.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-13</div><div class="title">气溶式气浮机使用攻略与实战心得：从安装调试到长期运行</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1744012340449_2020101722212318242.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://bu.dusays.com/2023/08/24/64e6ce9c507bb.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">这有关于<b style="color:#fff">产品、设计、开发</b>相关的问题和看法，还有<b style="color:#fff">文章翻译</b>和<b style="color:#fff">分享</b>。</div><div style="line-height:1.38;margin:0.6rem 0;text-align:justify;color:rgba(255, 255, 255, 0.8);">相信你可以在这里找到对你有用的<b style="color:#fff">知识</b>和<b style="color:#fff">教程</b>。</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Laosia</h1><div class="author-info__desc">😤Laosia😚无聊时刻😤</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/laosiaa" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/233882124" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="card-widget card-countdown"><div class="item-headline"><i></i><span></span></div><div class="item-content"><div class="cd-count-left">
+  <span class="cd-text">距离</span>
+  <span class="cd-name" id="eventName"></span>
+  <span class="cd-time" id="daysUntil"></span>
+  <span class="cd-date" id="eventDate"></span>
+</div>
+<div id="countRight" class="cd-count-right"></div>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%E5%AE%83%E5%88%B0%E5%BA%95%E9%9D%A0%E4%BB%80%E4%B9%88%E6%8A%8A%E6%B3%A5%E6%8C%A4%E5%B9%B2"><span class="toc-number">1.</span> <span class="toc-text">一、先搞清楚它到底靠什么把泥挤干</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C%E5%8F%A6%E5%A4%96%E4%B8%89%E7%A7%8D%E8%84%B1%E6%B0%B4%E6%9C%BA%E6%AF%94%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E8%AF%A5%E9%80%89%E5%AE%83"><span class="toc-number">1.1.</span> <span class="toc-text">和另外三种脱水机比，什么时候该选它</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%8B%86%E5%BC%80%E7%9C%8B%EF%BC%9A%E4%BA%94%E4%B8%AA%E9%83%A8%E4%BB%B6%EF%BC%8C%E5%90%84%E6%9C%89%E5%90%84%E7%9A%84%E8%84%BE%E6%B0%94"><span class="toc-number">2.</span> <span class="toc-text">二、拆开看：五个部件，各有各的脾气</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%A0%E7%89%87%E7%BB%84%EF%BC%88%E5%9B%BA%E5%AE%9A%E7%8E%AF-%E6%B8%B8%E5%8A%A8%E7%8E%AF%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">1. 叠片组（固定环 + 游动环）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%9E%BA%E6%97%8B%E8%BD%B4"><span class="toc-number">2.2.</span> <span class="toc-text">2. 螺旋轴</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%83%8C%E5%8E%8B%E6%9D%BF%E4%B8%8E%E8%B0%83%E8%8A%82%E6%9C%BA%E6%9E%84"><span class="toc-number">2.3.</span> <span class="toc-text">3. 背压板与调节机构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E7%B5%AE%E5%87%9D%E6%90%85%E6%8B%8C%E6%A7%BD%EF%BC%88%E6%B7%B7%E5%90%88%E6%A7%BD-%E7%B5%AE%E5%87%9D%E6%A7%BD%EF%BC%89"><span class="toc-number">2.4.</span> <span class="toc-text">4. 絮凝搅拌槽（混合槽 + 絮凝槽）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E9%A9%B1%E5%8A%A8%E4%B8%8E%E5%96%B7%E6%B7%8B%E7%B3%BB%E7%BB%9F"><span class="toc-number">2.5.</span> <span class="toc-text">5. 驱动与喷淋系统</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%80%89%E5%9E%8B%EF%BC%9A%E7%AE%97%E5%B9%B2%E6%B3%A5%E9%87%8F%EF%BC%8C%E4%B8%8D%E8%A6%81%E7%9C%8B%E5%9E%8B%E5%8F%B7%E6%95%B0%E5%AD%97"><span class="toc-number">3.</span> <span class="toc-text">三、选型：算干泥量，不要看型号数字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%AE%89%E8%A3%85%E4%B8%8E%E9%A6%96%E6%AC%A1%E8%B0%83%E8%AF%95%EF%BC%88%E6%8C%89%E8%BF%99%E4%B8%AA%E9%A1%BA%E5%BA%8F%EF%BC%8C%E5%88%AB%E8%B7%B3%E6%AD%A5%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">四、安装与首次调试（按这个顺序，别跳步）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81PAM-%E5%8A%A0%E8%8D%AF%EF%BC%9A%E4%B8%83%E6%88%90%E6%95%88%E6%9E%9C%E5%9C%A8%E8%BF%99%E9%87%8C"><span class="toc-number">5.</span> <span class="toc-text">五、PAM 加药：七成效果在这里</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E5%9E%8B%E5%AF%B9%E7%85%A7"><span class="toc-number">5.1.</span> <span class="toc-text">选型对照</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E6%AF%94%E4%B8%8E%E6%8A%95%E5%8A%A0"><span class="toc-number">5.2.</span> <span class="toc-text">配比与投加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E4%B8%AA%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8A%A0%E8%8D%AF%E9%94%99%E8%AF%AF"><span class="toc-number">5.3.</span> <span class="toc-text">四个最常见的加药错误</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%82%E6%95%B0%E6%80%8E%E4%B9%88%E8%B0%83%EF%BC%9A%E4%BA%94%E4%B8%AA%E6%97%8B%E9%92%AE%E7%9A%84%E7%89%A9%E7%90%86%E6%84%8F%E4%B9%89"><span class="toc-number">6.</span> <span class="toc-text">六、参数怎么调：五个旋钮的物理意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B8%B8%E8%A7%81%E6%95%85%E9%9A%9C%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="toc-number">7.</span> <span class="toc-text">七、常见故障对照表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%BB%B4%E6%8A%A4%E4%BF%9D%E5%85%BB%E8%AE%A1%E5%88%92"><span class="toc-number">8.</span> <span class="toc-text">八、维护保养计划</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%8D%81%E6%9D%A1%E5%AE%9E%E6%88%98%E5%BF%83%E5%BE%97"><span class="toc-number">9.</span> <span class="toc-text">九、十条实战心得</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%87%A0%E6%9D%A1%E4%B8%8D%E8%83%BD%E7%A2%B0%E7%9A%84%E7%BA%A2%E7%BA%BF"><span class="toc-number">10.</span> <span class="toc-text">十、几条不能碰的红线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%EF%BC%9A%E5%8F%82%E6%95%B0%E9%80%9F%E6%9F%A5%E5%8D%A1"><span class="toc-number">11.</span> <span class="toc-text">附：参数速查卡</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/11/14/duoluoji-guide/" title="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/14nwO9kL.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"/></a><div class="content"><a class="title" href="/2026/11/14/duoluoji-guide/" title="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验">叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验</a><time datetime="2026-11-14T10:30:00.000Z" title="发表于 2026-11-14 18:30:00">2026-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/13/daf-machine-guide/" title="气溶式气浮机使用攻略与实战心得：从安装调试到长期运行"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/uHvLAzUq.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="气溶式气浮机使用攻略与实战心得：从安装调试到长期运行"/></a><div class="content"><a class="title" href="/2026/11/13/daf-machine-guide/" title="气溶式气浮机使用攻略与实战心得：从安装调试到长期运行">气溶式气浮机使用攻略与实战心得：从安装调试到长期运行</a><time datetime="2026-11-13T10:00:00.000Z" title="发表于 2026-11-13 18:00:00">2026-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/13/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/bIYPMJOY.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门必会命令：从登录到排障的 30 个基本功"/></a><div class="content"><a class="title" href="/2026/11/13/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功">Linux 入门必会命令：从登录到排障的 30 个基本功</a><time datetime="2026-11-13T02:16:19.000Z" title="发表于 2026-11-13 10:16:19">2026-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/12/pve-8-optimization-guide/" title="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/美女/横版/KZX3GFQP.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"/></a><div class="content"><a class="title" href="/2026/11/12/pve-8-optimization-guide/" title="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件">Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件</a><time datetime="2026-11-12T01:16:58.000Z" title="发表于 2026-11-12 09:16:58">2026-11-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/11/07/changhenge-install-guide/" title="长恨歌安装启动教程"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/1746873550339_20240123233127170602388777453.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="长恨歌安装启动教程"/></a><div class="content"><a class="title" href="/2026/11/07/changhenge-install-guide/" title="长恨歌安装启动教程">长恨歌安装启动教程</a><time datetime="2026-11-07T04:04:31.000Z" title="发表于 2026-11-07 12:04:31">2026-11-07</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/svg/1776658920718_Laosia-上班洗澡中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 - 2026 By <a class="footer-bar-link" href="/" title="Laosia" target="_blank">Laosia</a></div></div><div id="footer-type-tips"></div><div class="js-pjax"><script>function subtitleType () {
+  fetch('https://v1.hitokoto.cn')
+    .then(response => response.json())
+    .then(data => {
+      if (true) {
+        const from = '出自 ' + data.from
+        const sub = ["生活明朗&#44; 万物可爱&#44; 人间值得&#44; 未来可期."]
+        sub.unshift(data.hitokoto, from)
+        window.typed = new Typed('#footer-type-tips', {
+          strings: sub,
+          startDelay: 300,
+          typeSpeed: 150,
+          loop: true,
+          backSpeed: 50,
+        })
+      } else {
+        document.getElementById('footer-type-tips').innerHTML = data.hitokoto
+      }
+    })
+}
+
+if (true) {
+  if (typeof Typed === 'function') {
+    subtitleType()
+  } else {
+    getScript('https://cdn.cbd.int/typed.js@2.1.0/dist/typed.umd.js').then(subtitleType)
+  }
+} else {
+  subtitleType()
+}
+</script></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="备案号">备案号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">36</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/icon/1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" target="_blank" rel="noopener" href="https://music.eooce.com/"><i class="anzhiyufont anzhiyu-icon-music _blank" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/air-conditioner/"><i class="anzhiyufont anzhiyu-icon-fan faa-tada" style="font-size: 0.9em;"></i><span> 小空调</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Cloudflare/" style="font-size: 0.88rem;">Cloudflare<sup>1</sup></a><a href="/tags/DAF/" style="font-size: 0.88rem;">DAF<sup>1</sup></a><a href="/tags/DNS/" style="font-size: 0.88rem;">DNS<sup>1</sup></a><a href="/tags/DNSSEC/" style="font-size: 0.88rem;">DNSSEC<sup>1</sup></a><a href="/tags/Debian11/" style="font-size: 0.88rem;">Debian11<sup>1</sup></a><a href="/tags/Docker/" style="font-size: 0.88rem;">Docker<sup>2</sup></a><a href="/tags/HiDNS/" style="font-size: 0.88rem;">HiDNS<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 0.88rem;">Linux<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 0.88rem;">Markdown<sup>1</sup></a><a href="/tags/Mihomo/" style="font-size: 0.88rem;">Mihomo<sup>1</sup></a><a href="/tags/PVE/" style="font-size: 0.88rem;">PVE<sup>2</sup></a><a href="/tags/SSH/" style="font-size: 0.88rem;">SSH<sup>1</sup></a><a href="/tags/gcore/" style="font-size: 0.88rem;">gcore<sup>1</sup></a><a href="/tags/hexo/" style="font-size: 0.88rem;">hexo<sup>1</sup></a><a href="/tags/lxc/" style="font-size: 0.88rem;">lxc<sup>1</sup></a><a href="/tags/pve/" style="font-size: 0.88rem;">pve<sup>3</sup></a><a href="/tags/usb/" style="font-size: 0.88rem;">usb<sup>1</sup></a><a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 0.88rem;">优化<sup>1</sup></a><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 0.88rem;">分享<sup>1</sup></a><a href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/" style="font-size: 0.88rem;">叠螺机<sup>1</sup></a><a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 0.88rem;">命令行<sup>1</sup></a><a href="/tags/%E5%9B%9E%E6%BA%90/" style="font-size: 0.88rem;">回源<sup>1</sup></a><a href="/tags/%E5%B1%B1%E6%B2%B3%E5%B0%8F%E4%BE%A0/" style="font-size: 0.88rem;">山河小侠<sup>1</sup></a><a href="/tags/%E6%88%90%E5%B0%B1%E6%8C%87%E5%8D%97/" style="font-size: 0.88rem;">成就指南<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 0.88rem;">技术<sup>6</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 0.88rem;">教程<sup>2</sup></a><a href="/tags/%E6%B0%94%E6%B5%AE%E6%9C%BA/" style="font-size: 0.88rem;">气浮机<sup>1</sup></a><a href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/" style="font-size: 0.88rem;">污水处理<sup>2</sup></a><a href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/" style="font-size: 0.88rem;">污泥脱水<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 0.88rem;">游戏<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F%E6%94%BB%E7%95%A5/" style="font-size: 0.88rem;">游戏攻略<sup>1</sup></a><a href="/tags/%E7%BB%B4%E6%8A%A4/" style="font-size: 0.88rem;">维护<sup>1</sup></a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 0.88rem;">虚拟化<sup>1</sup></a><a href="/tags/%E8%AD%A6%E5%91%8A/" style="font-size: 0.88rem;">警告<sup>1</sup></a><a href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/" style="font-size: 0.88rem;">设备调试<sup>2</sup></a><a href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/" style="font-size: 0.88rem;">运行经验<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>var meting_api = "https://blog.521251.xyz/music/meting.json?server=:server&type=:type&id=:id&r=:r";
+</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/07/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Laosia 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("04/07/2025 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://img.521251.xyz/file/svg/1776659150666_Laosia-下班冥想中.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'laosiaa/blog_comments',
+      'data-repo-id': 'R_kgDOSL7O8A',
+      'data-category-id': 'DIC_kwDOSL7O8M4C7oiZ',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-lang":"zh-CN","data-mapping":"pathname","data-category":"Announcements","data-input-position":"top","data-reactions-enabled":1,"data-emit-metadata":1,"data-theme":"preferred_color_scheme","data-loading":"lazy"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  anzhiyu.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/static/countdown.js"></script><script src="/js/tech-canvas.js" defer></script><script src="/js/ai-summary.js" defer></script><script src="/js/pv-refresh.js" defer></script><script src="/js/img-lazy-fix.js" defer></script><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/fireworks.min.js"></script><script defer="defer" id="ribbon" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/canvas-fluttering-ribbon.min.js"></script><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/click-heart.min.js" async="async" mobile="true"></script><script id="click-show-text" src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/dist/click-show-text.min.js" data-mobile="true" data-text="加油,真棒,厉害,优秀,学习,进步" data-fontsize="18px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script class="async" src="https://events.vercount.one/js"></script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
