@@ -284,38 +284,49 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   --es-sub: #9aa4b8;
   --es-chip: rgba(255, 255, 255, 0.07);
 }
-
-/* 顶部标题收一点 */
 #page .page-title { margin: 4px 0 18px; }
 
-/* 列表容器 */
-#essay_page .timeline .list.show {
-  display: flex; flex-direction: column; gap: 0; padding: 0; margin: 0;
-  background: transparent !important; box-shadow: none !important;
-}
-#essay_page .timeline .list > hr { display: none !important; }
-
-/* 每条短文：上半卡（正文 + 图） */
-#essay_page .timeline .list > li.bber-item {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 196px;
-  gap: 20px; align-items: start;
+/* 关掉瀑布流：改单列纵向流 */
+#essay_page #waterfall,
+#essay_page .timeline #waterfall {
+  position: static !important;
+  height: auto !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  padding: 0 !important;
   margin: 0 !important;
-  padding: 22px 24px 16px !important;
-  background: var(--es-card) !important;
-  border: 1px solid var(--es-line);
-  border-bottom: 0;
-  border-radius: 18px 18px 0 0;
-  box-shadow: none !important;
-  transition: border-color .2s ease, transform .2s ease;
-  overflow: hidden;
+  background: transparent !important;
 }
-#essay_page .timeline .list > li.bber-item:first-child { margin-top: 0 !important; }
+#essay_page #waterfall > hr { display: none !important; }
 
-/* 下半卡：时间 / 来源 / 地点 */
-#essay_page .timeline .list > .bber-bottom {
+/* 卡片上半：正文 + 配图 */
+#essay_page #waterfall > li.bber-item {
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 24px 26px 14px !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 200px !important;
+  gap: 22px !important;
+  align-items: start !important;
+  background: var(--es-card) !important;
+  border: 1px solid var(--es-line) !important;
+  border-bottom: 0 !important;
+  border-radius: 18px 18px 0 0 !important;
+  box-shadow: none !important;
+  overflow: hidden;
+  transition: border-color .2s ease;
+}
+
+/* 卡片下半：日期 / 来源 / 地点 */
+#essay_page #waterfall > .bber-bottom {
   margin: 0 0 18px !important;
-  padding: 0 24px 18px !important;
+  padding: 0 26px 18px !important;
   background: var(--es-card);
   border: 1px solid var(--es-line);
   border-top: 0;
@@ -324,24 +335,24 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   transition: border-color .2s ease;
 }
 
-#essay_page .timeline .list > li.bber-item:hover { border-color: rgba(252, 70, 107, .35); }
-#essay_page .timeline .list > li.bber-item:hover + .bber-bottom { border-color: rgba(252, 70, 107, .35); }
+#essay_page #waterfall > li.bber-item:hover { border-color: rgba(252, 70, 107, .38) !important; }
+#essay_page #waterfall > li.bber-item:hover + hr + .bber-bottom { border-color: rgba(252, 70, 107, .38); }
 
 /* 正文 */
 #essay_page .bber-content { min-width: 0; }
 #essay_page .bber-content p.datacont {
   margin: 0 !important;
-  font-size: 14.8px; line-height: 1.9; color: var(--es-text);
-  letter-spacing: .01em; text-align: justify;
+  font-size: 14.8px; line-height: 1.92; color: var(--es-text);
+  letter-spacing: .012em; text-align: justify;
 }
 
-/* 图片统一成大图 + 圆角 */
-#essay_page .bber-container-img { display: block; width: 196px; }
-#essay_page .bber-content-img { display: block; }
+/* 配图 */
+#essay_page .bber-container-img { display: block !important; width: 200px !important; margin: 0 !important; }
+#essay_page .bber-content-img { display: block !important; }
 #essay_page .bber-content-img img {
-  width: 196px !important; height: 136px !important;
-  object-fit: cover; border-radius: 12px; display: block;
-  margin: 0 !important;
+  width: 200px !important; height: 140px !important;
+  object-fit: cover !important; border-radius: 12px;
+  display: block; margin: 0 !important;
   transition: transform .25s ease;
 }
 #essay_page .bber-content-img:hover img { transform: scale(1.02); }
@@ -349,30 +360,30 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 /* 清掉主题多出来的空占位块 */
 #essay_page .bber-content-noimg { display: none !important; }
 
-/* 元信息：日期 + 来源 + 地点 */
-#essay_page .bber-info {
+/* 元信息 */
+#essay_page .bber-bottom .bber-info {
   display: flex !important; flex-wrap: wrap; align-items: center; gap: 8px;
   font-size: 12.5px !important; color: var(--es-sub) !important;
-  padding: 0 !important;
+  padding: 0 !important; margin: 0 !important;
 }
-#essay_page .bber-info > * { margin: 0 !important; }
-#essay_page .bber-info .bber-info-from,
-#essay_page .bber-info .bber-info-address {
-  padding: 3px 10px; border-radius: 999px;
-  background: var(--es-chip); border: 1px solid var(--es-line);
-  color: var(--es-sub) !important; line-height: 1.5;
+#essay_page .bber-bottom .bber-info > * { margin: 0 !important; }
+#essay_page #waterfall > .bber-bottom .bber-info-time,
+#essay_page #waterfall > .bber-bottom .bber-info-from,
+#essay_page #waterfall > .bber-bottom .bber-info-address {
+  padding: 3px 10px !important; border-radius: 999px !important;
+  background: var(--es-chip) !important; border: 1px solid var(--es-line) !important;
+  color: var(--es-sub) !important; font-size: 12px !important; line-height: 1.5;
 }
-#essay_page .bber-info > i { color: var(--es-sub) !important; opacity: .8; }
 
-/* 底部提示语 */
-#essay_page .timeline { background: transparent !important; box-shadow: none !important; }
+/* 底部提示 */
+#essay_page #bber-tips, #essay_page .bber-tips { color: var(--es-sub) !important; font-size: 13px !important; }
 
 @media screen and (max-width: 768px) {
-  #essay_page .timeline .list > li.bber-item {
-    grid-template-columns: minmax(0, 1fr) 104px;
-    gap: 14px; padding: 18px 18px 12px !important;
+  #essay_page #waterfall > li.bber-item {
+    grid-template-columns: minmax(0, 1fr) 104px !important;
+    gap: 14px !important; padding: 18px 18px 10px !important;
   }
-  #essay_page .bber-container-img, #essay_page .bber-content-img { width: 104px; }
+  #essay_page .bber-container-img { width: 104px !important; }
   #essay_page .bber-content-img img { width: 104px !important; height: 104px !important; }
-  #essay_page .timeline .list > .bber-bottom { padding: 0 18px 16px !important; }
+  #essay_page #waterfall > .bber-bottom { padding: 0 18px 16px !important; }
 }
