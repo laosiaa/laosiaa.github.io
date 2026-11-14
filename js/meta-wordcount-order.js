@@ -59,31 +59,61 @@
     });
   }
 
+  // 「天津市」→「天津」，「津南区」→「津南」
+  function shortName(v) {
+    return (v || "")
+      .replace(/(维吾尔自治区|壮族自治区|回族自治区|自治区|特别行政区|自治州|省|市|区|县)$/g, "")
+      .trim();
+  }
+
+  function fromMir6(j) {
+    var d = (j && j.data) || {};
+    var p = shortName(d.province);
+    var c = shortName(d.city) || shortName(d.districts);
+    if (!p && !c) throw new Error("empty");
+    if (p && c && p !== c) return p + " · " + c;
+    return p || c;
+  }
+
+  function fromIpip(j) {
+    var a = (j && j.data && j.data.location) || [];
+    var p = shortName(a[1]);
+    var c = shortName(a[3]) || shortName(a[2]);
+    if (!p && !c) throw new Error("empty");
+    if (p && c && p !== c) return p + " · " + c;
+    return p || c;
+  }
+
+  function fromIpsb(j) {
+    var c = j.city || j.region;
+    if (!c) throw new Error("empty");
+    return shortName(c);
+  }
+
   function resolveLocation() {
     var c = cachedLoc();
     if (c) return Promise.resolve(c);
-    // 首选：ipip.net（中文，CORS *），失败退 ip.sb（英文）
-    return fetchJSON("https://myip.ipip.net/json", 4000)
-      .then(function (j) {
-        var arr = (j && j.data && j.data.location) || [];
-        var parts = [];
-        if (arr[1]) parts.push(arr[1]);
-        if (arr[2] && arr[2] !== arr[1]) parts.push(arr[2]);
-        if (arr[4]) parts.push(arr[4]);
-        if (!parts.length) throw new Error("empty");
-        return parts.join(" · ");
-      })
-      .catch(function () {
-        return fetchJSON("https://api.ip.sb/geoip", 4000).then(function (j) {
-          var s = [j.city, j.country_code || j.country].filter(Boolean).join(" · ");
-          if (!s) throw new Error("empty");
-          return s;
+
+    var chain = [
+      ["https://api.mir6.com/api/ip?type=json", fromMir6],
+      ["https://myip.ipip.net/json", fromIpip],
+      ["https://api.ip.sb/geoip", fromIpsb]
+    ];
+
+    function step(i) {
+      if (i >= chain.length) return Promise.reject(new Error("all failed"));
+      var item = chain[i];
+      return fetchJSON(item[0], 4500)
+        .then(function (j) {
+          var v = item[1](j);
+          saveLoc(v);
+          return v;
+        })
+        .catch(function () {
+          return step(i + 1);
         });
-      })
-      .then(function (v) {
-        saveLoc(v);
-        return v;
-      });
+    }
+    return step(0);
   }
 
   /* ---------- 单行元信息 ---------- */
