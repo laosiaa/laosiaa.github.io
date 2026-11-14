@@ -1,9 +1,9 @@
-/*! 文章页元信息：单行「字数 · 约X分钟读完 · 日期 · IP归属」，IP 归属走真实定位接口 */
+/*! 文章页元信息：单行「字数 · 约X分钟读完 · 日期 · IP归属」+ 悬停说明气泡 */
 (function () {
   "use strict";
 
-  var CACHE_KEY = "la_ip_loc_v1";
-  var CACHE_TTL = 30 * 60 * 1000; // 30 分钟
+  var CACHE_KEY = "la_ip_loc_v2";
+  var CACHE_TTL = 30 * 60 * 1000;
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -12,12 +12,14 @@
     return n;
   }
 
-  function log(m) {
-    if (window.console && console.debug) console.debug("[meta]", m);
+  function tip(node, text) {
+    if (!node || !text) return;
+    node.setAttribute("data-tip", text);
+    node.setAttribute("title", text);
   }
 
-  /* ---------- IP 归属 ---------- */
-  function cachedLoc() {
+  /* ---------- 缓存 ---------- */
+  function cached() {
     try {
       var raw = sessionStorage.getItem(CACHE_KEY);
       if (!raw) return null;
@@ -29,7 +31,7 @@
     }
   }
 
-  function saveLoc(v) {
+  function save(v) {
     try {
       sessionStorage.setItem(CACHE_KEY, JSON.stringify({ v: v, t: Date.now() }));
     } catch (e) {}
@@ -40,7 +42,7 @@
       var done = false;
       var xhr = new XMLHttpRequest();
       xhr.open("GET", url, true);
-      xhr.timeout = timeout || 4000;
+      xhr.timeout = timeout || 4500;
       xhr.onload = function () {
         if (done) return;
         done = true;
@@ -59,40 +61,41 @@
     });
   }
 
-  // 「天津市」→「天津」，「津南区」→「津南」
+  /* ---------- 地名归一化：「天津市」→「天津」 ---------- */
   function shortName(v) {
     return (v || "")
       .replace(/(维吾尔自治区|壮族自治区|回族自治区|自治区|特别行政区|自治州|省|市|区|县)$/g, "")
       .trim();
   }
 
+  function join(prov, city) {
+    if (prov && city && prov !== city) return prov + " · " + city;
+    return prov || city || "";
+  }
+
   function fromMir6(j) {
     var d = (j && j.data) || {};
-    var p = shortName(d.province);
-    var c = shortName(d.city) || shortName(d.districts);
-    if (!p && !c) throw new Error("empty");
-    if (p && c && p !== c) return p + " · " + c;
-    return p || c;
+    var loc = join(shortName(d.province), shortName(d.city) || shortName(d.districts));
+    if (!loc) throw new Error("empty");
+    return { loc: loc, isp: (d.isp || "").trim() };
   }
 
   function fromIpip(j) {
     var a = (j && j.data && j.data.location) || [];
-    var p = shortName(a[1]);
-    var c = shortName(a[3]) || shortName(a[2]);
-    if (!p && !c) throw new Error("empty");
-    if (p && c && p !== c) return p + " · " + c;
-    return p || c;
+    var loc = join(shortName(a[1]), shortName(a[3]) || shortName(a[2]));
+    if (!loc) throw new Error("empty");
+    return { loc: loc, isp: (a[4] || "").trim() };
   }
 
   function fromIpsb(j) {
-    var c = j.city || j.region;
-    if (!c) throw new Error("empty");
-    return shortName(c);
+    var loc = shortName(j.city || j.region);
+    if (!loc) throw new Error("empty");
+    return { loc: loc, isp: (j.isp || j.organization || "").trim() };
   }
 
   function resolveLocation() {
-    var c = cachedLoc();
-    if (c) return Promise.resolve(c);
+    var c = cached();
+    if (c && c.loc) return Promise.resolve(c);
 
     var chain = [
       ["https://api.mir6.com/api/ip?type=json", fromMir6],
@@ -106,7 +109,7 @@
       return fetchJSON(item[0], 4500)
         .then(function (j) {
           var v = item[1](j);
-          saveLoc(v);
+          save(v);
           return v;
         })
         .catch(function () {
@@ -137,52 +140,51 @@
     var pubText = pub ? pub.textContent.trim() : "";
 
     dateSpan.innerHTML = "";
-    dateSpan.removeAttribute("style");
     dateSpan.classList.add("meta-inline");
 
     function sep() {
       dateSpan.appendChild(el("span", "post-meta-separator"));
     }
 
-    // 1) 字数（纯数字，不带「字」）
-    if (count) {
-      dateSpan.appendChild(el("i", "anzhiyufont anzhiyu-icon-file-word post-meta-icon"));
-      dateSpan.appendChild(el("span", "post-meta-label", count));
-      dateSpan.lastChild.title = "\u672c\u6587\u5171 " + count + " \u5b57";
+    function item(iconCls, text, tipText) {
+      dateSpan.appendChild(el("i", "anzhiyufont " + iconCls + " post-meta-icon"));
+      var s = el("span", "post-meta-label", text);
+      if (tipText) tip(s, tipText);
+      dateSpan.appendChild(s);
+      return s;
     }
+
+    // 1) 字数
+    if (count) item("anzhiyu-icon-file-word", count, "\u672c\u6587\u5171 " + count + " \u5b57\uff08\u4e2d\u6587\u9010\u5b57\u8ba1\uff0c\u82f1\u6587\u6309\u8bcd\u8ba1\uff09");
 
     // 2) 约 X 分钟读完
     if (minText) {
       sep();
-      dateSpan.appendChild(el("i", "anzhiyufont anzhiyu-icon-clock post-meta-icon"));
-      dateSpan.appendChild(el("span", "post-meta-label", "\u7ea6 " + minText + " \u5206\u949f\u8bfb\u5b8c"));
+      item("anzhiyu-icon-clock", "\u7ea6 " + minText + " \u5206\u949f\u8bfb\u5b8c", "\u9884\u8ba1\u9605\u8bfb\u65f6\u957f " + minText + " \u5206\u949f\uff08\u6309 350 \u5b57/\u5206\u949f\u4f30\u7b97\uff09");
     }
 
     // 3) 日期
     if (pubText) {
       sep();
-      dateSpan.appendChild(el("i", "anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"));
-      dateSpan.appendChild(el("time", "post-meta-date-created", pubText));
+      item("anzhiyu-icon-calendar-days", pubText, "\u6587\u7ae0\u53d1\u5e03\u4e8e " + pubText);
     }
 
-    // 4) IP 归属
+    // 4) IP 归属（悬停时补上运营商）
     sep();
-    dateSpan.appendChild(el("i", "anzhiyufont anzhiyu-icon-location-dot post-meta-icon"));
-    var loc = el("span", "post-meta-label ip-loc", "\u5b9a\u4f4d\u4e2d\u2026");
-    dateSpan.appendChild(loc);
+    var locEl = item("anzhiyu-icon-location-dot", "\u5b9a\u4f4d\u4e2d\u2026", "IP \u5f52\u5c5e\u83b7\u53d6\u4e2d\u2026");
 
     wc.dataset.mcMoved = "1";
     if (second) second.style.display = "none";
 
     resolveLocation()
       .then(function (v) {
-        loc.textContent = v;
-        loc.title = "IP \u5f52\u5c5e\uff1a" + v;
+        locEl.textContent = v.loc;
+        var t = "IP \u5f52\u5c5e\uff1a" + v.loc + (v.isp ? "\uff08" + v.isp + "\uff09" : "");
+        tip(locEl, t);
       })
       .catch(function () {
-        loc.textContent = "\u672a\u77e5";
-        loc.title = "IP \u5f52\u5c5e\u83b7\u53d6\u5931\u8d25";
-        log("ip location failed");
+        locEl.textContent = "\u672a\u77e5";
+        tip(locEl, "IP \u5f52\u5c5e\u83b7\u53d6\u5931\u8d25");
       });
   }
 

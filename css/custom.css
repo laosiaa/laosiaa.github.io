@@ -93,3 +93,51 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 @media screen and (max-width: 768px) {
   .post-meta-date.meta-inline { white-space: normal; }
 }
+
+/* 文章页元信息：数字悬停说明气泡 */
+.post-meta-date.meta-inline .post-meta-label[data-tip] {
+  position: relative;
+  cursor: help;
+}
+.post-meta-date.meta-inline .post-meta-label[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translate(-50%, 4px);
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  white-space: nowrap;
+  color: #fff;
+  background: rgba(20, 22, 30, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.16s ease, transform 0.16s ease;
+  z-index: 20;
+}
+.post-meta-date.meta-inline .post-meta-label[data-tip]::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 4px);
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: rgba(20, 22, 30, 0.94);
+  opacity: 0;
+  transition: opacity 0.16s ease;
+  z-index: 20;
+}
+.post-meta-date.meta-inline .post-meta-label[data-tip]:hover::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+.post-meta-date.meta-inline .post-meta-label[data-tip]:hover::before {
+  opacity: 1;
+}
+@media screen and (max-width: 768px) {
+  .post-meta-date.meta-inline .post-meta-label[data-tip]::after { display: none; }
+}
