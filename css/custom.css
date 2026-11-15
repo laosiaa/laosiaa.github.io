@@ -730,13 +730,16 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 /* 相册卡片网格：两列自适应，填满内容宽度 */
 #album .card-album {
   display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)) !important;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
   gap: 18px !important;
   margin-top: 6px;
 }
 #album .card-album .card {
   position: relative !important;
   display: block !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  margin: 0 !important;
   border-radius: 18px !important;
   overflow: hidden !important;
   aspect-ratio: 4 / 3;
