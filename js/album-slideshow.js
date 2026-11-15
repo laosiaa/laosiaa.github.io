@@ -1,8 +1,25 @@
-/*! 相册详情页：把图集改成幻灯片轮播（默认 5 秒自动切换） */
+/*! 相册详情页：幻灯片轮播（3 秒自动切换 + 每次不同的华丽转场） */
 (function () {
   "use strict";
 
-  var INTERVAL = 5000;
+  var INTERVAL = 3000;
+
+  // 轮换使用的转场（顺序循环，相邻两次必然不同）
+  var FX = [
+    "fade",      // 交叉淡入
+    "slide-in",  // 自右向左推入
+    "zoom-in",   // 放大冲入
+    "flip",      // 3D 横向翻页
+    "wipe",      // 左侧擦除展开
+    "blur",      // 模糊渐清
+    "circle",    // 圆形扩散
+    "slide-out", // 自左向右推入
+    "zoom-out",  // 缩小浮现
+    "rotate",    // 旋转甩入
+    "wipe-up",   // 自下而上擦除
+    "flip-v"     // 3D 纵向翻页
+  ];
+  var fxIdx = 0;
 
   function textOf(el, sel) {
     var n = el.querySelector(sel);
@@ -112,29 +129,45 @@
     var cur = 0;      // 当前显示在上层的图层
     var first = true; // 首帧直接显示，不做转场
 
-    function paint(i, dir) {
+    function reset(el) {
+      el.className = "alb-img nolazyload";
+      el.style.opacity = "";
+      el.style.transform = "";
+      el.style.clipPath = "";
+      el.style.filter = "";
+    }
+
+    function paint(i) {
       var s = slides[i];
       var inEl = first ? layers[0] : layers[1 - cur];
       var outEl = first ? layers[1] : layers[cur];
-      var d = dir >= 0 ? 1 : -1;
+      var fx = FX[fxIdx++ % FX.length];
 
       // 预加载下一张
       var nx = slides[(i + 1) % slides.length];
       if (nx) { var pre = new Image(); pre.src = nx.src; }
 
+      reset(inEl);
       inEl.src = s.src;
-      inEl.style.transition = "none";
-      inEl.style.opacity = "0";
-      inEl.style.transform = "translate3d(" + 46 * d + "px,0,0) scale(.985)";
-      void inEl.offsetWidth; // 强制重排，让转场生效
-      inEl.style.transition = "";
-      inEl.style.opacity = "1";
-      inEl.style.transform = "translate3d(0,0,0) scale(1)";
+      inEl.style.zIndex = "2";
+      outEl.style.zIndex = "1";
 
-      if (!first) {
-        outEl.style.opacity = "0";
-        outEl.style.transform = "translate3d(" + -46 * d + "px,0,0) scale(.985)";
+      if (first) {
+        inEl.style.opacity = "1";
+      } else {
+        inEl.classList.add("alb-fx", "alb-fx-" + fx);
       }
+
+      // 转场结束后收尾
+      window.setTimeout(function () {
+        reset(inEl);
+        inEl.style.opacity = "1";
+        inEl.style.zIndex = "2";
+        reset(outEl);
+        outEl.style.opacity = "0";
+        outEl.style.zIndex = "1";
+      }, 1050);
+
       cur = first ? 0 : 1 - cur;
       first = false;
 
@@ -155,14 +188,12 @@
       }
     }
 
-    function go(i, dir) {
-      var n = (i + slides.length) % slides.length;
-      var d = dir || (n > idx ? 1 : -1);
-      idx = n;
-      paint(idx, d);
+    function go(i) {
+      idx = (i + slides.length) % slides.length;
+      paint(idx);
     }
-    function next() { go(idx + 1, 1); }
-    function prev() { go(idx - 1, -1); }
+    function next() { go(idx + 1); }
+    function prev() { go(idx - 1); }
 
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function start() {
@@ -208,7 +239,7 @@
       if (document.hidden) stop(); else if (playing) start();
     });
 
-    paint(0, 1);
+    paint(0);
     start();
     return wrap;
   }

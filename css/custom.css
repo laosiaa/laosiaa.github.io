@@ -419,14 +419,14 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 
 /* ========== 相册页：顶部横幅隐形（保留高度，位置不变） ========== */
-#album .author-content-item.album {
+#album .author-content-item.album,
+#album_detail .author-content.author-content-item.album {
   visibility: hidden !important;
   background-image: none !important;
   background-color: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
 }
-
 /* ========== 相册详情页：幻灯片 ========== */
 #album_detail .alb-slides { margin: 6px 0 22px; display: flex; flex-direction: column; gap: 12px; }
 #album_detail .alb-stage {
@@ -435,14 +435,46 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   background: rgba(12, 14, 20, .72);
   box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
 }
-#album_detail .alb-stage { height: min(64vh, 600px); }
+#album_detail .alb-stage { height: min(64vh, 600px); perspective: 1500px; }
 #album_detail .alb-img {
-  position: absolute; inset: 0;
+  position: absolute; inset: 0; z-index: 1;
   width: 100%; height: 100%; object-fit: contain; display: block;
   background: rgba(8, 10, 14, .92); margin: 0 !important;
-  opacity: 0; will-change: opacity, transform;
-  transition: opacity .62s cubic-bezier(.22,.61,.36,1), transform .62s cubic-bezier(.22,.61,.36,1);
+  opacity: 0; will-change: opacity, transform, filter, clip-path;
 }
+
+/* ---------- 12 种转场（每次轮换一个） ---------- */
+#album_detail .alb-fx {
+  animation-duration: .8s;
+  animation-timing-function: cubic-bezier(.22,.7,.25,1);
+  animation-fill-mode: both;
+  backface-visibility: hidden;
+}
+@keyframes albFade     { from { opacity: 0 } to { opacity: 1 } }
+@keyframes albSlideIn  { from { opacity: 1; transform: translate3d(102%,0,0) } to { opacity: 1; transform: translate3d(0,0,0) } }
+@keyframes albSlideOut { from { opacity: 1; transform: translate3d(-102%,0,0) } to { opacity: 1; transform: translate3d(0,0,0) } }
+@keyframes albZoomIn   { from { opacity: .25; transform: scale(1.25) } to { opacity: 1; transform: scale(1) } }
+@keyframes albZoomOut  { from { opacity: .15; transform: scale(.76) } to { opacity: 1; transform: scale(1) } }
+@keyframes albFlip     { from { opacity: .35; transform: rotateY(-92deg) scale(.94) } to { opacity: 1; transform: rotateY(0) scale(1) } }
+@keyframes albFlipV    { from { opacity: .35; transform: rotateX(88deg) scale(.94) } to { opacity: 1; transform: rotateX(0) scale(1) } }
+@keyframes albWipe     { from { opacity: 1; clip-path: inset(0 100% 0 0) } to { opacity: 1; clip-path: inset(0 0 0 0) } }
+@keyframes albWipeUp   { from { opacity: 1; clip-path: inset(100% 0 0 0) } to { opacity: 1; clip-path: inset(0 0 0 0) } }
+@keyframes albCircle   { from { opacity: 1; clip-path: circle(0% at 50% 45%) } to { opacity: 1; clip-path: circle(88% at 50% 45%) } }
+@keyframes albBlur     { from { opacity: .2; filter: blur(20px) saturate(1.4) } to { opacity: 1; filter: blur(0) saturate(1) } }
+@keyframes albRotate   { from { opacity: .2; transform: rotate(-9deg) scale(1.2) } to { opacity: 1; transform: rotate(0) scale(1) } }
+
+#album_detail .alb-fx-fade      { animation-name: albFade }
+#album_detail .alb-fx-slide-in  { animation-name: albSlideIn }
+#album_detail .alb-fx-slide-out { animation-name: albSlideOut }
+#album_detail .alb-fx-zoom-in   { animation-name: albZoomIn }
+#album_detail .alb-fx-zoom-out  { animation-name: albZoomOut }
+#album_detail .alb-fx-flip      { animation-name: albFlip; transform-origin: 50% 50% }
+#album_detail .alb-fx-flip-v    { animation-name: albFlipV; transform-origin: 50% 50% }
+#album_detail .alb-fx-wipe      { animation-name: albWipe }
+#album_detail .alb-fx-wipe-up   { animation-name: albWipeUp }
+#album_detail .alb-fx-circle    { animation-name: albCircle }
+#album_detail .alb-fx-blur      { animation-name: albBlur }
+#album_detail .alb-fx-rotate    { animation-name: albRotate }
 #album_detail .alb-cap-in { animation: albCapIn .55s cubic-bezier(.22,.61,.36,1) both; }
 @keyframes albCapIn {
   from { opacity: 0; transform: translateY(10px); }
