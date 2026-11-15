@@ -126,8 +126,9 @@
     var idx = 0;
     var timer = null;
     var playing = true;
-    var cur = 0;      // 当前显示在上层的图层
-    var first = true; // 首帧直接显示，不做转场
+    var cur = 0;      // 当前显示的图层
+    var first = true; // 首帧不做转场
+    var gen = 0;      // 转场代号
 
     function reset(el) {
       el.className = "alb-img nolazyload";
@@ -142,6 +143,7 @@
       var inEl = first ? layers[0] : layers[1 - cur];
       var outEl = first ? layers[1] : layers[cur];
       var fx = FX[fxIdx++ % FX.length];
+      var my = ++gen; // 代号，防止上一轮的收尾把这一轮清掉
 
       // 预加载下一张
       var nx = slides[(i + 1) % slides.length];
@@ -158,15 +160,20 @@
         inEl.classList.add("alb-fx", "alb-fx-" + fx);
       }
 
-      // 转场结束后收尾
-      window.setTimeout(function () {
+      // 转场结束后收尾（animationend + 兜底定时器，且只对当前这一轮生效）
+      var finish = function () {
+        if (my !== gen) return;
         reset(inEl);
         inEl.style.opacity = "1";
         inEl.style.zIndex = "2";
         reset(outEl);
         outEl.style.opacity = "0";
         outEl.style.zIndex = "1";
-      }, 1050);
+      };
+      if (!first) {
+        inEl.addEventListener("animationend", finish, { once: true });
+        window.setTimeout(finish, 1100);
+      }
 
       cur = first ? 0 : 1 - cur;
       first = false;
