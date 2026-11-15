@@ -966,65 +966,91 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 #page #article-container blockquote p::before,
 #page #article-container blockquote p::after { content: none !important; }
 
-/* ========== 首页分类按钮：统一为玻璃质感（只保留低饱和点缀色） ========== */
+/* ========== 首页分类按钮：科技动图背景 + 恢复原字号 ========== */
 #home_top .categoryGroup { gap: 12px !important; }
 #home_top .categoryGroup .categoryItem { box-shadow: none !important; background: transparent !important; }
 
 #home_top .categoryButton {
   position: relative;
-  display: inline-flex !important; align-items: center; gap: 10px;
-  padding: 9px 18px !important;
+  display: flex !important;
+  align-items: center;
+  height: 100% !important;
+  padding: 0 0 0 24px !important;
   border-radius: 14px !important;
-  background: rgba(255, 255, 255, .055) !important;
-  border: 1px solid rgba(255, 255, 255, .10) !important;
-  color: rgba(255, 255, 255, .86) !important;
-  box-shadow: none !important;
-  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, .12) !important;
+  background-color: #0b1018 !important;
+  background-image: url("https://img.521251.xyz/file/bg/1794707816948_tech-cat-anim.webp") !important;
+  background-size: cover !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .28) !important;
   overflow: hidden;
-  transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease;
-}
-#home_top .categoryButton::before {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: radial-gradient(120% 160% at 0% 50%, var(--cat-tint, rgba(255,255,255,.10)), transparent 62%);
-  opacity: .55;
-  transition: opacity .22s ease;
-}
-#home_top .categoryButton .categoryButtonText {
-  position: relative; z-index: 1;
-  font-size: 13.5px !important; font-weight: 600;
-  letter-spacing: .01em;
-  color: rgba(255, 255, 255, .88) !important;
-}
-/* 主题字体里没有这几个图标的字形，会渲染成下划线占位，直接换成发光圆点 */
-#home_top .categoryButton i { display: none !important; }
-#home_top .categoryButton .categoryButtonText::before {
-  content: ""; display: inline-block;
-  width: 6px; height: 6px; border-radius: 50%;
-  background: var(--cat, #fff);
-  box-shadow: 0 0 10px var(--cat, #fff);
-  margin-right: 9px; vertical-align: 2px;
-  opacity: .9;
-  transition: box-shadow .22s ease, transform .22s ease;
-}
-#home_top .categoryButton:hover .categoryButtonText::before {
-  box-shadow: 0 0 14px var(--cat, #fff);
-  transform: scale(1.15);
+  transform: none;
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
 }
 
-#home_top .categoryButton.blue  { --cat: #6f9bff; --cat-tint: rgba(80, 120, 255, .26); }
-#home_top .categoryButton.red   { --cat: #fc466b; --cat-tint: rgba(252, 70, 107, .26); }
-#home_top .categoryButton.green { --cat: #2fd6a6; --cat-tint: rgba(47, 214, 166, .22); }
+/* 文字区压暗，保证任何帧都读得清 */
+#home_top .categoryButton::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background: linear-gradient(100deg,
+      rgba(6, 9, 16, .86) 0%,
+      rgba(6, 9, 16, .62) 42%,
+      rgba(6, 9, 16, .18) 78%,
+      rgba(6, 9, 16, 0) 100%);
+  transition: opacity .25s ease;
+}
+
+#home_top .categoryButton .categoryButtonText {
+  position: relative; z-index: 1;
+  padding-left: 0 !important;
+  font-size: 1.1rem !important;
+  font-weight: 700 !important;
+  line-height: 1.25 !important;
+  letter-spacing: .01em;
+  color: #fff !important;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .7);
+}
+#home_top .categoryButton .categoryButtonText::before { content: none !important; }
+
+/* 左侧点缀短线（替代主题原来的白线） */
+#home_top .categoryButton::after {
+  content: ""; position: absolute; z-index: 1;
+  left: 24px; bottom: 24px;
+  width: 20px; height: 2px; border-radius: 2px;
+  background: var(--cat, #fff);
+  box-shadow: 0 0 12px var(--cat, #fff);
+  opacity: .9;
+}
+
+/* 右侧大图标：恢复但收敛 */
+#home_top .categoryButton i {
+  display: block !important;
+  position: absolute !important;
+  right: 6px; top: 50%;
+  transform: translateY(-50%) rotate(12deg);
+  font-size: 3.2rem !important;
+  opacity: .22;
+  filter: blur(1px);
+  color: var(--cat, #fff) !important;
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+}
+
+#home_top .categoryButton.blue  { --cat: #6f9bff; }
+#home_top .categoryButton.red   { --cat: #fc466b; }
+#home_top .categoryButton.green { --cat: #2fd6a6; }
 
 #home_top .categoryButton:hover {
   transform: translateY(-2px);
-  background: rgba(255, 255, 255, .09) !important;
   border-color: var(--cat) !important;
-  box-shadow: 0 10px 26px rgba(0, 0, 0, .32) !important;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, .38) !important;
 }
-#home_top .categoryButton:hover::before { opacity: .9; }
-#home_top .categoryButton:hover i { transform: translateX(2px) scale(1.06); }
+#home_top .categoryButton:hover::before { opacity: .82; }
+#home_top .categoryButton:hover i { opacity: .4; transform: translateY(-50%) rotate(0) scale(1.06); }
 
 @media screen and (max-width: 768px) {
-  #home_top .categoryButton { padding: 8px 14px !important; border-radius: 12px !important; }
-  #home_top .categoryButton .categoryButtonText { font-size: 12.5px !important; }
+  #home_top .categoryButton { padding-left: 18px !important; }
+  #home_top .categoryButton .categoryButtonText { font-size: 1rem !important; }
+  #home_top .categoryButton::after { left: 18px; bottom: 18px; width: 16px; }
+  #home_top .categoryButton i { font-size: 2.4rem !important; }
 }
