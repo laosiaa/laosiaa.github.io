@@ -1426,10 +1426,11 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
 
 /* 相册详情：返回按钮放在幻灯片右上角 */
 #album_detail { position: relative; }
+#album_detail .author-content { position: relative; }
 #album_detail .alb-stage { position: relative; }
 #album_detail .alb-back {
   position: absolute;
-  top: 16px; right: 0;
+  bottom: 14px; right: 0;
   z-index: 6;
   display: inline-flex; align-items: center; gap: 5px;
   padding: 7px 16px; border-radius: 999px;
@@ -1448,5 +1449,5 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   transform: translateX(-2px);
 }
 @media screen and (max-width: 768px) {
-  #album_detail .alb-back { top: 10px; right: 10px; padding: 6px 13px; font-size: 12.5px; }
+  #album_detail .alb-back { bottom: 10px; right: 8px; padding: 6px 13px; font-size: 12.5px; }
 }

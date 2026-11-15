@@ -296,7 +296,8 @@
       if (window.pjax && window.pjax.loadUrl) window.pjax.loadUrl(url);
       else window.location.href = url;
     });
-    root.appendChild(backEl);
+    var headerBox = root.querySelector(".author-content") || root;
+    headerBox.appendChild(backEl);
     root.dataset.albSlides = "1";
   }
 
