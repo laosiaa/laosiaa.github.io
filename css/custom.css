@@ -1109,8 +1109,13 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   left: auto !important;
   width: 100% !important;
   height: auto !important;
-  /* 左右边距由 post-header-align.js 量出正文主栏后写入变量，保证同栅格 */
-  padding: 46px var(--col-right, 24px) 67px var(--col-left, 24px) !important;
+  /* 宽度/左边距由 post-header-align.js 量出正文主栏后写入变量，保证同栅格 */
+  width: var(--col-w, 100%) !important;
+  max-width: var(--col-w, 100%) !important;
+  margin-left: var(--col-left, 0px) !important;
+  margin-right: 0 !important;
+  padding: 46px 0 67px 0 !important;
+  box-sizing: border-box !important;
   margin: 0 !important;
   text-align: left;
   background: transparent !important;
