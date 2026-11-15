@@ -922,3 +922,28 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   .bgm-meta { padding: 8px 9px 10px; }
   .bgm-title { font-size: 12.5px; }
 }
+
+/* 追番页：两个板块 */
+.bgm-page { display: block; }
+.bgm-sec { margin-bottom: 34px; }
+.bgm-sec:last-child { margin-bottom: 4px; }
+.bgm-sec-head {
+  display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+  margin: 2px 0 16px;
+}
+.bgm-sec-head h2 {
+  margin: 0 !important;
+  font-size: 19px; font-weight: 700; letter-spacing: .01em;
+  color: #fff !important;
+  padding-left: 12px; position: relative;
+}
+.bgm-sec-head h2::before {
+  content: ""; position: absolute; left: 0; top: 50%;
+  width: 3px; height: 16px; border-radius: 3px; transform: translateY(-50%);
+  background: linear-gradient(180deg, #fc466b, #7b8cff);
+}
+.bgm-sec-head span {
+  font-size: 12.5px; color: rgba(255, 255, 255, .45);
+}
+.bgm-tab-body { display: block; }
+.bgm-empty { color: rgba(255, 255, 255, .4); font-size: 13px; padding: 18px 4px; }

@@ -1,11 +1,18 @@
-/*! 追番页：把插件渲染的长列表改造成海报网格 + 胶囊标签 */
+/*! 追番页：好番推荐 + 我的追番（海报网格） */
 (function () {
   "use strict";
 
   var DATA_URL = "/bangumis/data.json";
+  var REC_URL = "/bangumis/recommend.json";
 
   function txt(el) {
     return el ? (el.textContent || "").replace(/\s+/g, " ").trim() : "";
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
   }
 
   function card(it) {
@@ -16,61 +23,47 @@
     a.rel = "noopener";
     a.title = it.title + (it.des ? "\n" + it.des : "");
 
-    var badge = it.status
-      ? '<span class="bgm-badge' + (/^更新至/.test(it.status) ? " onair" : "") + '">' + it.status + "</span>"
+    var status = it.status || it.ep_status || "";
+    var onair = /^更新至|^连载/.test(status);
+    var badge = status
+      ? '<span class="bgm-badge' + (onair ? " onair" : "") + '">' + esc(status) + "</span>"
       : "";
     var hasScore = it.score && it.score !== "-";
-    var sc = '<span class="bgm-score' + (hasScore ? "" : " dim") + '">' + (hasScore ? it.score : "—") + "</span>";
+    var sc = '<span class="bgm-score' + (hasScore ? "" : " dim") + '">' + (hasScore ? esc(it.score) : "—") + "</span>";
 
     a.innerHTML =
       '<div class="bgm-cover">' +
-      '<img class="nolazyload" src="' + (it.cover || "") + '" alt="' + (it.title || "") +
+      '<img class="nolazyload" src="' + esc(it.cover) + '" alt="' + esc(it.title) +
       '" referrerpolicy="no-referrer" loading="lazy">' +
       badge + sc +
       "</div>" +
       '<div class="bgm-meta">' +
-      '<p class="bgm-title">' + (it.title || "") + "</p>" +
-      (it.area ? '<p class="bgm-sub">' + it.area + "</p>" : "") +
+      '<p class="bgm-title">' + esc(it.title) + "</p>" +
+      (it.area ? '<p class="bgm-sub">' + esc(it.area) + "</p>" : "") +
       "</div>";
     return a;
   }
 
-  function build(groups) {
-    var wrap = document.createElement("div");
-    wrap.className = "bgm-wrap";
-
-    var bar = document.createElement("div");
-    bar.className = "bgm-tabs";
-    var grid = document.createElement("div");
-    grid.className = "bgm-grid";
-
-    function render(items) {
-      grid.innerHTML = "";
-      if (!items.length) {
-        grid.innerHTML = '<p class="bgm-empty">这里还空着~</p>';
-        return;
-      }
-      var frag = document.createDocumentFragment();
-      items.forEach(function (it) { frag.appendChild(card(it)); });
-      grid.appendChild(frag);
+  function grid(items) {
+    var g = document.createElement("div");
+    g.className = "bgm-grid";
+    if (!items.length) {
+      g.innerHTML = '<p class="bgm-empty">这里还空着~</p>';
+      return g;
     }
+    var frag = document.createDocumentFragment();
+    items.forEach(function (it) { frag.appendChild(card(it)); });
+    g.appendChild(frag);
+    return g;
+  }
 
-    groups.forEach(function (g, i) {
-      var b = document.createElement("button");
-      b.className = "bgm-tab" + (i === 0 ? " active" : "");
-      b.innerHTML = g.label + '<span class="bgm-tab-n">' + g.items.length + "</span>";
-      b.addEventListener("click", function () {
-        Array.prototype.forEach.call(bar.children, function (x) { x.classList.remove("active"); });
-        b.classList.add("active");
-        render(g.items);
-      });
-      bar.appendChild(b);
-    });
-
-    wrap.appendChild(bar);
-    wrap.appendChild(grid);
-    render(groups[0].items);
-    return wrap;
+  function section(title, sub) {
+    var s = document.createElement("section");
+    s.className = "bgm-sec";
+    s.innerHTML =
+      '<div class="bgm-sec-head"><h2>' + esc(title) + "</h2>" +
+      (sub ? "<span>" + esc(sub) + "</span>" : "") + "</div>";
+    return s;
   }
 
   function normalize(b) {
@@ -85,10 +78,35 @@
     };
   }
 
+  function tabs(groups) {
+    var bar = document.createElement("div");
+    bar.className = "bgm-tabs";
+    var holder = document.createElement("div");
+    holder.className = "bgm-tab-body";
+
+    function show(items) {
+      holder.innerHTML = "";
+      holder.appendChild(grid(items));
+    }
+
+    groups.forEach(function (g, i) {
+      var b = document.createElement("button");
+      b.className = "bgm-tab" + (i === 0 ? " active" : "");
+      b.innerHTML = esc(g.label) + '<span class="bgm-tab-n">' + g.items.length + "</span>";
+      b.addEventListener("click", function () {
+        Array.prototype.forEach.call(bar.children, function (x) { x.classList.remove("active"); });
+        b.classList.add("active");
+        show(g.items);
+      });
+      bar.appendChild(b);
+    });
+    show(groups[0].items);
+    return { bar: bar, body: holder };
+  }
+
   function fromJson(d) {
     var all = [].concat(d.wantWatch || [], d.watching || [], d.watched || []);
-    var seen = {};
-    var uniq = [];
+    var seen = {}, uniq = [];
     all.forEach(function (b) {
       if (!b || !b.title || seen[b.title]) return;
       seen[b.title] = 1;
@@ -104,8 +122,7 @@
 
   function fromDom() {
     var root = document.getElementById("article-container");
-    var seen = {};
-    var uniq = [];
+    var seen = {}, uniq = [];
     Array.prototype.forEach.call(root.querySelectorAll(".bangumi-item"), function (item) {
       var a = item.querySelector(".bangumi-title a") || item.querySelector(".bangumi-picture a");
       var picA = item.querySelector(".bangumi-picture a");
@@ -144,14 +161,38 @@
     if (!root.querySelector(".bangumi-item")) return;
     root.dataset.bgmGrid = "1";
 
-    fetch(DATA_URL, { cache: "no-store" })
+    var mineP = fetch(DATA_URL, { cache: "no-store" })
       .then(function (r) { return r.ok ? r.json() : Promise.reject(0); })
       .then(fromJson)
-      .catch(fromDom)
-      .then(function (groups) {
-        hideOriginal(root);
-        root.appendChild(build(groups));
-      });
+      .catch(fromDom);
+
+    var recP = fetch(REC_URL, { cache: "no-store" })
+      .then(function (r) { return r.ok ? r.json() : Promise.reject(0); })
+      .then(function (list) { return (list || []).map(normalize); })
+      .catch(function () { return []; });
+
+    Promise.all([mineP, recP]).then(function (res) {
+      var mine = res[0];
+      var rec = res[1];
+      hideOriginal(root);
+
+      var page = document.createElement("div");
+      page.className = "bgm-page";
+
+      if (rec.length) {
+        var s1 = section("好番推荐", "评分 9.0 以上的国创 · 每天自动更新");
+        s1.appendChild(grid(rec));
+        page.appendChild(s1);
+      }
+
+      var s2 = section("我的追番", "共 " + mine[0].items.length + " 部");
+      var t = tabs(mine);
+      s2.appendChild(t.bar);
+      s2.appendChild(t.body);
+      page.appendChild(s2);
+
+      root.appendChild(page);
+    });
   }
 
   function boot() {
