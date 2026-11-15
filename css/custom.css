@@ -1109,7 +1109,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   left: auto !important;
   width: 100% !important;
   height: auto !important;
-  padding: 46px 24px 10px !important;
+  padding: 46px 24px 58px !important;
   padding-left: calc(max(24px, (100vw - 1400px) / 2 + 19px)) !important;
   padding-right: calc(max(24px, (100vw - 1400px) / 2 + 19px)) !important;
   margin: 0 !important;
@@ -1159,6 +1159,8 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #article-container img.keep-full { height: 300px !important; }
 }
 
+/* 正文卡片下移到页头背景之下，与标题拉开距离 */
+#page-header.post-bg { margin-bottom: 28px !important; }
 /* 页头动感背景画布 */
 #page-header.post-bg { position: relative; overflow: hidden; }
 #page-header.post-bg #post-header-canvas {
