@@ -1126,3 +1126,23 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #page-header.post-bg #post-top-cover #post-top-bg { height: 240px !important; }
   #page-header.post-bg #post-info { padding: 16px 16px 6px !important; }
 }
+
+/* ========== 文章正文图片：统一高度（约为原来的 3/4） ========== */
+#article-container img:not(.no-lightbox):not(.emoji) {
+  height: 460px !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  border-radius: 12px;
+  margin: 12px auto !important;
+  display: block;
+}
+/* 正文里的小图标 / 徽章不参与 */
+#article-container img.emoji,
+#article-container img[src*=".svg"] { height: auto !important; width: auto !important; }
+/* 正文首图若与页头封面重复，由脚本隐藏 */
+#article-container .post-cover-dup { display: none !important; }
+
+@media screen and (max-width: 768px) {
+  #article-container img:not(.no-lightbox):not(.emoji) { height: 300px !important; }
+}
