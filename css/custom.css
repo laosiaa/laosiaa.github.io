@@ -1336,3 +1336,37 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 [data-theme="light"] .bgm-tab-n { background: rgba(0, 0, 0, .12); }
 [data-theme="light"] #page #article-container blockquote * { color: #40454f !important; }
 
+/* ========== 好番推荐：查看更多按钮 + 独立页面 ========== */
+.bgm-sec-head { position: relative; }
+.bgm-more-link {
+  margin-left: auto;
+  display: inline-flex; align-items: center; gap: 4px;
+  padding: 6px 16px; border-radius: 999px;
+  font-size: 13px; font-weight: 600; text-decoration: none !important;
+  color: #7b8cff; border: 1px solid rgba(123, 140, 255, .38);
+  background: rgba(123, 140, 255, .10);
+  transition: all .18s ease; white-space: nowrap;
+}
+.bgm-more-link i { font-style: normal; font-size: 15px; line-height: 1; }
+.bgm-more-link:hover { background: rgba(123, 140, 255, .2); transform: translateX(2px); }
+[data-theme="light"] .bgm-more-link { color: #425aef; border-color: rgba(66, 90, 239, .3); background: rgba(66, 90, 239, .08); }
+[data-theme="light"] .bgm-more-link:hover { background: rgba(66, 90, 239, .16); }
+
+/* 独立推荐页 */
+.rec-page { display: block; }
+.rec-bar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  flex-wrap: wrap; margin: 6px 0 18px; font-size: 13.5px; opacity: .82;
+}
+.rec-bar b { font-weight: 700; opacity: 1; }
+.rec-tip { font-size: 12.5px; opacity: .7; }
+.rec-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin: 22px 0 4px; padding: 8px 18px; border-radius: 999px; text-decoration: none !important;
+  font-size: 13px; border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .06);
+}
+[data-theme="light"] .rec-back { border-color: rgba(0, 0, 0, .12); background: rgba(0, 0, 0, .04); color: #333; }
+@media screen and (max-width: 768px) {
+  .bgm-more-link { margin-left: 0; }
+  .rec-bar { font-size: 12.5px; }
+}

@@ -260,7 +260,13 @@
           return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
         });
         var s1 = section("好番推荐", sorted.length + " 部评分 8.0 以上的国创 · 每天自动更新");
-        s1.appendChild(pagedView(sorted, REC_INITIAL, PAGE_SIZE));
+        var head = s1.querySelector(".bgm-sec-head");
+        var moreLink = document.createElement("a");
+        moreLink.className = "bgm-more-link";
+        moreLink.href = "/recommend/";
+        moreLink.innerHTML = "查看更多 <i>›</i>";
+        head.appendChild(moreLink);
+        s1.appendChild(grid(sorted.slice(0, REC_INITIAL)));
         page.appendChild(s1);
       }
 
