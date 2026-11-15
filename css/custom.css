@@ -1392,10 +1392,10 @@ body:has(#rec-page) .comment-head { display: none !important; }
 .rec-bar .rec-back-top:hover { background: rgba(123, 140, 255, .18); border-color: rgba(123, 140, 255, .4); }
 
 /* 好番推荐 / 我的追番 独立页：卡片高度收窄 */
-.rec-page .bgm-cover { aspect-ratio: 4 / 3.3 !important; }
+.rec-page .bgm-cover { aspect-ratio: 4 / 4.2 !important; }
 .rec-page .bgm-card .bgm-cover img { object-fit: cover; }
 .rec-page .bgm-meta { padding: 7px 9px 8px !important; }
 .rec-page .bgm-title { font-size: 13.5px !important; line-height: 1.35 !important; }
 @media screen and (max-width: 768px) {
-  .rec-page .bgm-cover { aspect-ratio: 4 / 3.8 !important; }
+  .rec-page .bgm-cover { aspect-ratio: 4 / 4.6 !important; }
 }
