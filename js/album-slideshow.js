@@ -68,7 +68,7 @@
     wrap.className = "alb-slides";
     wrap.innerHTML =
       '<div class="alb-stage">' +
-      '<img class="alb-img" alt="">' +
+      '<img class="alb-img nolazyload" alt="">' +
       '<button class="alb-nav alb-prev" aria-label="上一张">‹</button>' +
       '<button class="alb-nav alb-next" aria-label="下一张">›</button>' +
       '<div class="alb-cap"><span class="alb-cap-main"></span><span class="alb-cap-meta"></span></div>' +
@@ -92,6 +92,7 @@
       b.className = "alb-thumb" + (i === 0 ? " active" : "");
       b.setAttribute("aria-label", "第 " + (i + 1) + " 张");
       var timg = document.createElement("img");
+      timg.className = "nolazyload";
       timg.src = s.thumb;
       timg.alt = "";
       timg.loading = "eager";
