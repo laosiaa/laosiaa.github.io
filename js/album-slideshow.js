@@ -73,6 +73,7 @@
     wrap.innerHTML =
       '<div class="alb-stage">' +
       '<img class="alb-img nolazyload" alt="">' +
+      '<img class="alb-img nolazyload" alt="">' +
       '<button class="alb-nav alb-prev" aria-label="上一张">‹</button>' +
       '<button class="alb-nav alb-next" aria-label="下一张">›</button>' +
       '<div class="alb-cap"><span class="alb-cap-main"></span><span class="alb-cap-meta"></span></div>' +
@@ -84,7 +85,8 @@
       "</div>";
 
     var stage = wrap.querySelector(".alb-stage");
-    var img = wrap.querySelector(".alb-img");
+    var layers = wrap.querySelectorAll(".alb-img");
+    var capBox = wrap.querySelector(".alb-cap");
     var capMain = wrap.querySelector(".alb-cap-main");
     var capMeta = wrap.querySelector(".alb-cap-meta");
     var counter = wrap.querySelector(".alb-count");
@@ -107,19 +109,42 @@
     var idx = 0;
     var timer = null;
     var playing = true;
+    var cur = 0;      // 当前显示在上层的图层
+    var first = true; // 首帧直接显示，不做转场
 
-    function render(i) {
+    function paint(i, dir) {
       var s = slides[i];
-      img.classList.add("fade");
-      img.src = s.src;
-      img.onload = function () { img.classList.remove("fade"); };
-      img.onerror = function () { img.classList.remove("fade"); };
+      var inEl = first ? layers[0] : layers[1 - cur];
+      var outEl = first ? layers[1] : layers[cur];
+      var d = dir >= 0 ? 1 : -1;
+
       // 预加载下一张
       var nx = slides[(i + 1) % slides.length];
       if (nx) { var pre = new Image(); pre.src = nx.src; }
+
+      inEl.src = s.src;
+      inEl.style.transition = "none";
+      inEl.style.opacity = "0";
+      inEl.style.transform = "translate3d(" + 46 * d + "px,0,0) scale(.985)";
+      void inEl.offsetWidth; // 强制重排，让转场生效
+      inEl.style.transition = "";
+      inEl.style.opacity = "1";
+      inEl.style.transform = "translate3d(0,0,0) scale(1)";
+
+      if (!first) {
+        outEl.style.opacity = "0";
+        outEl.style.transform = "translate3d(" + -46 * d + "px,0,0) scale(.985)";
+      }
+      cur = first ? 0 : 1 - cur;
+      first = false;
+
       capMain.textContent = s.cap || "";
       capMeta.textContent = s.meta || "";
-      wrap.querySelector(".alb-cap").style.display = s.cap || s.meta ? "" : "none";
+      capBox.style.display = s.cap || s.meta ? "" : "none";
+      capBox.classList.remove("alb-cap-in");
+      void capBox.offsetWidth;
+      capBox.classList.add("alb-cap-in");
+
       counter.innerHTML = "<b>" + (i + 1) + "</b> / " + slides.length;
       Array.prototype.forEach.call(thumbEls, function (t, k) {
         t.classList.toggle("active", k === i);
@@ -130,12 +155,14 @@
       }
     }
 
-    function go(i) {
-      idx = (i + slides.length) % slides.length;
-      render(idx);
+    function go(i, dir) {
+      var n = (i + slides.length) % slides.length;
+      var d = dir || (n > idx ? 1 : -1);
+      idx = n;
+      paint(idx, d);
     }
-    function next() { go(idx + 1); }
-    function prev() { go(idx - 1); }
+    function next() { go(idx + 1, 1); }
+    function prev() { go(idx - 1, -1); }
 
     function stop() { if (timer) { clearInterval(timer); timer = null; } }
     function start() {
@@ -181,7 +208,7 @@
       if (document.hidden) stop(); else if (playing) start();
     });
 
-    render(0);
+    paint(0, 1);
     start();
     return wrap;
   }

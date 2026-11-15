@@ -435,12 +435,19 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   background: rgba(12, 14, 20, .72);
   box-shadow: 0 12px 34px rgba(0, 0, 0, .28);
 }
+#album_detail .alb-stage { height: min(64vh, 600px); }
 #album_detail .alb-img {
-  width: 100%; height: min(64vh, 600px); object-fit: contain; display: block;
-  background: rgba(8, 10, 14, .9); margin: 0 !important;
-  transition: opacity .35s ease;
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: contain; display: block;
+  background: rgba(8, 10, 14, .92); margin: 0 !important;
+  opacity: 0; will-change: opacity, transform;
+  transition: opacity .62s cubic-bezier(.22,.61,.36,1), transform .62s cubic-bezier(.22,.61,.36,1);
 }
-#album_detail .alb-img.fade { opacity: .25; }
+#album_detail .alb-cap-in { animation: albCapIn .55s cubic-bezier(.22,.61,.36,1) both; }
+@keyframes albCapIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 #album_detail .alb-nav {
   position: absolute; top: 50%; transform: translateY(-50%);
@@ -497,7 +504,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 #album_detail .alb-thumb.active { opacity: 1; border-color: #fc466b; }
 
 @media screen and (max-width: 768px) {
-  #album_detail .alb-img { height: 46vh; }
+  #album_detail .alb-stage { height: 46vh; }
   #album_detail .alb-nav { width: 36px; height: 36px; font-size: 20px; }
   #album_detail .alb-prev { left: 8px; }
   #album_detail .alb-next { right: 8px; }
