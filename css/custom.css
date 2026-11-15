@@ -1159,6 +1159,19 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #article-container img.keep-full { height: 300px !important; }
 }
 
+/* 页头动感背景画布 */
+#page-header.post-bg { position: relative; overflow: hidden; }
+#page-header.post-bg #post-header-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.95;
+}
+#page-header.post-bg #post-info { position: relative; z-index: 1; }
+
 /* ========== 顶部封面：不显示图片，保持透明背景 ========== */
 #page-header.post-bg #post-top-cover { display: none !important; }
 #page-header.post-bg { background: transparent !important; padding-top: 64px; }
