@@ -91,14 +91,7 @@
       var b = document.createElement("button");
       b.className = "alb-thumb" + (i === 0 ? " active" : "");
       b.setAttribute("aria-label", "第 " + (i + 1) + " 张");
-      var timg = document.createElement("img");
-      timg.className = "nolazyload";
-      timg.src = s.thumb;
-      timg.alt = "";
-      timg.loading = "eager";
-      timg.decoding = "async";
-      timg.referrerPolicy = "no-referrer";
-      b.appendChild(timg);
+      b.style.backgroundImage = "url('" + s.thumb + "')";
       b.addEventListener("click", function () {
         go(i);
         restart();
