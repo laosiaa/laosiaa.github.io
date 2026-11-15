@@ -1110,8 +1110,8 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   width: 100% !important;
   height: auto !important;
   padding: 22px 24px 8px !important;
-  padding-left: calc(max(0px, (100vw - 1400px) / 2) + 65px) !important;
-  padding-right: calc(max(0px, (100vw - 1400px) / 2) + 65px) !important;
+  padding-left: calc(max(0px, (100vw - 1400px) / 2) + 60px) !important;
+  padding-right: calc(max(0px, (100vw - 1400px) / 2) + 60px) !important;
   margin: 0 !important;
   text-align: left;
   background: transparent !important;
