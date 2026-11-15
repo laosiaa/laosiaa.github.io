@@ -1193,3 +1193,40 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 #page-header.post-bg #post-top-cover { display: none !important; }
 #page-header.post-bg { background: transparent !important; padding-top: 64px; }
 #page-header.post-bg .main-hero-waves-area { display: none !important; }
+
+/* ========== 友链页卡片：加宽，避免名字被截断 ========== */
+.flink .anzhiyu-flink-list {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 14px !important;
+}
+.flink .anzhiyu-flink-list .flink-list-item {
+  width: calc((100% - 14px) / 2) !important;
+  height: auto !important;
+  min-height: 92px !important;
+  margin: 0 !important;
+  float: none !important;
+}
+.flink .anzhiyu-flink-list .flink-list-item a.cf-friends-link {
+  height: 100% !important;
+  align-items: center !important;
+}
+.flink .anzhiyu-flink-list .flink-item-name {
+  font-size: 16px !important;
+  line-height: 1.35 !important;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+}
+.flink .anzhiyu-flink-list .flink-item-desc {
+  font-size: 12.5px !important;
+  line-height: 1.4 !important;
+  white-space: normal !important;
+  overflow: hidden !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+@media screen and (max-width: 768px) {
+  .flink .anzhiyu-flink-list .flink-list-item { width: 100% !important; }
+}
