@@ -965,3 +965,57 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 #page #article-container blockquote p::before,
 #page #article-container blockquote p::after { content: none !important; }
+
+/* ========== 首页分类按钮：统一为玻璃质感（只保留低饱和点缀色） ========== */
+#home_top .categoryGroup { gap: 12px !important; }
+#home_top .categoryGroup .categoryItem { box-shadow: none !important; background: transparent !important; }
+
+#home_top .categoryButton {
+  position: relative;
+  display: inline-flex !important; align-items: center; gap: 10px;
+  padding: 9px 18px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, .055) !important;
+  border: 1px solid rgba(255, 255, 255, .10) !important;
+  color: rgba(255, 255, 255, .86) !important;
+  box-shadow: none !important;
+  backdrop-filter: blur(10px);
+  overflow: hidden;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease;
+}
+#home_top .categoryButton::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 160% at 0% 50%, var(--cat-tint, rgba(255,255,255,.10)), transparent 62%);
+  opacity: .55;
+  transition: opacity .22s ease;
+}
+#home_top .categoryButton .categoryButtonText {
+  position: relative; z-index: 1;
+  font-size: 13.5px !important; font-weight: 600;
+  letter-spacing: .01em;
+  color: rgba(255, 255, 255, .88) !important;
+}
+#home_top .categoryButton i {
+  position: relative; z-index: 1;
+  font-size: 15px !important;
+  color: var(--cat, rgba(255, 255, 255, .8)) !important;
+  transition: transform .22s ease;
+}
+
+#home_top .categoryButton.blue  { --cat: #6f9bff; --cat-tint: rgba(80, 120, 255, .26); }
+#home_top .categoryButton.red   { --cat: #fc466b; --cat-tint: rgba(252, 70, 107, .26); }
+#home_top .categoryButton.green { --cat: #2fd6a6; --cat-tint: rgba(47, 214, 166, .22); }
+
+#home_top .categoryButton:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, .09) !important;
+  border-color: var(--cat) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .32) !important;
+}
+#home_top .categoryButton:hover::before { opacity: .9; }
+#home_top .categoryButton:hover i { transform: translateX(2px) scale(1.06); }
+
+@media screen and (max-width: 768px) {
+  #home_top .categoryButton { padding: 8px 14px !important; border-radius: 12px !important; }
+  #home_top .categoryButton .categoryButtonText { font-size: 12.5px !important; }
+}
