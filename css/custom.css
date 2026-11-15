@@ -1370,3 +1370,13 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
   .bgm-more-link { margin-left: 0; }
   .rec-bar { font-size: 12.5px; }
 }
+
+/* 追番页 / 好番推荐页：关闭评论区 */
+body:has(.bgm-page) #post-comment,
+body:has(.bgm-page) .comment-wrap,
+body:has(.bgm-page) .comment-head,
+body:has(.bgm-page) .comment-barrage,
+#rec-page ~ * #post-comment,
+body:has(#rec-page) #post-comment,
+body:has(#rec-page) .comment-wrap,
+body:has(#rec-page) .comment-head { display: none !important; }
