@@ -27,11 +27,11 @@
       if (!w || !h) {
         el.addEventListener("load", function (e) {
           var t = e.currentTarget;
-          if (t.naturalWidth && t.naturalHeight && t.naturalWidth / t.naturalHeight > 1.6) t.classList.add("keep-full");
+          if (t.naturalWidth && t.naturalHeight && t.naturalWidth / t.naturalHeight >= 2.2) t.classList.add("keep-full");
         });
         continue;
       }
-      if (w / h > 1.6) el.classList.add("keep-full");   // 界面截图等超宽图不裁切
+      if (w / h >= 2.2) el.classList.add("keep-full");   // 界面截图等超宽图不裁切
     }
   }
 
