@@ -1309,7 +1309,8 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 }
 [data-theme="light"] .bgm-score.dim { color: rgba(0, 0, 0, .42); border-color: rgba(0, 0, 0, .12); }
 [data-theme="light"] .bgm-empty { color: rgba(0, 0, 0, .42); }
-[data-theme="light"] .bgm-sec-head h2 { color: #222; }
+[data-theme="light"] .bgm-sec-head h2 { color: #1f2430 !important; }
+[data-theme="light"] .bgm-sec-head span { color: rgba(0, 0, 0, .5) !important; }
 [data-theme="light"] .bgm-sec-sub { color: rgba(0, 0, 0, .5); }
 [data-theme="light"] .bgm-more {
   color: #425aef; border-color: rgba(66, 90, 239, .3); background: rgba(66, 90, 239, .08);
@@ -1321,14 +1322,17 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 [data-theme="light"] .bgm-pg.active { color: #fff; background: #f76b8a; border-color: #f76b8a; }
 
 /* 追番页引言在白天模式下不可见 → 用正文色 */
-#article-container > blockquote p { color: inherit !important; }
-[data-theme="light"] #article-container > blockquote,
-[data-theme="light"] #article-container > blockquote p { color: #4c4948 !important; border-left-color: #425aef !important; }
+[data-theme="light"] #page #article-container blockquote {
+  background: rgba(66, 90, 239, .06) !important;
+  border-color: rgba(66, 90, 239, .16) !important;
+  border-left: 3px solid #425aef !important;
+}
+[data-theme="light"] #page #article-container blockquote,
+[data-theme="light"] #page #article-container blockquote p { color: #40454f !important; }
 
 /* 追番页白天模式：文字与引言统一深色 */
 [data-theme="light"] .bgm-title { color: #1f2430 !important; }
 [data-theme="light"] .bgm-sub { color: rgba(0, 0, 0, .55) !important; }
 [data-theme="light"] .bgm-tab-n { background: rgba(0, 0, 0, .12); }
-[data-theme="light"] #article-container > blockquote,
-[data-theme="light"] #article-container > blockquote * { color: #4c4948 !important; }
-[data-theme="light"] #article-container > blockquote { background: rgba(66, 90, 239, .06) !important; border-left-color: #425aef !important; }
+[data-theme="light"] #page #article-container blockquote * { color: #40454f !important; }
+
