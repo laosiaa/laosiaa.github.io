@@ -1324,3 +1324,11 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 #article-container > blockquote p { color: inherit !important; }
 [data-theme="light"] #article-container > blockquote,
 [data-theme="light"] #article-container > blockquote p { color: #4c4948 !important; border-left-color: #425aef !important; }
+
+/* 追番页白天模式：文字与引言统一深色 */
+[data-theme="light"] .bgm-title { color: #1f2430 !important; }
+[data-theme="light"] .bgm-sub { color: rgba(0, 0, 0, .55) !important; }
+[data-theme="light"] .bgm-tab-n { background: rgba(0, 0, 0, .12); }
+[data-theme="light"] #article-container > blockquote,
+[data-theme="light"] #article-container > blockquote * { color: #4c4948 !important; }
+[data-theme="light"] #article-container > blockquote { background: rgba(66, 90, 239, .06) !important; border-left-color: #425aef !important; }
