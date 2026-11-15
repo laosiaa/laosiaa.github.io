@@ -84,11 +84,12 @@
     return slides;
   }
 
-  function build(slides) {
+  function build(slides, backUrl) {
     var wrap = document.createElement("div");
     wrap.className = "alb-slides";
     wrap.innerHTML =
       '<div class="alb-stage">' +
+      '<a class="alb-back" href="' + (backUrl || "/album/") + '">返回</a>' +
       '<img class="alb-img nolazyload" alt="">' +
       '<img class="alb-img nolazyload" alt="">' +
       '<button class="alb-nav alb-prev" aria-label="上一张">‹</button>' +
@@ -210,6 +211,16 @@
     }
     function restart() { start(); }
 
+    var backEl = wrap.querySelector(".alb-back");
+    if (backEl) {
+      backEl.addEventListener("click", function (e) {
+        e.preventDefault();
+        var url = backEl.getAttribute("href") || "/album/";
+        if (window.pjax && window.pjax.loadUrl) window.pjax.loadUrl(url);
+        else window.location.href = url;
+      });
+    }
+
     wrap.querySelector(".alb-next").addEventListener("click", function (e) { e.stopPropagation(); next(); restart(); });
     wrap.querySelector(".alb-prev").addEventListener("click", function (e) { e.stopPropagation(); prev(); restart(); });
 
@@ -269,7 +280,18 @@
       tipEl.textContent = tipEl.textContent.trim() + " · 共 " + slides.length + " 张";
     }
 
-    var node = build(slides);
+    // 页头原来的「返回」按钮：取出跳转地址，隐藏原按钮，改放到幻灯片右上角
+    var backUrl = "/album/";
+    var oldBack = root.querySelector(".banner-button");
+    if (oldBack) {
+      var oc = oldBack.getAttribute("onclick") || "";
+      var m = /pjax\.loadUrl\(["']([^"']+)["']\)/.exec(oc);
+      if (m) backUrl = m[1];
+      var grp = oldBack.closest(".banner-button-group") || oldBack;
+      grp.style.display = "none";
+    }
+
+    var node = build(slides, backUrl);
     root.insertBefore(node, old[0] || root.firstChild);
     root.dataset.albSlides = "1";
   }
