@@ -1147,7 +1147,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 
 /* ========== 文章正文图片：宽度不变，只压高度（可裁切） ========== */
-#article-container img:not(.emoji):not(.keep-full) {
+body:has(#page-header.post-bg) #article-container img:not(.emoji):not(.keep-full) {
   height: 460px !important;
   width: 100% !important;
   max-width: 100% !important;
@@ -1158,7 +1158,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   display: block;
 }
 /* 技术截图 / 超宽图：不裁切，完整显示 */
-#article-container img.keep-full {
+body:has(#page-header.post-bg) #article-container img.keep-full {
   height: 460px !important;
   width: 100% !important;
   object-fit: contain !important;
@@ -1171,7 +1171,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 
 @media screen and (max-width: 768px) {
   #article-container img:not(.emoji):not(.keep-full),
-  #article-container img.keep-full { height: 300px !important; }
+  body:has(#page-header.post-bg) #article-container img.keep-full { height: 300px !important; }
 }
 
 /* 正文卡片下移到页头背景之下，与标题拉开距离 */
