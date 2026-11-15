@@ -419,35 +419,105 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 
 /* ========== 相册页：顶部横幅隐形（保留高度，位置不变） ========== */
-/* 只去掉背景图、保留文字与「返回」按钮 */
-#album .author-content-item.album,
-#album_detail .author-content.author-content-item.album {
+/* ========== 相册详情页：顶部标题区重排（保留文字 + 返回按钮） ========== */
+#album_detail .author-content.author-content-item.album,
+#album .author-content-item.album {
   background-image: none !important;
   background-color: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
 }
-#album_detail .author-content.author-content-item.album .card-content,
-#album .author-content-item.album .card-content {
-  text-shadow: 0 2px 12px rgba(0, 0, 0, .55);
+#album_detail .author-content.author-content-item.album { min-height: 260px; }
+
+#album_detail .author-content.author-content-item.album .card-content {
+  position: relative !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-end !important;
+  align-items: flex-start !important;
+  gap: 0 !important;
+  padding: 30px 6px 26px !important;
+  min-height: 260px;
 }
-/* 「返回」按钮保持可见、可点 */
-#album_detail .author-content.author-content-item.album .banner-button,
-#album .author-content-item.album .banner-button {
-  display: inline-flex !important;
-  align-items: center; gap: 6px;
-  padding: 7px 16px; border-radius: 999px;
-  background: rgba(255, 255, 255, .10);
-  border: 1px solid rgba(255, 255, 255, .22);
+
+/* 眉标：相册集 */
+#album_detail .author-content.author-content-item.album .author-content-item-tips {
+  display: inline-flex !important; align-items: center; gap: 8px;
+  margin: 0 0 12px 0 !important;
+  font-size: 12px !important; font-weight: 600;
+  letter-spacing: .22em; text-transform: uppercase;
+  color: rgba(255, 255, 255, .5) !important;
+}
+#album_detail .author-content.author-content-item.album .author-content-item-tips::before {
+  content: ""; width: 20px; height: 2px; border-radius: 2px;
+  background: linear-gradient(90deg, #fc466b, #7b8cff);
+}
+
+/* 主标题 */
+#album_detail .author-content.author-content-item.album .author-content-item-title {
+  margin: 0 !important;
+  font-size: 40px !important;
+  line-height: 1.18 !important;
+  font-weight: 800 !important;
+  letter-spacing: .01em;
   color: #fff !important;
-  backdrop-filter: blur(6px);
-  transition: background .2s ease, transform .2s ease;
+  text-shadow: 0 6px 26px rgba(0, 0, 0, .55);
 }
-#album_detail .author-content.author-content-item.album .banner-button:hover,
-#album .author-content-item.album .banner-button:hover {
-  background: rgba(252, 70, 107, .55);
+
+/* 描述 */
+#album_detail .author-content.author-content-item.album .content-bottom {
+  margin: 12px 0 0 0 !important;
+  padding: 0 !important;
+}
+#album_detail .author-content.author-content-item.album .content-bottom .tips {
+  margin: 0 !important;
+  max-width: 58ch;
+  font-size: 14.5px !important;
+  line-height: 1.8 !important;
+  color: rgba(255, 255, 255, .66) !important;
+  letter-spacing: .012em;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .5);
+}
+
+/* 返回按钮：右上角胶囊 */
+#album_detail .author-content.author-content-item.album .banner-button-group {
+  position: absolute !important;
+  top: 22px; right: 4px;
+  margin: 0 !important;
+}
+#album_detail .author-content.author-content-item.album .banner-button {
+  display: inline-flex !important; align-items: center; gap: 8px;
+  padding: 8px 16px 8px 12px;
+  border-radius: 999px;
+  font-size: 13px !important; font-weight: 500;
+  color: rgba(255, 255, 255, .9) !important;
+  background: rgba(255, 255, 255, .07);
+  border: 1px solid rgba(255, 255, 255, .16);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: background .22s ease, border-color .22s ease, transform .22s ease;
+}
+#album_detail .author-content.author-content-item.album .banner-button i {
+  font-size: 15px !important; line-height: 1;
+  transition: transform .22s ease;
+}
+#album_detail .author-content.author-content-item.album .banner-button:hover {
+  background: rgba(252, 70, 107, .28);
+  border-color: rgba(252, 70, 107, .55);
   transform: translateY(-1px);
+}
+#album_detail .author-content.author-content-item.album .banner-button:hover i {
+  transform: translateX(-3px);
+}
+
+@media screen and (max-width: 768px) {
+  #album_detail .author-content.author-content-item.album { min-height: 210px; }
+  #album_detail .author-content.author-content-item.album .card-content { min-height: 210px; padding: 22px 4px 20px !important; }
+  #album_detail .author-content.author-content-item.album .author-content-item-title { font-size: 27px !important; }
+  #album_detail .author-content.author-content-item.album .content-bottom .tips { font-size: 13px !important; }
+  #album_detail .author-content.author-content-item.album .banner-button-group { top: 14px; right: 2px; }
+  #album_detail .author-content.author-content-item.album .banner-button { font-size: 12px !important; padding: 6px 12px 6px 9px; }
 }
 /* ========== 相册详情页：幻灯片 ========== */
 #album_detail .alb-slides { margin: 6px 0 22px; display: flex; flex-direction: column; gap: 12px; }
