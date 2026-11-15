@@ -485,9 +485,13 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 #album_detail .alb-thumb {
   flex: none; width: 78px; height: 54px; border-radius: 9px;
-  background-size: cover; background-position: center;
+  background: rgba(255, 255, 255, .06);
   border: 2px solid transparent; opacity: .5; cursor: pointer; padding: 0;
-  transition: opacity .2s ease, border-color .2s ease, transform .2s ease;
+  overflow: hidden; transition: opacity .2s ease, border-color .2s ease, transform .2s ease;
+}
+#album_detail .alb-thumb img {
+  width: 100%; height: 100%; object-fit: cover; display: block;
+  border-radius: 7px; margin: 0 !important;
 }
 #album_detail .alb-thumb:hover { opacity: .9; transform: translateY(-2px); }
 #album_detail .alb-thumb.active { opacity: 1; border-color: #fc466b; }

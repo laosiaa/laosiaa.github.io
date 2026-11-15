@@ -54,7 +54,8 @@
       if (!src) return;
       slides.push({
         src: src,
-        thumb: (img && (img.getAttribute("data-src") || img.getAttribute("src"))) || src,
+        thumb: a.getAttribute("data-thumb") ||
+               (img && (img.getAttribute("data-src") || img.getAttribute("src"))) || src,
         cap: a.getAttribute("data-caption") || "",
         meta: textOf(it, ".tag-address")
       });
@@ -89,8 +90,13 @@
     slides.forEach(function (s, i) {
       var b = document.createElement("button");
       b.className = "alb-thumb" + (i === 0 ? " active" : "");
-      b.style.backgroundImage = "url(\"" + s.thumb + "\")";
       b.setAttribute("aria-label", "第 " + (i + 1) + " 张");
+      var timg = document.createElement("img");
+      timg.src = s.thumb;
+      timg.alt = "";
+      timg.loading = "lazy";
+      timg.referrerPolicy = "no-referrer";
+      b.appendChild(timg);
       b.addEventListener("click", function () {
         go(i);
         restart();
