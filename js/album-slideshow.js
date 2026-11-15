@@ -36,9 +36,13 @@
         var imgs = li.querySelectorAll(".album-content-img");
         Array.prototype.forEach.call(imgs, function (a) {
           var img = a.querySelector("img");
-          var src = a.getAttribute("href") || (img && img.getAttribute("src"));
-          if (!src) return;
-          slides.push({ src: src, thumb: img ? img.getAttribute("src") : src, cap: cap, meta: meta.join(" · ") });
+          // 主题懒加载会把 <img> 的 src 换成 1px 占位图，真实地址取 <a href>
+          var full = a.getAttribute("href");
+          var raw = (img && (img.getAttribute("data-src") || img.getAttribute("data-original") || img.getAttribute("src"))) || "";
+          if (!full && !raw) return;
+          if (!full && /^data:/.test(raw)) return;
+          var src = full || raw;
+          slides.push({ src: src, thumb: /^data:/.test(raw) ? src : (raw || src), cap: cap, meta: meta.join(" · ") });
         });
       });
       return slides;
@@ -51,7 +55,7 @@
       if (!a) return;
       var src = a.getAttribute("href") || (it.querySelector("img") || {}).src;
       var img = it.querySelector("img");
-      if (!src) return;
+      if (!src || /^data:/.test(src)) return;
       slides.push({
         src: src,
         thumb: a.getAttribute("data-thumb") ||
