@@ -16,8 +16,11 @@
     a.rel = "noopener";
     a.title = it.title + (it.des ? "\n" + it.des : "");
 
-    var badge = it.status ? '<span class="bgm-badge">' + it.status + "</span>" : "";
-    var sc = it.score && it.score !== "-" ? '<span class="bgm-score">' + it.score + "</span>" : "";
+    var badge = it.status
+      ? '<span class="bgm-badge' + (/^更新至/.test(it.status) ? " onair" : "") + '">' + it.status + "</span>"
+      : "";
+    var hasScore = it.score && it.score !== "-";
+    var sc = '<span class="bgm-score' + (hasScore ? "" : " dim") + '">' + (hasScore ? it.score : "—") + "</span>";
 
     a.innerHTML =
       '<div class="bgm-cover">' +
