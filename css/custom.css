@@ -1099,7 +1099,6 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 
 /* 波浪斜切在新版式里会压住标题，隐藏 */
-#page-header.post-bg .main-hero-waves-area { display: none !important; }
 
 /* 标题区：移到封面下方 */
 #page-header.post-bg #post-info {
@@ -1192,7 +1191,6 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 /* ========== 顶部封面：不显示图片，保持透明背景 ========== */
 #page-header.post-bg #post-top-cover { display: none !important; }
 #page-header.post-bg { background: transparent !important; padding-top: 64px; }
-#page-header.post-bg .main-hero-waves-area { display: none !important; }
 
 /* ========== 友链页卡片：加宽，避免名字被截断 ========== */
 .flink .anzhiyu-flink-list {
@@ -1243,4 +1241,34 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 }
 @media screen and (max-width: 768px) {
   .flink .anzhiyu-flink-list .flink-list-item { width: 100% !important; }
+}
+
+/* ========== 页头底部动感波浪（与主题 postTopWave 一致） ========== */
+#page-header.post-bg { overflow: hidden !important; }
+#page-header.post-bg .main-hero-waves-area {
+  display: block !important;
+  visibility: visible !important;
+  position: absolute !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: -2px !important;
+  width: 100% !important;
+  height: 64px !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+}
+#page-header.post-bg .main-hero-waves-area .waves-svg {
+  display: block !important;
+  width: 100% !important;
+  height: 64px !important;
+  min-height: 64px !important;
+}
+/* 波浪颜色跟随页面底色（深色 #18171d） */
+[data-theme="dark"] #page-header.post-bg .parallax > use:nth-child(1) { fill: rgba(24, 23, 29, 0.78) !important; }
+[data-theme="dark"] #page-header.post-bg .parallax > use:nth-child(2) { fill: rgba(24, 23, 29, 0.50) !important; }
+[data-theme="dark"] #page-header.post-bg .parallax > use:nth-child(3) { fill: rgba(24, 23, 29, 0.28) !important; }
+[data-theme="dark"] #page-header.post-bg .parallax > use:nth-child(4) { fill: rgba(24, 23, 29, 1) !important; }
+@media screen and (max-width: 768px) {
+  #page-header.post-bg .main-hero-waves-area,
+  #page-header.post-bg .main-hero-waves-area .waves-svg { height: 44px !important; min-height: 44px !important; }
 }
