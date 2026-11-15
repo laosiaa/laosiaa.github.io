@@ -1114,7 +1114,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   max-width: var(--col-w, 100%) !important;
   margin-left: var(--col-left, 0px) !important;
   margin-right: 0 !important;
-  padding: 46px 0 67px 0 !important;
+  padding: 46px 0 112px 0 !important;
   box-sizing: border-box !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -1139,7 +1139,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #page-header.post-bg #post-info {
     width: var(--col-w, 100%) !important;
     margin-left: var(--col-left, 16px) !important;
-    padding: 30px 16px 44px 16px !important;
+    padding: 30px 16px 64px 16px !important;
   }
 }
 
