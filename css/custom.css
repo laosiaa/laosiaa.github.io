@@ -1109,7 +1109,9 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   left: auto !important;
   width: 100% !important;
   height: auto !important;
-  padding: 22px clamp(20px, 5.5vw, 84px) 8px !important;
+  padding: 22px 24px 8px !important;
+  padding-left: calc(max(0px, (100vw - 1400px) / 2) + 65px) !important;
+  padding-right: calc(max(0px, (100vw - 1400px) / 2) + 65px) !important;
   margin: 0 !important;
   text-align: left;
   background: transparent !important;
@@ -1118,6 +1120,8 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   margin: 0 !important;
   text-align: left;
   text-shadow: none;
+  font-size: 46px !important;
+  line-height: 1.32 !important;
 }
 #page-header.post-bg #post-info #post-meta { margin-top: 12px !important; }
 
