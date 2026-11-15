@@ -271,14 +271,16 @@
       }
 
       var s2 = section("我的追番", "共 " + mine[0].items.length + " 部");
-      var head2 = s2.querySelector(".bgm-sec-head");
+      var t = tabs(mine);
+      var tabRow = document.createElement("div");
+      tabRow.className = "bgm-tabs-row";
       var moreLink2 = document.createElement("a");
       moreLink2.className = "bgm-more-link";
       moreLink2.href = "/my-bangumi/";
       moreLink2.innerHTML = "查看更多 <i>›</i>";
-      head2.appendChild(moreLink2);
-      var t = tabs(mine);
-      s2.appendChild(t.bar);
+      tabRow.appendChild(t.bar);
+      tabRow.appendChild(moreLink2);
+      s2.appendChild(tabRow);
       s2.appendChild(t.body);
       page.appendChild(s2);
 

@@ -1399,3 +1399,15 @@ body:has(#rec-page) .comment-head { display: none !important; }
 @media screen and (max-width: 768px) {
   .rec-page .bgm-cover { aspect-ratio: 4 / 4.6 !important; }
 }
+
+/* 我的追番：tabs 行右侧放「查看更多」 */
+.bgm-tabs-row {
+  display: flex !important; align-items: center; justify-content: space-between;
+  gap: 12px; flex-wrap: wrap; margin-bottom: 15px;
+}
+.bgm-tabs-row .bgm-tabs { margin-bottom: 0 !important; }
+.bgm-tabs-row .bgm-more-link { margin-left: auto; }
+@media screen and (max-width: 768px) {
+  .bgm-tabs-row { gap: 8px; }
+  .bgm-tabs-row .bgm-more-link { margin-left: auto; }
+}
