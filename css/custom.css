@@ -437,14 +437,21 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 
 #album_detail .author-content.author-content-item.album .card-content {
   position: relative !important;
-  display: flex !important;
-  flex-direction: column !important;
-  justify-content: center !important;
-  align-items: flex-start !important;
-  gap: 0 !important;
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas:
+    "eyebrow btn"
+    "title   btn"
+    "desc    btn";
+  align-items: center;
+  column-gap: 24px;
+  row-gap: 0;
   padding: 24px 6px !important;
   min-height: 260px;
 }
+#album_detail .author-content.author-content-item.album .author-content-item-tips { grid-area: eyebrow; }
+#album_detail .author-content.author-content-item.album .author-content-item-title { grid-area: title; }
+#album_detail .author-content.author-content-item.album .content-bottom { grid-area: desc; }
 
 /* 眉标：相册集 */
 #album_detail .author-content.author-content-item.album .author-content-item-tips {
@@ -454,7 +461,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   padding-left: 28px;
   font-size: 12px !important; font-weight: 600;
   letter-spacing: .22em; text-transform: uppercase;
-  color: rgba(255, 255, 255, .5) !important;
+  color: rgba(255, 255, 255, .62) !important;
 }
 #album_detail .author-content.author-content-item.album .author-content-item-tips::before {
   content: ""; position: absolute; left: 0; top: 50%;
@@ -490,10 +497,12 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 
 /* 返回按钮：右上角胶囊 */
 #album_detail .author-content.author-content-item.album .banner-button-group {
-  position: absolute !important;
-  top: 50%; right: 4px;
-  transform: translateY(-50%);
+  grid-area: btn;
+  position: static !important;
+  transform: none !important;
   margin: 0 !important;
+  justify-self: end;
+  align-self: center;
 }
 #album_detail .author-content.author-content-item.album .banner-button {
   display: inline-flex !important; align-items: center; gap: 8px;

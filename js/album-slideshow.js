@@ -263,6 +263,12 @@
       el.style.display = "none";
     });
 
+    // 眉标补上张数信息
+    var tipEl = root.querySelector(".author-content-item-tips");
+    if (tipEl && tipEl.textContent.indexOf("张") < 0) {
+      tipEl.textContent = tipEl.textContent.trim() + " · 共 " + slides.length + " 张";
+    }
+
     var node = build(slides);
     root.insertBefore(node, old[0] || root.firstChild);
     root.dataset.albSlides = "1";
