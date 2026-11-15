@@ -1411,3 +1411,15 @@ body:has(#rec-page) .comment-head { display: none !important; }
   .bgm-tabs-row { gap: 8px; }
   .bgm-tabs-row .bgm-more-link { margin-left: auto; }
 }
+
+/* 相册页及其所有子页（含以后新增的相册项目）：一律不显示评论 */
+body:has(#album) #post-comment,
+body:has(#album) .comment-wrap,
+body:has(#album) .comment-head,
+body:has(#album) .comment-barrage,
+body:has(#album_detail) #post-comment,
+body:has(#album_detail) .comment-wrap,
+body:has(#album_detail) .comment-head,
+body:has(#album_detail) .comment-barrage,
+body:has(.alb-slides) #post-comment,
+body:has(.alb-slides) .comment-wrap { display: none !important; }
