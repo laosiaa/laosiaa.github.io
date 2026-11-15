@@ -419,13 +419,35 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 }
 
 /* ========== 相册页：顶部横幅隐形（保留高度，位置不变） ========== */
+/* 只去掉背景图、保留文字与「返回」按钮 */
 #album .author-content-item.album,
 #album_detail .author-content.author-content-item.album {
-  visibility: hidden !important;
   background-image: none !important;
   background-color: transparent !important;
   border: 0 !important;
   box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+#album_detail .author-content.author-content-item.album .card-content,
+#album .author-content-item.album .card-content {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, .55);
+}
+/* 「返回」按钮保持可见、可点 */
+#album_detail .author-content.author-content-item.album .banner-button,
+#album .author-content-item.album .banner-button {
+  display: inline-flex !important;
+  align-items: center; gap: 6px;
+  padding: 7px 16px; border-radius: 999px;
+  background: rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, .22);
+  color: #fff !important;
+  backdrop-filter: blur(6px);
+  transition: background .2s ease, transform .2s ease;
+}
+#album_detail .author-content.author-content-item.album .banner-button:hover,
+#album .author-content-item.album .banner-button:hover {
+  background: rgba(252, 70, 107, .55);
+  transform: translateY(-1px);
 }
 /* ========== 相册详情页：幻灯片 ========== */
 #album_detail .alb-slides { margin: 6px 0 22px; display: flex; flex-direction: column; gap: 12px; }
