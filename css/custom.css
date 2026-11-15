@@ -1380,3 +1380,13 @@ body:has(.bgm-page) .comment-barrage,
 body:has(#rec-page) #post-comment,
 body:has(#rec-page) .comment-wrap,
 body:has(#rec-page) .comment-head { display: none !important; }
+
+/* 独立页顶部返回按钮（不用滚动就能看到） */
+.rec-bar .rec-back-top {
+  margin: 0 !important; padding: 6px 14px; font-size: 12.5px; white-space: nowrap;
+  color: inherit; background: rgba(255, 255, 255, .08); border: 1px solid rgba(255, 255, 255, .16);
+}
+[data-theme="light"] .rec-bar .rec-back-top {
+  background: rgba(0, 0, 0, .05); border-color: rgba(0, 0, 0, .12); color: #333;
+}
+.rec-bar .rec-back-top:hover { background: rgba(123, 140, 255, .18); border-color: rgba(123, 140, 255, .4); }

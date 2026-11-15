@@ -60,8 +60,9 @@
 
     function render() {
       var slice = list.slice((page - 1) * PER, page * PER);
-      var html = '<div class="rec-bar"><span>共 <b>' + list.length +
-        "</b> 部 · 第 <b>" + page + "/" + pages + "</b> 页</span>" +
+      var html = '<div class="rec-bar">' +
+        '<a class="rec-back rec-back-top" href="/bangumis/">← 返回追番页</a>' +
+        "<span>共 <b>" + list.length + "</b> 部 · 第 <b>" + page + "/" + pages + "</b> 页</span>" +
         '<span class="rec-tip">评分 8.0 以上的国创精选 · 每天自动更新</span></div>';
 
       html += '<div class="bgm-grid">' + slice.map(function (it) {
@@ -79,7 +80,6 @@
         html += "</div>";
       }
 
-      html += '<a class="rec-back" href="/bangumis/">← 返回追番页</a>';
       root.innerHTML = html;
     }
 

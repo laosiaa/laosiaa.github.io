@@ -86,8 +86,9 @@
       });
       html += "</div>";
 
-      html += '<div class="rec-bar"><span>共 <b>' + items.length + "</b> 部 · 第 <b>" +
-        page + "/" + pages + "</b> 页</span>" +
+      html += '<div class="rec-bar">' +
+        '<a class="rec-back rec-back-top" href="/bangumis/">← 返回追番页</a>' +
+        "<span>共 <b>" + items.length + "</b> 部 · 第 <b>" + page + "/" + pages + "</b> 页</span>" +
         '<span class="rec-tip">B 站追番收藏 · 每天自动同步</span></div>';
 
       if (slice.length) {
@@ -109,7 +110,6 @@
         html += "</div>";
       }
 
-      html += '<a class="rec-back" href="/bangumis/">← 返回追番页</a>';
       root.innerHTML = html;
     }
 
