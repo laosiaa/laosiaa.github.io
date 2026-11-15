@@ -1203,14 +1203,28 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 .flink .anzhiyu-flink-list .flink-list-item {
   width: calc((100% - 14px) / 2) !important;
   height: auto !important;
-  min-height: 92px !important;
   margin: 0 !important;
   float: none !important;
 }
 .flink .anzhiyu-flink-list .flink-list-item a.cf-friends-link {
-  height: 100% !important;
+  display: flex !important;
   align-items: center !important;
+  gap: 14px !important;
+  height: auto !important;
+  padding: 16px 18px !important;
+  box-sizing: border-box !important;
 }
+.flink .anzhiyu-flink-list .cf-friends-avatar {
+  width: 64px !important;
+  height: 64px !important;
+  min-width: 64px !important;
+  max-width: 64px !important;
+  object-fit: cover !important;
+  border-radius: 14px !important;
+  flex: 0 0 64px !important;
+  margin: 0 !important;
+}
+.flink .anzhiyu-flink-list .flink-item-info { min-width: 0 !important; flex: 1 1 auto !important; }
 .flink .anzhiyu-flink-list .flink-item-name {
   font-size: 16px !important;
   line-height: 1.35 !important;
