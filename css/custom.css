@@ -1116,7 +1116,8 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   margin-right: 0 !important;
   padding: 46px 0 67px 0 !important;
   box-sizing: border-box !important;
-  margin: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
   text-align: left;
   background: transparent !important;
 }
@@ -1135,7 +1136,11 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 @media screen and (max-width: 768px) {
   #page-header.post-bg #post-top-cover,
   #page-header.post-bg #post-top-cover #post-top-bg { height: 240px !important; }
-  #page-header.post-bg #post-info { padding: 16px 16px 6px !important; }
+  #page-header.post-bg #post-info {
+    width: var(--col-w, 100%) !important;
+    margin-left: var(--col-left, 16px) !important;
+    padding: 30px 16px 44px 16px !important;
+  }
 }
 
 /* ========== 文章正文图片：宽度不变，只压高度（可裁切） ========== */
