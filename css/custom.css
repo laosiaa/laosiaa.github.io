@@ -1055,11 +1055,23 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #home_top .categoryButton i { font-size: 2.4rem !important; }
 }
 
-/* ========== 文章页封面：摆正 + 高度 ×0.75 ========== */
-/* 主题默认把封面旋转 10°、右移并放大，视觉上像“错位”，这里改回正放铺满 */
+/* ========== 文章页封面：封面在上、标题在下（高度 375px） ========== */
+#page-header.post-bg {
+  display: flex !important;
+  flex-direction: column !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+  background: transparent !important;
+}
+#page-header.post-bg nav#nav { order: 0; }
+
+/* 封面：摆正、铺满、在上面 */
 #page-header.post-bg #post-top-cover {
+  order: 1;
+  position: relative !important;
   width: 100% !important;
-  height: 100% !important;
+  height: 375px !important;
   margin: 0 !important;
   transform: none !important;
   -webkit-transform: none !important;
@@ -1069,27 +1081,43 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
 #page-header.post-bg #post-top-cover::after {
   box-shadow: none !important;
   -webkit-box-shadow: none !important;
-  background: linear-gradient(to bottom, rgba(6, 8, 14, .18), rgba(6, 8, 14, .55)) !important;
+  background: linear-gradient(to bottom, rgba(6, 8, 14, .10), rgba(6, 8, 14, .42)) !important;
 }
 #page-header.post-bg #post-top-cover #post-top-bg {
   width: 100% !important;
   min-width: 0 !important;
-  height: 100% !important;
+  height: 375px !important;
   min-height: 0 !important;
   object-fit: cover !important;
   object-position: center 42% !important;
   transform: none !important;
 }
 
-/* 高度降为原来的 75% */
-#page-header.post-bg,
-#page-header.post-bg #post-top-cover,
-#page-header.post-bg #post-top-cover #post-top-bg { height: 375px !important; }
-#page-header.post-bg #post-top-cover #post-top-bg { min-height: 375px !important; }
+/* 波浪斜切在新版式里会压住标题，隐藏 */
+#page-header.post-bg .main-hero-waves-area { display: none !important; }
+
+/* 标题区：移到封面下方 */
+#page-header.post-bg #post-info {
+  order: 2;
+  position: static !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+  height: auto !important;
+  padding: 22px 0 8px !important;
+  margin: 0 !important;
+  text-align: left;
+  background: transparent !important;
+}
+#page-header.post-bg #post-info .post-title {
+  margin: 0 !important;
+  text-align: left;
+  text-shadow: none;
+}
+#page-header.post-bg #post-info #post-meta { margin-top: 12px !important; }
 
 @media screen and (max-width: 768px) {
-  #page-header.post-bg,
   #page-header.post-bg #post-top-cover,
-  #page-header.post-bg #post-top-cover #post-top-bg { height: 260px !important; }
-  #page-header.post-bg #post-top-cover #post-top-bg { min-height: 260px !important; }
+  #page-header.post-bg #post-top-cover #post-top-bg { height: 240px !important; }
+  #page-header.post-bg #post-info { padding: 16px 12px 6px !important; }
 }
