@@ -1054,3 +1054,42 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #home_top .categoryButton::after { left: 18px; bottom: 18px; width: 16px; }
   #home_top .categoryButton i { font-size: 2.4rem !important; }
 }
+
+/* ========== 文章页封面：摆正 + 高度 ×0.75 ========== */
+/* 主题默认把封面旋转 10°、右移并放大，视觉上像“错位”，这里改回正放铺满 */
+#page-header.post-bg #post-top-cover {
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  transform: none !important;
+  -webkit-transform: none !important;
+  border-radius: 0 !important;
+  overflow: hidden !important;
+}
+#page-header.post-bg #post-top-cover::after {
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  background: linear-gradient(to bottom, rgba(6, 8, 14, .18), rgba(6, 8, 14, .55)) !important;
+}
+#page-header.post-bg #post-top-cover #post-top-bg {
+  width: 100% !important;
+  min-width: 0 !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  object-fit: cover !important;
+  object-position: center 42% !important;
+  transform: none !important;
+}
+
+/* 高度降为原来的 75% */
+#page-header.post-bg,
+#page-header.post-bg #post-top-cover,
+#page-header.post-bg #post-top-cover #post-top-bg { height: 375px !important; }
+#page-header.post-bg #post-top-cover #post-top-bg { min-height: 375px !important; }
+
+@media screen and (max-width: 768px) {
+  #page-header.post-bg,
+  #page-header.post-bg #post-top-cover,
+  #page-header.post-bg #post-top-cover #post-top-bg { height: 260px !important; }
+  #page-header.post-bg #post-top-cover #post-top-bg { min-height: 260px !important; }
+}
