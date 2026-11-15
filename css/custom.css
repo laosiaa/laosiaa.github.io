@@ -1109,7 +1109,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   left: auto !important;
   width: 100% !important;
   height: auto !important;
-  padding: 46px 24px 58px !important;
+  padding: 46px 24px 67px !important;
   padding-left: calc(max(24px, (100vw - 1400px) / 2 + 19px)) !important;
   padding-right: calc(max(24px, (100vw - 1400px) / 2 + 19px)) !important;
   margin: 0 !important;
