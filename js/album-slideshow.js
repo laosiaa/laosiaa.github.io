@@ -94,7 +94,8 @@
       var timg = document.createElement("img");
       timg.src = s.thumb;
       timg.alt = "";
-      timg.loading = "lazy";
+      timg.loading = "eager";
+      timg.decoding = "async";
       timg.referrerPolicy = "no-referrer";
       b.appendChild(timg);
       b.addEventListener("click", function () {
