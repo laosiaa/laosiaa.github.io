@@ -60,6 +60,13 @@
     return g;
   }
 
+  function fmtNum(n) {
+    n = Number(n) || 0;
+    if (n >= 1e8) return (n / 1e8).toFixed(2) + "亿";
+    if (n >= 1e4) return (n / 1e4).toFixed(1) + "万";
+    return String(n);
+  }
+
   function section(title, sub) {
     var s = document.createElement("section");
     s.className = "bgm-sec";
@@ -283,6 +290,38 @@
       s2.appendChild(tabRow);
       s2.appendChild(t.body);
       page.appendChild(s2);
+
+      // 红果视频（红果漫剧榜综合评分前 100）
+      var s3 = section("红果视频", "漫剧榜 · 按热度+收藏+点赞+分享总和排序");
+      var head3 = s3.querySelector(".bgm-sec-head");
+      var moreLink3 = document.createElement("a");
+      moreLink3.className = "bgm-more-link";
+      moreLink3.href = "/hongguo/";
+      moreLink3.innerHTML = "查看更多 <i>›</i>";
+      head3.appendChild(moreLink3);
+      s3.appendChild(grid([]));
+      page.appendChild(s3);
+
+      fetch("/bangumis/hongguo.json", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : Promise.reject(0); })
+        .then(function (list) {
+          var arr = (list || []).slice().sort(function (a, b) {
+            return (Number(b.total) || 0) - (Number(a.total) || 0);
+          }).slice(0, 4).map(function (it) {
+            return {
+              title: it.title,
+              cover: it.cover,
+              link: it.link,
+              status: it.ep_status || "",
+              score: fmtNum(it.total),
+              area: "漫剧 · 热 " + (it.heatText || ""),
+              des: "综合 " + fmtNum(it.total)
+            };
+          });
+          var holder = s3.querySelector(".bgm-grid");
+          if (holder) holder.outerHTML = grid(arr).outerHTML;
+        })
+        .catch(function () {});
 
       root.appendChild(page);
     });
