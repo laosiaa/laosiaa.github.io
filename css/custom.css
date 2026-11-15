@@ -1127,22 +1127,48 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #page-header.post-bg #post-info { padding: 16px 16px 6px !important; }
 }
 
-/* ========== 文章正文图片：统一高度（约为原来的 3/4） ========== */
-#article-container img:not(.no-lightbox):not(.emoji) {
+/* ========== 文章正文图片：宽度不变，只压高度（可裁切） ========== */
+#article-container img:not(.emoji):not(.keep-full) {
   height: 460px !important;
   width: 100% !important;
   max-width: 100% !important;
+  object-fit: cover !important;
+  object-position: center 30% !important;
+  border-radius: 12px;
+  margin: 12px auto !important;
+  display: block;
+}
+/* 技术截图 / 超宽图：不裁切，完整显示 */
+#article-container img.keep-full {
+  height: 460px !important;
+  width: 100% !important;
   object-fit: contain !important;
   border-radius: 12px;
   margin: 12px auto !important;
   display: block;
 }
-/* 正文里的小图标 / 徽章不参与 */
 #article-container img.emoji,
 #article-container img[src*=".svg"] { height: auto !important; width: auto !important; }
-/* 正文首图若与页头封面重复，由脚本隐藏 */
-#article-container .post-cover-dup { display: none !important; }
 
 @media screen and (max-width: 768px) {
-  #article-container img:not(.no-lightbox):not(.emoji) { height: 300px !important; }
+  #article-container img:not(.emoji):not(.keep-full),
+  #article-container img.keep-full { height: 300px !important; }
+}
+
+/* ========== 顶部封面（红框内）：恢复完整显示，不裁切 ========== */
+#page-header.post-bg #post-top-cover { background-color: #05070d; }
+#page-header.post-bg #post-top-cover .cover-blur {
+  position: absolute;
+  inset: -24px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(26px) brightness(.45) saturate(1.05);
+  transform: scale(1.08);
+  z-index: 0;
+}
+#page-header.post-bg #post-top-cover #post-top-bg {
+  position: relative;
+  z-index: 1;
+  object-fit: contain !important;
+  object-position: center !important;
 }
