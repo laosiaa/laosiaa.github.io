@@ -1155,20 +1155,7 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   #article-container img.keep-full { height: 300px !important; }
 }
 
-/* ========== 顶部封面（红框内）：恢复完整显示，不裁切 ========== */
-#page-header.post-bg #post-top-cover { background-color: #05070d; }
-#page-header.post-bg #post-top-cover .cover-blur {
-  position: absolute;
-  inset: -24px;
-  background-size: cover;
-  background-position: center;
-  filter: blur(26px) brightness(.45) saturate(1.05);
-  transform: scale(1.08);
-  z-index: 0;
-}
-#page-header.post-bg #post-top-cover #post-top-bg {
-  position: relative;
-  z-index: 1;
-  object-fit: contain !important;
-  object-position: center !important;
-}
+/* ========== 顶部封面：不显示图片，保持透明背景 ========== */
+#page-header.post-bg #post-top-cover { display: none !important; }
+#page-header.post-bg { background: transparent !important; padding-top: 64px; }
+#page-header.post-bg .main-hero-waves-area { display: none !important; }
