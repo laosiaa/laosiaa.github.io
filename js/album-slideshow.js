@@ -89,7 +89,6 @@
     wrap.className = "alb-slides";
     wrap.innerHTML =
       '<div class="alb-stage">' +
-      '<a class="alb-back" href="' + (backUrl || "/album/") + '">返回</a>' +
       '<img class="alb-img nolazyload" alt="">' +
       '<img class="alb-img nolazyload" alt="">' +
       '<button class="alb-nav alb-prev" aria-label="上一张">‹</button>' +
@@ -211,16 +210,6 @@
     }
     function restart() { start(); }
 
-    var backEl = wrap.querySelector(".alb-back");
-    if (backEl) {
-      backEl.addEventListener("click", function (e) {
-        e.preventDefault();
-        var url = backEl.getAttribute("href") || "/album/";
-        if (window.pjax && window.pjax.loadUrl) window.pjax.loadUrl(url);
-        else window.location.href = url;
-      });
-    }
-
     wrap.querySelector(".alb-next").addEventListener("click", function (e) { e.stopPropagation(); next(); restart(); });
     wrap.querySelector(".alb-prev").addEventListener("click", function (e) { e.stopPropagation(); prev(); restart(); });
 
@@ -293,6 +282,21 @@
 
     var node = build(slides, backUrl);
     root.insertBefore(node, old[0] || root.firstChild);
+
+    // 返回按钮：放在相册标题区右上角（幻灯片框上方、与框右边缘对齐）
+    var oldBtn = root.querySelector(".alb-back");
+    if (oldBtn) oldBtn.remove();
+    var backEl = document.createElement("a");
+    backEl.className = "alb-back";
+    backEl.href = backUrl;
+    backEl.textContent = "返回";
+    backEl.addEventListener("click", function (e) {
+      e.preventDefault();
+      var url = backEl.getAttribute("href") || "/album/";
+      if (window.pjax && window.pjax.loadUrl) window.pjax.loadUrl(url);
+      else window.location.href = url;
+    });
+    root.appendChild(backEl);
     root.dataset.albSlides = "1";
   }
 

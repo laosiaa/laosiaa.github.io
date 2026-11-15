@@ -1425,10 +1425,11 @@ body:has(.alb-slides) #post-comment,
 body:has(.alb-slides) .comment-wrap { display: none !important; }
 
 /* 相册详情：返回按钮放在幻灯片右上角 */
+#album_detail { position: relative; }
 #album_detail .alb-stage { position: relative; }
 #album_detail .alb-back {
   position: absolute;
-  top: 14px; right: 14px;
+  top: 18px; right: 18px;
   z-index: 6;
   display: inline-flex; align-items: center; gap: 5px;
   padding: 7px 16px; border-radius: 999px;
