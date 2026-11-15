@@ -1272,3 +1272,55 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
   #page-header.post-bg .main-hero-waves-area,
   #page-header.post-bg .main-hero-waves-area .waves-svg { height: 44px !important; min-height: 44px !important; }
 }
+
+/* ========== 追番页：查看更多 + 分页 + 白天模式配色 ========== */
+.bgm-paged { display: block; }
+.bgm-sec-sub { color: inherit; opacity: .62; font-size: 13px; }
+.bgm-more {
+  display: flex; align-items: center; gap: 8px;
+  margin: 18px auto 4px; padding: 9px 22px; border-radius: 999px;
+  cursor: pointer; font-size: 14px; font-weight: 600; color: inherit;
+  border: 1px solid rgba(120, 200, 255, .38);
+  background: rgba(120, 200, 255, .10);
+  transition: all .2s ease;
+}
+.bgm-more span { font-size: 12px; font-weight: 400; opacity: .6; }
+.bgm-more:hover { background: rgba(120, 200, 255, .2); transform: translateY(-1px); }
+.bgm-pager { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin: 20px 0 4px; }
+.bgm-pg {
+  min-width: 38px; height: 34px; padding: 0 12px; border-radius: 9px; cursor: pointer;
+  font-size: 13px; color: inherit;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .06);
+  transition: all .16s ease;
+}
+.bgm-pg:hover:not(:disabled) { background: rgba(255, 255, 255, .14); }
+.bgm-pg.active { background: #f76b8a; border-color: #f76b8a; color: #fff; }
+.bgm-pg:disabled { opacity: .32; cursor: not-allowed; }
+
+/* 白天模式：所有追番元素改用深色文字 */
+[data-theme="light"] .bgm-tab { color: #4b4453; background: rgba(0, 0, 0, .05); }
+[data-theme="light"] .bgm-tab:hover { color: #222; background: rgba(0, 0, 0, .09); }
+[data-theme="light"] .bgm-tab.active { color: #fff; }
+[data-theme="light"] .bgm-card { background: #fff; border-color: rgba(0, 0, 0, .07); }
+[data-theme="light"] .bgm-cover { background: #eef1f6; }
+[data-theme="light"] .bgm-score {
+  color: #c0392b; border-color: rgba(192, 57, 43, .28); background: rgba(255, 255, 255, .9);
+}
+[data-theme="light"] .bgm-score.dim { color: rgba(0, 0, 0, .42); border-color: rgba(0, 0, 0, .12); }
+[data-theme="light"] .bgm-empty { color: rgba(0, 0, 0, .42); }
+[data-theme="light"] .bgm-sec-head h2 { color: #222; }
+[data-theme="light"] .bgm-sec-sub { color: rgba(0, 0, 0, .5); }
+[data-theme="light"] .bgm-more {
+  color: #425aef; border-color: rgba(66, 90, 239, .3); background: rgba(66, 90, 239, .08);
+}
+[data-theme="light"] .bgm-pg {
+  color: #333; border-color: rgba(0, 0, 0, .12); background: rgba(0, 0, 0, .04);
+}
+[data-theme="light"] .bgm-pg:hover:not(:disabled) { background: rgba(0, 0, 0, .09); }
+[data-theme="light"] .bgm-pg.active { color: #fff; background: #f76b8a; border-color: #f76b8a; }
+
+/* 追番页引言在白天模式下不可见 → 用正文色 */
+#article-container > blockquote p { color: inherit !important; }
+[data-theme="light"] #article-container > blockquote,
+[data-theme="light"] #article-container > blockquote p { color: #4c4948 !important; border-left-color: #425aef !important; }

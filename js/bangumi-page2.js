@@ -1,9 +1,11 @@
-/*! 追番页：好番推荐 + 我的追番（海报网格） */
+/*! 追番页：好番推荐（50 部 8.0+）+ 我的追番，支持「查看更多」与分页（每页 8 部） */
 (function () {
   "use strict";
 
   var DATA_URL = "/bangumis/data.json";
   var REC_URL = "/bangumis/recommend.json";
+  var PAGE_SIZE = 8;
+  var REC_INITIAL = 4;
 
   function txt(el) {
     return el ? (el.textContent || "").replace(/\s+/g, " ").trim() : "";
@@ -29,7 +31,8 @@
       ? '<span class="bgm-badge' + (onair ? " onair" : "") + '">' + esc(status) + "</span>"
       : "";
     var hasScore = it.score && it.score !== "-";
-    var sc = '<span class="bgm-score' + (hasScore ? "" : " dim") + '">' + (hasScore ? esc(it.score) : "—") + "</span>";
+    var sc = '<span class="bgm-score' + (hasScore ? "" : " dim") + '">' +
+      (hasScore ? esc(it.score) : "—") + "</span>";
 
     a.innerHTML =
       '<div class="bgm-cover">' +
@@ -62,8 +65,79 @@
     s.className = "bgm-sec";
     s.innerHTML =
       '<div class="bgm-sec-head"><h2>' + esc(title) + "</h2>" +
-      (sub ? "<span>" + esc(sub) + "</span>" : "") + "</div>";
+      (sub ? "<span class=\"bgm-sec-sub\">" + esc(sub) + "</span>" : "") + "</div>";
     return s;
+  }
+
+  /* ---------- 分页视图：初始 N 个 + 查看更多 + 翻页 ---------- */
+  function pagedView(items, initial, pageSize) {
+    var wrap = document.createElement("div");
+    wrap.className = "bgm-paged";
+
+    var body = document.createElement("div");
+    body.className = "bgm-paged-body";
+
+    var pager = document.createElement("div");
+    pager.className = "bgm-pager";
+
+    var more = document.createElement("button");
+    more.type = "button";
+    more.className = "bgm-more";
+    more.innerHTML = "查看更多 <span>共 " + items.length + " 部</span>";
+
+    var expanded = false;
+    var page = 0;
+    var total = items.length;
+    var pages = Math.max(1, Math.ceil(total / pageSize));
+
+    function renderAll() {
+      body.innerHTML = "";
+      body.appendChild(grid(expanded ? items.slice(page * pageSize, page * pageSize + pageSize) : items.slice(0, initial)));
+    }
+
+    function renderPager() {
+      if (!expanded || pages <= 1) { pager.innerHTML = ""; pager.style.display = "none"; return; }
+      pager.style.display = "";
+      var html = "";
+      html += '<button type="button" class="bgm-pg" data-go="prev"' + (page === 0 ? " disabled" : "") + ">上一页</button>";
+      for (var i = 0; i < pages; i++) {
+        html += '<button type="button" class="bgm-pg num' + (i === page ? " active" : "") +
+          '" data-go="' + i + '">' + (i + 1) + "</button>";
+      }
+      html += '<button type="button" class="bgm-pg" data-go="next"' + (page === pages - 1 ? " disabled" : "") + ">下一页</button>";
+      pager.innerHTML = html;
+    }
+
+    function sync() {
+      renderAll();
+      renderPager();
+      more.innerHTML = expanded
+        ? "收起 <span>已展开全部 " + total + " 部</span>"
+        : "查看更多 <span>共 " + total + " 部</span>";
+    }
+
+    more.addEventListener("click", function () {
+      expanded = !expanded;
+      page = 0;
+      sync();
+      if (expanded) wrap.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    pager.addEventListener("click", function (e) {
+      var btn = e.target.closest("button[data-go]");
+      if (!btn || btn.disabled) return;
+      var go = btn.getAttribute("data-go");
+      if (go === "prev") page = Math.max(0, page - 1);
+      else if (go === "next") page = Math.min(pages - 1, page + 1);
+      else page = parseInt(go, 10) || 0;
+      sync();
+    });
+
+    sync();
+    wrap.appendChild(body);
+    wrap.appendChild(pager);
+    if (total > initial) wrap.appendChild(more);
+    return wrap;
   }
 
   function normalize(b) {
@@ -78,6 +152,7 @@
     };
   }
 
+  /* ---------- 我的追番：分类切换 + 各自分页 ---------- */
   function tabs(groups) {
     var bar = document.createElement("div");
     bar.className = "bgm-tabs";
@@ -86,11 +161,12 @@
 
     function show(items) {
       holder.innerHTML = "";
-      holder.appendChild(grid(items));
+      holder.appendChild(pagedView(items, PAGE_SIZE, PAGE_SIZE));
     }
 
     groups.forEach(function (g, i) {
       var b = document.createElement("button");
+      b.type = "button";
       b.className = "bgm-tab" + (i === 0 ? " active" : "");
       b.innerHTML = esc(g.label) + '<span class="bgm-tab-n">' + g.items.length + "</span>";
       b.addEventListener("click", function () {
@@ -180,8 +256,11 @@
       page.className = "bgm-page";
 
       if (rec.length) {
-        var s1 = section("好番推荐", "评分 9.0 以上的国创 · 每天自动更新");
-        s1.appendChild(grid(rec));
+        var sorted = rec.slice().sort(function (a, b) {
+          return (parseFloat(b.score) || 0) - (parseFloat(a.score) || 0);
+        });
+        var s1 = section("好番推荐", sorted.length + " 部评分 8.0 以上的国创 · 每天自动更新");
+        s1.appendChild(pagedView(sorted, REC_INITIAL, PAGE_SIZE));
         page.appendChild(s1);
       }
 
