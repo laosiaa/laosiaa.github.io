@@ -995,11 +995,20 @@ img[data-ll-fixed]{filter:none !important;opacity:1 !important;}
   letter-spacing: .01em;
   color: rgba(255, 255, 255, .88) !important;
 }
-#home_top .categoryButton i {
-  position: relative; z-index: 1;
-  font-size: 15px !important;
-  color: var(--cat, rgba(255, 255, 255, .8)) !important;
-  transition: transform .22s ease;
+/* 主题字体里没有这几个图标的字形，会渲染成下划线占位，直接换成发光圆点 */
+#home_top .categoryButton i { display: none !important; }
+#home_top .categoryButton .categoryButtonText::before {
+  content: ""; display: inline-block;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cat, #fff);
+  box-shadow: 0 0 10px var(--cat, #fff);
+  margin-right: 9px; vertical-align: 2px;
+  opacity: .9;
+  transition: box-shadow .22s ease, transform .22s ease;
+}
+#home_top .categoryButton:hover .categoryButtonText::before {
+  box-shadow: 0 0 14px var(--cat, #fff);
+  transform: scale(1.15);
 }
 
 #home_top .categoryButton.blue  { --cat: #6f9bff; --cat-tint: rgba(80, 120, 255, .26); }
