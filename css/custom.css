@@ -1551,8 +1551,10 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   /* 14. 封面图在夜间模式压暗一点，避免白底刺眼 */
   #article-container > p:first-of-type > img,
   #article-container > p:first-of-type > a > img,
+  #article-container > p:first-of-type > a > img[data-ll-fixed],
   #article-container > p:first-of-type > a > img.entered {
-    filter: brightness(.92) saturate(.97);
+    filter: brightness(.92) saturate(.97) !important;
+    -webkit-filter: brightness(.92) saturate(.97) !important;
   }
 
   /* 15. AI 摘要「收起」按钮热区放大 */
