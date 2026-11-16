@@ -1760,6 +1760,66 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   /* 给固定控制条留出空间 */
   body[data-type="music"] .aplayer-body { padding-bottom: 108px !important; }
 
+  /* 音量滑块（脚本注入） */
+  body[data-type="music"] .mm-vol {
+    flex: 1 1 100% !important;
+    order: 2;
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    margin: 2px 0 0;
+    padding: 0 2px;
+  }
+  body[data-type="music"] .mm-vol-btn {
+    flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
+    width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%;
+    background: transparent; color: rgba(255, 255, 255, .85); cursor: pointer;
+  }
+  body[data-type="music"] .mm-vol-range {
+    -webkit-appearance: none; appearance: none;
+    flex: 1 1 auto; height: 22px; background: transparent; margin: 0;
+  }
+  body[data-type="music"] .mm-vol-range::-webkit-slider-runnable-track {
+    height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .22);
+  }
+  body[data-type="music"] .mm-vol-range::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 14px; height: 14px; margin-top: -5px; border-radius: 50%;
+    background: var(--anzhiyu-main, #fc466b); border: 0;
+    box-shadow: 0 0 0 4px rgba(252, 70, 107, .18);
+  }
+  body[data-type="music"] .mm-vol-range::-moz-range-track {
+    height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .22);
+  }
+  body[data-type="music"] .mm-vol-range::-moz-range-thumb {
+    width: 14px; height: 14px; border: 0; border-radius: 50%;
+    background: var(--anzhiyu-main, #fc466b);
+  }
+
+  /* 曲库抽屉：盖住控制条上方、圆角、可滚动 */
+  body[data-type="music"] #anMusic-page .aplayer-list {
+    position: fixed !important;
+    left: 0 !important; right: 0 !important;
+    bottom: 0 !important;
+    z-index: 1300 !important;
+    max-height: 72vh !important;
+    border-radius: 18px 18px 0 0 !important;
+    padding: 14px 0 96px !important;
+    background: var(--sidebar-bg, rgba(20, 20, 24, .96)) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    backdrop-filter: blur(18px) !important;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, .45) !important;
+    transition: transform .28s ease, bottom .28s ease !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list:not(.aplayer-list-hide) {
+    bottom: -100% !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol {
+    max-height: calc(72vh - 110px) !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+  }
+
   /* 右侧三个功能按钮：竖排在歌词区右上，避免压住封面/控制条 */
   body[data-type="music"] #anMusicBtnGetSong,
   body[data-type="music"] #anMusicRefreshBtn,
