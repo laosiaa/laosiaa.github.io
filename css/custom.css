@@ -2263,9 +2263,10 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
   /* 首行与标题之间留出呼吸距离，避免误触 */
   body[data-type="music"] #anMusic-page .aplayer-list ol { padding: 10px 0 8px !important; }
   body[data-type="music"] #anMusic-page .aplayer-list ol li {
-    padding: 8px 16px !important;
+    box-sizing: border-box !important;
+    padding: 6px 16px !important;
     gap: 10px !important;
-    min-height: 42px;
+    min-height: 46px !important;
     align-items: center;
     line-height: 1.35 !important;
     border-bottom: 1px solid rgba(255, 255, 255, .04) !important;
