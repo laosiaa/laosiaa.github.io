@@ -1678,6 +1678,7 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
 
 /* ================= 音乐馆页面：移动端全屏播放器 ================= */
 @media screen and (max-width: 768px) {
+  body[data-type="music"] { overflow: hidden !important; }
   body[data-type="music"] #content-inner,
   body[data-type="music"] .layout { padding: 0 !important; gap: 0 !important; }
   body[data-type="music"] #page {
