@@ -47,7 +47,18 @@
     var im = document.createElement("img");
     im.src = url;
     im.alt = "专辑封面";
+    var closeBtn = document.createElement("button");
+    closeBtn.type = "button";
+    closeBtn.className = "mm-zoom-close";
+    closeBtn.setAttribute("aria-label", "关闭");
+    closeBtn.textContent = "✕";
+    closeBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      closeZoom();
+    });
+    im.addEventListener("click", function (e) { e.stopPropagation(); });
     overlay.appendChild(im);
+    overlay.appendChild(closeBtn);
     overlay.addEventListener("click", function (e) { e.stopPropagation(); closeZoom(); });
     document.body.appendChild(overlay);
     requestAnimationFrame(function () { overlay.classList.add("mm-zoom-on"); });

@@ -2360,3 +2360,19 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
 @media screen and (max-width: 768px) {
   .mm-zoom img { max-width: 96vw; max-height: 86vh; border-radius: 14px; }
 }
+/* 放大层关闭按钮 */
+.mm-zoom-close {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  right: 14px;
+  width: 38px; height: 38px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 50%;
+  background: rgba(28, 28, 34, .8);
+  color: #fff; font-size: 15px; line-height: 1;
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  z-index: 3001;
+}
+.mm-zoom-close:active { background: rgba(255, 255, 255, .18); }
