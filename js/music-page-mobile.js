@@ -136,17 +136,34 @@
     if (open) open.classList.remove("mm-open");
   }
 
+  /* ---------- 4. 位置兜底：个别机型 fixed 会算偏，按实测差位移回来 ---------- */
+  function ensureBottom() {
+    var c = document.querySelector("#anMusic-page .aplayer-controller");
+    if (!c) return;
+    c.style.transform = "";
+    var r = c.getBoundingClientRect();
+    var diff = Math.round(r.bottom - window.innerHeight);
+    if (diff > 1) c.style.transform = "translateY(" + (-diff) + "px)";
+  }
+
   /* ---------- 启动 ---------- */
   function tick() {
     var ok = restructure();
     ok = fixList() && ok;
+    ensureBottom();
     return ok;
   }
   function boot() {
     var n = 0;
-    var t = setInterval(function () { n++; if (tick() || n > 45) clearInterval(t); }, 400);
+    var t = setInterval(function () {
+      n++;
+      if (tick() || n > 45) clearInterval(t);
+    }, 400);
+    var k = 0;
+    var t2 = setInterval(function () { k++; ensureBottom(); if (k > 20) clearInterval(t2); }, 500);
     document.addEventListener("click", function (e) {
       if (e.target.closest && e.target.closest(".aplayer-icon-menu")) setTimeout(fixList, 120);
+      setTimeout(ensureBottom, 60);
     }, true);
   }
 
