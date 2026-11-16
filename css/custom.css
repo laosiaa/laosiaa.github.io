@@ -2113,12 +2113,20 @@ hr:before, hr:after,
 [data-theme='light'] #article-container hr {
   border-top-color: rgba(15, 23, 42, .12) !important;
 }
-/* 侧栏「最新文章」等列表的虚线下边框 → 细实线 */
+/* 侧栏「最新文章」等列表的虚线下边框 → 细实线（主题用 :not(:last-child)，要压过它） */
+#aside-content .aside-list > .aside-list-item,
+#aside-content .aside-list-item,
 .aside-list-item,
 .aside-list-item:not(:last-child) {
   border-bottom: 1px solid rgba(255, 255, 255, .07) !important;
+  border-bottom-style: solid !important;
 }
+[data-theme='light'] #aside-content .aside-list-item,
 [data-theme='light'] .aside-list-item { border-bottom-color: rgba(15, 23, 42, .07) !important; }
+/* 右键菜单里的虚线分隔 */
+.rightMenu-group,
+.rightMenu-group.rightMenu-line,
+.rightMenu-small { border-bottom: 1px solid rgba(255, 255, 255, .08) !important; border-bottom-style: solid !important; }
 /* 评论区等其它带虚线的横线 */
 .tk-comment + .tk-comment,
 .comment-item { border-top-style: solid !important; }
