@@ -1708,15 +1708,18 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
     padding: 4px 0 150px !important;
   }
   body[data-type="music"] .aplayer-body .aplayer-pic {
-    width: 118px !important; height: 118px !important; margin: 2px auto 8px !important;
-    border-radius: 16px !important; box-shadow: 0 10px 26px rgba(0, 0, 0, .45) !important;
+    width: 96px !important; height: 96px !important; margin: 0 auto 6px !important;
+    border-radius: 14px !important; box-shadow: 0 8px 22px rgba(0, 0, 0, .42) !important;
   }
+  /* 封面上的播放/暂停大按钮：去掉（底部控制条已有播放键） */
+  body[data-type="music"] .aplayer-body .aplayer-pic .aplayer-button { display: none !important; }
   body[data-type="music"] .aplayer-info { height: auto !important; margin: 0 !important; }
+  body[data-type="music"] .aplayer-info .aplayer-music { margin: 0 !important; }
   body[data-type="music"] .aplayer-info .aplayer-music { text-align: center !important; padding: 0 18px !important; }
   body[data-type="music"] .aplayer-info .aplayer-music .aplayer-title { font-size: 16.5px !important; line-height: 1.35 !important; }
   body[data-type="music"] .aplayer-info .aplayer-lrc {
     margin: 2px 0 0 !important;
-    height: 330px !important; max-height: none !important; min-height: 0 !important;
+    height: 372px !important; max-height: none !important; min-height: 0 !important;
     padding: 0 20px !important;
     -webkit-mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 84%, transparent);
     mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 84%, transparent);
