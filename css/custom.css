@@ -1918,3 +1918,6 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   body[data-type="music"] #anMusicRefreshBtn { top: 134px !important; }
   body[data-type="music"] #anMusicSwitching { top: 184px !important; }
 }
+
+/* 音量滑块只给手机端用，桌面端隐藏 */
+.mm-vol { display: none !important; }
