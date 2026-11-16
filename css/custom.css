@@ -2123,6 +2123,12 @@ hr:before, hr:after,
 }
 [data-theme='light'] #aside-content .aside-list-item,
 [data-theme='light'] .aside-list-item { border-bottom-color: rgba(15, 23, 42, .07) !important; }
+/* 主题在同选择器上写了 border-bottom: 0 dashed !important，这里用同等选择器 + 更晚加载压过 */
+#aside-content .aside-list > .aside-list-item:not(:last-child),
+[data-theme='dark'] #aside-content .aside-list > .aside-list-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, .07) !important;
+  border-bottom-style: solid !important;
+}
 /* 右键菜单里的虚线分隔 */
 .rightMenu-group,
 .rightMenu-group.rightMenu-line,
