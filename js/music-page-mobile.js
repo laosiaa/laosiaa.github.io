@@ -172,6 +172,20 @@
     if (diff > 1) c.style.transform = "translateY(" + (-diff) + "px)";
   }
 
+
+  /* 点遮罩关闭曲库后，主题不会把遮罩收起来，这里补一刀 */
+  document.addEventListener("click", function (e) {
+    var m = maskEl();
+    if (!m || e.target !== m) return;
+    setTimeout(function () {
+      var l = listEl();
+      if (l && !l.classList.contains("aplayer-list-hide")) {
+        m.style.display = "none";
+        m.style.animation = "";
+      }
+    }, 60);
+  }, true);
+
   /* ---------- 启动 ---------- */
   function tick() {
     var ok = restructure();
