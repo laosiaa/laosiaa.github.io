@@ -98,18 +98,30 @@
       }, 600);
     }
 
-    // 等元数据就绪再定位，避免时长未知导致 seek 失败
+    // 元数据就绪后再定位：监听事件 + 轮询双保险，避免时长未知导致 seek 失败
+    var done = false;
+    function trySeek() {
+      if (done) return;
+      var d = ap.audio ? ap.audio.duration : 0;
+      if (!d || !isFinite(d)) return;
+      done = true;
+      try { if (seekTo > 0.5 && seekTo < d - 2) ap.seek(seekTo); } catch (e) {}
+      resume();
+    }
+    if (ap.audio) {
+      ap.audio.preload = "metadata";
+      ["loadedmetadata", "durationchange", "canplay", "canplaythrough"].forEach(function (ev) {
+        ap.audio.addEventListener(ev, trySeek);
+      });
+      try { if (!ap.audio.duration) ap.audio.load(); } catch (e) {}
+    }
     var tries = 0;
     var timer = setInterval(function () {
       tries++;
-      var d = ap.audio ? ap.audio.duration : 0;
-      if (d && isFinite(d)) {
+      trySeek();
+      if (done || tries > 40) {
         clearInterval(timer);
-        try { if (seekTo > 0.5 && seekTo < d - 2) ap.seek(seekTo); } catch (e) {}
-        resume();
-      } else if (tries > 40) {
-        clearInterval(timer);
-        resume();
+        if (!done) resume();
       }
     }, 250);
   }
