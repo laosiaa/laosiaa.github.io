@@ -2358,5 +2358,5 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
 }
 .mm-zoom.mm-zoom-on img { transform: scale(1); }
 @media screen and (max-width: 768px) {
-  .mm-zoom img { max-width: 92vw; max-height: 74vh; border-radius: 14px; }
+  .mm-zoom img { max-width: 96vw; max-height: 86vh; border-radius: 14px; }
 }
