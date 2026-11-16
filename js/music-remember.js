@@ -42,6 +42,7 @@
       t: Math.max(0, Math.round(t * 10) / 10),
       vol: ap.volume(),
       mode: ap.mode,
+      playing: !!(ap.audio && !ap.audio.paused),
       at: now,
     });
   }
@@ -74,6 +75,29 @@
     if (ap.list.index !== idx) {
       try { ap.list.switch(idx); } catch (e) {}
     }
+    function resume() {
+      if (!st.playing) return;
+      var go = function () {
+        try {
+          var r = ap.play();
+          if (r && r.catch) r.catch(function () {});
+        } catch (e) {}
+      };
+      go();
+      // 被自动播放策略拦下时，等用户第一次点屏幕/按键再续播
+      var once = function () {
+        document.removeEventListener("pointerdown", once, true);
+        document.removeEventListener("keydown", once, true);
+        if (ap.audio && ap.audio.paused) go();
+      };
+      setTimeout(function () {
+        if (ap.audio && ap.audio.paused) {
+          document.addEventListener("pointerdown", once, true);
+          document.addEventListener("keydown", once, true);
+        }
+      }, 600);
+    }
+
     // 等元数据就绪再定位，避免时长未知导致 seek 失败
     var tries = 0;
     var timer = setInterval(function () {
@@ -82,8 +106,10 @@
       if (d && isFinite(d)) {
         clearInterval(timer);
         try { if (seekTo > 0.5 && seekTo < d - 2) ap.seek(seekTo); } catch (e) {}
+        resume();
       } else if (tries > 40) {
         clearInterval(timer);
+        resume();
       }
     }, 250);
   }
