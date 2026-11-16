@@ -1716,13 +1716,13 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   body[data-type="music"] .aplayer-info .aplayer-music .aplayer-title { font-size: 16.5px !important; line-height: 1.35 !important; }
   body[data-type="music"] .aplayer-info .aplayer-lrc {
     margin: 2px 0 0 !important;
-    height: 300px !important; max-height: none !important; min-height: 0 !important;
+    height: 330px !important; max-height: none !important; min-height: 0 !important;
     padding: 0 20px !important;
-    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
-    mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 84%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 6%, #000 84%, transparent);
   }
   body[data-type="music"] .aplayer-info .aplayer-lrc p {
-    font-size: 13px !important; line-height: 2 !important; opacity: .48 !important; color: #fff !important;
+    font-size: 13px !important; line-height: 1.95 !important; opacity: .55 !important; color: #fff !important;
   }
   body[data-type="music"] .aplayer-info .aplayer-lrc p.aplayer-lrc-current {
     font-size: 15px !important; font-weight: 600 !important; opacity: 1 !important; color: #3ddc84 !important;
