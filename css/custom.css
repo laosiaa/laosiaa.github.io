@@ -2297,3 +2297,21 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
   /* 拖动手柄可点按关闭 */
   body[data-type="music"] .mm-list-head::before { cursor: pointer; }
 }
+
+/* 顺序 / 随机 切换按钮（手机端） */
+@media screen and (max-width: 768px) {
+  body[data-type="music"] .mm-row-2 { gap: 18px !important; }
+  body[data-type="music"] .mm-row-2 .mm-mode {
+    display: inline-flex !important; align-items: center; justify-content: center !important;
+    width: 28px !important; height: 28px !important;
+    padding: 0 !important; border: 0 !important; background: transparent !important;
+    color: #fff !important; opacity: .82 !important; cursor: pointer;
+  }
+  body[data-type="music"] .mm-row-2 .mm-mode svg { width: 20px !important; height: 20px !important; }
+  body[data-type="music"] .mm-row-2 .mm-mode .mm-mode-shuffle { display: none; }
+  body[data-type="music"] .mm-row-2 .mm-mode.mm-random .mm-mode-shuffle { display: block; }
+  body[data-type="music"] .mm-row-2 .mm-mode.mm-random .mm-mode-list { display: none; }
+  body[data-type="music"] .mm-row-2 .mm-mode.mm-random {
+    color: var(--anzhiyu-main, #fc466b) !important; opacity: 1 !important;
+  }
+}

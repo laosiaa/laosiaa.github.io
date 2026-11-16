@@ -45,13 +45,39 @@
 
     var r2 = document.createElement("div");
     r2.className = "mm-row mm-row-2";
-    [loop, back, play, fwd, menu].forEach(function (n) { if (n) r2.appendChild(n); });
+    var modeBtn = buildModeBtn(ap);
+    [modeBtn, loop, back, play, fwd, menu].forEach(function (n) { if (n) r2.appendChild(n); });
 
     ctrl.textContent = "";
     ctrl.appendChild(r1);
     ctrl.appendChild(r2);
     buildVolume(ap, r1);
     return true;
+  }
+
+  /* ---------- 顺序 / 随机 播放切换（手机端专用，主题默认只有循环键） ---------- */
+  function buildModeBtn(ap) {
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "aplayer-icon mm-mode";
+    btn.setAttribute("aria-label", "顺序播放 / 随机播放");
+    btn.innerHTML =
+      '<svg class="mm-mode-shuffle" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>' +
+      '<svg class="mm-mode-list" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h7"/><path d="M17 15l3 3-3 3"/></svg>';
+
+    function paint() {
+      var random = String(ap.mode) === "random";
+      btn.classList.toggle("mm-random", random);
+      btn.setAttribute("title", random ? "随机播放" : "顺序播放");
+    }
+    btn.addEventListener("click", function () {
+      ap.mode = String(ap.mode) === "random" ? "list" : "random";
+      paint();
+    });
+    paint();
+    return btn;
   }
 
   /* ---------- 2. 音量：喇叭点开弹层，拖动滑杆 ---------- */
