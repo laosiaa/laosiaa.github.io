@@ -2267,11 +2267,11 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
     padding: 6px 16px !important;
     gap: 10px !important;
     min-height: 46px !important;
+    height: 46px !important;
     align-items: center;
     line-height: 1.35 !important;
     border-bottom: 1px solid rgba(255, 255, 255, .04) !important;
   }
-  body[data-type="music"] #anMusic-page .aplayer-list ol li,
   body[data-type="music"] #anMusic-page .aplayer-list ol li *,
   body[data-type="music"] .aplayer-list ol li .aplayer-list-index,
   body[data-type="music"] .aplayer-list ol li .aplayer-list-title,
