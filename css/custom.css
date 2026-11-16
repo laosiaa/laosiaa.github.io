@@ -1549,8 +1549,9 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   #category-bar { margin-top: 12px !important; }
 
   /* 14. 封面图在夜间模式压暗一点，避免白底刺眼 */
-  #article-container > p:first-of-type > img:only-child,
-  #article-container > p:only-child > img {
+  #article-container > p:first-of-type > img,
+  #article-container > p:first-of-type > a > img,
+  #article-container > p:first-of-type > a > img.entered {
     filter: brightness(.92) saturate(.97);
   }
 
