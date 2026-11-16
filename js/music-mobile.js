@@ -89,3 +89,26 @@
   else boot();
   document.addEventListener("pjax:complete", boot);
 })();
+
+/* 曲库抽屉：压掉主题写在行内的 max-height（它会顶到屏幕外） */
+(function () {
+  "use strict";
+  function fixHeights() {
+    var list = document.querySelector("#anMusic-page .aplayer-list");
+    if (!list) return false;
+    list.style.setProperty("max-height", "calc(100vh - 250px)", "important");
+    var ol = list.querySelector("ol");
+    if (ol) ol.style.setProperty("max-height", "calc(100vh - 340px)", "important");
+    return true;
+  }
+  function boot() {
+    var n = 0;
+    var t = setInterval(function () { n++; if (fixHeights() || n > 40) clearInterval(t); }, 400);
+    document.addEventListener("click", function (e) {
+      if (e.target.closest && e.target.closest(".aplayer-icon-menu")) setTimeout(fixHeights, 60);
+    }, true);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+  document.addEventListener("pjax:complete", boot);
+})();
