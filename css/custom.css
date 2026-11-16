@@ -2270,9 +2270,16 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
     line-height: 1.35 !important;
     border-bottom: 1px solid rgba(255, 255, 255, .04) !important;
   }
-  body[data-type="music"] #anMusic-page .aplayer-list ol li > * { line-height: 1.35 !important; }
-  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-index,
-  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-author { line-height: 1.35 !important; }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li,
+  body[data-type="music"] #anMusic-page .aplayer-list ol li *,
+  body[data-type="music"] .aplayer-list ol li .aplayer-list-index,
+  body[data-type="music"] .aplayer-list ol li .aplayer-list-title,
+  body[data-type="music"] .aplayer-list ol li .aplayer-list-author {
+    line-height: 1.35 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
   body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-title {
     font-size: 13px !important;
     line-height: 1.35 !important;
