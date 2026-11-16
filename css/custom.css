@@ -1451,3 +1451,91 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
 @media screen and (max-width: 768px) {
   #album_detail .alb-back { bottom: 10px; right: 8px; padding: 6px 13px; font-size: 12.5px; }
 }
+
+/* ================= 移动端优化（≤768px） ================= */
+@media screen and (max-width: 768px) {
+
+  /* 1. 首页顶部卡片条：整张卡片可见 + 吸附滑动 */
+  .swiper_container_card {
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding-right: 14px;
+  }
+  .swiper_container_card::-webkit-scrollbar { display: none; }
+  .topGroup { gap: 12px !important; }
+  .topGroup .recent-post-item {
+    flex: 0 0 auto !important;
+    width: 74vw !important;
+    max-width: 300px !important;
+    scroll-snap-align: start;
+  }
+  .topGroup .recent-post-item .article-title {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .topGroup .recent-post-item .recent-post-info { padding: 8px 10px !important; }
+
+  /* 2. 首页分类栏：间距均匀，更多按钮不粘连 */
+  #bannerGroup .categoryGroup { gap: 7px !important; }
+  #bannerGroup .categoryItem { padding: 4px 10px !important; }
+  #bannerGroup .categoryItem:last-child { margin-left: 4px !important; }
+
+  /* 3. 首页文章卡片：元信息 / 标签字号加大，标签不硬截断 */
+  .recent-post-info .article-meta-wrap,
+  .recent-post-info .article-meta-wrap a,
+  .recent-post-info .article-meta.tags,
+  .recent-post-info .article-meta.tags a { font-size: 12.5px !important; }
+  .recent-post-info .article-meta.tags {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+  }
+  .recent-post-info .article-title { font-size: 17px !important; line-height: 1.45 !important; }
+
+  /* 4. 文章页：标题缩小、不再被 3 行截断 */
+  #page-header.post-bg #post-info .post-title,
+  #page-header.post-bg #post-info .post-title a {
+    font-size: 25px !important;
+    line-height: 1.5 !important;
+    -webkit-line-clamp: unset !important;
+    display: block !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+  #page-header.post-bg #post-info { padding-top: 26px !important; }
+
+  /* 5. 文章页：标签行左对齐（不再居中悬空） */
+  #page-header.post-bg #post-info > div:not(.post-title):not(#post-meta) {
+    justify-content: flex-start !important;
+    margin-inline: 0 !important;
+    text-align: left !important;
+  }
+
+  /* 6. 文章页元信息：图标+文字成组，换行整齐 */
+  #post-meta .meta-inline {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    column-gap: 14px !important;
+    row-gap: 7px !important;
+    white-space: normal !important;
+    font-size: 12.5px !important;
+  }
+  #post-meta .meta-inline .post-meta-separator { display: none !important; }
+  #post-meta .meta-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    white-space: nowrap !important;
+  }
+  #post-meta .meta-item .post-meta-icon { font-size: 13px !important; opacity: .8; }
+
+  /* 7. AI 摘要卡片：移动端更紧凑 */
+  .ai-summary-card { padding: 10px 12px !important; font-size: 13px !important; line-height: 1.65 !important; }
+  .ai-summary-card .ai-summary-text { font-size: 13px !important; }
+}
