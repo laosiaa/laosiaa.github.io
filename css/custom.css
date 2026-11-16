@@ -1174,7 +1174,7 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 #article-container img[src*=".svg"] { height: auto !important; width: auto !important; }
 
 @media screen and (max-width: 768px) {
-  #article-container img:not(.emoji):not(.keep-full):not(.cf-friends-avatar):not(.no-lightbox),
+  #article-container img:not(.emoji):not(.keep-full):not(.cf-friends-avatar):not(.no-lightbox):not(.ab-avatar),
   body:has(#page-header.post-bg) #article-container img.keep-full { height: 300px !important; }
 }
 
