@@ -105,8 +105,33 @@ async function handle(request) {
 
     const br = u.searchParams.get("br");
     const brList = br ? [br, "320", "192", "128"] : ["320", "192", "128"];
+
+    // 解析结果缓存 5 分钟：上游对同一出口 IP 有频率限制，重复播放/多人同时听时
+    // 打满就会 404，缓存一下既快又稳。
+    const cacheKey = new Request(`https://blog.521251.xyz/music-api/_resolved?sid=${sid}`, {
+      method: "GET",
+    });
+    const cache = caches.default;
+    const hit = await cache.match(cacheKey);
+    if (hit) {
+      const loc = await hit.text();
+      if (loc) {
+        return new Response(null, {
+          status: 302,
+          headers: { location: loc, "cache-control": "no-store", ...CORS },
+        });
+      }
+    }
+
     const got = await resolveNetease(sid, [...new Set(brList)]);
     if (!got) return json({ ok: false, error: "unavailable", sid }, 404);
+
+    await cache.put(
+      cacheKey,
+      new Response(got.url, {
+        headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "max-age=300" },
+      })
+    );
 
     return new Response(null, {
       status: 302,
