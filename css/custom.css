@@ -2238,3 +2238,50 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
     color: var(--anzhiyu-main, #fc466b) !important;
   }
 }
+
+/* ========== 手机端曲库：单手友好（更矮、更紧凑、首行有呼吸） ========== */
+@media screen and (max-width: 768px) {
+  body[data-type="music"] #anMusic-page .aplayer-list.aplayer-list-hide {
+    /* 只占下半屏，拇指够得着 */
+    max-height: min(56vh, calc(100vh - 300px)) !important;
+    padding: 4px 0 6px !important;
+    overscroll-behavior: contain;
+  }
+  body[data-type="music"] .mm-list-head {
+    padding: 14px 16px 10px !important;
+  }
+  body[data-type="music"] .mm-list-head::before {
+    top: 5px;
+    width: 40px; height: 4px;
+    background: rgba(255, 255, 255, .26);
+  }
+  body[data-type="music"] .mm-list-head .mm-list-title { font-size: 13px !important; }
+  body[data-type="music"] .mm-list-head .mm-list-close {
+    width: 32px !important; height: 32px !important;
+    margin: -6px -4px -6px 0;
+  }
+  /* 首行与标题之间留出呼吸距离，避免误触 */
+  body[data-type="music"] #anMusic-page .aplayer-list ol { padding: 10px 0 8px !important; }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li {
+    padding: 8px 16px !important;
+    gap: 10px !important;
+    min-height: 42px;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, .04) !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-title {
+    font-size: 13px !important;
+    line-height: 1.35 !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-author {
+    font-size: 10.5px !important;
+    opacity: .45 !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-index {
+    flex: 0 0 18px !important; width: 18px !important;
+    font-size: 11px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li.aplayer-list-light::before { width: 3px; }
+  /* 拖动手柄可点按关闭 */
+  body[data-type="music"] .mm-list-head::before { cursor: pointer; }
+}

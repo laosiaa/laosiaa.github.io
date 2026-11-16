@@ -117,6 +117,7 @@
       h.querySelector(".mm-list-close").addEventListener("click", closeDrawer);
       l.insertBefore(h, l.firstChild);
     }
+    bindSheetGestures();
     if (!l.dataset.mmBound) {
       l.dataset.mmBound = "1";
       l.addEventListener("click", function (e) {
@@ -125,6 +126,31 @@
       });
     }
     return true;
+  }
+
+
+  /* ---------- 5. 曲库：头部长按/下拉都可关闭，方便单手 ---------- */
+  function bindSheetGestures() {
+    var l = listEl();
+    var head = l && l.querySelector(".mm-list-head");
+    if (!head || head.dataset.mmDrag === "1") return;
+    head.dataset.mmDrag = "1";
+    var startY = 0, moved = false;
+    head.addEventListener("touchstart", function (e) {
+      startY = e.touches[0].clientY;
+      moved = false;
+    }, { passive: true });
+    head.addEventListener("touchmove", function (e) {
+      var dy = e.touches[0].clientY - startY;
+      if (dy > 8) moved = true;
+      if (dy > 0) head.style.transform = "translateY(" + Math.min(dy, 80) + "px)";
+    }, { passive: true });
+    head.addEventListener("touchend", function () {
+      var t = head.style.transform || "";
+      var dy = parseInt((t.match(/-?\d+/) || [0])[0], 10) || 0;
+      head.style.transform = "";
+      if (moved && dy > 30) closeDrawer();
+    });
   }
 
   function closeDrawer() {
