@@ -1973,6 +1973,26 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   .ab-tags > * { flex: 0 0 auto !important; font-size: 12px !important; padding: 5px 11px !important; }
   .ab-actions { justify-content: center !important; flex-wrap: wrap !important; gap: 10px !important; margin-top: 14px !important; }
   .ab-actions > * { flex: 0 0 auto !important; }
+  /* 三个按钮统一成同一套胶囊样式，只用配色区分主次 */
+  .ab-actions { gap: 8px !important; }
+  .ab-actions .ab-btn {
+    height: 34px !important; padding: 0 15px !important;
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    font-size: 12.5px !important; line-height: 1 !important;
+    border-radius: 999px !important;
+    background: rgba(255, 255, 255, .07) !important;
+    background-image: none !important;
+    border: 1px solid rgba(255, 255, 255, .14) !important;
+    box-shadow: none !important;
+    color: var(--ab-text) !important; text-decoration: none !important;
+  }
+  .ab-actions .ab-btn--primary {
+    background: rgba(252, 70, 107, .18) !important;
+    border-color: rgba(252, 70, 107, .45) !important;
+    color: #ff97ac !important;
+  }
+  .ab-hero { padding-bottom: 20px !important; }
+
   .ab-grid3 { gap: 12px !important; }
   .ab-card { padding: 16px 16px 14px !important; border-radius: 16px !important; }
   .ab-card h3 { font-size: 16px !important; }
