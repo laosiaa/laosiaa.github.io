@@ -2327,3 +2327,36 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
     color: var(--anzhiyu-main, #fc466b) !important; opacity: 1 !important;
   }
 }
+
+/* ========== 音乐馆封面点击放大 ========== */
+.mm-zoom {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6vh 6vw;
+  background: rgba(6, 6, 10, .88);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  opacity: 0;
+  transition: opacity .22s ease;
+  cursor: zoom-out;
+}
+.mm-zoom.mm-zoom-on { opacity: 1; }
+.mm-zoom img {
+  max-width: 88vw;
+  max-height: 82vh;
+  width: auto;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .6);
+  transform: scale(.94);
+  transition: transform .22s ease;
+  object-fit: contain;
+}
+.mm-zoom.mm-zoom-on img { transform: scale(1); }
+@media screen and (max-width: 768px) {
+  .mm-zoom img { max-width: 92vw; max-height: 74vh; border-radius: 14px; }
+}

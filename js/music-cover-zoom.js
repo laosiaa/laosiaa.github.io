@@ -1,0 +1,80 @@
+/*! 音乐馆：彻底移除封面上的播放/暂停按钮（DOM 删除，不是隐藏）+ 点封面放大查看 */
+(function () {
+  "use strict";
+
+  /* ---------- 1. 删除 .aplayer-button 节点 ---------- */
+  function killButton() {
+    var btns = document.querySelectorAll("#anMusic-page .aplayer-pic .aplayer-button, .aplayer-pic .aplayer-button");
+    for (var i = 0; i < btns.length; i++) {
+      var b = btns[i];
+      if (b && b.parentNode) b.parentNode.removeChild(b);
+    }
+    return !!document.querySelector("#anMusic-page .aplayer-pic");
+  }
+
+  /* ---------- 2. 点封面放大 ---------- */
+  var overlay = null;
+  function closeZoom() {
+    if (!overlay) return;
+    overlay.classList.remove("mm-zoom-on");
+    var el = overlay;
+    overlay = null;
+    setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 220);
+    document.removeEventListener("keydown", onKey);
+  }
+  function onKey(e) { if (e.key === "Escape") closeZoom(); }
+
+  function coverUrl(pic) {
+    var m = /url\((["']?)(.*?)\1\)/.exec(pic.style.backgroundImage || "");
+    if (m && m[2] && m[2] !== "none") return m[2];
+    var img = pic.querySelector("img");
+    return img ? img.src : "";
+  }
+
+  function openZoom(url) {
+    if (!url) return;
+    overlay = document.createElement("div");
+    overlay.className = "mm-zoom";
+    var im = document.createElement("img");
+    im.src = url;
+    im.alt = "专辑封面";
+    overlay.appendChild(im);
+    overlay.addEventListener("click", function (e) { e.stopPropagation(); closeZoom(); });
+    document.body.appendChild(overlay);
+    requestAnimationFrame(function () { overlay.classList.add("mm-zoom-on"); });
+    document.addEventListener("keydown", onKey);
+  }
+
+  function bindPic() {
+    var pic = document.querySelector("#anMusic-page .aplayer-pic");
+    if (!pic || pic.dataset.mmZoom === "1") return;
+    pic.dataset.mmZoom = "1";
+    pic.style.cursor = "zoom-in";
+    pic.addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      openZoom(coverUrl(pic));
+    }, true);
+  }
+
+  /* ---------- 3. 启动：APlayer 会重建节点，用 observer + 定时兜底 ---------- */
+  function tick() {
+    killButton();
+    bindPic();
+  }
+  function boot() {
+    tick();
+    var n = 0;
+    var t = setInterval(function () { n++; tick(); if (n > 40) clearInterval(t); }, 400);
+
+    var mo = new MutationObserver(function () { tick(); });
+    var host = document.getElementById("anMusic-page");
+    if (host) mo.observe(host, { childList: true, subtree: true });
+
+    window.addEventListener("resize", function () { setTimeout(tick, 300); });
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+  document.addEventListener("pjax:complete", function () { setTimeout(boot, 300); });
+})();
