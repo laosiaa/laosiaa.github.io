@@ -1760,6 +1760,25 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   /* 给固定控制条留出空间 */
   body[data-type="music"] .aplayer-body { padding-bottom: 108px !important; }
 
+  /* 控制条内部排布：时间靠左，播放键居中，循环/曲库靠右 */
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 4px !important;
+  }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time-inner {
+    margin-right: 8px !important;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: .3px;
+  }
+  /* 顺序播放键与循环键功能重复，隐藏 */
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-order { display: none !important; }
+  /* 循环键推到右侧 */
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-loop { margin-left: auto !important; margin-right: 10px !important; }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-menu { margin-right: 0 !important; }
+
   /* 音量滑块（脚本注入） */
   body[data-type="music"] .mm-vol {
     flex: 1 1 100% !important;
