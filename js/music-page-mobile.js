@@ -104,7 +104,7 @@
   function fixList() {
     var l = listEl();
     if (!l) return false;
-    l.style.setProperty("max-height", "calc(100vh - 230px)", "important");
+    l.style.setProperty("max-height", "min(56vh, calc(100vh - 300px))", "important");
     var ol = l.querySelector("ol");
     if (ol) ol.style.setProperty("max-height", "calc(100vh - 330px)", "important");
 
