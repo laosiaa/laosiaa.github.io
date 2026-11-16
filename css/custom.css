@@ -1755,9 +1755,11 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   body[data-type="music"] .mm-row-2 .aplayer-icon {
     position: static !important; margin: 0 !important;
     left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
-    width: 28px !important; height: 28px !important; opacity: .8 !important;
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    width: 28px !important; height: 28px !important; opacity: .82 !important;
+    color: #fff !important; background: transparent !important;
   }
-  body[data-type="music"] .mm-row-2 .aplayer-icon svg { width: 20px !important; height: 20px !important; }
+  body[data-type="music"] .mm-row-2 .aplayer-icon svg { width: 20px !important; height: 20px !important; fill: currentColor !important; }
   body[data-type="music"] .mm-row-2 .aplayer-icon-play {
     width: 46px !important; height: 46px !important; opacity: 1 !important;
     border-radius: 50% !important; color: #fff !important;
