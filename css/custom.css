@@ -1813,6 +1813,11 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   }
   body[data-type="music"] #anMusic-page .aplayer-list.aplayer-list-hide {
     bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
+    max-height: calc(100vh - 200px) !important;
+    height: auto !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list.aplayer-list-hide ol {
+    max-height: calc(100vh - 300px) !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-list:not(.aplayer-list-hide) {
     bottom: -100% !important;
