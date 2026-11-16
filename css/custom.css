@@ -1527,9 +1527,27 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   /* 5. 文章页：标签行左对齐（不再居中悬空） */
   #page-header.post-bg #post-info > div:not(.post-title):not(#post-meta) {
     justify-content: flex-start !important;
-    margin-inline: 0 !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    align-self: flex-start !important;
     text-align: left !important;
   }
+  #page-header.post-bg #post-info { align-items: flex-start !important; }
+
+  /* 8. 首页轮播右侧渐隐 + 与分类栏留白 */
+  .swiper_container_card { position: relative; }
+  .swiper_container_card::after {
+    content: ""; position: absolute; top: 0; right: 0; width: 34px; height: 100%;
+    background: linear-gradient(90deg, rgba(10, 15, 30, 0), rgba(10, 15, 30, .85));
+    pointer-events: none; border-radius: 0 16px 16px 0;
+  }
+  #category-bar { margin-top: 12px !important; }
+
+  /* 9. 移动端小字对比度 */
+  .recent-post-info .article-meta-wrap,
+  .recent-post-info .article-meta.tags,
+  .recent-post-info .article-meta.tags a { color: rgba(255, 255, 255, .68) !important; }
+  #post-meta .meta-item .post-meta-label { color: rgba(255, 255, 255, .78) !important; }
 
   /* 6. 文章页元信息：图标+文字成组，换行整齐 */
   #post-meta .meta-inline {
