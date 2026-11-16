@@ -1466,7 +1466,7 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   .topGroup { gap: 12px !important; }
   .topGroup .recent-post-item {
     flex: 0 0 auto !important;
-    width: 74vw !important;
+    width: min(76vw, 320px) !important;
     max-width: 300px !important;
     scroll-snap-align: start;
   }
@@ -1482,7 +1482,7 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   /* 2. 首页分类栏：间距均匀，更多按钮不粘连 */
   #bannerGroup .categoryGroup { display: none !important; }   /* 手机端隐藏顶部重复的分类卡片 */
   #bannerGroup { width: auto !important; flex: 0 0 auto !important; }
-  .topGroup .recent-post-item { width: calc(100vw - 52px) !important; max-width: none !important; }
+  .topGroup .recent-post-item { width: min(76vw, 320px) !important; max-width: none !important; }
 
   #catalog-list {
     display: flex !important; gap: 6px !important;
