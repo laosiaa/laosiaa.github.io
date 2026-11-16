@@ -1715,6 +1715,51 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   }
   body[data-type="music"] .aplayer-lrc { margin-top: 6px !important; }
 
+  /* 底部控制条：固定贴底、内部改 flex 排版，避免上一首/播放/下一首被顶到屏幕外 */
+  body[data-type="music"] .aplayer-info .aplayer-controller {
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px 12px !important;
+    padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px)) !important;
+    background: rgba(16, 16, 20, .9) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    backdrop-filter: blur(16px) !important;
+    border-top: 1px solid rgba(255, 255, 255, .1) !important;
+    border-radius: 18px 18px 0 0 !important;
+    z-index: 1200 !important;
+  }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-bar-wrap {
+    flex: 1 1 100% !important; order: -1; margin: 0 0 2px !important; padding: 0 !important;
+  }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time {
+    position: static !important; width: auto !important; height: auto !important;
+    bottom: auto !important; order: 1; font-size: 11px !important;
+  }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time-inner {
+    position: static !important; display: flex !important; align-items: center !important;
+    gap: 6px !important; width: auto !important; height: auto !important; margin: 0 !important;
+  }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-ptime,
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-dtime { position: static !important; }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon {
+    position: static !important; left: auto !important; right: auto !important;
+    top: auto !important; bottom: auto !important; margin: 0 4px !important;
+    width: 30px !important; height: 30px !important;
+  }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-menu { position: static !important; }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-volume-wrap { display: none !important; }
+  /* 给固定控制条留出空间 */
+  body[data-type="music"] .aplayer-body { padding-bottom: 108px !important; }
+
   /* 右侧三个功能按钮：竖排在歌词区右上，避免压住封面/控制条 */
   body[data-type="music"] #anMusicBtnGetSong,
   body[data-type="music"] #anMusicRefreshBtn,
