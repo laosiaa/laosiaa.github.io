@@ -2136,3 +2136,12 @@ hr:before, hr:after,
 /* 评论区等其它带虚线的横线 */
 .tk-comment + .tk-comment,
 .comment-item { border-top-style: solid !important; }
+
+/* ========== 音乐馆封面上的播放/暂停圆钮：桌面 + 手机全部去掉（底部控制条已有播放键） ========== */
+.aplayer-pic .aplayer-button,
+body[data-type="music"] .aplayer-pic .aplayer-button,
+#anMusic-page .aplayer-pic .aplayer-button {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
