@@ -46,7 +46,19 @@
     var r2 = document.createElement("div");
     r2.className = "mm-row mm-row-2";
     var modeBtn = buildModeBtn(ap);
-    [modeBtn, loop, back, play, fwd, menu].forEach(function (n) { if (n) r2.appendChild(n); });
+    // 左（模式/循环）· 中（上一首/播放/下一首，绝对居中）· 右（曲库）
+    var gLeft = document.createElement("div");
+    gLeft.className = "mm-grp mm-grp-left";
+    var gMid = document.createElement("div");
+    gMid.className = "mm-grp mm-grp-mid";
+    var gRight = document.createElement("div");
+    gRight.className = "mm-grp mm-grp-right";
+    [modeBtn, loop].forEach(function (n) { if (n) gLeft.appendChild(n); });
+    [back, play, fwd].forEach(function (n) { if (n) gMid.appendChild(n); });
+    [menu].forEach(function (n) { if (n) gRight.appendChild(n); });
+    r2.appendChild(gLeft);
+    r2.appendChild(gMid);
+    r2.appendChild(gRight);
 
     ctrl.textContent = "";
     ctrl.appendChild(r1);
