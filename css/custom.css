@@ -1480,9 +1480,24 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   .topGroup .recent-post-item .recent-post-info { padding: 8px 10px !important; }
 
   /* 2. 首页分类栏：间距均匀，更多按钮不粘连 */
-  #bannerGroup .categoryGroup { gap: 7px !important; }
-  #bannerGroup .categoryItem { padding: 4px 10px !important; }
-  #bannerGroup .categoryItem:last-child { margin-left: 4px !important; }
+  #bannerGroup .categoryGroup { display: none !important; }   /* 手机端隐藏顶部重复的分类卡片 */
+  #bannerGroup { width: auto !important; flex: 0 0 auto !important; }
+  .topGroup .recent-post-item { width: calc(100vw - 52px) !important; max-width: none !important; }
+
+  #catalog-list {
+    display: flex !important; gap: 6px !important;
+    overflow-x: auto !important; scrollbar-width: none;
+    padding: 0 0 2px !important;
+  }
+  #catalog-list::-webkit-scrollbar { display: none; }
+  .catalog-list-item {
+    flex: 0 0 auto !important;
+    padding: 5px 12px !important;
+    border-radius: 999px !important;
+    margin: 0 !important;
+  }
+  .catalog-list-item a { font-size: 13px !important; }
+  #catalog-bar .catalog-more, #catalog-bar .more-button { margin-left: 6px !important; }
 
   /* 3. 首页文章卡片：元信息 / 标签字号加大，标签不硬截断 */
   .recent-post-info .article-meta-wrap,
