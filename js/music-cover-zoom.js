@@ -31,7 +31,16 @@
     return img ? img.src : "";
   }
 
-  function openZoom(url) {
+  /* 网易云图片默认只给 300×300，放大时换成高清参数 */
+  function hires(url) {
+    if (!url) return url;
+    if (/param=\d+y\d+/.test(url)) return url.replace(/param=\d+y\d+/, "param=900y900");
+    if (/\?param=/.test(url)) return url.replace(/\?param=.*$/, "?param=900y900");
+    return url;
+  }
+
+  function openZoom(rawUrl) {
+    var url = hires(rawUrl);
     if (!url) return;
     overlay = document.createElement("div");
     overlay.className = "mm-zoom";
