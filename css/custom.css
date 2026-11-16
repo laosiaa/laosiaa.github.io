@@ -1790,6 +1790,12 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
     transform: translateY(-50%) !important; margin: 0 !important;
   }
 
+  /* 曲库展开时主题会拉一层全屏遮罩，会把控制条一起盖黑：让遮罩停在控制条上方 */
+  body[data-type="music"] #menu-mask {
+    bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
+    height: auto !important;
+  }
+
   /* 音量滑块（脚本注入） */
   body[data-type="music"] .mm-vol {
     flex: 1 1 100% !important;
