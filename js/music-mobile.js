@@ -65,3 +65,27 @@
   else boot();
   document.addEventListener("pjax:complete", boot);
 })();
+
+/* 曲库抽屉头部：标题 + 关闭按钮 */
+(function () {
+  "use strict";
+  function head() {
+    var list = document.querySelector("#anMusic-page .aplayer-list");
+    if (!list || list.querySelector(".mm-list-head")) return !!list;
+    var h = document.createElement("div");
+    h.className = "mm-list-head";
+    var n = list.querySelectorAll("li").length;
+    h.innerHTML = '<span class="mm-list-title">曲库 · ' + n + ' 首</span>' +
+      '<button class="mm-list-close" type="button" aria-label="关闭">✕</button>';
+    h.querySelector(".mm-list-close").addEventListener("click", function () {
+      var menu = document.querySelector("#anMusic-page .aplayer-icon-menu");
+      if (menu) menu.click();
+    });
+    list.insertBefore(h, list.firstChild);
+    return true;
+  }
+  function boot() { if (head()) return; var n = 0; var t = setInterval(function () { n++; if (head() || n > 40) clearInterval(t); }, 400); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+  document.addEventListener("pjax:complete", boot);
+})();
