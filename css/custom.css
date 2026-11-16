@@ -2049,6 +2049,10 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
 }
 
 /* ========== 朋友圈页顶部横幅：去掉插图，只留紧凑文字条 ========== */
+/* 朋友圈页里主题留下的空占位 div（42px 空白条）直接隐藏 */
+#fcircle_page > div:empty,
+.fcircle_page > div:empty { display: none !important; }
+
 .author-content.author-content-item.fcirclePage,
 .fcirclePage.author-content-item {
   background-image: none !important;
