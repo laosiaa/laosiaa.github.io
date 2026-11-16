@@ -1895,19 +1895,23 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
     display: flex !important;
     flex-direction: column !important;
     grid-template-columns: none !important;
-    gap: 10px !important;
-    padding: 12px 14px 6px !important;
+    gap: 0 !important;
+    padding: 0 !important;
     background: transparent !important;
     border: 0 !important;
     border-radius: 0 !important;
+  }
+  #essay_page .es-card > li.bber-item > .bber-content,
+  #essay_page #waterfall > li.bber-item > .bber-content {
+    padding: 12px 14px 2px !important;
   }
   #essay_page .es-card > li.bber-item .bber-container-img,
   #essay_page #waterfall > li.bber-item .bber-container-img {
     order: -1 !important;
     width: 100% !important;
-    height: 168px !important;
+    height: 158px !important;
     margin: 0 !important;
-    border-radius: 12px !important;
+    border-radius: 0 !important;
     overflow: hidden !important;
   }
   #essay_page .bber-content-img {
@@ -1919,7 +1923,7 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   #essay_page .bber-content-img img {
     width: 100% !important; max-width: none !important; min-width: 0 !important;
     height: 100% !important; max-height: none !important; min-height: 0 !important;
-    object-fit: cover !important; border-radius: 12px !important;
+    object-fit: cover !important; border-radius: 0 !important;
   }
   #essay_page .bber-content-noimg { display: none !important; }
   #essay_page .bber-content .datacont {

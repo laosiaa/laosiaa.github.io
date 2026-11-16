@@ -233,9 +233,9 @@
             
             <tag> PVE </tag>
             
-            <tag> Mihomo </tag>
-            
             <tag> Docker </tag>
+            
+            <tag> Mihomo </tag>
             
         </tags>
       
@@ -343,9 +343,9 @@
             
             <tag> pve </tag>
             
-            <tag> Docker </tag>
-            
             <tag> lxc </tag>
+            
+            <tag> Docker </tag>
             
         </tags>
       
