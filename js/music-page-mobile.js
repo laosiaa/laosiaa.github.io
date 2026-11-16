@@ -50,7 +50,7 @@
     ctrl.textContent = "";
     ctrl.appendChild(r1);
     ctrl.appendChild(r2);
-    ctrl.appendChild(buildVolume(ap, r1));
+    buildVolume(ap, r1);
     return true;
   }
 
