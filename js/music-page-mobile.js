@@ -211,6 +211,21 @@
   }
 
 
+
+  /* ---------- 打开曲库时自动滚到正在播放的那一首 ---------- */
+  function scrollToCurrent() {
+    var l = listEl();
+    if (!l) return;
+    var ol = l.querySelector("ol");
+    var cur = l.querySelector("li.aplayer-list-light");
+    if (!ol || !cur) return;
+    var or = ol.getBoundingClientRect();
+    var cr = cur.getBoundingClientRect();
+    // 目标：当前行落在列表垂直中线附近
+    var delta = cr.top - or.top - (ol.clientHeight - cr.height) / 2;
+    ol.scrollTop = Math.max(0, ol.scrollTop + delta);
+  }
+
   /* 点遮罩关闭曲库后，主题不会把遮罩收起来，这里补一刀 */
   document.addEventListener("click", function (e) {
     var m = maskEl();
@@ -240,7 +255,10 @@
     var k = 0;
     var t2 = setInterval(function () { k++; ensureBottom(); if (k > 20) clearInterval(t2); }, 500);
     document.addEventListener("click", function (e) {
-      if (e.target.closest && e.target.closest(".aplayer-icon-menu")) setTimeout(fixList, 120);
+      if (e.target.closest && e.target.closest(".aplayer-icon-menu")) {
+        setTimeout(fixList, 120);
+        [80, 260, 520, 900].forEach(function (t) { setTimeout(scrollToCurrent, t); });
+      }
       setTimeout(ensureBottom, 60);
     }, true);
   }
