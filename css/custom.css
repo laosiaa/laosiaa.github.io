@@ -1543,6 +1543,25 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   }
   #category-bar { margin-top: 12px !important; }
 
+  /* 10. 文章页：AI 摘要与封面图之间留白 */
+  #article-container .ai-summary-card { margin-bottom: 14px !important; }
+  #article-container > p:first-of-type { margin-top: 0 !important; }
+
+  /* 11. 追番/推荐卡片：标题最多两行省略，角标不打架 */
+  .bgm-card .bgm-title {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    word-break: break-word;
+  }
+  .bgm-card .bgm-badge { max-width: calc(100% - 56px); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .rec-bar { row-gap: 6px !important; }
+
+  /* 12. 底部安全区（iPhone 手势条） */
+  #body-wrap { padding-bottom: env(safe-area-inset-bottom, 0px); }
+  #rightside { bottom: calc(env(safe-area-inset-bottom, 0px) + 40px) !important; }
+
   /* 9. 移动端小字对比度 */
   .recent-post-info .article-meta-wrap,
   .recent-post-info .article-meta.tags,
