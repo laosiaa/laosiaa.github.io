@@ -2091,3 +2091,34 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
 .fcirclePage .content-bottom .tips { font-size: 12px !important; line-height: 1.6 !important; }
 .fcirclePage .banner-button-group,
 .fcirclePage .banner-button { display: none !important; }
+
+/* ========== 去掉全站虚线与剪刀图标：分割线统一成 1px 细实线 ========== */
+hr,
+#article-container hr,
+#aside-content hr {
+  border: 0 !important;
+  border-top: 1px solid rgba(255, 255, 255, .14) !important;
+  height: 0 !important;
+  margin: 30px 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+hr:before, hr:after,
+#article-container hr:before, #article-container hr:after {
+  content: none !important;
+  display: none !important;
+}
+[data-theme='light'] hr,
+[data-theme='light'] #article-container hr {
+  border-top-color: rgba(15, 23, 42, .12) !important;
+}
+/* 侧栏「最新文章」等列表的虚线下边框 → 细实线 */
+.aside-list-item,
+.aside-list-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, .07) !important;
+}
+[data-theme='light'] .aside-list-item { border-bottom-color: rgba(15, 23, 42, .07) !important; }
+/* 评论区等其它带虚线的横线 */
+.tk-comment + .tk-comment,
+.comment-item { border-top-style: solid !important; }
