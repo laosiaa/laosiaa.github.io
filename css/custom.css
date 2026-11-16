@@ -52,14 +52,19 @@
   flex: 1;
 }
 #ai-summary .ai-summary-toggle {
-  border: none;
-  background: transparent;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .06);
   cursor: pointer;
-  font-size: 0.78rem;
-  opacity: 0.65;
+  font-size: 0.8rem;
+  line-height: 1;
+  padding: 7px 13px;
+  min-height: 30px;
+  border-radius: 999px;
+  opacity: 0.85;
   color: inherit;
+  transition: all .18s ease;
 }
-#ai-summary .ai-summary-toggle:hover { opacity: 1; }
+#ai-summary .ai-summary-toggle:hover { opacity: 1; background: rgba(255, 255, 255, .14); }
 #ai-summary.collapsed .ai-summary-body { display: none; }
 #ai-summary.failed { border-color: rgba(255, 120, 120, 0.45); opacity: 0.85; }
 #ai-summary .ai-summary-body { color: var(--anzhiyu-fontcolor, inherit); opacity: 1; font-weight: 500; }
@@ -1543,6 +1548,32 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   }
   #category-bar { margin-top: 12px !important; }
 
+  /* 14. 封面图在夜间模式压暗一点，避免白底刺眼 */
+  #article-container > p:first-of-type > img:only-child,
+  #article-container > p:only-child > img {
+    filter: brightness(.92) saturate(.97);
+  }
+
+  /* 15. AI 摘要「收起」按钮热区放大 */
+  #ai-summary .ai-summary-toggle { min-height: 36px; padding: 9px 16px; font-size: .86rem; }
+
+  /* 16. 文章页返回上一页入口（仅手机显示） */
+  #page-header.post-bg #post-info .post-back-link {
+    display: inline-flex !important;
+    align-items: center; gap: 5px;
+    margin: 0 0 10px; padding: 7px 15px;
+    border-radius: 999px;
+    font-size: 12.5px; line-height: 1;
+    text-decoration: none !important;
+    color: rgba(255, 255, 255, .86);
+    background: rgba(255, 255, 255, .08);
+    border: 1px solid rgba(255, 255, 255, .2);
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    transition: all .18s ease;
+  }
+  #page-header.post-bg #post-info .post-back-link i { font-style: normal; opacity: .85; }
+  #page-header.post-bg #post-info .post-back-link:active { background: rgba(255, 255, 255, .18); }
+
   /* 13. 手机端取消分类栏吸顶（滚动时会压住内容） */
   #categoryBar,
   #category-bar {
@@ -1604,3 +1635,6 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   .ai-summary-card { padding: 10px 12px !important; font-size: 13px !important; line-height: 1.65 !important; }
   .ai-summary-card .ai-summary-text { font-size: 13px !important; }
 }
+
+/* 返回上一页入口：桌面端不显示 */
+.post-back-link { display: none; }
