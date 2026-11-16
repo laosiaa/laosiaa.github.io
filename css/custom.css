@@ -1543,6 +1543,19 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   }
   #category-bar { margin-top: 12px !important; }
 
+  /* 13. 手机端取消分类栏吸顶（滚动时会压住内容） */
+  #categoryBar,
+  #category-bar {
+    position: static !important;
+    top: auto !important;
+    z-index: auto !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  #categoryBar .catalog-bar, #category-bar .catalog-bar { background: transparent !important; }
+
   /* 10. 文章页：AI 摘要与封面图之间留白 */
   #article-container .ai-summary-card { margin-bottom: 14px !important; }
   #article-container > p:first-of-type { margin-top: 0 !important; }
