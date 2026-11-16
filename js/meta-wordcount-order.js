@@ -176,14 +176,35 @@
     wc.dataset.mcMoved = "1";
     if (second) second.style.display = "none";
 
+    // post-meta-group.js 会 clone 节点并 innerHTML 重排，之前拿到的 locEl 可能已脱离文档，
+    // 所以每次都按 data-tip 重新查真实节点再写文字
+    function applyLoc(text) {
+      var labels = document.querySelectorAll(".post-meta-date.meta-inline .post-meta-label");
+      var hit = false;
+      for (var i = 0; i < labels.length; i++) {
+        var t = labels[i].getAttribute("data-tip") || labels[i].getAttribute("title") || "";
+        if (t === "作者 IP 归属地") {
+          labels[i].textContent = text;
+          hit = true;
+        }
+      }
+      if (!hit && labels.length) {
+        var last = labels[labels.length - 1];
+        if (/定位中|未知/.test(last.textContent || "")) last.textContent = text;
+      }
+      if (locEl) locEl.textContent = text;
+    }
+
     resolveLocation()
       .then(function (v) {
-        locEl.textContent = v.loc;
-        tip(locEl, "作者 IP 归属地");
+        applyLoc(v.loc);
+        setTimeout(function () { applyLoc(v.loc); }, 400);
+        setTimeout(function () { applyLoc(v.loc); }, 1200);
+        setTimeout(function () { applyLoc(v.loc); }, 2400);
       })
       .catch(function () {
-        locEl.textContent = "\u672a\u77e5";
-        tip(locEl, "作者 IP 归属地");
+        applyLoc("\u672a\u77e5");
+        setTimeout(function () { applyLoc("\u672a\u77e5"); }, 1200);
       });
   }
 
