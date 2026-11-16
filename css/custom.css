@@ -1681,147 +1681,123 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   body[data-type="music"] #content-inner,
   body[data-type="music"] .layout { padding: 0 !important; gap: 0 !important; }
   body[data-type="music"] #page {
-    width: 100% !important;
-    max-width: 100% !important;
-    padding: 0 !important;
-    border: 0 !important;
-    box-shadow: none !important;
-    background: transparent !important;
+    width: 100% !important; max-width: 100% !important; padding: 0 !important;
+    border: 0 !important; box-shadow: none !important; background: transparent !important;
   }
   body[data-type="music"] #aside-content,
   body[data-type="music"] #post-comment,
   body[data-type="music"] #workboard { display: none !important; }
 
+  /* 右侧三个悬浮功能键全部去掉 */
+  body[data-type="music"] #anMusicBtnGetSong,
+  body[data-type="music"] #anMusicRefreshBtn,
+  body[data-type="music"] #anMusicSwitching { display: none !important; }
+
   body[data-type="music"] #anMusic-page,
   body[data-type="music"] #anMusic-page-meting { width: 100% !important; }
 
-  /* 播放器：撑满可视高度 */
+  /* 播放器：封面收小、歌词上移多显示几行 */
   body[data-type="music"] .aplayer {
-    width: 100% !important;
-    height: auto !important;
-    min-height: calc(100vh - 72px) !important;
+    width: 100% !important; height: auto !important;
+    min-height: calc(100vh - 60px) !important; background: transparent !important;
   }
   body[data-type="music"] .aplayer-body {
-    top: 72px !important;
-    height: calc(100vh - 150px) !important;
+    position: static !important; top: auto !important; left: auto !important; right: auto !important;
+    width: 100% !important; height: auto !important; margin: 0 !important;
+    padding: 4px 0 150px !important;
   }
-  /* 底部控制条高度正常，不再被压成一条线 */
-  body[data-type="music"] .aplayer-controller {
-    height: auto !important;
-    min-height: 64px !important;
-    padding: 8px 12px !important;
-    box-sizing: border-box !important;
-    bottom: 0 !important;
+  body[data-type="music"] .aplayer-body .aplayer-pic {
+    width: 118px !important; height: 118px !important; margin: 2px auto 8px !important;
+    border-radius: 16px !important; box-shadow: 0 10px 26px rgba(0, 0, 0, .45) !important;
   }
-  body[data-type="music"] .aplayer-lrc { margin-top: 6px !important; }
+  body[data-type="music"] .aplayer-info { height: auto !important; margin: 0 !important; }
+  body[data-type="music"] .aplayer-info .aplayer-music { text-align: center !important; padding: 0 18px !important; }
+  body[data-type="music"] .aplayer-info .aplayer-music .aplayer-title { font-size: 16.5px !important; line-height: 1.35 !important; }
+  body[data-type="music"] .aplayer-info .aplayer-lrc {
+    margin: 2px 0 0 !important;
+    height: 300px !important; max-height: none !important; min-height: 0 !important;
+    padding: 0 20px !important;
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 10%, #000 80%, transparent);
+  }
+  body[data-type="music"] .aplayer-info .aplayer-lrc p {
+    font-size: 13px !important; line-height: 2 !important; opacity: .48 !important; color: #fff !important;
+  }
+  body[data-type="music"] .aplayer-info .aplayer-lrc p.aplayer-lrc-current {
+    font-size: 15px !important; font-weight: 600 !important; opacity: 1 !important; color: #3ddc84 !important;
+  }
 
-  /* 底部控制条：固定贴底、内部改 flex 排版，避免上一首/播放/下一首被顶到屏幕外 */
+  /* ---------- 底部控制条 ---------- */
   body[data-type="music"] .aplayer-info .aplayer-controller {
-    position: fixed !important;
-    left: 0 !important;
-    right: 0 !important;
-    bottom: 0 !important;
-    width: 100% !important;
-    height: auto !important;
-    box-sizing: border-box !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    flex-wrap: wrap !important;
-    gap: 6px 12px !important;
-    padding: 14px 16px calc(16px + env(safe-area-inset-bottom, 0px)) !important;
-    background: rgba(16, 16, 20, .9) !important;
-    -webkit-backdrop-filter: blur(16px) !important;
-    backdrop-filter: blur(16px) !important;
-    border-top: 1px solid rgba(255, 255, 255, .1) !important;
-    border-radius: 18px 18px 0 0 !important;
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    width: 100% !important; height: auto !important; box-sizing: border-box !important;
+    display: block !important;
+    padding: 13px 18px calc(12px + env(safe-area-inset-bottom, 0px)) !important;
+    background: rgba(14, 14, 18, .94) !important;
+    -webkit-backdrop-filter: blur(20px) !important; backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(255, 255, 255, .08) !important;
+    border-radius: 20px 20px 0 0 !important;
     z-index: 1200 !important;
   }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-bar-wrap {
-    flex: 1 1 100% !important; order: -1; margin: 0 0 2px !important; padding: 0 !important;
+  body[data-type="music"] .mm-row { display: flex !important; align-items: center !important; }
+  body[data-type="music"] .mm-row-1 { gap: 10px; margin-bottom: 4px; }
+  body[data-type="music"] .mm-row-1 .aplayer-ptime,
+  body[data-type="music"] .mm-row-1 .aplayer-dtime {
+    position: static !important; flex: 0 0 auto !important; margin: 0 !important;
+    font-size: 11px !important; opacity: .6 !important;
+    font-variant-numeric: tabular-nums; min-width: 36px;
   }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time {
-    position: static !important; width: auto !important; height: auto !important;
-    bottom: auto !important; order: 1; font-size: 11px !important;
+  body[data-type="music"] .mm-row-1 .aplayer-dtime { text-align: right; }
+  body[data-type="music"] .mm-row-1 .aplayer-bar-wrap {
+    flex: 1 1 auto !important; margin: 0 !important; padding: 0 !important;
   }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time-inner {
-    position: static !important; display: flex !important; align-items: center !important;
-    gap: 6px !important; width: auto !important; height: auto !important; margin: 0 !important;
+  body[data-type="music"] .mm-row-2 { justify-content: center; gap: 24px; padding-top: 4px; }
+  body[data-type="music"] .mm-row-2 .aplayer-icon {
+    position: static !important; margin: 0 !important;
+    left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
+    width: 28px !important; height: 28px !important; opacity: .8 !important;
   }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-ptime,
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-dtime { position: static !important; }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon {
-    position: static !important; left: auto !important; right: auto !important;
-    top: auto !important; bottom: auto !important; margin: 0 4px !important;
-    width: 30px !important; height: 30px !important;
+  body[data-type="music"] .mm-row-2 .aplayer-icon svg { width: 20px !important; height: 20px !important; }
+  body[data-type="music"] .mm-row-2 .aplayer-icon-play {
+    width: 46px !important; height: 46px !important; opacity: 1 !important;
+    border-radius: 50% !important; color: #fff !important;
+    background: var(--anzhiyu-main, #fc466b) !important;
+    box-shadow: 0 6px 18px rgba(252, 70, 107, .38) !important;
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
   }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-menu { position: static !important; }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-volume-wrap { display: none !important; }
-  /* 给固定控制条留出空间 */
-  body[data-type="music"] .aplayer-body { padding-bottom: 108px !important; }
+  body[data-type="music"] .mm-row-2 .aplayer-icon-play svg { width: 22px !important; height: 22px !important; fill: #fff !important; }
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-volume-wrap,
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-order,
+  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-lrc { display: none !important; }
 
-  /* 控制条内部排布：时间靠左，播放键居中，循环/曲库靠右 */
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time {
-    width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: flex-start !important;
-    gap: 4px !important;
-  }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time-inner {
-    margin-right: 8px !important;
-    font-variant-numeric: tabular-nums;
-    letter-spacing: .3px;
-  }
-  /* 顺序播放键与循环键功能重复，隐藏 */
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-order { display: none !important; }
-  /* 时间绝对靠左、循环+曲库绝对靠右，让上一首/播放/下一首真正居中 */
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time { position: relative !important; justify-content: center !important; }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-time-inner {
-    position: absolute !important; left: 0 !important; top: 50% !important;
-    transform: translateY(-50%) !important; margin: 0 !important;
-  }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-loop {
-    position: absolute !important; right: 40px !important; top: 50% !important;
-    transform: translateY(-50%) !important; margin: 0 !important;
-  }
-  body[data-type="music"] .aplayer-info .aplayer-controller .aplayer-icon-menu {
-    position: absolute !important; right: 0 !important; top: 50% !important;
-    transform: translateY(-50%) !important; margin: 0 !important;
-  }
-
-  /* 曲库展开时主题会拉一层全屏遮罩，会把控制条一起盖黑：让遮罩停在控制条上方 */
-  body[data-type="music"] #menu-mask {
-    bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
-    height: auto !important;
-  }
-
-  /* 音量滑块（脚本注入） */
-  body[data-type="music"] .mm-vol {
-    flex: 1 1 100% !important;
-    order: 2;
-    display: flex !important;
-    align-items: center;
-    gap: 10px;
-    margin: 2px 0 0;
-    padding: 0 2px;
-  }
+  /* 音量：喇叭图标 + 弹层滑杆 */
+  body[data-type="music"] .mm-vol { position: relative !important; flex: 0 0 auto !important; display: block !important; order: 0 !important; }
   body[data-type="music"] .mm-vol-btn {
-    flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center;
-    width: 26px; height: 26px; padding: 0; border: 0; border-radius: 50%;
-    background: transparent; color: rgba(255, 255, 255, .85); cursor: pointer;
+    display: inline-flex !important; align-items: center !important; justify-content: center !important;
+    width: 26px !important; height: 26px !important; padding: 0 !important;
+    border: 0 !important; background: transparent !important;
+    color: rgba(255, 255, 255, .8) !important; cursor: pointer;
   }
+  body[data-type="music"] .mm-vol-pop {
+    position: absolute !important; right: -6px !important; bottom: 40px !important;
+    width: 206px; display: none; align-items: center; gap: 10px;
+    padding: 10px 14px; border-radius: 999px;
+    background: rgba(38, 38, 46, .98); border: 1px solid rgba(255, 255, 255, .1);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, .55); z-index: 1400;
+  }
+  body[data-type="music"] .mm-vol.mm-open .mm-vol-pop { display: flex; }
+  body[data-type="music"] .mm-vol-val { flex: 0 0 26px; font-size: 11px; text-align: right; opacity: .6; }
   body[data-type="music"] .mm-vol-range {
     -webkit-appearance: none; appearance: none;
-    flex: 1 1 auto; height: 22px; background: transparent; margin: 0;
+    flex: 1 1 auto; height: 22px; margin: 0; background: transparent;
   }
   body[data-type="music"] .mm-vol-range::-webkit-slider-runnable-track {
     height: 4px; border-radius: 4px; background: rgba(255, 255, 255, .22);
   }
   body[data-type="music"] .mm-vol-range::-webkit-slider-thumb {
     -webkit-appearance: none; appearance: none;
-    width: 14px; height: 14px; margin-top: -5px; border-radius: 50%;
-    background: var(--anzhiyu-main, #fc466b); border: 0;
+    width: 14px; height: 14px; margin-top: -5px; border-radius: 50%; border: 0;
+    background: var(--anzhiyu-main, #fc466b);
     box-shadow: 0 0 0 4px rgba(252, 70, 107, .18);
   }
   body[data-type="music"] .mm-vol-range::-moz-range-track {
@@ -1832,48 +1808,40 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
     background: var(--anzhiyu-main, #fc466b);
   }
 
-  /* 曲库抽屉：盖住控制条上方、圆角、可滚动 */
-  body[data-type="music"] #anMusic-page .aplayer-list {
-    position: fixed !important;
-    left: 0 !important; right: 0 !important;
-    bottom: 0 !important;
-    z-index: 1300 !important;
-    max-height: 72vh !important;
-    border-radius: 18px 18px 0 0 !important;
-    padding: 14px 0 96px !important;
-    background: var(--sidebar-bg, rgba(20, 20, 24, .96)) !important;
-    -webkit-backdrop-filter: blur(18px) !important;
-    backdrop-filter: blur(18px) !important;
-    box-shadow: 0 -12px 40px rgba(0, 0, 0, .45) !important;
-    transition: transform .28s ease, bottom .28s ease !important;
-  }
-  body[data-type="music"] #anMusic-page .aplayer-list.aplayer-list-hide {
-    bottom: calc(112px + env(safe-area-inset-bottom, 0px)) !important;
-    max-height: calc(100vh - 200px) !important;
+  /* 曲库展开时主题拉的全屏遮罩：停在控制条上方 */
+  body[data-type="music"] #menu-mask {
+    bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
     height: auto !important;
   }
-  body[data-type="music"] #anMusic-page .aplayer-list.aplayer-list-hide ol {
-    max-height: calc(100vh - 300px) !important;
+
+  /* ---------- 曲库抽屉 ---------- */
+  body[data-type="music"] #anMusic-page .aplayer-list {
+    position: fixed !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    z-index: 1300 !important; border-radius: 20px 20px 0 0 !important;
+    padding: 14px 0 132px !important;
+    background: var(--sidebar-bg, rgba(18, 18, 22, .97)) !important;
+    -webkit-backdrop-filter: blur(18px) !important; backdrop-filter: blur(18px) !important;
+    box-shadow: 0 -12px 40px rgba(0, 0, 0, .45) !important;
+    transition: bottom .28s ease !important;
   }
-  body[data-type="music"] #anMusic-page .aplayer-list:not(.aplayer-list-hide) {
-    bottom: -100% !important;
+  body[data-type="music"] #anMusic-page .aplayer-list.aplayer-list-hide {
+    bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
   }
-  /* 曲库列表项：序号定宽、歌名省略、歌手右对齐 */
+  body[data-type="music"] #anMusic-page .aplayer-list:not(.aplayer-list-hide) { bottom: -100% !important; }
+  body[data-type="music"] #anMusic-page .aplayer-list ol {
+    overflow-y: auto !important; -webkit-overflow-scrolling: touch;
+  }
   body[data-type="music"] #anMusic-page .aplayer-list ol li {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    padding: 11px 16px !important;
-    margin: 0 !important;
-    border-radius: 0 !important;
+    display: flex !important; align-items: center !important; gap: 10px !important;
+    padding: 12px 18px !important; margin: 0 !important; border-radius: 0 !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol li.aplayer-list-light {
-    background: rgba(252, 70, 107, .16) !important;
+    background: rgba(252, 70, 107, .14) !important;
     box-shadow: inset 3px 0 0 var(--anzhiyu-main, #fc466b);
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-index {
-    flex: 0 0 24px !important; width: 24px !important; text-align: right !important;
-    font-size: 12px !important; opacity: .5 !important; position: static !important;
+    flex: 0 0 22px !important; width: 22px !important; text-align: right !important;
+    position: static !important; font-size: 12px !important; opacity: .45 !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-title {
     flex: 1 1 auto !important; min-width: 0 !important; max-width: none !important;
@@ -1882,41 +1850,20 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-author {
     flex: 0 0 auto !important; position: static !important; right: auto !important;
-    max-width: 40% !important; width: auto !important; overflow: hidden !important;
+    max-width: 38% !important; width: auto !important; overflow: hidden !important;
     text-overflow: ellipsis !important; white-space: nowrap !important;
-    font-size: 11.5px !important; opacity: .55 !important; text-align: right !important;
+    font-size: 11.5px !important; opacity: .5 !important; text-align: right !important;
   }
-  /* 抽屉头部 */
   body[data-type="music"] .mm-list-head {
     display: flex !important; align-items: center; justify-content: space-between;
-    padding: 0 18px 10px; margin: 0 0 2px;
-    border-bottom: 1px solid rgba(255, 255, 255, .08);
+    padding: 0 18px 12px; border-bottom: 1px solid rgba(255, 255, 255, .08);
   }
   body[data-type="music"] .mm-list-head .mm-list-title { font-size: 13px; font-weight: 600; opacity: .9; }
   body[data-type="music"] .mm-list-head .mm-list-close {
     width: 28px; height: 28px; border: 0; border-radius: 50%; cursor: pointer;
-    background: rgba(255, 255, 255, .08); color: inherit; font-size: 15px; line-height: 1;
+    background: rgba(255, 255, 255, .08); color: inherit; font-size: 14px; line-height: 1;
     display: inline-flex; align-items: center; justify-content: center;
   }
-  body[data-type="music"] #anMusic-page .aplayer-list ol {
-    max-height: calc(72vh - 160px) !important;
-    overflow-y: auto !important;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  /* 右侧三个功能按钮：竖排在歌词区右上，避免压住封面/控制条 */
-  body[data-type="music"] #anMusicBtnGetSong,
-  body[data-type="music"] #anMusicRefreshBtn,
-  body[data-type="music"] #anMusicSwitching {
-    right: 10px !important;
-    bottom: auto !important;
-    width: 42px !important;
-    height: 42px !important;
-    z-index: 1100 !important;
-  }
-  body[data-type="music"] #anMusicBtnGetSong { top: 84px !important; }
-  body[data-type="music"] #anMusicRefreshBtn { top: 134px !important; }
-  body[data-type="music"] #anMusicSwitching { top: 184px !important; }
 }
 
 /* 音量滑块只给手机端用，桌面端隐藏 */
