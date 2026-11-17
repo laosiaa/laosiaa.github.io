@@ -104,7 +104,9 @@
       try {
         ap.on(ev, function () {
           if (ev === "play" || ev === "listswitch") active = ap;
-          render(true);
+          // listswitch 事件触发时 APlayer 的 index 可能还没更新，挪到下一拍再读
+          if (ev === "listswitch") setTimeout(function () { render(true); }, 60);
+          else render(true);
         });
       } catch (e) {}
     });
