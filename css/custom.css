@@ -2502,10 +2502,12 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
     -webkit-appearance: none; appearance: none;
   }
   body[data-type="music"] .mm-timer-input::placeholder { color: rgba(255, 255, 255, .35); }
-  body[data-type="music"] .mm-timer-ok {
-    flex: 0 0 auto; height: 30px; padding: 0 10px !important;
-    border-radius: 9px; border: 0;
-    background: var(--anzhiyu-main, #fc466b); color: #fff;
-    font-size: 12.5px; cursor: pointer;
+  body[data-type="music"] .mm-timer-pop button.mm-timer-ok {
+    flex: 0 0 auto !important; height: 30px !important; padding: 0 12px !important;
+    border-radius: 9px !important; border: 0 !important;
+    background: var(--anzhiyu-main, #fc466b) !important; color: #1b1b1f !important;
+    font-size: 12.5px !important; font-weight: 600 !important;
+    text-align: center !important; cursor: pointer;
   }
+  body[data-type="music"] .mm-timer-pop button.mm-timer-ok:active { filter: brightness(.92); }
 }
