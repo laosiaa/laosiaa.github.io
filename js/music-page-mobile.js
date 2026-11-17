@@ -68,6 +68,101 @@
     return true;
   }
 
+  /* ---------- 睡眠定时：15/30/60 分钟、播完本首 ---------- */
+  var TIMER_KEY = "mm-sleep-timer";
+  var timerTick = null;
+
+  function buildTimerBtn(ap) {
+    var wrap = document.createElement("div");
+    wrap.className = "mm-timer";
+    wrap.innerHTML =
+      '<button class="aplayer-icon mm-timer-btn" type="button" aria-label="定时关闭">' +
+      '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">' +
+      '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5"/><path d="M9 2h6"/></svg>' +
+      '<i class="mm-timer-badge"></i></button>' +
+      '<div class="mm-timer-pop">' +
+      '<div class="mm-timer-title">定时关闭</div>' +
+      '<button data-min="15">15 分钟</button>' +
+      '<button data-min="30">30 分钟</button>' +
+      '<button data-min="60">60 分钟</button>' +
+      '<button data-min="end">播完本首</button>' +
+      '<button data-min="0" class="mm-timer-cancel">取消定时</button>' +
+      "</div>";
+
+    var btn = wrap.querySelector(".mm-timer-btn");
+    var badge = wrap.querySelector(".mm-timer-badge");
+    var pop = wrap.querySelector(".mm-timer-pop");
+
+    function read() {
+      try { return JSON.parse(localStorage.getItem(TIMER_KEY) || "null"); } catch (e) { return null; }
+    }
+    function write(o) {
+      try { o ? localStorage.setItem(TIMER_KEY, JSON.stringify(o)) : localStorage.removeItem(TIMER_KEY); } catch (e) {}
+    }
+    function label(t) {
+      var m = Math.floor(t / 60), s = Math.round(t % 60);
+      return m + ":" + (s < 10 ? "0" + s : s);
+    }
+    function clearTimer() {
+      write(null);
+      wrap.classList.remove("mm-timer-on");
+      badge.textContent = "";
+      if (timerTick) { clearInterval(timerTick); timerTick = null; }
+    }
+    function fire() {
+      try { ap.pause(); } catch (e) {}
+      clearTimer();
+    }
+    function start(mode, minutes) {
+      write({ mode: mode, end: mode === "end" ? 0 : Date.now() + minutes * 60000 });
+      wrap.classList.add("mm-timer-on");
+      pop.classList.remove("mm-open");
+      run();
+    }
+    function run() {
+      var st = read();
+      if (!st) return;
+      wrap.classList.add("mm-timer-on");
+      if (timerTick) clearInterval(timerTick);
+      if (st.mode === "end") badge.textContent = "末";
+      timerTick = setInterval(function () {
+        var cur = read();
+        if (!cur) { clearTimer(); return; }
+        if (cur.mode === "end") { badge.textContent = "末"; return; }
+        var left = Math.round((cur.end - Date.now()) / 1000);
+        if (left <= 0) { fire(); return; }
+        badge.textContent = label(left);
+      }, 1000);
+    }
+
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      pop.classList.toggle("mm-open");
+    });
+    pop.addEventListener("click", function (e) {
+      var b = e.target.closest("button[data-min]");
+      if (!b) return;
+      e.stopPropagation();
+      var v = b.getAttribute("data-min");
+      if (v === "0") { clearTimer(); pop.classList.remove("mm-open"); return; }
+      if (v === "end") start("end", 0);
+      else start("time", parseInt(v, 10));
+    });
+    document.addEventListener("click", function (e) {
+      if (!wrap.contains(e.target)) pop.classList.remove("mm-open");
+    });
+
+    try {
+      ap.on("ended", function () {
+        var st = read();
+        if (st && st.mode === "end") fire();
+      });
+    } catch (e) {}
+
+    run();
+    return wrap;
+  }
+
   /* ---------- 顺序 / 随机 播放切换（手机端专用，主题默认只有循环键） ---------- */
   function buildModeBtn(ap) {
     var btn = document.createElement("button");
