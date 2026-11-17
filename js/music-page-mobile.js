@@ -57,6 +57,15 @@
     gMid.className = "mm-grp mm-grp-mid";
     var gRight = document.createElement("div");
     gRight.className = "mm-grp mm-grp-right";
+    // 曲库按钮换成「列表 + 音符」图标，避免和顶部汉堡菜单混淆
+    if (menu) {
+      menu.innerHTML =
+        '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">' +
+        '<path d="M4 6h9"/><path d="M4 12h9"/><path d="M4 18h6"/>' +
+        '<path d="M18 4.5v9.2"/><circle cx="16.2" cy="15.6" r="2.4"/></svg>';
+      menu.setAttribute("title", "曲库");
+      menu.setAttribute("aria-label", "打开曲库");
+    }
     [modeBtn].forEach(function (n) { if (n) gLeft.appendChild(n); });
     [back, play, fwd].forEach(function (n) { if (n) gMid.appendChild(n); });
     [menu].forEach(function (n) { if (n) gRight.appendChild(n); });
