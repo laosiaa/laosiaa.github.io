@@ -2511,3 +2511,48 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
   }
   body[data-type="music"] .mm-timer-pop button.mm-timer-ok:active { filter: brightness(.92); }
 }
+
+/* ========== 曲库搜索框 ========== */
+@media screen and (max-width: 768px) {
+  body[data-type="music"] .mm-list-search {
+    display: flex; align-items: center; gap: 8px;
+    margin: 8px 14px 6px;
+    padding: 0 10px;
+    height: 36px;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .08);
+  }
+  body[data-type="music"] .mm-list-search svg { flex: 0 0 auto; opacity: .45; }
+  body[data-type="music"] .mm-search-input {
+    flex: 1 1 auto; min-width: 0; width: 100%;
+    height: 100%; border: 0; background: transparent;
+    color: #fff; font-size: 13px;
+    -webkit-appearance: none; appearance: none;
+    outline: none;
+  }
+  body[data-type="music"] .mm-search-input::placeholder { color: rgba(255, 255, 255, .35); }
+  body[data-type="music"] .mm-search-input::-webkit-search-cancel-button { display: none; }
+  body[data-type="music"] .mm-search-clear {
+    flex: 0 0 auto;
+    width: 20px; height: 20px; padding: 0;
+    display: none; align-items: center; justify-content: center;
+    border: 0; border-radius: 50%;
+    background: rgba(255, 255, 255, .14);
+    color: rgba(255, 255, 255, .75);
+    font-size: 10px; line-height: 1; cursor: pointer;
+  }
+  body[data-type="music"] .mm-list-search:focus-within .mm-search-clear,
+  body[data-type="music"] .mm-search-input:not(:placeholder-shown) ~ .mm-search-clear { display: inline-flex; }
+  /* 无结果提示 */
+  body[data-type="music"] .mm-list-search.mm-search-empty::after {
+    content: "没有匹配的歌曲";
+    position: absolute;
+    left: 0; right: 0;
+    margin-top: 120px;
+    text-align: center;
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, .4);
+    pointer-events: none;
+  }
+}

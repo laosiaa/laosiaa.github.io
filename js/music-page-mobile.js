@@ -316,6 +316,50 @@
         '<button class="mm-list-close" type="button" aria-label="关闭">✕</button>';
       h.querySelector(".mm-list-close").addEventListener("click", closeDrawer);
       l.insertBefore(h, l.firstChild);
+
+      // 搜索框
+      var box = document.createElement("div");
+      box.className = "mm-list-search";
+      box.innerHTML =
+        '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+        '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>' +
+        '<input class="mm-search-input" type="search" inputmode="search" placeholder="搜索歌名 / 歌手" autocomplete="off">' +
+        '<button class="mm-search-clear" type="button" aria-label="清空">✕</button>';
+      h.parentNode.insertBefore(box, h.nextSibling);
+
+      var input = box.querySelector(".mm-search-input");
+      var clear = box.querySelector(".mm-search-clear");
+      var title = h.querySelector(".mm-list-title");
+
+      function apply() {
+        var kw = (input.value || "").trim().toLowerCase();
+        var lis = Array.prototype.slice.call(l.querySelectorAll("ol > li"));
+        var shown = 0;
+        lis.forEach(function (li) {
+          var t = li.querySelector(".aplayer-list-title");
+          var a = li.querySelector(".aplayer-list-author");
+          var txt = ((t ? t.textContent : "") + " " + (a ? a.textContent : "")).toLowerCase();
+          var hit = !kw || txt.indexOf(kw) >= 0;
+          li.style.display = hit ? "" : "none";
+          if (hit) shown++;
+        });
+        title.textContent = kw ? "找到 " + shown + " 首" : "曲库 · " + lis.length + " 首";
+        box.classList.toggle("mm-search-empty", !!kw && shown === 0);
+      }
+
+      input.addEventListener("input", apply);
+      input.addEventListener("keydown", function (e) {
+        e.stopPropagation();
+        if (e.key === "Escape") { input.value = ""; apply(); input.blur(); }
+      });
+      clear.addEventListener("click", function (e) {
+        e.stopPropagation();
+        input.value = "";
+        apply();
+        input.focus();
+      });
+      l.__mmFilter = apply;
+      l.__mmSearchReset = function () { input.value = ""; apply(); };
     }
     bindSheetGestures();
     if (!l.dataset.mmBound) {
@@ -375,7 +419,10 @@
 
   function closeDrawer() {
     var l = listEl();
-    if (l) l.classList.remove("aplayer-list-hide");
+    if (l) {
+      l.classList.remove("aplayer-list-hide");
+      if (l.__mmSearchReset) l.__mmSearchReset();
+    }
     var m = maskEl();
     if (m) { m.style.display = "none"; m.style.animation = ""; }
     var open = document.querySelector("#anMusic-page .mm-vol.mm-open");
@@ -398,6 +445,8 @@
   function scrollToCurrent() {
     var l = listEl();
     if (!l) return;
+    var si = l.querySelector(".mm-search-input");
+    if (si && si.value.trim()) return;   // 正在搜索就别抢滚动位置
     var ol = l.querySelector("ol");
     var cur = l.querySelector("li.aplayer-list-light");
     if (!ol || !cur) return;
