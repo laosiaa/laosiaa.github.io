@@ -59,7 +59,7 @@
     gRight.className = "mm-grp mm-grp-right";
     [modeBtn].forEach(function (n) { if (n) gLeft.appendChild(n); });
     [back, play, fwd].forEach(function (n) { if (n) gMid.appendChild(n); });
-    [loop, menu].forEach(function (n) { if (n) gRight.appendChild(n); });
+    [menu].forEach(function (n) { if (n) gRight.appendChild(n); });
     r2.appendChild(gLeft);
     r2.appendChild(gMid);
     r2.appendChild(gRight);
