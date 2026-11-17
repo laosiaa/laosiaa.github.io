@@ -2579,20 +2579,14 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] .mm-list-search { display: none !important; }
 }
 
-/* 搜索框并入标题行：标题左 / 搜索中 / 关闭右 */
+/* 搜索框并入标题行：标题左 / 搜索中 / 关闭右（其余沿用原有标题行样式） */
 @media screen and (max-width: 768px) {
   body[data-type="music"] #anMusic-page .mm-list-head {
     display: flex !important;
     align-items: center !important;
     gap: 10px !important;
-    padding: 0 14px !important;
-    min-height: 46px !important;
   }
-  body[data-type="music"] #anMusic-page .mm-list-title {
-    flex: 0 0 auto !important;
-    font-size: 13px !important;
-    white-space: nowrap !important;
-  }
+  body[data-type="music"] #anMusic-page .mm-list-head .mm-list-title { flex: 0 0 auto !important; }
   body[data-type="music"] #anMusic-page .mm-list-head .mm-list-search {
     flex: 1 1 auto !important;
     min-width: 96px !important;
@@ -2602,9 +2596,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     height: 32px !important;
     border-radius: 10px !important;
   }
-  body[data-type="music"] #anMusic-page .mm-list-head .mm-list-search > svg {
-    left: 9px !important;
-  }
+  body[data-type="music"] #anMusic-page .mm-list-head .mm-list-search > svg { left: 9px !important; }
   body[data-type="music"] #anMusic-page .mm-list-head .mm-search-input {
     font-size: 12.5px !important;
     padding: 0 28px 0 26px !important;
@@ -2612,9 +2604,5 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .mm-list-head .mm-search-clear {
     right: 7px !important;
     width: 18px !important; height: 18px !important;
-  }
-  body[data-type="music"] #anMusic-page .mm-list-close {
-    flex: 0 0 auto !important;
-    margin-left: 0 !important;
   }
 }
