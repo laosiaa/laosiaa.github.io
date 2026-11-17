@@ -331,8 +331,10 @@
       var clear = box.querySelector(".mm-search-clear");
       var title = h.querySelector(".mm-list-title");
 
+      var raf = 0;
       function apply() {
         var kw = (input.value || "").trim().toLowerCase();
+        l.__mmQuery = kw;
         var lis = Array.prototype.slice.call(l.querySelectorAll("ol > li"));
         var shown = 0;
         lis.forEach(function (li) {
@@ -345,6 +347,23 @@
         });
         title.textContent = kw ? "找到 " + shown + " 首" : "曲库 · " + lis.length + " 首";
         box.classList.toggle("mm-search-empty", !!kw && shown === 0);
+      }
+
+      function reapply() {
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(function () {
+          raf = 0;
+          apply();
+        });
+      }
+      l.__mmReapply = reapply;
+
+      var olEl = l.querySelector("ol");
+      if (olEl && !olEl.__mmObs) {
+        olEl.__mmObs = true;
+        new MutationObserver(function () {
+          if (l.__mmQuery) setTimeout(apply, 30);
+        }).observe(olEl, { childList: true });
       }
 
       input.addEventListener("input", apply);
@@ -408,6 +427,9 @@
       m.style.animation = "0.5s ease 0s 1 normal none running to_show";
     }
     setTimeout(function () { fixList(); scrollToCurrent(); }, 120);
+    [320, 700, 1200].forEach(function (t) {
+      setTimeout(function () { if (l.__mmReapply && l.__mmQuery) l.__mmReapply(); }, t);
+    });
   }
 
   function toggleDrawer() {
