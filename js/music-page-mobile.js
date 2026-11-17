@@ -325,7 +325,8 @@
         '<circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>' +
         '<input class="mm-search-input" type="search" inputmode="search" placeholder="搜索歌名 / 歌手" autocomplete="off">' +
         '<button class="mm-search-clear" type="button" aria-label="清空">✕</button>';
-      h.parentNode.insertBefore(box, h.nextSibling);
+      // 搜索框放进标题那一行的中间（标题左 / 搜索中 / ✕右）
+      h.insertBefore(box, h.querySelector(".mm-list-close"));
 
       var input = box.querySelector(".mm-search-input");
       var clear = box.querySelector(".mm-search-clear");
