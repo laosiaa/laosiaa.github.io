@@ -111,7 +111,7 @@
     });
 
     if (ap.audio) {
-      ["play", "pause", "loadedmetadata", "durationchange"].forEach(function (ev) {
+      ["play", "playing", "pause", "loadedmetadata", "durationchange", "seeked"].forEach(function (ev) {
         ap.audio.addEventListener(ev, function () {
           if (ev === "play") active = ap;
           render(true);
@@ -157,6 +157,10 @@
       render(true);
     }
   }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") setTimeout(function () { render(true); }, 300);
+  });
 
   function boot() {
     scan();
