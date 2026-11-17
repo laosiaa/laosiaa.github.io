@@ -103,7 +103,7 @@
     ["listswitch", "play", "pause", "ended", "stoped"].forEach(function (ev) {
       try {
         ap.on(ev, function () {
-          if (ev === "play") active = ap;
+          if (ev === "play" || ev === "listswitch") active = ap;
           render(true);
         });
       } catch (e) {}
