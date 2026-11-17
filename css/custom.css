@@ -2376,3 +2376,52 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
   z-index: 3001;
 }
 .mm-zoom-close:active { background: rgba(255, 255, 255, .18); }
+
+/* ========== 手机端：睡眠定时按钮 ========== */
+@media screen and (max-width: 768px) {
+  body[data-type="music"] .mm-timer { position: relative; display: inline-flex; align-items: center; }
+  body[data-type="music"] .mm-timer-btn {
+    position: relative;
+    display: inline-flex !important; align-items: center; justify-content: center !important;
+    width: 28px !important; height: 28px !important;
+    padding: 0 !important; border: 0 !important; background: transparent !important;
+    color: #fff !important; opacity: .82 !important; cursor: pointer;
+  }
+  body[data-type="music"] .mm-timer-btn svg { width: 20px !important; height: 20px !important; }
+  body[data-type="music"] .mm-timer-on .mm-timer-btn {
+    color: var(--anzhiyu-main, #fc466b) !important; opacity: 1 !important;
+  }
+  body[data-type="music"] .mm-timer-badge {
+    position: absolute; top: -6px; right: -10px;
+    min-width: 26px; padding: 0 3px;
+    font-size: 9px; line-height: 13px; font-style: normal; text-align: center;
+    color: #fff; background: var(--anzhiyu-main, #fc466b);
+    border-radius: 999px; letter-spacing: -.2px;
+  }
+  body[data-type="music"] .mm-timer-badge:empty { display: none; }
+  body[data-type="music"] .mm-timer-pop {
+    position: absolute; left: 50%; bottom: 42px;
+    transform: translateX(-50%) scale(.96);
+    transform-origin: bottom center;
+    width: 148px; padding: 8px;
+    display: none; flex-direction: column; gap: 2px;
+    background: rgba(34, 34, 40, .98);
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 16px;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .6);
+    -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+    z-index: 1400;
+    opacity: 0; transition: opacity .16s ease, transform .16s ease;
+  }
+  body[data-type="music"] .mm-timer-pop.mm-open { display: flex; opacity: 1; transform: translateX(-50%) scale(1); }
+  body[data-type="music"] .mm-timer-pop .mm-timer-title {
+    font-size: 11px; opacity: .5; padding: 4px 8px 6px; letter-spacing: .5px;
+  }
+  body[data-type="music"] .mm-timer-pop button {
+    border: 0; background: transparent; color: inherit;
+    font-size: 13px; text-align: left;
+    padding: 9px 10px; border-radius: 10px; cursor: pointer;
+  }
+  body[data-type="music"] .mm-timer-pop button:active { background: rgba(255, 255, 255, .1); }
+  body[data-type="music"] .mm-timer-pop .mm-timer-cancel { opacity: .55; font-size: 12px; }
+}

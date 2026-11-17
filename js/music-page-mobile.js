@@ -53,7 +53,8 @@
     gMid.className = "mm-grp mm-grp-mid";
     var gRight = document.createElement("div");
     gRight.className = "mm-grp mm-grp-right";
-    [modeBtn, loop].forEach(function (n) { if (n) gLeft.appendChild(n); });
+    var timerBtn = buildTimerBtn(ap);
+    [modeBtn, timerBtn, loop].forEach(function (n) { if (n) gLeft.appendChild(n); });
     [back, play, fwd].forEach(function (n) { if (n) gMid.appendChild(n); });
     [menu].forEach(function (n) { if (n) gRight.appendChild(n); });
     r2.appendChild(gLeft);
