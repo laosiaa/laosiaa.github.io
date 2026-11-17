@@ -2514,33 +2514,43 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
 
 /* ========== 曲库搜索框 ========== */
 @media screen and (max-width: 768px) {
+  /* 用定位布局，避开 input 在 flex 里被压成 0 宽的问题 */
   body[data-type="music"] .mm-list-search {
-    display: flex; align-items: center; gap: 8px;
+    position: relative;
+    display: block;
     margin: 8px 14px 6px;
-    padding: 0 10px;
     height: 36px;
     border-radius: 12px;
     background: rgba(255, 255, 255, .06);
     border: 1px solid rgba(255, 255, 255, .08);
   }
-  body[data-type="music"] .mm-list-search svg { flex: 0 0 auto; opacity: .45; }
+  body[data-type="music"] .mm-list-search > svg {
+    position: absolute; left: 11px; top: 50%;
+    transform: translateY(-50%);
+    opacity: .45; pointer-events: none;
+  }
   body[data-type="music"] .mm-search-input {
-    /* flex-basis:auto + width:100% 会塌成 0px，改成 0% 基准 */
-    flex: 1 1 auto !important; min-width: 140px !important; width: auto !important;
-    height: 100%; border: 0; background: transparent;
+    display: block;
+    width: 100% !important;
+    height: 100%;
+    padding: 0 34px 0 30px;
+    border: 0; border-radius: 12px;
+    background: transparent;
     color: #fff; font-size: 13px;
     -webkit-appearance: none; appearance: none;
     outline: none;
+    box-sizing: border-box;
   }
   body[data-type="music"] .mm-search-input::placeholder { color: rgba(255, 255, 255, .35); }
   body[data-type="music"] .mm-search-input::-webkit-search-cancel-button { display: none; }
   body[data-type="music"] .mm-search-clear {
-    flex: 0 0 auto;
+    position: absolute; right: 9px; top: 50%;
+    transform: translateY(-50%);
     width: 20px; height: 20px; padding: 0;
     display: none; align-items: center; justify-content: center;
     border: 0; border-radius: 50%;
-    background: rgba(255, 255, 255, .14);
-    color: rgba(255, 255, 255, .75);
+    background: rgba(255, 255, 255, .16);
+    color: rgba(255, 255, 255, .8);
     font-size: 10px; line-height: 1; cursor: pointer;
   }
   body[data-type="music"] .mm-list-search:focus-within .mm-search-clear,
@@ -2550,14 +2560,13 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
     content: "没有匹配的歌曲";
     position: absolute;
     left: 0; right: 0;
-    margin-top: 120px;
+    top: 60px;
     text-align: center;
     font-size: 12.5px;
     color: rgba(255, 255, 255, .4);
     pointer-events: none;
   }
 }
-
 /* 搜索过滤：必须用 !important 才能压过抽屉里 li 的 display:flex !important */
 body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   display: none !important;
