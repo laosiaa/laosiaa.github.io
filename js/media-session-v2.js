@@ -104,9 +104,8 @@
       try {
         ap.on(ev, function () {
           if (ev === "play" || ev === "listswitch") active = ap;
-          // listswitch 事件触发时 APlayer 的 index 可能还没更新，挪到下一拍再读
-          if (ev === "listswitch") setTimeout(function () { render(true); }, 60);
-          else render(true);
+          // APlayer 的 index 可能在事件之后才更新，统一延后一拍再读
+          setTimeout(function () { render(true); }, 120);
         });
       } catch (e) {}
     });
@@ -142,10 +141,30 @@
     return players.length > 0;
   }
 
+  // 看门狗：iOS/Android 有时会延迟或丢掉 metadata 更新，定时比对一次
+  function watchdog() {
+    if (!players.length) return;
+    var ap = active;
+    for (var i = 0; i < players.length; i++) {
+      if (players[i].audio && !players[i].audio.paused) { ap = players[i]; break; }
+    }
+    if (!ap || !ap.list) return;
+    var a = trackOf(ap);
+    var md = navigator.mediaSession.metadata;
+    var same = md && md.title === (a.name || "") && md.artist === (a.artist || "");
+    if (!same) {
+      active = ap;
+      render(true);
+    }
+  }
+
   function boot() {
     scan();
     var n = 0;
     var t = setInterval(function () { n++; if (scan() || n > 40) clearInterval(t); }, 400);
+    if (!window.__msWatch) {
+      window.__msWatch = setInterval(watchdog, 2000);
+    }
   }
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
