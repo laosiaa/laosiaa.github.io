@@ -2527,6 +2527,8 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
   body[data-type="music"] .mm-list-search > svg {
     position: absolute; left: 11px; top: 50%;
     transform: translateY(-50%);
+    width: 15px !important; height: 15px !important;
+    flex: none !important;
     opacity: .45; pointer-events: none;
   }
   body[data-type="music"] .mm-search-input {
