@@ -1,11 +1,11 @@
-/*! 媒体会话 v2：让手机锁屏/通知栏显示当前歌曲名、歌手与封面，并支持锁屏控制 */
+/*! 媒体会话 v3：只有“真正在出声”的播放器实例才能接管锁屏/通知栏 */
 (function () {
   "use strict";
 
   if (!("mediaSession" in navigator)) return;
 
   var players = [];
-  var active = null;
+  var active = null;      // 最近真正播放过的实例（用于暂停时保留锁屏信息）
   var lastPos = 0;
   var handlersBound = false;
 
@@ -20,16 +20,17 @@
     return (ap.list.audios || [])[idx] || {};
   }
 
-  function render(force) {
-    // 首页迷你播放器与音乐馆可能同时在，优先交给正在播放的那个
-    var playing = null;
+  /* 正在出声的实例（audio 未暂停且已加载） */
+  function sounding() {
     for (var i = 0; i < players.length; i++) {
-      if (players[i].audio && !players[i].audio.paused) { playing = players[i]; break; }
+      var p = players[i];
+      if (p.audio && !p.audio.paused && p.audio.currentTime > 0) return p;
+      if (p.audio && !p.audio.paused && p.audio.readyState > 0) return p;
     }
-    var ap = playing || active || players[0];
-    if (!ap || !ap.list) return;
-    active = ap;
+    return null;
+  }
 
+  function paintMeta(ap) {
     var a = trackOf(ap);
     var pic = bigPic(a.pic || "");
     var artwork = pic
@@ -47,18 +48,17 @@
         artwork: artwork,
       });
     } catch (e) {}
+  }
 
+  function paintState(ap) {
     try {
       navigator.mediaSession.playbackState =
-        ap.audio && !ap.audio.paused ? "playing" : "paused";
+        ap && ap.audio && !ap.audio.paused ? "playing" : "paused";
     } catch (e) {}
-
-    position(ap, !!force);
-    bindHandlers();
   }
 
   function position(ap, force) {
-    if (!ap.audio || !ap.audio.duration || !isFinite(ap.audio.duration)) return;
+    if (!ap || !ap.audio || !ap.audio.duration || !isFinite(ap.audio.duration)) return;
     var now = Date.now();
     if (!force && now - lastPos < 900) return;
     lastPos = now;
@@ -71,59 +71,78 @@
     } catch (e) {}
   }
 
+  /* 只有“正在出声”的那个实例才会改锁屏内容 */
+  function sync(force) {
+    var ap = sounding();
+    if (!ap) return;              // 没有任何实例在放 → 保持锁屏现状，不抢
+    active = ap;
+    paintMeta(ap);
+    paintState(ap);
+    position(ap, !!force);
+    bindHandlers();
+  }
+
   function bindHandlers() {
     if (handlersBound) return;
     handlersBound = true;
-    function cur() { return active; }
     try {
-      navigator.mediaSession.setActionHandler("play", function () { var a = cur(); if (a) a.play(); });
-      navigator.mediaSession.setActionHandler("pause", function () { var a = cur(); if (a) a.pause(); });
-      navigator.mediaSession.setActionHandler("previoustrack", function () { var a = cur(); if (a) a.skipBack(); });
-      navigator.mediaSession.setActionHandler("nexttrack", function () { var a = cur(); if (a) a.skipForward(); });
+      navigator.mediaSession.setActionHandler("play", function () {
+        var a = active; if (a) a.play();
+      });
+      navigator.mediaSession.setActionHandler("pause", function () {
+        var a = active; if (a) a.pause();
+      });
+      navigator.mediaSession.setActionHandler("previoustrack", function () {
+        var a = active; if (a) a.skipBack();
+      });
+      navigator.mediaSession.setActionHandler("nexttrack", function () {
+        var a = active; if (a) a.skipForward();
+      });
       navigator.mediaSession.setActionHandler("seekto", function (d) {
-        var a = cur();
+        var a = active;
         if (a && d && typeof d.seekTime === "number") a.seek(d.seekTime);
       });
       navigator.mediaSession.setActionHandler("seekbackward", function () {
-        var a = cur();
+        var a = active;
         if (a && a.audio) a.seek(Math.max(0, a.audio.currentTime - 10));
       });
       navigator.mediaSession.setActionHandler("seekforward", function () {
-        var a = cur();
+        var a = active;
         if (a && a.audio) a.seek(Math.min(a.audio.duration || 0, a.audio.currentTime + 10));
       });
     } catch (e) {}
   }
 
   function attach(ap) {
-    if (!ap || !ap.list || ap.__msBound) return;
-    ap.__msBound = true;
+    if (!ap || !ap.list || ap.__ms3) return;
+    ap.__ms3 = true;
     players.push(ap);
 
-    ["listswitch", "play", "pause", "ended", "stoped"].forEach(function (ev) {
-      try {
-        ap.on(ev, function () {
-          if (ev === "play" || ev === "listswitch") active = ap;
-          // APlayer 的 index 可能在事件之后才更新，统一延后一拍再读
-          setTimeout(function () { render(true); }, 120);
-        });
-      } catch (e) {}
-    });
-
     if (ap.audio) {
-      ["play", "playing", "pause", "loadedmetadata", "durationchange", "seeked"].forEach(function (ev) {
-        ap.audio.addEventListener(ev, function () {
-          if (ev === "play") active = ap;
-          render(true);
-        }, { passive: true });
-      });
+      ap.audio.addEventListener("play", function () {
+        active = ap;
+        // 等一拍，等 APlayer 把 index / src 切好
+        setTimeout(function () { sync(true); }, 120);
+      }, { passive: true });
+      ap.audio.addEventListener("playing", function () { setTimeout(function () { sync(true); }, 60); }, { passive: true });
+      ap.audio.addEventListener("pause", function () {
+        if (active === ap) paintState(ap);   // 只改状态，不动标题
+      }, { passive: true });
+      ap.audio.addEventListener("loadedmetadata", function () { if (!ap.audio.paused) sync(true); }, { passive: true });
       ap.audio.addEventListener("timeupdate", function () {
-        if (active === ap) position(ap, false);
+        if (active === ap && !ap.audio.paused) position(ap, false);
       }, { passive: true });
     }
 
-    if (!active) active = ap;
-    render(true);
+    ["listswitch", "ended"].forEach(function (ev) {
+      try {
+        ap.on(ev, function () {
+          if (!ap.audio || ap.audio.paused) return;  // 没在放就不抢锁屏
+          active = ap;
+          setTimeout(function () { sync(true); }, 150);
+        });
+      } catch (e) {}
+    });
   }
 
   function scan() {
@@ -141,35 +160,29 @@
     return players.length > 0;
   }
 
-  // 看门狗：iOS/Android 有时会延迟或丢掉 metadata 更新，定时比对一次
+  /* 看门狗：只有正在出声时才校准，避免暂停的实例把锁屏改掉 */
   function watchdog() {
-    if (!players.length) return;
-    var ap = active;
-    for (var i = 0; i < players.length; i++) {
-      if (players[i].audio && !players[i].audio.paused) { ap = players[i]; break; }
-    }
-    if (!ap || !ap.list) return;
+    var ap = sounding();
+    if (!ap) return;
     var a = trackOf(ap);
     var md = navigator.mediaSession.metadata;
-    var same = md && md.title === (a.name || "") && md.artist === (a.artist || "");
-    if (!same) {
+    if (!md || md.title !== (a.name || "") || md.artist !== (a.artist || "")) {
       active = ap;
-      render(true);
+      paintMeta(ap);
+      paintState(ap);
     }
   }
-
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "visible") setTimeout(function () { render(true); }, 300);
-  });
 
   function boot() {
     scan();
     var n = 0;
     var t = setInterval(function () { n++; if (scan() || n > 40) clearInterval(t); }, 400);
-    if (!window.__msWatch) {
-      window.__msWatch = setInterval(watchdog, 2000);
-    }
+    if (!window.__ms3Watch) window.__ms3Watch = setInterval(watchdog, 2000);
   }
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") setTimeout(function () { sync(false); }, 300);
+  });
 
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
