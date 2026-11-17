@@ -2425,3 +2425,84 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
   body[data-type="music"] .mm-timer-pop button:active { background: rgba(255, 255, 255, .1); }
   body[data-type="music"] .mm-timer-pop .mm-timer-cancel { opacity: .55; font-size: 12px; }
 }
+
+/* ========== 手机端播放条：按网易云样式重排（主控一行 5 个，次功能收进进度行） ========== */
+@media screen and (max-width: 768px) {
+  body[data-type="music"] .mm-row-1 {
+    gap: 8px !important;
+    margin-bottom: 2px !important;
+    align-items: center !important;
+  }
+  body[data-type="music"] .mm-row-1 .aplayer-ptime,
+  body[data-type="music"] .mm-row-1 .aplayer-dtime {
+    font-size: 10.5px !important; min-width: 33px !important; opacity: .55 !important;
+  }
+  /* 定时 / 音量：进度行右侧的小图标 */
+  body[data-type="music"] .mm-row-1 .mm-timer,
+  body[data-type="music"] .mm-row-1 .mm-vol { flex: 0 0 auto !important; }
+  body[data-type="music"] .mm-timer-btn,
+  body[data-type="music"] .mm-vol-btn { width: 24px !important; height: 24px !important; opacity: .7 !important; }
+  body[data-type="music"] .mm-timer-btn svg,
+  body[data-type="music"] .mm-vol-btn svg { width: 17px !important; height: 17px !important; }
+
+  /* 主控行：模式 | 上一首 播放 下一首 | 曲库 */
+  body[data-type="music"] .mm-row-2 {
+    position: relative !important;
+    justify-content: space-between !important;
+    padding: 2px 22px 0 !important;
+    min-height: 54px;
+  }
+  body[data-type="music"] .mm-grp { display: flex; align-items: center; gap: 14px; }
+  body[data-type="music"] .mm-grp-mid {
+    position: absolute !important; left: 50% !important; top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    gap: 20px;
+  }
+  body[data-type="music"] .mm-row-2 .aplayer-icon,
+  body[data-type="music"] .mm-row-2 .mm-mode { width: 30px !important; height: 30px !important; opacity: .82 !important; }
+  body[data-type="music"] .mm-row-2 .mm-grp-mid .aplayer-icon { width: 32px !important; height: 32px !important; opacity: .92 !important; }
+  body[data-type="music"] .mm-row-2 .aplayer-icon-play {
+    width: 54px !important; height: 54px !important; opacity: 1 !important;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, .35) !important;
+  }
+  body[data-type="music"] .mm-row-2 .aplayer-icon-play svg { width: 24px !important; height: 24px !important; }
+
+  /* 播放模式三态：只显示当前那个图标 */
+  body[data-type="music"] .mm-mode .mm-mi { display: none !important; }
+  body[data-type="music"] .mm-mode.mm-mode-list .mm-mi-list { display: block !important; }
+  body[data-type="music"] .mm-mode.mm-mode-shuffle .mm-mi-shuffle { display: block !important; }
+  body[data-type="music"] .mm-mode.mm-mode-single .mm-mi-single { display: block !important; }
+  body[data-type="music"] .mm-mode.mm-mode-shuffle,
+  body[data-type="music"] .mm-mode.mm-mode-single { color: var(--anzhiyu-main, #fc466b) !important; opacity: 1 !important; }
+
+  /* 定时弹层：贴右侧展开，不被屏幕裁掉 */
+  body[data-type="music"] .mm-timer-pop {
+    left: auto !important; right: -10px !important;
+    transform: translateY(4px) scale(.97) !important;
+    transform-origin: bottom right !important;
+    width: 172px !important;
+  }
+  body[data-type="music"] .mm-timer-pop.mm-open { transform: translateY(0) scale(1) !important; }
+  body[data-type="music"] .mm-timer-pop button { font-size: 12.5px !important; padding: 8px 10px !important; }
+  /* 自定义时长输入行 */
+  body[data-type="music"] .mm-timer-custom {
+    display: none; gap: 6px; padding: 4px 2px 6px;
+  }
+  body[data-type="music"] .mm-timer-custom.mm-custom-on { display: flex; }
+  body[data-type="music"] .mm-timer-input {
+    flex: 1 1 auto; min-width: 0; width: 100%;
+    height: 30px; padding: 0 8px;
+    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, .16);
+    background: rgba(255, 255, 255, .06);
+    color: #fff; font-size: 12.5px;
+    -webkit-appearance: none; appearance: none;
+  }
+  body[data-type="music"] .mm-timer-input::placeholder { color: rgba(255, 255, 255, .35); }
+  body[data-type="music"] .mm-timer-ok {
+    flex: 0 0 auto; height: 30px; padding: 0 10px !important;
+    border-radius: 9px; border: 0;
+    background: var(--anzhiyu-main, #fc466b); color: #fff;
+    font-size: 12.5px; cursor: pointer;
+  }
+}

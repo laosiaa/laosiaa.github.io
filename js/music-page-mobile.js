@@ -42,21 +42,24 @@
     if (ptime) r1.appendChild(ptime);
     r1.appendChild(bar);
     if (dtime) r1.appendChild(dtime);
+    // 参考网易云：次要功能（定时、音量）收进进度条这一行
+    var timerBtn = buildTimerBtn(ap);
+    r1.appendChild(timerBtn);
+    buildVolume(ap, r1);
 
     var r2 = document.createElement("div");
     r2.className = "mm-row mm-row-2";
     var modeBtn = buildModeBtn(ap);
-    // 左（模式/循环）· 中（上一首/播放/下一首，绝对居中）· 右（曲库）
+    // 主控行只留 5 个：左（播放模式）· 中（上一首/播放/下一首，绝对居中）· 右（曲库/循环）
     var gLeft = document.createElement("div");
     gLeft.className = "mm-grp mm-grp-left";
     var gMid = document.createElement("div");
     gMid.className = "mm-grp mm-grp-mid";
     var gRight = document.createElement("div");
     gRight.className = "mm-grp mm-grp-right";
-    var timerBtn = buildTimerBtn(ap);
-    [modeBtn, timerBtn, loop].forEach(function (n) { if (n) gLeft.appendChild(n); });
+    [modeBtn].forEach(function (n) { if (n) gLeft.appendChild(n); });
     [back, play, fwd].forEach(function (n) { if (n) gMid.appendChild(n); });
-    [menu].forEach(function (n) { if (n) gRight.appendChild(n); });
+    [loop, menu].forEach(function (n) { if (n) gRight.appendChild(n); });
     r2.appendChild(gLeft);
     r2.appendChild(gMid);
     r2.appendChild(gRight);
@@ -64,7 +67,6 @@
     ctrl.textContent = "";
     ctrl.appendChild(r1);
     ctrl.appendChild(r2);
-    buildVolume(ap, r1);
     return true;
   }
 
@@ -86,6 +88,11 @@
       '<button data-min="30">30 分钟</button>' +
       '<button data-min="60">60 分钟</button>' +
       '<button data-min="end">播完本首</button>' +
+      '<button data-min="custom">自定义时长…</button>' +
+      '<div class="mm-timer-custom">' +
+      '<input class="mm-timer-input" type="number" inputmode="numeric" min="1" max="720" placeholder="分钟">' +
+      '<button class="mm-timer-ok" type="button">确定</button>' +
+      "</div>" +
       '<button data-min="0" class="mm-timer-cancel">取消定时</button>' +
       "</div>";
 
@@ -139,14 +146,37 @@
       e.stopPropagation();
       pop.classList.toggle("mm-open");
     });
+    var customRow = pop.querySelector(".mm-timer-custom");
+    var customInput = pop.querySelector(".mm-timer-input");
+    var customOk = pop.querySelector(".mm-timer-ok");
+
+    function applyCustom() {
+      var n = parseInt(customInput.value, 10);
+      if (!n || n < 1) { customInput.focus(); return; }
+      if (n > 720) n = 720;
+      customInput.value = "";
+      customRow.classList.remove("mm-custom-on");
+      start("time", n);
+    }
+
     pop.addEventListener("click", function (e) {
       var b = e.target.closest("button[data-min]");
       if (!b) return;
       e.stopPropagation();
       var v = b.getAttribute("data-min");
       if (v === "0") { clearTimer(); pop.classList.remove("mm-open"); return; }
-      if (v === "end") start("end", 0);
-      else start("time", parseInt(v, 10));
+      if (v === "end") { start("end", 0); return; }
+      if (v === "custom") {
+        customRow.classList.toggle("mm-custom-on");
+        if (customRow.classList.contains("mm-custom-on")) setTimeout(function () { customInput.focus(); }, 60);
+        return;
+      }
+      start("time", parseInt(v, 10));
+    });
+    customOk.addEventListener("click", function (e) { e.stopPropagation(); applyCustom(); });
+    customInput.addEventListener("keydown", function (e) {
+      e.stopPropagation();
+      if (e.key === "Enter") applyCustom();
     });
     document.addEventListener("click", function (e) {
       if (!wrap.contains(e.target)) pop.classList.remove("mm-open");
@@ -165,23 +195,39 @@
 
   /* ---------- 顺序 / 随机 播放切换（手机端专用，主题默认只有循环键） ---------- */
   function buildModeBtn(ap) {
+    var MODES = [
+      { id: "list", label: "顺序播放", key: "list" },
+      { id: "random", label: "随机播放", key: "shuffle" },
+      { id: "single", label: "单曲循环", key: "single" }
+    ];
     var btn = document.createElement("button");
     btn.type = "button";
     btn.className = "aplayer-icon mm-mode";
-    btn.setAttribute("aria-label", "顺序播放 / 随机播放");
     btn.innerHTML =
-      '<svg class="mm-mode-shuffle" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
+      '<svg class="mm-mi mm-mi-list" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h7"/><path d="M17 15l3 3-3 3"/></svg>' +
+      '<svg class="mm-mi mm-mi-shuffle" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M16 3h5v5"/><path d="M4 20 21 3"/><path d="M21 16v5h-5"/><path d="M15 15l6 6"/><path d="M4 4l5 5"/></svg>' +
-      '<svg class="mm-mode-list" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
-      '<path d="M4 6h16"/><path d="M4 12h10"/><path d="M4 18h7"/><path d="M17 15l3 3-3 3"/></svg>';
+      '<svg class="mm-mi mm-mi-single" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M17 2.5 20.5 6 17 9.5"/><path d="M20.5 6H7a4.5 4.5 0 0 0-4.5 4.5"/>' +
+      '<path d="M7 21.5 3.5 18 7 14.5"/><path d="M3.5 18H17a4.5 4.5 0 0 0 4.5-4.5"/>' +
+      '<text x="12" y="15.5" font-size="8.5" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">1</text></svg>';
 
+    function idx() {
+      var m = String(ap.mode || "");
+      if (m === "random") return 1;
+      if (m === "single") return 2;
+      return 0;
+    }
     function paint() {
-      var random = String(ap.mode) === "random";
-      btn.classList.toggle("mm-random", random);
-      btn.setAttribute("title", random ? "随机播放" : "顺序播放");
+      var i = idx();
+      btn.className = "aplayer-icon mm-mode mm-mode-" + MODES[i].key;
+      btn.setAttribute("title", MODES[i].label);
+      btn.setAttribute("aria-label", MODES[i].label);
     }
     btn.addEventListener("click", function () {
-      ap.mode = String(ap.mode) === "random" ? "list" : "random";
+      var next = MODES[(idx() + 1) % MODES.length];
+      try { ap.mode = next.id; } catch (e) {}
       paint();
     });
     paint();
