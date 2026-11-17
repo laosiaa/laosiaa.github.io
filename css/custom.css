@@ -2573,3 +2573,8 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
 body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   display: none !important;
 }
+
+/* 桌面端不显示曲库搜索框（脚本只服务手机端布局） */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] .mm-list-search { display: none !important; }
+}
