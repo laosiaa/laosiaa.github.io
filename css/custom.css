@@ -2525,7 +2525,8 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
   }
   body[data-type="music"] .mm-list-search svg { flex: 0 0 auto; opacity: .45; }
   body[data-type="music"] .mm-search-input {
-    flex: 1 1 auto; min-width: 0; width: 100%;
+    /* flex-basis:auto + width:100% 会塌成 0px，改成 0% 基准 */
+    flex: 1 1 0% !important; min-width: 0 !important; width: auto !important;
     height: 100%; border: 0; background: transparent;
     color: #fff; font-size: 13px;
     -webkit-appearance: none; appearance: none;
