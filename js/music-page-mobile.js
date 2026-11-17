@@ -73,6 +73,17 @@
     r2.appendChild(gMid);
     r2.appendChild(gRight);
 
+    // 主题的点击处理绑在 .aplayer-time 里的原始节点上，节点被我们搬走后会失效，
+    // 这里自己接管（capture 阶段 + stopImmediatePropagation，避免重复绑定导致开关两次）
+    if (menu && !menu.__mmToggle) {
+      menu.__mmToggle = true;
+      menu.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        toggleDrawer();
+      }, true);
+    }
+
     ctrl.textContent = "";
     ctrl.appendChild(r1);
     ctrl.appendChild(r2);
@@ -340,6 +351,26 @@
       head.style.transform = "";
       if (moved && dy > 30) closeDrawer();
     });
+  }
+
+  function openDrawer() {
+    var l = listEl();
+    if (!l) return;
+    l.classList.add("aplayer-list-hide");
+    l.style.opacity = "1";
+    var m = maskEl();
+    if (m) {
+      m.style.display = "block";
+      m.style.animation = "0.5s ease 0s 1 normal none running to_show";
+    }
+    setTimeout(function () { fixList(); scrollToCurrent(); }, 120);
+  }
+
+  function toggleDrawer() {
+    var l = listEl();
+    if (!l) return;
+    if (l.classList.contains("aplayer-list-hide")) closeDrawer();
+    else openDrawer();
   }
 
   function closeDrawer() {
