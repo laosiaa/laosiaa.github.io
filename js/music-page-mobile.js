@@ -342,7 +342,7 @@
           var a = li.querySelector(".aplayer-list-author");
           var txt = ((t ? t.textContent : "") + " " + (a ? a.textContent : "")).toLowerCase();
           var hit = !kw || txt.indexOf(kw) >= 0;
-          li.style.display = hit ? "" : "none";
+          li.classList.toggle("mm-hide", !hit);
           if (hit) shown++;
         });
         title.textContent = kw ? "找到 " + shown + " 首" : "曲库 · " + lis.length + " 首";

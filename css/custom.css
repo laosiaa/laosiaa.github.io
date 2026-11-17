@@ -2556,3 +2556,8 @@ body[data-type="music"] .aplayer-pic .aplayer-button,
     pointer-events: none;
   }
 }
+
+/* 搜索过滤：必须用 !important 才能压过抽屉里 li 的 display:flex !important */
+body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
+  display: none !important;
+}
