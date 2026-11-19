@@ -415,7 +415,7 @@
       });
     }
     if (pic) {
-      ["left", "top", "transform"].forEach(function (p) {
+      ["left", "top", "transform", "margin", "margin-left", "margin-right", "position"].forEach(function (p) {
         pic.style.removeProperty(p);
       });
     }
