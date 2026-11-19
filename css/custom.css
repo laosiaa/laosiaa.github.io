@@ -3301,8 +3301,9 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     flex-direction: column;
     position: fixed !important;
     top: 0; right: 0; bottom: 74px;
+    box-sizing: border-box !important;
     width: 380px !important; min-width: 380px !important; max-width: 88vw !important;
-    height: calc(100vh - 74px) !important; max-height: none !important;
+    height: auto !important; max-height: none !important;
     margin: 0 !important;
     padding: 14px 16px 14px;
     background: #101013;

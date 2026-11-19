@@ -250,6 +250,17 @@
     queue.innerHTML = SVG.list + '<i class="md-badge">0</i>';
     queue.addEventListener("click", function () {
       document.body.classList.toggle("md-queue-open");
+      var l = document.querySelector("#anMusic-page .aplayer-list");
+      if (!l) return;
+      if (document.body.classList.contains("md-queue-open")) {
+        /* 抽屉里让面板自己撑满，清掉 enhanceList 写的内联高度 */
+        l.style.removeProperty("height");
+        l.style.removeProperty("max-height");
+        var ol0 = l.querySelector("ol");
+        if (ol0) ol0.style.removeProperty("max-height");
+      } else {
+        enhanceList();
+      }
     });
 
     [vol, mode, dl, share, queue].forEach(function (n) {
