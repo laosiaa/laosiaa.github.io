@@ -66,6 +66,7 @@
         /* APlayer 会在作者前面拼一个「 - 」，这里去掉，让歌手单独一行干净显示 */
         var au = document.querySelector("#anMusic-page .aplayer-author");
         if (au) au.textContent = String(a.artist || "").replace(/^\s*-\s*/, "");
+        paintTopMeta(ap);
       } catch (e) {}
     }
     paintMeta();
@@ -160,6 +161,29 @@
     ctrl.appendChild(prog);
     ctrl.appendChild(right);
     return true;
+  }
+
+  /* 右上角「歌手 - 歌名」+ 下载按钮（酷狗那种） */
+  function paintTopMeta(ap) {
+    var el = document.querySelector(".md-songmeta");
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "md-songmeta";
+      el.innerHTML = '<div class="md-sm-title"></div><a class="md-download" rel="noopener">下载这首歌</a>';
+      document.body.appendChild(el);
+    }
+    var a = {};
+    try {
+      a = ap.list.audios[ap.list.index] || {};
+    } catch (e) {}
+    var t = el.querySelector(".md-sm-title");
+    if (t) t.textContent = (a.artist ? a.artist + " - " : "") + (a.name || "");
+    var sid = String(a.url || "").split("sid=").pop().split("&")[0];
+    var dl = el.querySelector(".md-download");
+    if (dl && sid) {
+      dl.href = "/music-api/play?sid=" + sid + "&download=1&name=" + encodeURIComponent(a.name || "song");
+      dl.setAttribute("download", (a.name || "song") + ".mp3");
+    }
   }
 
   /* 桌面端：删掉右下角那三个悬浮功能键（不是隐藏，直接从 DOM 移除） */

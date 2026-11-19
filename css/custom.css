@@ -3093,3 +3093,62 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     color: #fff; background: rgba(255, 255, 255, .12);
   }
 }
+
+/* ================= 音乐馆 桌面端 第四轮：照酷狗单曲页（纯黑 + 居中封面 + 右上歌名/下载） ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] { background: #000 !important; }
+  body[data-type="music"] #an_music_bg,
+  body[data-type="music"] > canvas { display: none !important; }
+  body[data-type="music"] #page-header,
+  body[data-type="music"] #nav,
+  body[data-type="music"] #content-inner { background: transparent !important; }
+
+  /* 只留封面：歌词、歌名块、曲库面板、曲库开关都收起来 */
+  body[data-type="music"] #anMusic-page .aplayer-lrc,
+  body[data-type="music"] #anMusic-page .aplayer-music,
+  body[data-type="music"] #anMusic-page .aplayer-list,
+  body[data-type="music"] #anMusic-page .md-menu { display: none !important; }
+
+  body[data-type="music"] #anMusic-page .aplayer { gap: 0 !important; }
+  body[data-type="music"] #anMusic-page .aplayer-body {
+    justify-content: center !important;
+    padding: 0 !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-pic {
+    width: 400px !important;
+    height: 400px !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(255, 255, 255, .08) !important;
+    box-shadow: 0 26px 70px rgba(0, 0, 0, .75) !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-info {
+    padding: 0 !important;
+    height: auto !important;
+  }
+
+  /* 右上角：歌手 - 歌名 + 下载这首歌 */
+  body[data-type="music"] .md-songmeta {
+    position: fixed !important;
+    right: 42px; top: 96px;
+    z-index: 70;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+    text-align: right;
+  }
+  body[data-type="music"] .md-songmeta .md-sm-title {
+    color: #e9e9ef; font-size: 15px; letter-spacing: .3px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, .6);
+  }
+  body[data-type="music"] .md-songmeta .md-download {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px; border-radius: 999px; cursor: pointer;
+    background: rgba(255, 255, 255, .1);
+    border: 1px solid rgba(255, 255, 255, .16);
+    color: #eaeaf0; font-size: 12.5px; text-decoration: none;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  body[data-type="music"] .md-songmeta .md-download:hover {
+    background: rgba(255, 255, 255, .2);
+    border-color: rgba(255, 255, 255, .3);
+  }
+  body[data-type="music"] .md-songmeta .md-download::before { content: "↓"; font-size: 13px; }
+}

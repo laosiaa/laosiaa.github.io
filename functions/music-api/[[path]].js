@@ -247,6 +247,26 @@ async function handle(request) {
 
     const kind = (u.searchParams.get("type") || "url").toLowerCase();
 
+    /* 下载：把音频流原样转发出去，带 Content-Disposition 触发「另存为」 */
+    if (u.searchParams.get("download")) {
+      const dbr = u.searchParams.get("br");
+      const dbrList = dbr ? [dbr, "320", "192", "128"] : ["320", "192", "128"];
+      const got = await resolveAudio(sid, [...new Set(dbrList)]);
+      if (!got) return json({ ok: false, error: "unavailable", sid }, 404);
+      const r = await fetch(got.url, { headers: hdrs, cf: { cacheTtl: 0 } });
+      if (!r.ok || !r.body) return json({ ok: false, error: "fetch-failed", status: r.status, sid }, 502);
+      const raw = (u.searchParams.get("name") || sid).replace(/[\\/:*?"<>|\r\n]/g, "_");
+      return new Response(r.body, {
+        status: 200,
+        headers: {
+          "content-type": r.headers.get("content-type") || "audio/mpeg",
+          "content-disposition": `attachment; filename*=UTF-8''${encodeURIComponent(raw)}.mp3`,
+          "cache-control": "no-store",
+          ...CORS,
+        },
+      });
+    }
+
     // 曲目资料：歌手 / 专辑 / 发行时间 / 专辑内曲目（国内直连，走本站域名）
     if (kind === "info") {
       const cacheKey = new Request(`https://blog.521251.xyz/music-api/_info?sid=${sid}`, { method: "GET" });
