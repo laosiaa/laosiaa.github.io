@@ -3444,3 +3444,29 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     text-shadow: 0 2px 14px rgba(0, 0, 0, .8);
   }
 }
+
+/* ================= 音乐馆 桌面端 第七轮：歌词行高对齐 APlayer 的 40px 步进 + 标题回到右上角 ================= */
+@media screen and (min-width: 769px) {
+  /* APlayer 内部写死 translateY(40 * -index)，行高必须是 40 才能让当前行落在正中 */
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc .aplayer-lrc-contents {
+    padding-top: 160px !important;
+    padding-bottom: 160px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc p {
+    height: 40px !important;
+    line-height: 40px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc p.aplayer-lrc-current {
+    height: 40px !important;
+    line-height: 40px !important;
+  }
+
+  /* 右上角「歌手 - 歌名」+ 下载，别压到歌词区 */
+  body[data-type="music"] .md-songmeta {
+    left: auto !important;
+    right: 42px !important;
+    top: 108px !important;
+    align-items: flex-end !important;
+    text-align: right !important;
+  }
+}
