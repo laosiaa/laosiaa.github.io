@@ -423,8 +423,28 @@
     var bodyEl = el.querySelector(".aplayer-body");
     var lrc = el.querySelector(".aplayer-lrc");
     var pic = el.querySelector(".aplayer-pic");
+    var info = el.querySelector(".aplayer-info");
     var meta = document.querySelector(".md-songmeta");
     if (!bodyEl || !lrc) return;
+
+    /* 移动端：保持 APlayer 原始结构，把桌面那套改动全部还原 */
+    if (!isDesktop()) {
+      var colM = el.querySelector(".md-col");
+      if (colM) {
+        if (lrc.parentElement === colM) {
+          var ctrlM = info && info.querySelector(".aplayer-controller");
+          if (info) info.insertBefore(lrc, ctrlM || null);
+          else bodyEl.appendChild(lrc);
+        }
+        if (meta && meta.parentElement === colM && meta.parentNode) meta.parentNode.removeChild(meta);
+        if (colM.parentNode) colM.parentNode.removeChild(colM);
+      }
+      ["left", "top", "width", "height", "position"].forEach(function (p) {
+        lrc.style.removeProperty(p);
+      });
+      return;
+    }
+
     /* 右半边做成一个竖列：上面歌名，下面歌词 */
     var col = bodyEl.querySelector(".md-col");
     if (!col) {
