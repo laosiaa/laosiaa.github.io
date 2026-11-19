@@ -3865,3 +3865,17 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     margin: 0 0 6px !important;
   }
 }
+
+/* ================= 第十八轮：底栏的下载键要显示（之前被 .md-download 的全局 display:none 连坐隐藏了） ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .md-tools > .md-download {
+    display: inline-flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    width: 26px !important;
+    height: 26px !important;
+    color: rgba(255, 255, 255, .74) !important;
+  }
+  body[data-type="music"] #anMusic-page .md-tools > .md-download:hover { color: #fff !important; }
+  body[data-type="music"] #anMusic-page .md-tools > .md-download svg { width: 17px !important; height: 17px !important; display: block !important; }
+}
