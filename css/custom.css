@@ -3355,35 +3355,6 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"].md-queue-open #anMusic-page .aplayer-list .md-list-head { display: flex; }
 }
 
-/* ========== 桌面端音乐馆：整体居中（宽屏下不要左对齐） ========== */
-@media screen and (min-width: 769px) {
-  /* 封面直接绝对居中，不再依赖 aplayer 的 flex 排布（那套在宽屏下会把它推到左边） */
-  body[data-type="music"] #anMusic-page .aplayer-pic {
-    position: fixed !important;
-    left: 50% !important;
-    top: 47% !important;
-    margin: 0 !important;
-    transform: translate(-50%, -50%) !important;
-    z-index: 60 !important;
-  }
-}
-
-@media screen and (min-width: 769px) {
-  /* 主题给 .aplayer-controller 写了 max-width:1500px，宽屏下会贴着左边 */
-  body[data-type="music"] #anMusic-page {
-    max-width: 1440px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-  }
-  body[data-type="music"] #anMusic-page .aplayer-controller.md-bar {
-    max-width: none !important;
-    width: 100% !important;
-    /* 背景铺满，内容按 1440 居中 */
-    padding-left: max(22px, calc((100vw - 1440px) / 2)) !important;
-    padding-right: max(22px, calc((100vw - 1440px) / 2)) !important;
-  }
-}
-
 /* ================= 音乐馆 桌面端 第六轮：封面 + 右侧歌词，横排居中 ================= */
 @media screen and (min-width: 769px) {
   body[data-type="music"] #anMusic-page .aplayer-body {
