@@ -1,1 +1,1 @@
-{"versionCode":7,"versionName":"1.2.2","url":"https://blog.521251.xyz/laosia-music/Laosia-music.apk","size":2633864,"sha256":"55cde5ee964dfee79aad7847025db304476d7e9fbd1423ee5e704bfd9b7561c8","notes":"1. 修复缓存版放不出声（未缓存的歌不再拦截）\n2. 更新装好后自动删除下载的安装包\n3. 清理缓存也会一起清掉残留安装包"}
+{"versionCode":8,"versionName":"1.2.3","url":"https://blog.521251.xyz/laosia-music/Laosia-music.apk","size":2634564,"sha256":"54d108d0faf0b69847f422e502147a427e3b2e182497c244fec492f74e00eeec","notes":"1. 彻底不再拦截音频请求，修复「音频错误，2 秒后跳过」\n2. 菜单新增「播放诊断」，出问题点一下把内容发我\n3. 更新后自动删除安装包"}

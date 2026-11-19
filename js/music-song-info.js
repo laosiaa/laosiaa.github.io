@@ -8,6 +8,89 @@
   var cache = {};
   var panel = null;
   var lastKey = "";
+  var inflight = {};
+
+  // 资料本地持久化：加载过的不再请求（换页/重开浏览器都算）
+  var STORE = "mm-songinfo:";
+  var STORE_IDX = "mm-songinfo-index";
+  var STORE_MAX = 120;
+
+  function readStored(sid) {
+    try {
+      var s = localStorage.getItem(STORE + sid);
+      return s ? JSON.parse(s) : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function saveStored(sid, d) {
+    try {
+      localStorage.setItem(STORE + sid, JSON.stringify(d));
+      var idx = [];
+      try { idx = JSON.parse(localStorage.getItem(STORE_IDX) || "[]"); } catch (e) { idx = []; }
+      idx = idx.filter(function (x) { return x !== sid; });
+      idx.push(sid);
+      while (idx.length > STORE_MAX) {
+        var old = idx.shift();
+        try { localStorage.removeItem(STORE + old); } catch (e) {}
+      }
+      localStorage.setItem(STORE_IDX, JSON.stringify(idx));
+    } catch (e) {
+      // 空间满了：清掉旧资料再存一次
+      try {
+        var idx2 = JSON.parse(localStorage.getItem(STORE_IDX) || "[]");
+        idx2.slice(0, 20).forEach(function (x) { localStorage.removeItem(STORE + x); });
+        localStorage.setItem(STORE_IDX, JSON.stringify(idx2.slice(20)));
+        localStorage.setItem(STORE + sid, JSON.stringify(d));
+      } catch (e2) {}
+    }
+  }
+
+  function getInfo(sid) {
+    function get(url) {
+      return fetch(url).then(function (r) {
+        if (!r.ok) throw new Error("http " + r.status);
+        return r.json();
+      });
+    }
+    return get(API + "?sid=" + sid + "&type=info")
+      .catch(function () { return get(FALLBACK + "?sid=" + sid + "&type=info"); })
+      .then(function (d) {
+        if (!d || !d.ok) throw new Error("no data");
+        return d;
+      });
+  }
+
+  /* 取资料：内存 → 本地存储 → 网络；加载过的一律不再请求 */
+  function ensure(sid, cb) {
+    if (!sid) { if (cb) cb(null); return; }
+    if (cache[sid]) { if (cb) cb(cache[sid]); return; }
+    var stored = readStored(sid);
+    if (stored) {
+      cache[sid] = stored;
+      if (cb) cb(stored);
+      return;
+    }
+    if (inflight[sid]) {
+      if (cb) inflight[sid].push(cb);
+      return;
+    }
+    inflight[sid] = cb ? [cb] : [];
+    getInfo(sid)
+      .then(function (d) {
+        cache[sid] = d;
+        saveStored(sid, d);
+        var cbs = inflight[sid] || [];
+        delete inflight[sid];
+        cbs.forEach(function (f) { try { f(d); } catch (e) {} });
+      })
+      .catch(function () {
+        var cbs = inflight[sid] || [];
+        delete inflight[sid];
+        cbs.forEach(function (f) { try { f(null); } catch (e) {} });
+      });
+  }
 
   function getAplayer() {
     var host = document.querySelector("#anMusic-page meting-js");
@@ -212,23 +295,45 @@
       render(cache[sid], ap);
       return;
     }
-    function get(url) {
-      return fetch(url).then(function (r) {
-        if (!r.ok) throw new Error("http " + r.status);
-        return r.json();
-      });
-    }
-    get(API + "?sid=" + sid + "&type=info")
-      .catch(function () { return get(FALLBACK + "?sid=" + sid + "&type=info"); })
-      .then(function (d) {
-        if (!d || !d.ok) throw new Error("no data");
-        cache[sid] = d;
-        if (panel) render(d, getAplayer() || ap);
-      })
-      .catch(function () {
-        if (panel) panel.querySelector(".mm-info-body").innerHTML = '<div class="mm-info-loading">资料读取失败，稍后再试。</div>';
-      });
+    ensure(sid, function (d) {
+      if (!panel) return;
+      if (d) {
+        render(d, getAplayer() || ap);
+      } else {
+        panel.querySelector(".mm-info-body").innerHTML = '<div class="mm-info-loading">资料读取失败，稍后再试。</div>';
+      }
+    });
   }
 
   window.addEventListener("mm:songinfo", open, false);
+
+  /* 播放到某首歌就自动把它的资料取回来（已经取过的不再请求） */
+  function preloadCurrent() {
+    var ap = getAplayer();
+    if (!ap) return;
+    ensure(sidOf(ap));
+  }
+
+  function hookPreload() {
+    var ap = getAplayer();
+    if (!ap) return;
+    if (!ap.__mmPreloadHooked) {
+      ap.__mmPreloadHooked = true;
+      try {
+        ap.on("listswitch", function () { setTimeout(preloadCurrent, 400); });
+        ap.on("play", function () { setTimeout(preloadCurrent, 400); });
+      } catch (e) {}
+    }
+    preloadCurrent();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", hookPreload, false);
+  } else {
+    hookPreload();
+  }
+  setInterval(hookPreload, 2000);
+
+  // 给外部（调试/其它脚本）留个入口
+  window.MMSongInfo = { ensure: ensure, getCached: function (sid) { return cache[sid] || readStored(sid); } };
 })();
