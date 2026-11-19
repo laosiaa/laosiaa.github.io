@@ -903,26 +903,29 @@ const anzhiyu = {
 
     document.getElementById("menu-mask").addEventListener("click", anMusicPageMenuAask);
 
-    // 监听增加单曲按钮
-    anMusicBtnGetSong.addEventListener("click", () => {
-      if (changeMusicListFlag) {
-        const anMusicPage = document.getElementById("anMusic-page");
-        const metingAplayer = anMusicPage.querySelector("meting-js").aplayer;
-        const allAudios = metingAplayer.list.audios;
-        const randomIndex = Math.floor(Math.random() * allAudios.length);
-        // 随机播放一首
-        metingAplayer.list.switch(randomIndex);
-      } else {
-        anzhiyu.cacheAndPlayMusic();
-      }
-    });
-    anMusicRefreshBtn.addEventListener("click", () => {
-      localStorage.removeItem("musicData");
-      anzhiyu.snackbarShow("已移除相关缓存歌曲");
-    });
-    anMusicSwitchingBtn.addEventListener("click", () => {
-      anzhiyu.changeMusicList();
-    });
+    // 监听增加单曲按钮（桌面端这三个按钮已被移除，做空值保护）
+    anMusicBtnGetSong &&
+      anMusicBtnGetSong.addEventListener("click", () => {
+        if (changeMusicListFlag) {
+          const anMusicPage = document.getElementById("anMusic-page");
+          const metingAplayer = anMusicPage.querySelector("meting-js").aplayer;
+          const allAudios = metingAplayer.list.audios;
+          const randomIndex = Math.floor(Math.random() * allAudios.length);
+          // 随机播放一首
+          metingAplayer.list.switch(randomIndex);
+        } else {
+          anzhiyu.cacheAndPlayMusic();
+        }
+      });
+    anMusicRefreshBtn &&
+      anMusicRefreshBtn.addEventListener("click", () => {
+        localStorage.removeItem("musicData");
+        anzhiyu.snackbarShow("已移除相关缓存歌曲");
+      });
+    anMusicSwitchingBtn &&
+      anMusicSwitchingBtn.addEventListener("click", () => {
+        anzhiyu.changeMusicList();
+      });
 
     // 默认加载的歌单
     if (GLOBAL_CONFIG.music_page_default === "custom") {

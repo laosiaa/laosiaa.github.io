@@ -2826,3 +2826,122 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #content-inner { padding-bottom: 74px !important; }
   body[data-type="music"] #anMusic-page .aplayer-list { bottom: 62px !important; }
 }
+
+/* ================= 音乐馆 桌面端：去侧栏 + 网易云风格曲库 ================= */
+@media screen and (min-width: 769px) {
+  /* 1. 本页不显示右侧资料卡/公告/倒计时那一整栏 */
+  body[data-type="music"] #aside-content,
+  body[data-type="music"] #post-comment,
+  body[data-type="music"] #workboard { display: none !important; }
+  body[data-type="music"] #content-inner,
+  body[data-type="music"] .layout,
+  body[data-type="music"] #page {
+    width: 100% !important; max-width: none !important;
+  }
+
+  /* 2. 曲库面板：半透明卡片 + 头部 + 三列（序号/歌曲/歌手） */
+  body[data-type="music"] #anMusic-page .aplayer-list {
+    width: 44% !important;
+    min-width: 340px !important;
+    max-width: 520px !important;
+    background: rgba(26, 26, 30, .72) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(150%) !important;
+    backdrop-filter: blur(18px) saturate(150%) !important;
+    border: 1px solid rgba(255, 255, 255, .08) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 18px 46px rgba(0, 0, 0, .38) !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* 头部：播放列表 / 共 N 首 */
+  body[data-type="music"] #anMusic-page .aplayer-list .md-list-head {
+    display: flex !important; align-items: center !important; justify-content: space-between !important;
+    padding: 15px 18px 12px !important;
+    color: #f2f2f6 !important; font-size: 15px !important; font-weight: 600 !important;
+    letter-spacing: .3px;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list .md-list-head .md-list-count {
+    color: #8b8b95 !important; font-size: 12px !important; font-weight: 400 !important;
+  }
+
+  /* 列名：歌曲 / 歌手 */
+  body[data-type="music"] #anMusic-page .aplayer-list .md-list-cols {
+    display: grid !important; grid-template-columns: 34px 1fr 128px; gap: 0 10px;
+    padding: 8px 18px 9px !important;
+    color: #74747d !important; font-size: 12px !important;
+    border-bottom: 1px solid rgba(255, 255, 255, .07) !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list .md-list-cols span:last-child { text-align: right; }
+
+  /* 列表本体 */
+  body[data-type="music"] #anMusic-page .aplayer-list ol {
+    flex: 1 1 auto;
+    padding: 8px 8px 10px !important;
+    margin: 0 !important;
+    overflow-y: auto !important;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, .18) transparent;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar { width: 6px !important; display: block !important; }
+  body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .16) !important; border-radius: 3px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar-track { background: transparent !important; }
+
+  /* 单行：序号 | 歌名 | 歌手 */
+  body[data-type="music"] #anMusic-page .aplayer-list ol li {
+    display: grid !important;
+    grid-template-columns: 34px 1fr 128px;
+    gap: 0 10px;
+    align-items: center !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    line-height: 38px !important;
+    padding: 0 10px !important;
+    margin: 2px 0 !important;
+    border: 0 !important;
+    border-radius: 9px !important;
+    background: transparent !important;
+    font-size: 13.5px !important;
+    transition: background .14s ease;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li:hover { background: rgba(255, 255, 255, .06) !important; }
+
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-cur { display: none !important; }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-index {
+    grid-column: 1; text-align: center !important;
+    color: #74747d !important; font-size: 12.5px !important; line-height: 38px !important;
+    position: relative;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-title {
+    grid-column: 2;
+    color: #dcdce3 !important; font-size: 13.5px !important; line-height: 38px !important;
+    overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-author {
+    grid-column: 3;
+    text-align: right !important;
+    color: #85858e !important; font-size: 12.5px !important; line-height: 38px !important;
+    overflow: hidden !important; text-overflow: ellipsis !important; white-space: nowrap !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-author::before { content: ""; }
+
+  /* 正在播放：底色 + 白色歌名 + 换掉序号显示小音符 */
+  body[data-type="music"] #anMusic-page .aplayer-list ol li.aplayer-list-light {
+    background: rgba(255, 255, 255, .1) !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li.aplayer-list-light .aplayer-list-title {
+    color: #fff !important; font-weight: 600 !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li.aplayer-list-light .aplayer-list-index {
+    color: transparent !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol li.aplayer-list-light .aplayer-list-index::after {
+    content: "♪";
+    position: absolute; inset: 0;
+    color: var(--anzhiyu-main, #ff6b81);
+    font-size: 13px; line-height: 38px; text-align: center;
+  }
+}

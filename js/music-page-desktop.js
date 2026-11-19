@@ -159,9 +159,39 @@
     return true;
   }
 
+  /* 桌面端：删掉右下角那三个悬浮功能键（不是隐藏，直接从 DOM 移除） */
+  function dropActionButtons() {
+    ["anMusicBtnGetSong", "anMusicRefreshBtn", "anMusicSwitching"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+    });
+  }
+
+  /* 桌面端：曲库面板加「播放列表 / 共 N 首」头部和列名，网易云那种结构 */
+  function enhanceList() {
+    var list = document.querySelector("#anMusic-page .aplayer-list");
+    if (!list || !list.querySelector("ol")) return;
+    var n = list.querySelectorAll("ol li").length;
+    var head = list.querySelector(".md-list-head");
+    if (!head) {
+      head = document.createElement("div");
+      head.className = "md-list-head";
+      head.innerHTML = '<span class="md-list-title">播放列表</span><span class="md-list-count"></span>';
+      list.insertBefore(head, list.firstChild);
+      var cols = document.createElement("div");
+      cols.className = "md-list-cols";
+      cols.innerHTML = "<span>歌曲</span><span>歌手</span>";
+      list.insertBefore(cols, head.nextSibling);
+    }
+    var count = head.querySelector(".md-list-count");
+    if (count) count.textContent = "共 " + n + " 首";
+  }
+
   function tick() {
     if (!isDesktop()) return;
+    dropActionButtons();
     build(getAp());
+    enhanceList();
   }
 
   var n = 0;
