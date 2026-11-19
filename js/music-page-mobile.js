@@ -233,11 +233,38 @@
       '<path d="M7 21.5 3.5 18 7 14.5"/><path d="M3.5 18H17a4.5 4.5 0 0 0 4.5-4.5"/>' +
       '<text x="12" y="15.5" font-size="8.5" font-family="sans-serif" fill="currentColor" stroke="none" text-anchor="middle">1</text></svg>';
 
+    /* APlayer 1.10 的真实开关是 ap.options.order('list'|'random') 与 ap.options.loop('all'|'one'|'none')
+       —— ap.mode 是「normal / mini」布局模式，改它不会影响播放顺序 */
+    function opts() { return ap.options || (ap.options = {}); }
     function idx() {
-      var m = String(ap.mode || "");
-      if (m === "random") return 1;
-      if (m === "single") return 2;
+      var o = opts();
+      if (o.loop === "one") return 2;
+      if (o.order === "random") return 1;
       return 0;
+    }
+    function apply(i) {
+      var o = opts();
+      if (i === 1) {
+        o.order = "random";
+        o.loop = "all";
+        // 歌单可能变化，随机序长度不对时重排一次
+        if (!ap.randomOrder || ap.randomOrder.length !== (ap.list.audios || []).length) {
+          var arr = [];
+          for (var k = 0; k < (ap.list.audios || []).length; k++) arr.push(k);
+          for (var j = arr.length - 1; j > 0; j--) {
+            var t = Math.floor(Math.random() * (j + 1));
+            var tmp = arr[j]; arr[j] = arr[t]; arr[t] = tmp;
+          }
+          ap.randomOrder = arr;
+        }
+      } else if (i === 2) {
+        o.order = "list";
+        o.loop = "one";
+      } else {
+        o.order = "list";
+        o.loop = "all";
+      }
+      try { ap.options = o; } catch (e) {}
     }
     function paint() {
       var i = idx();
@@ -246,10 +273,12 @@
       btn.setAttribute("aria-label", MODES[i].label);
     }
     btn.addEventListener("click", function () {
-      var next = MODES[(idx() + 1) % MODES.length];
-      try { ap.mode = next.id; } catch (e) {}
+      var i = (idx() + 1) % MODES.length;
+      apply(i);
       paint();
     });
+    // 从其它地方（主题循环键、记忆播放）改过顺序时同步图标
+    setInterval(function () { if (btn.isConnected) paint(); }, 1500);
     paint();
     return btn;
   }
