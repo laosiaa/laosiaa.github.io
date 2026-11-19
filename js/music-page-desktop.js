@@ -188,8 +188,8 @@
 
     /* APlayer / 手机脚本会给列表写死内联 max-height（min(56vh, 100vh-300px)），
        桌面端让卡片跟播放器等高，这里按播放器实际高度重新算，并用 !important 覆盖内联值 */
-    var ap = document.querySelector("#anMusic-page .aplayer");
-    var h = ap ? ap.clientHeight : 700;
+    var bodyEl = document.querySelector("#anMusic-page .aplayer-body");
+    var h = bodyEl ? bodyEl.clientHeight : 700;
     list.style.setProperty("height", h + "px", "important");
     list.style.setProperty("max-height", h + "px", "important");
     var ol = list.querySelector("ol");
