@@ -3178,10 +3178,10 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .md-btns .aplayer-icon {
     width: 32px; height: 32px;
     display: inline-flex; align-items: center; justify-content: center;
-    border: 1px solid rgba(255, 255, 255, .26);
+    border: 1px solid rgba(255, 255, 255, .34);
     border-radius: 50%;
     background: transparent !important;
-    color: #fff !important; opacity: .92;
+    color: #fff !important; opacity: .95;
     cursor: pointer;
     transition: border-color .16s ease, background .16s ease, opacity .16s ease;
   }
@@ -3256,7 +3256,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     width: 26px; height: 26px; padding: 0;
     display: inline-flex; align-items: center; justify-content: center;
     border: 0; background: transparent;
-    color: rgba(255, 255, 255, .62); cursor: pointer;
+    color: rgba(255, 255, 255, .74); cursor: pointer;
     transition: color .15s ease;
   }
   body[data-type="music"] #anMusic-page .md-tools .md-icon:hover { color: #fff; }
