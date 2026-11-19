@@ -3551,3 +3551,15 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     text-align: right !important;
   }
 }
+
+/* ========== 桌面端音乐馆：歌词文字居中（原来 <p> 被写死 left，整块看着左对齐） ========== */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-lrc p,
+  body[data-type="music"] #anMusic-page .aplayer-lrc .aplayer-lrc-contents p {
+    text-align: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
