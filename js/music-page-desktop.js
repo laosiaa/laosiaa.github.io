@@ -439,11 +439,31 @@
   var t = setInterval(function () {
     n++;
     tick();
-    if (n > 30) clearInterval(t);
+    if (n > 75) clearInterval(t);
   }, 400);
-  [600, 1200, 2200, 3500].forEach(function (ms) {
+  [600, 1200, 2200, 3500, 5000, 7000].forEach(function (ms) {
     setTimeout(placeLrc, ms);
   });
+  /* 播放器高度会随 meting 数据/列表开关变化，用 ResizeObserver 跟着封面重新对齐 */
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function () {
+      placeLrc();
+    });
+    ["#anMusic-page .aplayer-body", "#anMusic-page .aplayer-pic", "#anMusic-page .aplayer"].forEach(function (sel) {
+      var el = document.querySelector(sel);
+      if (el) ro.observe(el);
+    });
+  }
+  try {
+    var apx = getAp();
+    if (apx) {
+      ["play", "canplay", "listswitch"].forEach(function (ev) {
+        apx.on(ev, function () {
+          setTimeout(placeLrc, 120);
+        });
+      });
+    }
+  } catch (e) {}
   window.addEventListener("resize", function () {
     setTimeout(tick, 300);
     setTimeout(function () { var ap = getAp(); if (ap) paintTopMeta(ap); }, 360);
