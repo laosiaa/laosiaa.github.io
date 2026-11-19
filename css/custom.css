@@ -3884,7 +3884,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
 @media screen and (min-width: 769px) {
   body[data-type="music"] #anMusic-page .aplayer-body {
     position: fixed !important;
-    left: calc(50% + 89px) !important;   /* 歌词列比文字宽，补 89px 才是视觉正中 */
+    left: calc(50% + 15px) !important;   /* 按《It's My Life》这类长英文歌词校准的视觉正中 */
     top: 47% !important;
     transform: translate(-50%, -50%) !important;
     width: 908px !important;             /* 360 封面 + 48 间距 + 500 歌词列 */
