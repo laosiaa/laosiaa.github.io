@@ -57,10 +57,10 @@
       '<path d="M17 2.5l3.5 3.5L17 9.5"/><path d="M20.5 6H7a4 4 0 0 0-4 4v1"/>' +
       '<path d="M7 21.5L3.5 18 7 14.5"/><path d="M3.5 18H17a4 4 0 0 0 4-4v-1"/></svg>',
     loopOne:
-      '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+      '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M17 2.5l3.5 3.5L17 9.5"/><path d="M20.5 6H7a4 4 0 0 0-4 4v1"/>' +
       '<path d="M7 21.5L3.5 18 7 14.5"/><path d="M3.5 18H17a4 4 0 0 0 4-4v-1"/>' +
-      '<text x="12" y="15.4" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">1</text></svg>',
+      '<path d="M10.6 12.4l1.5-1.1v4.4"/></svg>',
     shuffle:
       '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M16 3.5h4.5V8"/><path d="M20.5 3.5L14 10"/><path d="M16 20.5h4.5V16"/><path d="M20.5 20.5L4 4"/>' +
