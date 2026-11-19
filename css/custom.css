@@ -3371,3 +3371,64 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     padding-right: max(22px, calc((100vw - 1440px) / 2)) !important;
   }
 }
+
+/* ================= 音乐馆 桌面端 第六轮：封面 + 右侧歌词，横排居中 ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0 !important;
+    padding: 0 !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    flex: 0 0 360px !important;
+    width: 360px !important;
+    height: 360px !important;
+    margin: 0 !important;
+    transform: none !important;
+    border-radius: 4px !important;
+    border: 1px solid rgba(255, 255, 255, .08) !important;
+    box-shadow: 0 26px 70px rgba(0, 0, 0, .75) !important;
+  }
+  /* 中间那层 info 现在只剩一个 fixed 的底栏，别让它占位 */
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-info {
+    flex: 0 0 0 !important;
+    width: 0 !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+  /* 歌词：封面的右邻居，与封面同高 */
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc {
+    position: static !important;
+    display: block !important;
+    flex: 0 0 520px !important;
+    width: 520px !important;
+    height: 360px !important;
+    margin: 0 0 0 54px !important;
+    padding: 0 !important;
+    z-index: auto !important;
+    background: none !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc .aplayer-lrc-contents { width: 100% !important; }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc p {
+    height: 34px !important;
+    line-height: 34px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 15px !important;
+    color: rgba(255, 255, 255, .4) !important;
+    text-align: left !important;
+    text-shadow: none !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc p.aplayer-lrc-current {
+    font-size: 16px !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, .8);
+  }
+}

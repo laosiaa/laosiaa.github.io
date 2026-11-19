@@ -398,18 +398,17 @@
   }
 
   /* 歌词面板跟着封面走：贴在封面右边，与封面同高 */
+  /* 歌词面板：直接搬进 .aplayer-body 当封面的右邻居，交给 flex 排，不再靠坐标硬算 */
   function placeLrc() {
-    var pic = document.querySelector("#anMusic-page .aplayer-pic");
-    var lrc = document.querySelector("#anMusic-page .aplayer-lrc");
-    if (!pic || !lrc) return;
-    var r = pic.getBoundingClientRect();
-    if (!r.width) return;
-    var left = Math.round(r.right + 54);
-    var maxW = Math.max(260, window.innerWidth - left - 90);
-    lrc.style.setProperty("left", left + "px", "important");
-    lrc.style.setProperty("top", Math.round(r.top) + "px", "important");
-    lrc.style.setProperty("width", Math.min(520, maxW) + "px", "important");
-    lrc.style.setProperty("height", Math.round(r.height) + "px", "important");
+    var el = document.getElementById("anMusic-page");
+    if (!el) return;
+    var bodyEl = el.querySelector(".aplayer-body");
+    var lrc = el.querySelector(".aplayer-lrc");
+    if (!bodyEl || !lrc) return;
+    if (lrc.parentElement !== bodyEl) bodyEl.appendChild(lrc);
+    ["left", "top", "width", "height"].forEach(function (p) {
+      lrc.style.removeProperty(p);
+    });
   }
 
   function tick() {
