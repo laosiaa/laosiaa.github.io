@@ -41,7 +41,8 @@
       artist: a.artist || "",
       t: Math.max(0, Math.round(t * 10) / 10),
       vol: ap.volume(),
-      mode: ap.mode,
+      order: (ap.options || {}).order || "list",
+      loop: (ap.options || {}).loop || "all",
       playing: !!(ap.audio && !ap.audio.paused),
       at: now,
     });
@@ -63,7 +64,12 @@
 
     // 音量 & 播放模式
     try { if (typeof st.vol === "number") ap.volume(st.vol); } catch (e) {}
-    try { if (st.mode) ap.mode = st.mode; } catch (e) {}
+    // 顺序/循环状态（ap.mode 是布局模式，别存它）
+    try {
+      ap.options = ap.options || {};
+      if (st.order) ap.options.order = st.order;
+      if (st.loop) ap.options.loop = st.loop;
+    } catch (e) {}
 
     // 曲目：同名优先，找不到再用索引
     var idx = -1;
