@@ -3105,8 +3105,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #nav,
   body[data-type="music"] #content-inner { background: transparent !important; }
 
-  /* 只留封面：歌词、歌名块、曲库面板、曲库开关都收起来 */
-  body[data-type="music"] #anMusic-page .aplayer-lrc,
+  /* 只留封面：歌词单独定位到封面右侧，曲库面板和曲库开关收起来 */
   body[data-type="music"] #anMusic-page .aplayer-music,
   body[data-type="music"] #anMusic-page .aplayer-list,
   body[data-type="music"] #anMusic-page .md-menu { display: none !important; }
@@ -3117,16 +3116,51 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     padding: 0 !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-pic {
-    width: 200px !important;
-    height: 200px !important;
+    width: 360px !important;
+    height: 360px !important;
     border-radius: 4px !important;
     border: 1px solid rgba(255, 255, 255, .08) !important;
     box-shadow: 0 26px 70px rgba(0, 0, 0, .75) !important;
-    transform: translateY(-190px) !important;   /* 只保留纵向偏移，横向交给 flex 居中 */
+    transform: translate(-300px, -70px) !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-info {
     padding: 0 !important;
     height: auto !important;
+    overflow: visible !important;
+  }
+
+  /* 歌词：显示出来，放在封面右边，位置由 JS 按封面实际矩形对齐 */
+  body[data-type="music"] #anMusic-page .aplayer-lrc {
+    display: block !important;
+    position: fixed !important;
+    top: 180px; left: 640px;
+    width: 480px; height: 360px;
+    margin: 0 !important;
+    padding: 0 !important;
+    z-index: 60;
+    background: none !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  }
+  body[data-type="music"] #anMusic-page .aplayer-lrc::before,
+  body[data-type="music"] #anMusic-page .aplayer-lrc::after { display: none !important; }
+  body[data-type="music"] #anMusic-page .aplayer-lrc .aplayer-lrc-contents { width: 100% !important; }
+  body[data-type="music"] #anMusic-page .aplayer-lrc p {
+    height: 34px !important;
+    line-height: 34px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: 15px !important;
+    color: rgba(255, 255, 255, .4) !important;
+    text-align: left !important;
+    text-shadow: none !important;
+    transition: color .18s ease, opacity .18s ease;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-lrc p.aplayer-lrc-current {
+    font-size: 16px !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, .8);
   }
 
   /* 右上角：歌手 - 歌名 + 下载这首歌 */
