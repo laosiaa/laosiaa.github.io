@@ -146,10 +146,11 @@
         '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">' +
         '<path d="M4 6h9"/><path d="M4 12h9"/><path d="M4 18h6"/><path d="M18 4.5v9.2"/><circle cx="16.2" cy="15.6" r="2.4"/></svg>';
       menu.title = "播放列表";
-      right.appendChild(menu);
+      /* 网易云顺序：模式 → 音量 → 播放列表 */
     }
     right.appendChild(mode);
     right.appendChild(vol);
+    if (menu) right.appendChild(menu);
 
     ctrl.appendChild(left);
     ctrl.appendChild(btns);
