@@ -47,11 +47,7 @@
     },
     true
   );
-  if ("mediaSession" in navigator) {
-    try {
-      navigator.mediaSession.setActionHandler("pause", function () { pending = null; });
-    } catch (e) {}
-  }
+  /* 注意：这里不要去 setActionHandler("pause")，那会覆盖 media-session-v3 的锁屏暂停处理 */
 
   function resume(reason) {
     if (!pending || !pending.pausedByMutex) return;

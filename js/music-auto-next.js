@@ -1,0 +1,83 @@
+/*! 播完自动接下一首：APlayer 的 ended→next 在后台/锁屏时偶尔不触发，这里兜一层 */
+(function () {
+  "use strict";
+
+  var timers = {};
+
+  function getAp() {
+    var host = document.querySelector("#anMusic-page meting-js");
+    if (host && host.aplayer) return host.aplayer;
+    if (window.aplayers && window.aplayers.length) return window.aplayers[0];
+    return null;
+  }
+
+  function nextIdx(ap) {
+    var n = (ap.list.audios || []).length;
+    if (!n) return 0;
+    var o = ap.options || {};
+    if (o.order === "random") {
+      var ro = ap.randomOrder || [];
+      var i = ro.indexOf(ap.list.index);
+      if (i >= 0 && ro.length === n) return ro[(i + 1) % ro.length];
+      return Math.floor(Math.random() * n);
+    }
+    return (ap.list.index + 1) % n;
+  }
+
+  /* 试着让它继续出声；被浏览器拦就退避重试几次 */
+  function kick(ap, tries) {
+    tries = tries || 0;
+    if (!ap.audio || !ap.audio.paused) return;
+    try {
+      var p = ap.play();
+      if (p && typeof p.catch === "function") {
+        p.catch(function () {
+          if (tries < 4) setTimeout(function () { kick(ap, tries + 1); }, 400 * (tries + 1));
+        });
+      }
+    } catch (e) {}
+    if (tries < 4) {
+      setTimeout(function () {
+        if (ap.audio && ap.audio.paused) kick(ap, tries + 1);
+      }, 500 * (tries + 1));
+    }
+  }
+
+  function bind(ap) {
+    if (!ap || !ap.audio || ap.__mmAutoNext) return;
+    ap.__mmAutoNext = true;
+    try {
+      ap.audio.preload = "auto";
+    } catch (e) {}
+
+    ap.audio.addEventListener("ended", function () {
+      var idxAtEnd = ap.list.index;
+      var loopOne = (ap.options || {}).loop === "one";
+      clearTimeout(timers.t);
+      timers.t = setTimeout(function () {
+        if (!ap.audio) return;
+        if (!ap.audio.paused) return; // 已经自己接上了
+
+        if (loopOne) {
+          try { ap.seek(0); } catch (e) {}
+          kick(ap, 0);
+          return;
+        }
+        // APlayer 没切歌（index 没变）就自己切
+        if (ap.list.index === idxAtEnd) {
+          try { ap.list.switch(nextIdx(ap)); } catch (e) {}
+        }
+        setTimeout(function () { kick(ap, 0); }, 200);
+      }, 350);
+    });
+  }
+
+  function scan() {
+    bind(getAp());
+  }
+
+  scan();
+  var n = 0;
+  var t = setInterval(function () { n++; scan(); if (n > 40) clearInterval(t); }, 400);
+  document.addEventListener("pjax:complete", function () { setTimeout(scan, 400); });
+})();
