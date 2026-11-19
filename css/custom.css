@@ -3047,6 +3047,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     font-size: 14px !important; line-height: 26px !important;
     color: rgba(255, 255, 255, .78) !important;
     opacity: 1 !important;
+    text-align: center !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-lrc p.aplayer-lrc-current {
     font-size: 15px !important; color: #fff !important; font-weight: 600 !important;
@@ -3085,7 +3086,9 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .md-search .md-search-clear {
     background: none; border: 0; color: #8a8a94; cursor: pointer;
     font-size: 12px; padding: 2px 5px; border-radius: 6px;
+    display: none;
   }
+  body[data-type="music"] #anMusic-page .md-search.is-active .md-search-clear { display: block; }
   body[data-type="music"] #anMusic-page .md-search .md-search-clear:hover {
     color: #fff; background: rgba(255, 255, 255, .12);
   }
