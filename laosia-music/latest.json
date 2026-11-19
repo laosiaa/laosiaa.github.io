@@ -1,1 +1,1 @@
-{"versionCode":4,"versionName":"1.1.2","url":"https://blog.521251.xyz/laosia-music/Laosia-music.apk","size":2628164,"sha256":"0c535db4e4cf69d21202ae9b3dbdde61fef50e1cfffe8f7ec0bd6ecfbc480eba","notes":"1. App 内隐藏顶部导航（浏览器端不变）\n2. 右上角「⋯」→ 检查更新\n3. 启动后每 6 小时自动检查"}
+{"versionCode":5,"versionName":"1.2.0","url":"https://blog.521251.xyz/laosia-music/Laosia-music.apk","size":2633832,"sha256":"6465f7dd3361318a3ba513178e0aeffed371290e7c34b2e9c99c958f7b530fef","notes":"1. 音频缓存：听过的歌再听不走流量\n2. 歌词 / 歌曲资料 / 封面也会缓存到本地\n3. 菜单「清理缓存」随时清空\n4. 卸载 App 时缓存随应用数据一起删除"}
