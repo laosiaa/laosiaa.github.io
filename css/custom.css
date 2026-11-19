@@ -3767,3 +3767,17 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     margin-left: 178px !important;
   }
 }
+
+/* ================= 第十五轮：歌词单行不换行（保证 40px 步进不错位），过长省略 ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .md-col { flex: 0 0 540px !important; width: 540px !important; }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc { width: 540px !important; }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc p,
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc p.aplayer-lrc-current {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    height: 40px !important;
+    line-height: 40px !important;
+  }
+}
