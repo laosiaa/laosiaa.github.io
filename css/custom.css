@@ -3154,3 +3154,168 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   }
   body[data-type="music"] .md-songmeta .md-download::before { content: "↓"; font-size: 13px; }
 }
+
+/* ================= 音乐馆 桌面端 第五轮：底栏照酷狗（控制区居中 + 缩略图/歌名/进度 + 工具图标） ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-controller.md-bar {
+    height: 74px !important;
+    padding: 0 28px !important;
+    gap: 0 !important;
+    justify-content: center !important;
+    background: #0a0a0a !important;
+    border-top: 1px solid rgba(255, 255, 255, .07) !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  body[data-type="music"] #anMusic-page .md-bar > * { flex: 0 0 auto; }
+
+  /* 上一首 / 播放 / 下一首：细白描边圆钮 */
+  body[data-type="music"] #anMusic-page .md-btns {
+    display: flex; align-items: center; gap: 12px;
+    margin-right: 26px;
+  }
+  body[data-type="music"] #anMusic-page .md-btns .aplayer-icon {
+    width: 32px; height: 32px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid rgba(255, 255, 255, .26);
+    border-radius: 50%;
+    background: transparent !important;
+    color: #fff !important; opacity: .92;
+    cursor: pointer;
+    transition: border-color .16s ease, background .16s ease, opacity .16s ease;
+  }
+  body[data-type="music"] #anMusic-page .md-btns .aplayer-icon:hover {
+    border-color: rgba(255, 255, 255, .55);
+    background: rgba(255, 255, 255, .06) !important;
+    opacity: 1;
+  }
+  body[data-type="music"] #anMusic-page .md-btns .aplayer-icon-play {
+    width: 42px; height: 42px;
+    border-color: rgba(255, 255, 255, .34);
+    background: transparent !important;
+  }
+  body[data-type="music"] #anMusic-page .md-btns .aplayer-icon svg { width: 17px; height: 17px; fill: #fff !important; }
+  body[data-type="music"] #anMusic-page .md-btns .aplayer-icon-play svg { width: 19px; height: 19px; }
+
+  /* 缩略图 + 歌名 + 进度 + 时间 */
+  body[data-type="music"] #anMusic-page .md-track {
+    display: flex; align-items: center; gap: 14px;
+    width: 470px; max-width: 46vw;
+    margin-right: 30px;
+    min-width: 0;
+  }
+  body[data-type="music"] #anMusic-page .md-track .md-cover {
+    width: 42px; height: 42px; flex: 0 0 42px;
+    border-radius: 3px;
+    background-size: cover; background-position: center;
+    background-color: rgba(255, 255, 255, .06);
+  }
+  body[data-type="music"] #anMusic-page .md-track-body { flex: 1 1 auto; min-width: 0; }
+  body[data-type="music"] #anMusic-page .md-track-title {
+    font-size: 12.5px; color: rgba(255, 255, 255, .9); line-height: 1.2;
+    margin-bottom: 7px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  body[data-type="music"] #anMusic-page .md-line {
+    display: flex; align-items: center; gap: 10px;
+  }
+  body[data-type="music"] #anMusic-page .md-line .aplayer-bar-wrap {
+    flex: 1 1 auto; width: auto !important; margin: 0 !important; padding: 5px 0;
+  }
+  body[data-type="music"] #anMusic-page .md-line .aplayer-bar {
+    height: 3px !important; background: rgba(255, 255, 255, .16) !important; border-radius: 2px;
+  }
+  body[data-type="music"] #anMusic-page .md-line .aplayer-loaded {
+    height: 3px !important; background: rgba(255, 255, 255, .28) !important;
+  }
+  body[data-type="music"] #anMusic-page .md-line .aplayer-played {
+    height: 3px !important; background: #fff !important; border-radius: 2px;
+  }
+  body[data-type="music"] #anMusic-page .md-line .aplayer-thumb {
+    width: 9px !important; height: 9px !important; margin-top: -3px !important;
+    background: #fff !important; box-shadow: 0 0 0 0 transparent !important;
+  }
+  body[data-type="music"] #anMusic-page .md-time {
+    flex: 0 0 auto; display: flex; align-items: center; gap: 4px;
+    font-size: 11px; color: rgba(255, 255, 255, .42);
+    font-variant-numeric: tabular-nums;
+  }
+  body[data-type="music"] #anMusic-page .md-time .aplayer-ptime,
+  body[data-type="music"] #anMusic-page .md-time .aplayer-dtime {
+    min-width: 0; font-size: 11px; color: rgba(255, 255, 255, .42);
+  }
+  body[data-type="music"] #anMusic-page .md-time .md-sep { color: rgba(255, 255, 255, .28); }
+
+  /* 工具区：音量 / 循环 / 下载 / 分享 / 列表 */
+  body[data-type="music"] #anMusic-page .md-tools {
+    display: flex; align-items: center; gap: 16px;
+  }
+  body[data-type="music"] #anMusic-page .md-tools .md-icon {
+    position: relative;
+    width: 26px; height: 26px; padding: 0;
+    display: inline-flex; align-items: center; justify-content: center;
+    border: 0; background: transparent;
+    color: rgba(255, 255, 255, .62); cursor: pointer;
+    transition: color .15s ease;
+  }
+  body[data-type="music"] #anMusic-page .md-tools .md-icon:hover { color: #fff; }
+  body[data-type="music"] #anMusic-page .md-tools .md-mode.is-on { color: #fff; }
+  body[data-type="music"] #anMusic-page .md-vol {
+    display: flex; align-items: center; gap: 8px;
+    color: rgba(255, 255, 255, .62);
+  }
+  body[data-type="music"] #anMusic-page .md-vol > svg { cursor: pointer; }
+  body[data-type="music"] #anMusic-page .md-vol-range {
+    -webkit-appearance: none; appearance: none;
+    width: 74px; height: 3px; border-radius: 2px;
+    background: rgba(255, 255, 255, .18); outline: none; cursor: pointer;
+  }
+  body[data-type="music"] #anMusic-page .md-vol-range::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 9px; height: 9px; border-radius: 50%;
+    background: #fff; border: 0;
+  }
+  body[data-type="music"] #anMusic-page .md-vol-range::-moz-range-thumb {
+    width: 9px; height: 9px; border-radius: 50%; background: #fff; border: 0;
+  }
+  /* 列表角标：右上角小数字 */
+  body[data-type="music"] #anMusic-page .md-queue { overflow: visible; }
+  body[data-type="music"] #anMusic-page .md-queue .md-badge {
+    position: absolute; top: -5px; right: -8px;
+    min-width: 15px; height: 15px; padding: 0 4px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .14);
+    border: 1px solid rgba(255, 255, 255, .18);
+    color: rgba(255, 255, 255, .8);
+    font-size: 9px; font-style: normal; line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+  body[data-type="music"] #anMusic-page .md-queue:hover .md-badge {
+    background: rgba(255, 255, 255, .26); color: #fff;
+  }
+
+  /* 点列表角标 → 右侧弹出曲库抽屉（默认隐藏，保持酷狗那种干净版面） */
+  body[data-type="music"].md-queue-open #anMusic-page .aplayer-list {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed !important;
+    top: 0; right: 0; bottom: 74px;
+    width: 380px; max-width: 88vw;
+    height: auto !important; max-height: none !important;
+    margin: 0 !important;
+    padding: 14px 16px 8px;
+    background: #101013;
+    border-left: 1px solid rgba(255, 255, 255, .08);
+    box-shadow: -18px 0 50px rgba(0, 0, 0, .6);
+    z-index: 1250;
+    overflow: hidden;
+  }
+  body[data-type="music"].md-queue-open #anMusic-page .aplayer-list ol {
+    flex: 1 1 auto;
+    max-height: none !important;
+    overflow-y: auto;
+  }
+  body[data-type="music"].md-queue-open #anMusic-page .aplayer-list .md-list-head { display: flex; }
+}
+
