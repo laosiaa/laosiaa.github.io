@@ -3729,3 +3729,39 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     padding-bottom: 122px !important;
   }
 }
+
+/* ================= 第十四轮（定稿）：整组水平垂直居中，歌名与歌词左边缘对齐 ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body {
+    align-items: center !important;
+    justify-content: center !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    margin: 0 !important;
+    flex: 0 0 320px !important;
+    width: 320px !important;
+    height: 320px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .md-col {
+    height: auto !important;
+    min-height: 0 !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    gap: 14px !important;
+    margin-left: 48px !important;
+    flex: 0 0 500px !important;
+    width: 500px !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc {
+    flex: 0 0 auto !important;
+    width: 500px !important;
+    height: 320px !important;
+    max-height: 320px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc .aplayer-lrc-contents {
+    padding-top: 140px !important;
+    padding-bottom: 140px !important;
+  }
+}
