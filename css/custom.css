@@ -3470,3 +3470,24 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     text-align: right !important;
   }
 }
+
+/* ================= 第八轮修正：封面回到文档流（有人把它改成了 fixed），横排布局才成立 ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    float: none !important;
+    flex: 0 0 360px !important;
+    width: 360px !important;
+    height: 360px !important;
+    margin: 0 !important;
+    transform: none !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-notice,
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-miniswitcher {
+    display: none !important;
+  }
+}
