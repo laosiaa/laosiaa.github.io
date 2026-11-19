@@ -3117,12 +3117,12 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     padding: 0 !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-pic {
-    width: 320px !important;
-    height: 320px !important;
+    width: 260px !important;
+    height: 260px !important;
     border-radius: 4px !important;
     border: 1px solid rgba(255, 255, 255, .08) !important;
     box-shadow: 0 26px 70px rgba(0, 0, 0, .75) !important;
-    transform: translate(-170px, -70px) !important;
+    transform: translate(-240px, -130px) !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-info {
     padding: 0 !important;
