@@ -3831,3 +3831,37 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     text-overflow: ellipsis;
   }
 }
+
+/* 锁死舞台尺寸：歌词字数变化时封面/歌词/歌名都不许动 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    flex: 0 0 360px !important;
+    width: 360px !important;
+    height: 360px !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col {
+    flex: 0 0 500px !important;
+    width: 500px !important;
+    min-width: 500px !important;
+    max-width: 500px !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col .aplayer-lrc {
+    width: 500px !important;
+    min-width: 500px !important;
+    max-width: 500px !important;
+    height: 320px !important;
+    overflow: hidden !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col .aplayer-lrc p,
+  body[data-type="music"] #anMusic-page .md-col .aplayer-lrc .aplayer-lrc-contents p {
+    width: 100% !important;
+    text-align: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col .md-songmeta {
+    width: 500px !important;
+    min-height: 26px !important;
+    margin: 0 0 6px !important;
+  }
+}
