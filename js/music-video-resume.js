@@ -38,6 +38,21 @@
     true
   );
 
+  /* 用户自己按了播放/暂停，就别替他恢复 */
+  document.addEventListener(
+    "click",
+    function (e) {
+      var t = e.target;
+      if (t && t.closest && t.closest(".aplayer-icon-play, .mm-row-2 .aplayer-icon-play")) pending = null;
+    },
+    true
+  );
+  if ("mediaSession" in navigator) {
+    try {
+      navigator.mediaSession.setActionHandler("pause", function () { pending = null; });
+    } catch (e) {}
+  }
+
   function resume(reason) {
     if (!pending || !pending.pausedByMutex) return;
     var ap = pending.ap;
