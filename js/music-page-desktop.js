@@ -63,6 +63,9 @@
         var a = ap.list.audios[ap.list.index] || {};
         t1.textContent = a.name || "";
         t2.textContent = a.artist || "";
+        /* APlayer 会在作者前面拼一个「 - 」，这里去掉，让歌手单独一行干净显示 */
+        var au = document.querySelector("#anMusic-page .aplayer-author");
+        if (au) au.textContent = String(a.artist || "").replace(/^\s*-\s*/, "");
       } catch (e) {}
     }
     paintMeta();
