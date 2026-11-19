@@ -3916,3 +3916,13 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     margin: 0 !important;
   }
 }
+
+/* ================= 第十九轮：播放模式键换成三种可辨识图标（顺序/随机/单曲） ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .md-tools > .md-mode svg {
+    width: 17px !important;
+    height: 17px !important;
+    display: block !important;
+  }
+  body[data-type="music"] #anMusic-page .md-tools > .md-mode.is-on { color: #fff !important; }
+}

@@ -56,6 +56,15 @@
       '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M17 2.5l3.5 3.5L17 9.5"/><path d="M20.5 6H7a4 4 0 0 0-4 4v1"/>' +
       '<path d="M7 21.5L3.5 18 7 14.5"/><path d="M3.5 18H17a4 4 0 0 0 4-4v-1"/></svg>',
+    loopOne:
+      '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M17 2.5l3.5 3.5L17 9.5"/><path d="M20.5 6H7a4 4 0 0 0-4 4v1"/>' +
+      '<path d="M7 21.5L3.5 18 7 14.5"/><path d="M3.5 18H17a4 4 0 0 0 4-4v-1"/>' +
+      '<text x="12" y="15.4" text-anchor="middle" font-size="9" font-weight="700" fill="currentColor" stroke="none">1</text></svg>',
+    shuffle:
+      '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+      '<path d="M16 3.5h4.5V8"/><path d="M20.5 3.5L14 10"/><path d="M16 20.5h4.5V16"/><path d="M20.5 20.5L4 4"/>' +
+      '<path d="M4 20.5l4.2-4.2"/></svg>',
     download:
       '<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
       '<path d="M12 3.5v10"/><path d="M8 10l4 4 4-4"/><path d="M4.5 18.5h15"/></svg>',
@@ -202,8 +211,11 @@
       return 0;
     }
     function modePaint() {
-      mode.title = MODES[modeIdx()];
-      mode.classList.toggle("is-on", modeIdx() !== 0);
+      var i = modeIdx();
+      mode.title = MODES[i];
+      mode.setAttribute("aria-label", MODES[i]);
+      mode.innerHTML = i === 2 ? SVG.loopOne : i === 1 ? SVG.shuffle : SVG.loop;
+      mode.classList.toggle("is-on", i !== 0);
     }
     mode.addEventListener("click", function () {
       var o = ap.options || (ap.options = {});
