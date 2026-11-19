@@ -2990,6 +2990,10 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
 
 /* 音乐馆 桌面端 第三轮：中间封面/歌名/歌词重排 + 曲库搜索框 */
 @media screen and (min-width: 769px) {
+  /* 桌面端点「曲库」按钮时，主题会给 #menu-mask 加遮罩（整页 20px 模糊），
+     桌面不需要那个抽屉遮罩，直接禁掉 */
+  body[data-type="music"] #menu-mask { display: none !important; }
+
   body[data-type="music"] #anMusic-page .aplayer-body {
     justify-content: center !important;
     align-items: center !important;
@@ -2997,8 +3001,8 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   }
   /* 封面：固定尺寸、圆角、投影，不再用巨额外边距居中 */
   body[data-type="music"] #anMusic-page .aplayer-pic {
-    width: 250px !important;
-    height: 250px !important;
+    width: 280px !important;
+    height: 280px !important;
     margin: 0 auto !important;
     flex: 0 0 auto !important;
     border-radius: 20px !important;
