@@ -518,8 +518,25 @@
   }
 
 
+  /* 曲库开着时切歌（下一首 / 随机 / 自动播完）要跟着滚动到新当前曲 */
+  function drawerOpen() {
+    var l = listEl();
+    return !!(l && l.classList.contains("aplayer-list-hide"));
+  }
+  function bindFollow(ap) {
+    if (!ap || ap.__mmFollow) return;
+    ap.__mmFollow = true;
+    try {
+      ap.on("listswitch", function () {
+        if (!drawerOpen()) return;
+        [120, 320, 700].forEach(function (t) { setTimeout(scrollToCurrent, t); });
+      });
+    } catch (e) {}
+  }
+
   /* ---------- 启动 ---------- */
   function tick() {
+    bindFollow(getAplayer());
     var ok = restructure();
     ok = fixList() && ok;
     ensureBottom();
