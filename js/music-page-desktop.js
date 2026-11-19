@@ -435,8 +435,12 @@
   var n = 0;
   var t = setInterval(function () {
     n++;
-    if (tick() || n > 45) clearInterval(t);
+    tick();
+    if (n > 30) clearInterval(t);
   }, 400);
+  [600, 1200, 2200, 3500].forEach(function (ms) {
+    setTimeout(placeLrc, ms);
+  });
   window.addEventListener("resize", function () {
     setTimeout(tick, 300);
     setTimeout(function () { var ap = getAp(); if (ap) paintTopMeta(ap); }, 360);
