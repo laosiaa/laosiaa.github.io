@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  var timers = {};
+  var waiting = null; // { ap, idx }
 
   function getAp() {
     var host = document.querySelector("#anMusic-page meting-js");
@@ -27,7 +27,7 @@
   /* 试着让它继续出声；被浏览器拦就退避重试几次 */
   function kick(ap, tries) {
     tries = tries || 0;
-    if (!ap.audio || !ap.audio.paused) return;
+    if (!ap || !ap.audio || !ap.audio.paused) return;
     try {
       var p = ap.play();
       if (p && typeof p.catch === "function") {
@@ -46,30 +46,37 @@
   function bind(ap) {
     if (!ap || !ap.audio || ap.__mmAutoNext) return;
     ap.__mmAutoNext = true;
-    try {
-      ap.audio.preload = "auto";
-    } catch (e) {}
 
     ap.audio.addEventListener("ended", function () {
-      var idxAtEnd = ap.list.index;
       var loopOne = (ap.options || {}).loop === "one";
-      clearTimeout(timers.t);
-      timers.t = setTimeout(function () {
-        if (!ap.audio) return;
-        if (!ap.audio.paused) return; // 已经自己接上了
+      waiting = { ap: ap, idx: ap.list.index };
+      setTimeout(function () {
+        // 这段时间里 APlayer 自己切歌了（会触发 listswitch）→ 交给它
+        if (!waiting || waiting.ap !== ap) return;
+        var w = waiting;
+        waiting = null;
+        if (!ap.audio || !ap.audio.paused) return;
 
         if (loopOne) {
           try { ap.seek(0); } catch (e) {}
           kick(ap, 0);
           return;
         }
-        // APlayer 没切歌（index 没变）就自己切
-        if (ap.list.index === idxAtEnd) {
+        // APlayer 完全没反应（后台被冻结等）才自己切
+        if (ap.list.index === w.idx) {
           try { ap.list.switch(nextIdx(ap)); } catch (e) {}
         }
         setTimeout(function () { kick(ap, 0); }, 200);
-      }, 350);
+      }, 900);
     });
+
+    // APlayer 自己切歌成功时，这里只负责确保真的开始出声
+    try {
+      ap.on("listswitch", function () {
+        if (waiting && waiting.ap === ap) waiting = null;
+        setTimeout(function () { kick(ap, 0); }, 250);
+      });
+    } catch (e) {}
   }
 
   function scan() {
