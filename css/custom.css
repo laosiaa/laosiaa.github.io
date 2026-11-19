@@ -2985,3 +2985,83 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     flex: 1 1 auto !important;
   }
 }
+
+/* 音乐馆 桌面端 第三轮：中间封面/歌名/歌词重排 + 曲库搜索框 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body {
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 14px 0 6px !important;
+  }
+  /* 封面：固定尺寸、圆角、投影，不再用巨额外边距居中 */
+  body[data-type="music"] #anMusic-page .aplayer-pic {
+    width: 250px !important;
+    height: 250px !important;
+    margin: 0 auto !important;
+    flex: 0 0 auto !important;
+    border-radius: 20px !important;
+    box-shadow: 0 22px 46px rgba(0, 0, 0, .45) !important;
+    background-size: cover !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-info {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 16px 0 0 !important;
+    height: auto !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-music {
+    margin: 0 !important;
+    padding: 0 16px !important;
+    text-align: center !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-title { font-size: 21px !important; line-height: 1.4 !important; }
+  body[data-type="music"] #anMusic-page .aplayer-author { font-size: 13px !important; color: #9b9ba5 !important; }
+
+  /* 歌词：限定高度 + 上下渐隐，不再跑到屏幕外 */
+  body[data-type="music"] #anMusic-page .aplayer-lrc {
+    height: 156px !important;
+    margin: 12px 0 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 18%, #000 82%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 18%, #000 82%, transparent 100%);
+  }
+  body[data-type="music"] #anMusic-page .aplayer-lrc-contents { height: 100% !important; }
+  body[data-type="music"] #anMusic-page .aplayer-lrc p {
+    font-size: 14px !important; line-height: 26px !important;
+    color: rgba(255, 255, 255, .55) !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-lrc p.aplayer-lrc-current {
+    font-size: 15px !important; color: #fff !important;
+  }
+
+  /* 曲库搜索框 */
+  body[data-type="music"] #anMusic-page .md-search {
+    display: flex !important; align-items: center !important; gap: 8px;
+    margin: 0 16px 10px !important; padding: 0 10px !important;
+    height: 34px; color: #8a8a94;
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid rgba(255, 255, 255, .09);
+    border-radius: 10px;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  body[data-type="music"] #anMusic-page .md-search:focus-within,
+  body[data-type="music"] #anMusic-page .md-search.is-active {
+    border-color: rgba(255, 255, 255, .22);
+    background: rgba(255, 255, 255, .09);
+  }
+  body[data-type="music"] #anMusic-page .md-search input {
+    flex: 1 1 auto; min-width: 0;
+    background: transparent; border: 0; outline: none;
+    color: #e9e9ef; font-size: 13px; height: 32px;
+  }
+  body[data-type="music"] #anMusic-page .md-search input::placeholder { color: #787882; }
+  body[data-type="music"] #anMusic-page .md-search input::-webkit-search-cancel-button { display: none; }
+  body[data-type="music"] #anMusic-page .md-search .md-search-clear {
+    background: none; border: 0; color: #8a8a94; cursor: pointer;
+    font-size: 12px; padding: 2px 5px; border-radius: 6px;
+  }
+  body[data-type="music"] #anMusic-page .md-search .md-search-clear:hover {
+    color: #fff; background: rgba(255, 255, 255, .12);
+  }
+}

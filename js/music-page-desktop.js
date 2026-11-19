@@ -167,6 +167,49 @@
     });
   }
 
+  /* 桌面端：曲库搜索框 */
+  function applyFilter(list, q) {
+    var rows = list.querySelectorAll("ol li");
+    var ql = (q || "").trim().toLowerCase();
+    var shown = 0;
+    for (var i = 0; i < rows.length; i++) {
+      var li = rows[i];
+      var t = (li.querySelector(".aplayer-list-title") || {}).textContent || "";
+      var a = (li.querySelector(".aplayer-list-author") || {}).textContent || "";
+      var hit = !ql || (t + " " + a).toLowerCase().indexOf(ql) >= 0;
+      li.style.display = hit ? "" : "none";
+      if (hit) shown++;
+    }
+    var ol = list.querySelector("ol");
+    if (ol) ol.scrollTop = 0;
+    return shown;
+  }
+
+  function buildSearch(list, head) {
+    if (list.querySelector(".md-search")) return;
+    var box = document.createElement("div");
+    box.className = "md-search";
+    box.innerHTML =
+      '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">' +
+      '<circle cx="11" cy="11" r="6.5"/><path d="M16 16l4 4"/></svg>' +
+      '<input type="search" class="md-search-input" placeholder="搜索歌名 / 歌手" autocomplete="off" spellcheck="false">' +
+      '<button type="button" class="md-search-clear" aria-label="清空">✕</button>';
+    list.insertBefore(box, head.nextSibling);
+    var input = box.querySelector(".md-search-input");
+    var clear = box.querySelector(".md-search-clear");
+    var count = head.querySelector(".md-list-count");
+    var total = list.querySelectorAll("ol li").length;
+
+    function run() {
+      var shown = applyFilter(list, input.value);
+      if (count) count.textContent = input.value.trim() ? "匹配 " + shown + " 首" : "共 " + total + " 首";
+      box.classList.toggle("is-active", !!input.value.trim());
+    }
+    input.addEventListener("input", run);
+    input.addEventListener("keydown", function (e) { if (e.key === "Escape") { input.value = ""; run(); } });
+    clear.addEventListener("click", function () { input.value = ""; run(); input.focus(); });
+  }
+
   /* 桌面端：曲库面板加「播放列表 / 共 N 首」头部和列名，网易云那种结构 */
   function enhanceList() {
     var list = document.querySelector("#anMusic-page .aplayer-list");
@@ -182,9 +225,11 @@
       cols.className = "md-list-cols";
       cols.innerHTML = "<span></span><span>歌曲</span><span>歌手</span>";
       list.insertBefore(cols, head.nextSibling);
+      buildSearch(list, head);
     }
     var count = head.querySelector(".md-list-count");
-    if (count) count.textContent = "共 " + n + " 首";
+    var q = (list.querySelector(".md-search-input") || {}).value || "";
+    if (count && !q) count.textContent = "共 " + n + " 首";
 
     /* APlayer / 手机脚本会给列表写死内联 max-height（min(56vh, 100vh-300px)），
        桌面端让卡片跟播放器等高，这里按播放器实际高度重新算，并用 !important 覆盖内联值 */
