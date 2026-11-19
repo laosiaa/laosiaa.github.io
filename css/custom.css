@@ -3991,3 +3991,17 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     margin: 0 !important;
   }
 }
+
+/* 移动端封面再收一档 */
+@media screen and (max-width: 768px) {
+  body[data-type="music"] #anMusic-page .aplayer-body .aplayer-pic {
+    width: min(38vw, 150px) !important;
+    height: min(38vw, 150px) !important;
+    margin: 4px auto 10px !important;
+    border-radius: 14px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-info .aplayer-lrc {
+    height: 360px !important;
+    max-height: 360px !important;
+  }
+}
