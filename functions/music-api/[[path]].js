@@ -15,8 +15,11 @@
  */
 
 const GD = "https://music-api.gdstudio.xyz/api.php";
+// 备用「取链」服务：GD Studio 从 Cloudflare 出口会间歇性 520，需要有降级方案
+const MIRRORS = ["https://api.qijieya.cn/meting/", "https://api.injahow.cn/meting/"];
 const UA =
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/141.0 Safari/537.36";
+const hdrs = { "User-Agent": UA, Referer: "https://music.gdstudio.xyz/" };
 
 const CORS = {
   "access-control-allow-origin": "*",
@@ -42,18 +45,114 @@ async function resolveNetease(sid, brList) {
         const r = await fetch(
           `${GD}?types=url&source=netease&id=${encodeURIComponent(sid)}&br=${br}`,
           {
-            headers: { "User-Agent": UA, Referer: "https://music.gdstudio.xyz/" },
+            headers: hdrs,
             cf: { cacheTtl: 0 },
           }
         );
         if (!r.ok) continue;
         const j = await r.json();
         const url = Array.isArray(j.url) ? j.url[0] : j.url;
-        if (url) return { url, br: j.br || br, size: j.size || 0 };
+        if (url) return { url, br: j.br || br, size: j.size || 0, provider: "gdstudio" };
       } catch (e) {
         /* 换个码率或重试 */
       }
     }
+  }
+  return null;
+}
+
+/** 取一个 3xx 的 Location（不跟随），失败返回 null */
+async function locationOf(url) {
+  try {
+    const r = await fetch(url, { headers: hdrs, redirect: "manual", cf: { cacheTtl: 0 } });
+    const loc = r.headers.get("location");
+    if (loc && /^https?:/i.test(loc)) return loc;
+  } catch (e) {
+    /* ignore */
+  }
+  return null;
+}
+
+/** HEAD 一下真实音频，判断是不是 30 秒试听（试听约 480KB，整首通常 >1MB） */
+async function looksLikeFullTrack(url) {
+  try {
+    const r = await fetch(url, { method: "HEAD", headers: hdrs, cf: { cacheTtl: 0 } });
+    const len = parseInt(r.headers.get("content-length") || "0", 10);
+    if (!len) return true; // 拿不到长度就不下结论
+    return len > 700000;
+  } catch (e) {
+    return true;
+  }
+}
+
+async function fromMirrors(sid, allowTrial) {
+  let trial = null;
+  for (const base of MIRRORS) {
+    const loc = await locationOf(`${base}?type=url&id=${encodeURIComponent(sid)}`);
+    if (!loc) continue;
+    const full = await looksLikeFullTrack(loc);
+    if (full) return { url: loc, provider: new URL(base).hostname, trial: false };
+    if (!trial) trial = { url: loc, provider: new URL(base).hostname, trial: true };
+  }
+  return allowTrial ? trial : null;
+}
+
+/** 多上游降级：GD Studio → 镜像站（整首）→ 镜像站（试听兜底） */
+async function resolveAudio(sid, brList) {
+  const gd = await resolveNetease(sid, brList);
+  if (gd) return gd;
+  const full = await fromMirrors(sid, false);
+  if (full) return full;
+  return await fromMirrors(sid, true);
+}
+
+async function resolveLyric(sid) {
+  try {
+    const r = await fetch(`${GD}?types=lyric&source=netease&id=${encodeURIComponent(sid)}`, {
+      headers: hdrs,
+      cf: { cacheTtl: 0 },
+    });
+    if (r.ok) {
+      const j = await r.json();
+      const lrc = Array.isArray(j.lyric) ? j.lyric[0] : j.lyric || j.lrc;
+      if (lrc) return lrc;
+    }
+  } catch (e) {
+    /* 走镜像 */
+  }
+  for (const base of MIRRORS) {
+    try {
+      const r = await fetch(`${base}?type=lrc&id=${encodeURIComponent(sid)}`, {
+        headers: hdrs,
+        cf: { cacheTtl: 0 },
+      });
+      if (!r.ok) continue;
+      const t = await r.text();
+      if (t && t.includes("[") && t.length > 30) return t;
+    } catch (e) {
+      /* next */
+    }
+  }
+  return null;
+}
+
+async function resolvePic(sid) {
+  try {
+    const r = await fetch(`${GD}?types=pic&source=netease&id=${encodeURIComponent(sid)}`, {
+      headers: hdrs,
+      cf: { cacheTtl: 0 },
+    });
+    if (r.ok) {
+      const j = await r.json();
+      const pic = Array.isArray(j.url) ? j.url[0] : j.url;
+      if (pic) return pic;
+    }
+  } catch (e) {
+    /* 走镜像 */
+  }
+  for (const base of MIRRORS) {
+    const loc = await locationOf(`${base}?type=pic&id=${encodeURIComponent(sid)}`);
+    if (loc) return loc;
   }
   return null;
 }
@@ -74,11 +173,7 @@ async function handle(request) {
     const kind = (u.searchParams.get("type") || "url").toLowerCase();
 
     if (kind === "pic") {
-      const r = await fetch(`${GD}?types=pic&source=netease&id=${encodeURIComponent(sid)}`, {
-        headers: { "User-Agent": UA, Referer: "https://music.gdstudio.xyz/" },
-      });
-      const j = r.ok ? await r.json() : null;
-      const pic = j && (Array.isArray(j.url) ? j.url[0] : j.url);
+      const pic = await resolvePic(sid);
       if (!pic) return json({ ok: false, error: "no pic", sid }, 404);
       return new Response(null, {
         status: 302,
@@ -87,11 +182,7 @@ async function handle(request) {
     }
 
     if (kind === "lyric" || kind === "lrc") {
-      const r = await fetch(`${GD}?types=lyric&source=netease&id=${encodeURIComponent(sid)}`, {
-        headers: { "User-Agent": UA, Referer: "https://music.gdstudio.xyz/" },
-      });
-      const j = r.ok ? await r.json() : null;
-      const lrc = j && (Array.isArray(j.lyric) ? j.lyric[0] : j.lyric || j.lrc);
+      const lrc = await resolveLyric(sid);
       if (!lrc) return json({ ok: false, error: "no lyric", sid }, 404);
       return new Response(lrc, {
         status: 200,
@@ -123,7 +214,7 @@ async function handle(request) {
       }
     }
 
-    const got = await resolveNetease(sid, [...new Set(brList)]);
+    const got = await resolveAudio(sid, [...new Set(brList)]);
     if (!got) return json({ ok: false, error: "unavailable", sid }, 404);
 
     await cache.put(
@@ -149,7 +240,8 @@ async function handle(request) {
 
   if (path === "/resolve") {
     const sid = u.searchParams.get("sid") || "";
-    const got = await resolveNetease(sid, ["320", "192", "128"]);
+    if (!/^\d+$/.test(sid)) return json({ ok: false, error: "need numeric sid" }, 400);
+    const got = await resolveAudio(sid, ["320", "192", "128"]);
     return json(got ? { ok: true, ...got } : { ok: false, sid }, got ? 200 : 404);
   }
 
