@@ -157,16 +157,33 @@ async function handle(request) {
   if (path === "/debug") {
     const sid = (u.searchParams.get("sid") || "190449").trim();
     const out = { sid, colo: request.cf && request.cf.colo, tries: [] };
-    for (const br of ["320", "192"]) {
+    for (const [label, url] of [
+      ["gdstudio", `${GD}?types=url&source=netease&id=${encodeURIComponent(sid)}&br=320`],
+      ["injahow", `https://api.injahow.cn/meting/?type=url&id=${encodeURIComponent(sid)}`],
+      ["qijieya", `https://api.qijieya.cn/meting/?type=url&id=${encodeURIComponent(sid)}`],
+    ]) {
       try {
-        const r = await fetch(`${GD}?types=url&source=netease&id=${encodeURIComponent(sid)}&br=${br}`, {
+        const r = await fetch(url, {
           headers: { "User-Agent": UA, Referer: "https://music.gdstudio.xyz/" },
           cf: { cacheTtl: 0 },
+          redirect: "manual",
         });
-        const body = await r.text();
-        out.tries.push({ br, status: r.status, ct: r.headers.get("content-type"), body: body.slice(0, 300) });
+        let body = "";
+        try {
+          body = (await r.text()).slice(0, 200);
+        } catch (e) {
+          body = "(no text body)";
+        }
+        out.tries.push({
+          label,
+          status: r.status,
+          ct: r.headers.get("content-type"),
+          location: r.headers.get("location"),
+          clen: r.headers.get("content-length"),
+          body,
+        });
       } catch (e) {
-        out.tries.push({ br, error: String(e).slice(0, 200) });
+        out.tries.push({ label, error: String(e).slice(0, 160) });
       }
     }
     return json(out);
