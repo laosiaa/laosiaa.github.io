@@ -13,7 +13,18 @@
   }
   function apBox() { return document.querySelector("#anMusic-page .aplayer"); }
   function listEl() { return document.querySelector("#anMusic-page .aplayer-list"); }
-  function maskEl() { return document.getElementById("menu-mask"); }
+  /* 曲库抽屉自己的遮罩。注意：绝对不能再用 #menu-mask —— 那是主题移动端侧栏菜单的遮罩，
+     主题把它的 click 绑成了 sidebarFn.close()，我们把它挪走/隐藏后，侧栏菜单就再也关不掉了 */
+  function maskEl() {
+    var m = document.querySelector("#anMusicPage .mm-drawer-mask");
+    if (m) return m;
+    var page = document.getElementById("anMusicPage") || document.body;
+    m = document.createElement("div");
+    m.className = "mm-drawer-mask";
+    m.addEventListener("click", function () { closeDrawer(); });
+    page.appendChild(m);
+    return m;
+  }
 
   /* ---------- 1. 控制条重排：进度+时间+音量一行，播放键一行 ---------- */
   function restructure() {
@@ -452,10 +463,7 @@
     l.classList.add("aplayer-list-hide");
     l.style.opacity = "1";
     var m = maskEl();
-    if (m) {
-      m.style.display = "block";
-      m.style.animation = "0.5s ease 0s 1 normal none running to_show";
-    }
+    if (m) m.classList.add("mm-show");
     setTimeout(function () { fixList(); scrollToCurrent(); }, 120);
     [320, 700, 1200].forEach(function (t) {
       setTimeout(function () { if (l.__mmReapply && l.__mmQuery) l.__mmReapply(); }, t);
@@ -476,7 +484,7 @@
       if (l.__mmSearchReset) l.__mmSearchReset();
     }
     var m = maskEl();
-    if (m) { m.style.display = "none"; m.style.animation = ""; }
+    if (m) m.classList.remove("mm-show");
     var open = document.querySelector("#anMusic-page .mm-vol.mm-open");
     if (open) open.classList.remove("mm-open");
   }
@@ -509,18 +517,6 @@
     ol.scrollTop = Math.max(0, ol.scrollTop + delta);
   }
 
-  /* 点遮罩关闭曲库后，主题不会把遮罩收起来，这里补一刀 */
-  document.addEventListener("click", function (e) {
-    var m = maskEl();
-    if (!m || e.target !== m) return;
-    setTimeout(function () {
-      var l = listEl();
-      if (l && !l.classList.contains("aplayer-list-hide")) {
-        m.style.display = "none";
-        m.style.animation = "";
-      }
-    }, 60);
-  }, true);
 
   /* ---------- 启动 ---------- */
   function tick() {

@@ -1814,10 +1814,19 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
     background: var(--anzhiyu-main, #fc466b);
   }
 
-  /* 曲库展开时主题拉的全屏遮罩：停在控制条上方 */
-  body[data-type="music"] #menu-mask {
-    bottom: calc(118px + env(safe-area-inset-bottom, 0px)) !important;
-    height: auto !important;
+  /* 曲库抽屉自己的遮罩（原来的 #menu-mask 是侧栏菜单的，不能动） */
+  body[data-type="music"] #anMusicPage .mm-drawer-mask {
+    position: fixed;
+    left: 0; right: 0; top: 0;
+    bottom: calc(118px + env(safe-area-inset-bottom, 0px));
+    background: rgba(0, 0, 0, .45);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+    z-index: 1250;
+    opacity: 0; visibility: hidden;
+    transition: opacity .22s ease, visibility .22s ease;
+  }
+  body[data-type="music"] #anMusicPage .mm-drawer-mask.mm-show {
+    opacity: 1; visibility: visible;
   }
 
   /* ---------- 曲库抽屉 ---------- */
