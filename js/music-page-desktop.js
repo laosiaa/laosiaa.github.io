@@ -180,7 +180,7 @@
       list.insertBefore(head, list.firstChild);
       var cols = document.createElement("div");
       cols.className = "md-list-cols";
-      cols.innerHTML = "<span>歌曲</span><span>歌手</span>";
+      cols.innerHTML = "<span></span><span>歌曲</span><span>歌手</span>";
       list.insertBefore(cols, head.nextSibling);
     }
     var count = head.querySelector(".md-list-count");
