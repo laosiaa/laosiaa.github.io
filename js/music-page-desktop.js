@@ -455,15 +455,6 @@
       ps[i].style.setProperty("text-align", "center", "important");
     }
   }
-  /* 「封面 + 歌词」整组固定右移：歌词字数变化时不能重新量，否则整组会跟着歌词长短左右漂 */
-  function lockStage() {
-    if (!isDesktop()) return;
-    var pic = document.querySelector("#anMusic-page .aplayer-pic");
-    if (!pic) return;
-    if (pic.style.getPropertyValue("margin-left") === "178px") return;
-    pic.style.setProperty("margin-left", "178px", "important");
-  }
-  setInterval(lockStage, 800);
   setInterval(centerLyrics, 800);
 
   var n = 0;

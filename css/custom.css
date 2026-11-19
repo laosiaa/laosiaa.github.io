@@ -3879,3 +3879,37 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .md-tools > .md-download:hover { color: #fff !important; }
   body[data-type="music"] #anMusic-page .md-tools > .md-download svg { width: 17px !important; height: 17px !important; display: block !important; }
 }
+
+/* 固定舞台：封面 + 歌词列整体定尺寸、定位置，切歌/歌词长短都不会再左右跳 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body {
+    position: fixed !important;
+    left: calc(50% + 89px) !important;   /* 歌词列比文字宽，补 89px 才是视觉正中 */
+    top: 47% !important;
+    transform: translate(-50%, -50%) !important;
+    width: 908px !important;             /* 360 封面 + 48 间距 + 500 歌词列 */
+    min-width: 908px !important;
+    max-width: 908px !important;
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 48px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    z-index: 50 !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    margin: 0 !important;
+    flex: 0 0 360px !important;
+    width: 360px !important;
+    height: 360px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .md-col {
+    flex: 0 0 500px !important;
+    width: 500px !important;
+    min-width: 500px !important;
+    max-width: 500px !important;
+    margin: 0 !important;
+  }
+}
