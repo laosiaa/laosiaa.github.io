@@ -1814,6 +1814,14 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
     background: var(--anzhiyu-main, #fc466b);
   }
 
+  /* 移动端侧栏菜单：主题的 #menu-mask 只有 z-index 102，而音乐页控制条 1200 / 曲库 1300 都比它高，
+     点击落在播放器上 → 侧栏关不掉。这里把遮罩与面板提到播放器之上。
+     另外 #loading-box.loaded 之后 .loading-bg（z 1001、全屏、可点）仍然拦截点击，一并关掉。 */
+  body[data-type="music"] #menu-mask { z-index: 1400 !important; }
+  body[data-type="music"] #sidebar-menus { z-index: 1500 !important; }
+  body[data-type="music"] #loading-box.loaded,
+  body[data-type="music"] #loading-box.loaded .loading-bg { display: none !important; pointer-events: none !important; }
+
   /* 曲库抽屉自己的遮罩（原来的 #menu-mask 是侧栏菜单的，不能动） */
   body[data-type="music"] #anMusicPage .mm-drawer-mask {
     position: fixed;
