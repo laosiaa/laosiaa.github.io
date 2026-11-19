@@ -3894,7 +3894,8 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     max-width: 908px !important;
     display: flex !important;
     flex-direction: row !important;
-    align-items: center !important;
+    align-items: flex-start !important;   /* 不再被 911px 的容器高度拉到中间 */
+    height: auto !important;
     justify-content: flex-start !important;
     gap: 48px !important;
     padding: 0 !important;
