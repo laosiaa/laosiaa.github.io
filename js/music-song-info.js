@@ -124,7 +124,11 @@
       (al.company ? '<div class="mm-info-kv"><span>唱片公司</span><b>' + esc(al.company) + "</b></div>" : "") +
       '<div class="mm-info-kv"><span>时长</span><b>' + esc(fmtDur(s.duration || cur.time || 0) || "—") + "</b></div>";
 
-    var descHtml = '<p class="mm-info-desc">' + esc(desc || "这张专辑暂无官方简介。") + "</p>";
+    var fallback =
+      (artist.name || "该歌手") + " 演唱的《" + (s.name || curName) + "》，收录于专辑《" + (al.name || "未知") +
+      "》（" + fmtDate(al.publishTime) + " 发行" + (al.company ? "，" + al.company : "") + "），全辑 " +
+      (al.size || songs.length) + " 首。";
+    var descHtml = '<p class="mm-info-desc">' + esc(desc || fallback) + "</p>";
 
     var songsHtml = songs.length
       ? '<ul class="mm-info-songs">' +

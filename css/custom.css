@@ -2643,7 +2643,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   width: 100%; max-width: 560px;
   max-height: 82vh;
   display: flex; flex-direction: column;
-  background: rgba(24, 24, 28, .98);
+  background: #16161a;   /* 必须不透明：半透明时底部播放控制条会透上来压住文字 */
   color: #f2f2f5;
   border-radius: 20px 20px 0 0;
   box-shadow: 0 -14px 44px rgba(0, 0, 0, .5);
