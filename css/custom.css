@@ -3688,12 +3688,6 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   }
 }
 
-/* 封面+歌词这一组：歌词列原来 500px 宽、文字只有 ~165px，中间空太多、视觉重心偏左。
-   收窄歌词列，让文字贴着封面，整组自然居中。 */
-@media screen and (min-width: 769px) {
-  body[data-type="music"] #anMusic-page .md-col { width: 300px !important; }
-  body[data-type="music"] #anMusic-page .md-col .aplayer-lrc { width: 300px !important; }
-}
 
 /* ================= 第十三轮：整组真正居中 + 歌名与歌词左对齐、上下边对齐 ================= */
 @media screen and (min-width: 769px) {
@@ -3763,5 +3757,13 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc .aplayer-lrc-contents {
     padding-top: 140px !important;
     padding-bottom: 140px !important;
+  }
+}
+
+/* 封面+歌词这一组：歌词列 500px 宽但文字只有 ~165px，视觉重心偏左约 89px。
+   给封面加左外边距把整组推回屏幕正中（宽度都是固定的，所以这个值各视口通用）。 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    margin-left: 178px !important;
   }
 }
