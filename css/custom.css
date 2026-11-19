@@ -2888,7 +2888,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     width: 10px !important; display: block !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, .3) !important; border-radius: 5px !important;
+    background: rgba(255, 255, 255, .35) !important; border-radius: 5px !important;
     border: 2px solid transparent; background-clip: padding-box;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol:hover::-webkit-scrollbar-thumb {
@@ -3020,8 +3020,18 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     padding: 0 16px !important;
     text-align: center !important;
   }
-  body[data-type="music"] #anMusic-page .aplayer-title { font-size: 21px !important; line-height: 1.4 !important; }
-  body[data-type="music"] #anMusic-page .aplayer-author { font-size: 13px !important; color: #9b9ba5 !important; }
+  body[data-type="music"] #anMusic-page .aplayer-title {
+    display: block !important;
+    font-size: 21px !important; line-height: 1.4 !important; font-weight: 600 !important;
+    color: #fff !important;
+  }
+  /* 歌手单独一行、小一号，别和歌名挤成「歌名 - 歌手」 */
+  body[data-type="music"] #anMusic-page .aplayer-author {
+    display: block !important;
+    font-size: 13px !important; line-height: 1.5 !important;
+    color: #9b9ba5 !important; margin-top: 6px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-author::before { content: "" !important; }
 
   /* 歌词：限定高度 + 上下渐隐，不再跑到屏幕外 */
   body[data-type="music"] #anMusic-page .aplayer-lrc {
@@ -3035,10 +3045,11 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .aplayer-lrc-contents { height: 100% !important; }
   body[data-type="music"] #anMusic-page .aplayer-lrc p {
     font-size: 14px !important; line-height: 26px !important;
-    color: rgba(255, 255, 255, .55) !important;
+    color: rgba(255, 255, 255, .62) !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-lrc p.aplayer-lrc-current {
-    font-size: 15px !important; color: #fff !important;
+    font-size: 15px !important; color: #fff !important; font-weight: 600 !important;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, .45);
   }
 
   /* 曲库搜索框 */
@@ -3060,6 +3071,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     flex: 1 1 auto; min-width: 0;
     background: transparent; border: 0; outline: none;
     color: #e9e9ef; font-size: 13px; height: 32px;
+    text-align: left !important;
   }
   body[data-type="music"] #anMusic-page .md-search input::placeholder { color: #787882; }
   body[data-type="music"] #anMusic-page .md-search input::-webkit-search-cancel-button { display: none; }
