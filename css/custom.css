@@ -3790,3 +3790,22 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     text-align: left !important;
   }
 }
+
+/* 歌名放到歌词正上方，并与歌词同一套居中排布 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] .md-songmeta {
+    width: 100% !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin: 0 0 6px !important;
+    gap: 8px !important;
+  }
+  body[data-type="music"] .md-songmeta .md-sm-title {
+    font-size: 17px !important;
+    font-weight: 600 !important;
+    color: #f2f2f6 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+  body[data-type="music"] .md-songmeta .md-download { align-self: center !important; }
+}
