@@ -82,11 +82,12 @@
       if (pic) {
         var r = pic.getBoundingClientRect();
         if (r.width) {
-          el.style.left = Math.round(r.right + 30) + "px";
-          el.style.top = Math.round(r.top + 12) + "px";
-          // 「封面 + 右侧文字」整组居中：封面左移半个文字块宽度
+          // 先把封面按「文字块宽度的一半」左移，让整组居中；再按新的封面位置贴文字
           var mw = el.getBoundingClientRect().width || 0;
           pic.style.setProperty("margin-left", mw ? Math.round(-(mw + 30) / 2) + "px" : "0px", "important");
+          var r2 = pic.getBoundingClientRect();
+          el.style.left = Math.round(r2.right + 30) + "px";
+          el.style.top = Math.round(r2.top + 12) + "px";
         }
       }
     } catch (e) {}
