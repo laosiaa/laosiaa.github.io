@@ -455,6 +455,31 @@
       ps[i].style.setProperty("text-align", "center", "important");
     }
   }
+  /* 让「封面 + 歌词」这一组的视觉重心落在屏幕正中（歌词列比文字宽，纯 CSS 居中会偏左） */
+  function centerStage() {
+    if (!isDesktop()) return;
+    var pic = document.querySelector("#anMusic-page .aplayer-pic");
+    var lrc = document.querySelector("#anMusic-page .aplayer-lrc");
+    if (!pic || !lrc) return;
+    pic.style.setProperty("margin-left", "0px", "important");
+    var pr = pic.getBoundingClientRect();
+    var ps = lrc.querySelectorAll("p");
+    var minL = 1e9, maxR = -1;
+    for (var i = 0; i < ps.length; i++) {
+      var rg = document.createRange();
+      rg.selectNodeContents(ps[i]);
+      var b = rg.getBoundingClientRect();
+      if (b.width) { minL = Math.min(minL, b.left); maxR = Math.max(maxR, b.right); }
+    }
+    if (maxR < 0) return;
+    var left = Math.min(pr.left, minL);
+    var right = Math.max(pr.right, maxR);
+    var shift = Math.round(window.innerWidth / 2 - (left + right) / 2);
+    if (Math.abs(shift) > 2) {
+      pic.style.setProperty("margin-left", shift * 2 + "px", "important");
+    }
+  }
+  setInterval(centerStage, 800);
   setInterval(centerLyrics, 800);
 
   var n = 0;
