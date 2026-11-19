@@ -127,7 +127,7 @@
     var fallback =
       (artist.name || "该歌手") + " 演唱的《" + (s.name || curName) + "》，收录于专辑《" + (al.name || "未知") +
       "》（" + fmtDate(al.publishTime) + " 发行" + (al.company ? "，" + al.company : "") + "），全辑 " +
-      (al.size || songs.length) + " 首。";
+      (songs.length || al.size) + " 首。";
     var descHtml = '<p class="mm-info-desc">' + esc(desc || fallback) + "</p>";
 
     var songsHtml = songs.length
