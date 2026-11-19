@@ -136,7 +136,7 @@
           .map(function (x, i) {
             var isCur = x.name === curName;
             return (
-              '<li class="' + (isCur ? "is-cur" : "") + '" data-id="' + esc(x.id) + '" data-name="' + esc(x.name) + '">' +
+              '<li class="' + (isCur ? "is-cur" : "") + '" data-id="' + esc(x.id) + '" data-name="' + esc(x.name) + '" data-artist="' + esc(x.artist || "") + '">' +
               '<span class="mm-info-no">' + String(x.no || i + 1).padStart(2, "0") + "</span>" +
               '<span class="mm-info-name">' + esc(x.name) + "</span>" +
               '<span class="mm-info-dur">' + esc(fmtDur(x.duration)) + "</span>" +
@@ -154,10 +154,11 @@
       section("发行 · 专辑", releaseHtml) +
       section("本专辑其它歌曲（" + songs.length + "）", songsHtml);
 
-    // 点专辑内曲目：在歌单里能找到就切过去
+    // 点专辑内曲目：歌单里有就切过去；没有就临时加进歌单再播
     panel.querySelectorAll(".mm-info-songs li").forEach(function (li) {
       li.addEventListener("click", function () {
         var name = li.getAttribute("data-name");
+        var id = li.getAttribute("data-id");
         var audios = (ap.list && ap.list.audios) || [];
         for (var i = 0; i < audios.length; i++) {
           if (audios[i] && audios[i].name === name) {
@@ -166,7 +167,28 @@
             return;
           }
         }
-        li.classList.add("mm-info-none");
+        // 不在当前歌单：用同一个 Worker 拼一条音轨加进歌单
+        try {
+          var pic = (al.picUrl || "").replace(/param=\d+y\d+/, "param=300y300");
+          ap.list.add([
+            {
+              name: name,
+              artist: (li.getAttribute("data-artist") || artist.name || ""),
+              url: "https://meting-play.laosi-see.workers.dev/play?sid=" + id,
+              pic: pic,
+              lrc: "https://meting-play.laosi-see.workers.dev/play?sid=" + id + "&type=lyric",
+              cover: pic,
+              type: "normal",
+            },
+          ]);
+          ap.list.switch(ap.list.audios.length - 1);
+          // 曲库数量文案跟着更新
+          var title = document.querySelector("#anMusic-page .mm-list-title");
+          if (title) title.textContent = "曲库 · " + ap.list.audios.length + " 首";
+          close();
+        } catch (e) {
+          li.classList.add("mm-info-none");
+        }
       });
     });
   }
