@@ -71,11 +71,13 @@
     } catch (e) {}
   }
 
-  /* 只有“正在出声”的那个实例才会改锁屏内容 */
+  /* 只有“正在出声”的那个实例才会改锁屏内容；
+     但 iOS 有时在 play 的瞬间 readyState/currentTime 还没就绪，sounding() 会返回 null，
+     这时退回到 active（最近真正播放过的实例），否则锁屏会退回显示网页标题。 */
   function sync(force) {
-    var ap = sounding();
-    if (!ap) return;              // 没有任何实例在放 → 保持锁屏现状，不抢
-    active = ap;
+    var ap = sounding() || active;
+    if (!ap) return;              // 从来没播过 → 保持锁屏现状，不抢
+    if (sounding()) active = ap;
     paintMeta(ap);
     paintState(ap);
     position(ap, !!force);
@@ -163,13 +165,20 @@
   /* 看门狗：只有正在出声时才校准，避免暂停的实例把锁屏改掉 */
   function watchdog() {
     var ap = sounding();
-    if (!ap) return;
-    var a = trackOf(ap);
-    var md = navigator.mediaSession.metadata;
-    if (!md || md.title !== (a.name || "") || md.artist !== (a.artist || "")) {
-      active = ap;
-      paintMeta(ap);
-      paintState(ap);
+    if (ap) {
+      var a = trackOf(ap);
+      var md = navigator.mediaSession.metadata;
+      if (!md || md.title !== (a.name || "") || md.artist !== (a.artist || "")) {
+        active = ap;
+        paintMeta(ap);
+        paintState(ap);
+      }
+      return;
+    }
+    // 没有实例在放，但锁屏信息整个丢了（iOS 常见）→ 用最近播放过的实例补回去
+    if (!navigator.mediaSession.metadata && active && active.list) {
+      paintMeta(active);
+      try { navigator.mediaSession.playbackState = "paused"; } catch (e) {}
     }
   }
 
