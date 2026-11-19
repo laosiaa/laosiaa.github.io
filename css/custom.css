@@ -3122,7 +3122,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     border-radius: 4px !important;
     border: 1px solid rgba(255, 255, 255, .08) !important;
     box-shadow: 0 26px 70px rgba(0, 0, 0, .75) !important;
-    transform: translate(-330px, -190px) !important;
+    transform: translateY(-190px) !important;   /* 只保留纵向偏移，横向交给 flex 居中 */
   }
   body[data-type="music"] #anMusic-page .aplayer-info {
     padding: 0 !important;
@@ -3132,10 +3132,10 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   /* 右上角：歌手 - 歌名 + 下载这首歌 */
   body[data-type="music"] .md-songmeta {
     position: fixed !important;
-    right: 42px; top: 108px;
+    right: auto; left: 50%; top: 108px;
     z-index: 70;
-    display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
-    text-align: right;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+    text-align: left;
   }
   body[data-type="music"] .md-songmeta .md-sm-title {
     color: #e9e9ef; font-size: 15px; letter-spacing: .3px;

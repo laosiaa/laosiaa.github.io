@@ -76,6 +76,18 @@
       el.innerHTML = '<div class="md-sm-title"></div><a class="md-download" rel="noopener">下载这首歌</a>';
       document.body.appendChild(el);
     }
+    // 贴着封面右侧放（封面现在是居中的），这样整体视觉重心在屏幕中间
+    try {
+      var pic = document.querySelector("#anMusic-page .aplayer-pic");
+      if (pic) {
+        var r = pic.getBoundingClientRect();
+        if (r.width) {
+          el.style.left = Math.round(r.right + 30) + "px";
+          el.style.top = Math.round(r.top + 12) + "px";
+        }
+      }
+    } catch (e) {}
+
     var a = curAudio(ap);
     var t = el.querySelector(".md-sm-title");
     if (t) t.textContent = (a.artist ? a.artist + " - " : "") + (a.name || "");
@@ -411,6 +423,7 @@
   }, 400);
   window.addEventListener("resize", function () {
     setTimeout(tick, 300);
+    setTimeout(function () { var ap = getAp(); if (ap) paintTopMeta(ap); }, 360);
   });
   document.addEventListener("pjax:complete", function () {
     setTimeout(function () {
