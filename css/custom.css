@@ -3098,6 +3098,8 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
 @media screen and (min-width: 769px) {
   body[data-type="music"] { background: #000 !important; }
   body[data-type="music"] #an_music_bg,
+  body[data-type="music"] #universe,
+  body[data-type="music"] canvas.fireworks,
   body[data-type="music"] > canvas { display: none !important; }
   body[data-type="music"] #page-header,
   body[data-type="music"] #nav,
@@ -3129,7 +3131,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   /* 右上角：歌手 - 歌名 + 下载这首歌 */
   body[data-type="music"] .md-songmeta {
     position: fixed !important;
-    right: 42px; top: 96px;
+    right: 42px; top: 108px;
     z-index: 70;
     display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
     text-align: right;
