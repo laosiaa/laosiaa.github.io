@@ -262,6 +262,8 @@
         l.style.removeProperty("max-height");
         var ol0 = l.querySelector("ol");
         if (ol0) ol0.style.removeProperty("max-height");
+        /* 打开就直接定位到正在播放的那一首 */
+        [60, 200, 420, 700].forEach(function (t) { setTimeout(scrollToCurrent, t); });
       } else {
         enhanceList();
       }
@@ -295,6 +297,21 @@
       });
     } catch (e) {}
     return true;
+  }
+
+  /* 把当前播放的那一行滚到列表中间 */
+  function scrollToCurrent() {
+    var list = document.querySelector("#anMusic-page .aplayer-list");
+    if (!list) return;
+    var search = list.querySelector(".md-search-input");
+    if (search && search.value.trim()) return; // 正在搜索就别抢滚动
+    var ol = list.querySelector("ol");
+    var cur = list.querySelector("li.aplayer-list-light");
+    if (!ol || !cur) return;
+    var or = ol.getBoundingClientRect();
+    var cr = cur.getBoundingClientRect();
+    var delta = cr.top - or.top - (ol.clientHeight - cr.height) / 2;
+    ol.scrollTop = Math.max(0, ol.scrollTop + delta);
   }
 
   /* ---------- 曲库搜索（抽屉里用） ---------- */
@@ -426,6 +443,17 @@
 
   function tick() {
     if (!isDesktop()) return;
+    var _ap = getAp();
+    if (_ap && !_ap.__mdFollow) {
+      _ap.__mdFollow = true;
+      try {
+        _ap.on("listswitch", function () {
+          if (document.body.classList.contains("md-queue-open")) {
+            [80, 260, 600].forEach(function (t) { setTimeout(scrollToCurrent, t); });
+          }
+        });
+      } catch (e) {}
+    }
     dropActionButtons();
     var ap = getAp();
     if (ap) build(ap);
