@@ -3645,3 +3645,11 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     padding: 0 !important;
   }
 }
+
+/* 封面+歌词这一组：歌词列宽 500 而文字只有 ~145，视觉重心会偏左 ~80px，
+   给封面一个左侧外边距把这组推回屏幕正中（视口无关，宽度都是固定的） */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    margin-left: 160px !important;
+  }
+}
