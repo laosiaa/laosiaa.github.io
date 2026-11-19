@@ -82,9 +82,9 @@
       if (pic) {
         var r = pic.getBoundingClientRect();
         if (r.width) {
-          // 先把封面按「文字块宽度的一半」左移，让整组居中；再按新的封面位置贴文字
+          // 封面已在 CSS 里绝对居中；把整组（封面+右侧文字）按文字块宽度的一半左移，视觉重心才在屏幕中间
           var mw = el.getBoundingClientRect().width || 0;
-          pic.style.setProperty("margin-left", mw ? Math.round(-(mw + 30) / 2) + "px" : "0px", "important");
+          pic.style.setProperty("left", "calc(50% - " + Math.round((mw + 30) / 2) + "px)", "important");
           var r2 = pic.getBoundingClientRect();
           el.style.left = Math.round(r2.right + 30) + "px";
           el.style.top = Math.round(r2.top + 12) + "px";
