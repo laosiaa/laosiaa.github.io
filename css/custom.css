@@ -3646,13 +3646,6 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   }
 }
 
-/* 封面+歌词这一组：歌词列宽 500 而文字只有 ~145，视觉重心会偏左 ~80px，
-   给封面一个左侧外边距把这组推回屏幕正中（视口无关，宽度都是固定的） */
-@media screen and (min-width: 769px) {
-  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
-    margin-left: 160px !important;
-  }
-}
 
 /* ================= 第十二轮：竖列顺序（歌名在上、歌词在下）+ 歌词行高对齐 ================= */
 @media screen and (min-width: 769px) {
@@ -3693,4 +3686,11 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc p.aplayer-lrc-current {
     font-size: 16px !important; color: #fff !important; font-weight: 600 !important;
   }
+}
+
+/* 封面+歌词这一组：歌词列原来 500px 宽、文字只有 ~165px，中间空太多、视觉重心偏左。
+   收窄歌词列，让文字贴着封面，整组自然居中。 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .md-col { width: 300px !important; }
+  body[data-type="music"] #anMusic-page .md-col .aplayer-lrc { width: 300px !important; }
 }
