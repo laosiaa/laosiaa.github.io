@@ -516,6 +516,8 @@
     document.__mmBlankBound = true;
 
     document.addEventListener("click", function (e) {
+      // 桌面端曲库是常驻面板（菜单按钮 display:none），关掉就没法再打开了，所以只处理手机抽屉
+      if (!isMobile()) return;
       if (!listIsOpen()) return;
       var t = e.target;
       if (!t || !t.closest) return;
@@ -525,7 +527,7 @@
     }, true);
 
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && listIsOpen()) closeList();
+      if (e.key === "Escape" && isMobile() && listIsOpen()) closeList();
     });
   }
 
