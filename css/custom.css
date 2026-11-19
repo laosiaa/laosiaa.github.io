@@ -2863,7 +2863,7 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     letter-spacing: .3px;
   }
   body[data-type="music"] #anMusic-page .aplayer-list .md-list-head .md-list-count {
-    color: #8b8b95 !important; font-size: 12px !important; font-weight: 400 !important;
+    color: #a6a6b0 !important; font-size: 12px !important; font-weight: 400 !important;
   }
 
   /* 列名：歌曲 / 歌手 */
@@ -2880,13 +2880,18 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     flex: 1 1 auto;
     padding: 8px 8px 10px !important;
     margin: 0 !important;
-    overflow-y: auto !important;
+    overflow-y: scroll !important;
     scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, .18) transparent;
+    scrollbar-color: rgba(255, 255, 255, .28) transparent;
   }
-  body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar { width: 6px !important; display: block !important; }
+  body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar {
+    width: 8px !important; display: block !important;
+  }
   body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, .16) !important; border-radius: 3px !important;
+    background: rgba(255, 255, 255, .26) !important; border-radius: 4px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list ol:hover::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .42) !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar-track { background: transparent !important; }
 
