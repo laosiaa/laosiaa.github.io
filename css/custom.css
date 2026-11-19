@@ -3591,3 +3591,13 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     text-align: center !important;
   }
 }
+
+/* 宽屏下底栏铺满：主题给 .aplayer-controller 写了 max-width:1500px，会让整条贴着左边 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-controller.md-bar {
+    max-width: none !important;
+    width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+}
