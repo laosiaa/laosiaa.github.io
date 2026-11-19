@@ -157,6 +157,81 @@ async function resolvePic(sid) {
   return null;
 }
 
+/* ---------- 曲目资料（歌手 / 专辑 / 发行时间 / 专辑内曲目） ---------- */
+const NE = "https://music.163.com";
+
+function neHeaders() {
+  return { "User-Agent": UA, Referer: "https://music.163.com/", Cookie: "appver=2.0.2" };
+}
+
+async function neJson(url) {
+  try {
+    const r = await fetch(url, { headers: neHeaders(), cf: { cacheTtl: 3600 } });
+    if (!r.ok) return null;
+    return await r.json();
+  } catch (e) {
+    return null;
+  }
+}
+
+async function songInfo(sid) {
+  const detail = await neJson(`${NE}/api/song/detail/?id=${sid}&ids=%5B${sid}%5D`);
+  const song = detail && detail.songs && detail.songs[0];
+  if (!song) return null;
+
+  const album = song.album || {};
+  const artists = (song.artists || []).map((a) => ({ id: a.id, name: a.name }));
+
+  let artistInfo = null;
+  if (artists[0]) {
+    const ar = await neJson(`${NE}/api/artist/${artists[0].id}`);
+    const a = ar && ar.artist;
+    if (a) {
+      artistInfo = {
+        id: a.id,
+        name: a.name,
+        alias: a.alias || [],
+        picUrl: a.picUrl || a.img1v1Url || "",
+        briefDesc: a.briefDesc || "",
+        albumSize: a.albumSize || 0,
+        musicSize: a.musicSize || 0,
+      };
+    }
+  }
+
+  let albumSongs = [];
+  let albumExtra = {};
+  if (album.id) {
+    const al = await neJson(`${NE}/api/v1/album/${album.id}`);
+    if (al) {
+      albumExtra = al.album || {};
+      albumSongs = (al.songs || []).map((s) => ({
+        id: s.id,
+        name: s.name,
+        artist: ((s.ar || [])[0] || {}).name || "",
+        no: s.no || 0,
+        duration: s.dt || 0,
+      }));
+    }
+  }
+
+  return {
+    ok: true,
+    song: { id: song.id, name: song.name, alias: song.alias || [], duration: song.duration || 0 },
+    artists: artists.map((a) => (artistInfo && a.id === artistInfo.id ? { ...a, ...artistInfo } : a)),
+    album: {
+      id: album.id || 0,
+      name: album.name || "",
+      picUrl: album.picUrl || "",
+      publishTime: album.publishTime || albumExtra.publishTime || 0,
+      company: album.company || albumExtra.company || "",
+      description: album.description || albumExtra.description || "",
+      size: album.size || albumSongs.length,
+      songs: albumSongs,
+    },
+  };
+}
+
 async function handle(request) {
   const u = new URL(request.url);
   // 兼容 /music-api/play 与 /music/api/play 两种前缀
@@ -171,6 +246,26 @@ async function handle(request) {
     if (!sid || !/^\d+$/.test(sid)) return json({ ok: false, error: "need numeric sid" }, 400);
 
     const kind = (u.searchParams.get("type") || "url").toLowerCase();
+
+    // 曲目资料：歌手 / 专辑 / 发行时间 / 专辑内曲目（国内直连，走本站域名）
+    if (kind === "info") {
+      const cacheKey = new Request(`https://blog.521251.xyz/music-api/_info?sid=${sid}`, { method: "GET" });
+      const cache = caches.default;
+      const hit = await cache.match(cacheKey);
+      if (hit) return hit;
+      const info = await songInfo(sid);
+      if (!info) return json({ ok: false, error: "no info", sid }, 404);
+      const res = new Response(JSON.stringify(info), {
+        status: 200,
+        headers: {
+          "content-type": "application/json; charset=utf-8",
+          "cache-control": "public, max-age=86400",
+          ...CORS,
+        },
+      });
+      await cache.put(cacheKey, res.clone());
+      return res;
+    }
 
     if (kind === "pic") {
       const pic = await resolvePic(sid);

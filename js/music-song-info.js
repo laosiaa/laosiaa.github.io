@@ -2,7 +2,9 @@
 (function () {
   "use strict";
 
-  var API = "https://meting-play.laosi-see.workers.dev/play";
+  // 国内直连：走博客自己的 Pages Function（workers.dev 在国内被墙，不能用）
+  var API = "/music-api/play";
+  var FALLBACK = "https://meting-play.laosi-see.workers.dev/play";
   var cache = {};
   var panel = null;
   var lastKey = "";
@@ -174,9 +176,9 @@
             {
               name: name,
               artist: (li.getAttribute("data-artist") || artist.name || ""),
-              url: "https://meting-play.laosi-see.workers.dev/play?sid=" + id,
+              url: "/music-api/play?sid=" + id,
               pic: pic,
-              lrc: "https://meting-play.laosi-see.workers.dev/play?sid=" + id + "&type=lyric",
+              lrc: "/music-api/play?sid=" + id + "&type=lyric",
               cover: pic,
               type: "normal",
             },
@@ -210,8 +212,14 @@
       render(cache[sid], ap);
       return;
     }
-    fetch(API + "?sid=" + sid + "&type=info")
-      .then(function (r) { return r.json(); })
+    function get(url) {
+      return fetch(url).then(function (r) {
+        if (!r.ok) throw new Error("http " + r.status);
+        return r.json();
+      });
+    }
+    get(API + "?sid=" + sid + "&type=info")
+      .catch(function () { return get(FALLBACK + "?sid=" + sid + "&type=info"); })
       .then(function (d) {
         if (!d || !d.ok) throw new Error("no data");
         cache[sid] = d;
