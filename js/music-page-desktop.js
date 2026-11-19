@@ -185,6 +185,12 @@
     }
     var count = head.querySelector(".md-list-count");
     if (count) count.textContent = "共 " + n + " 首";
+
+    /* APlayer / 手机脚本会给列表写死内联 max-height（min(56vh, 100vh-300px)），
+       桌面端要让卡片铺满播放器高度，这里用 !important 覆盖掉内联值 */
+    list.style.setProperty("max-height", "100%", "important");
+    var ol = list.querySelector("ol");
+    if (ol) ol.style.setProperty("max-height", "none", "important");
   }
 
   function tick() {
