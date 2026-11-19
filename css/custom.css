@@ -2623,3 +2623,103 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     width: 18px !important; height: 18px !important;
   }
 }
+
+/* ========== 点封面：歌曲资料面板 ========== */
+.mm-info {
+  position: fixed; inset: 0; z-index: 1600;
+  opacity: 0; visibility: hidden;
+  transition: opacity .22s ease, visibility .22s ease;
+  font-family: inherit;
+}
+.mm-info.mm-info-on { opacity: 1; visibility: visible; }
+.mm-info-mask {
+  position: absolute; inset: 0;
+  background: rgba(0, 0, 0, .55);
+  -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px);
+}
+.mm-info-sheet {
+  position: absolute; left: 50%; bottom: 0;
+  transform: translate(-50%, 18px);
+  width: 100%; max-width: 560px;
+  max-height: 82vh;
+  display: flex; flex-direction: column;
+  background: rgba(24, 24, 28, .98);
+  color: #f2f2f5;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -14px 44px rgba(0, 0, 0, .5);
+  transition: transform .24s ease;
+  overflow: hidden;
+}
+.mm-info.mm-info-on .mm-info-sheet { transform: translate(-50%, 0); }
+.mm-info-head {
+  flex: 0 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 16px 10px;
+}
+.mm-info-title { font-size: 14px; font-weight: 600; opacity: .92; }
+.mm-info-close {
+  width: 30px; height: 30px; border: 0; border-radius: 50%;
+  background: rgba(255, 255, 255, .1); color: #fff;
+  font-size: 12px; line-height: 1; cursor: pointer;
+}
+.mm-info-body {
+  flex: 1 1 auto; overflow-y: auto; overscroll-behavior: contain;
+  padding: 0 16px calc(20px + env(safe-area-inset-bottom, 0px));
+}
+.mm-info-loading { padding: 34px 0; text-align: center; font-size: 13px; opacity: .55; }
+
+.mm-info-hero { display: flex; gap: 14px; align-items: center; padding: 4px 0 14px; }
+.mm-info-cover {
+  width: 84px; height: 84px; flex: 0 0 84px;
+  border-radius: 14px;
+  background-size: cover; background-position: center;
+  background-color: rgba(255, 255, 255, .06);
+}
+.mm-info-meta { min-width: 0; }
+.mm-info-meta h3 { margin: 0 0 6px; font-size: 17px; line-height: 1.35; font-weight: 700; }
+.mm-info-alias { margin: 0 0 4px; font-size: 11.5px; opacity: .5; }
+.mm-info-ar { margin: 0; font-size: 12.5px; opacity: .72; }
+
+.mm-info-sec { padding: 12px 0; border-top: 1px solid rgba(255, 255, 255, .08); }
+.mm-info-sec-t { font-size: 12px; opacity: .5; margin-bottom: 8px; }
+.mm-info-desc { margin: 0; font-size: 13px; line-height: 1.72; opacity: .82; white-space: pre-wrap; }
+
+.mm-info-artist { display: flex; gap: 12px; align-items: center; }
+.mm-info-avatar {
+  width: 54px; height: 54px; flex: 0 0 54px; border-radius: 50%;
+  background-size: cover; background-position: center;
+  background-color: rgba(255, 255, 255, .08);
+}
+.mm-info-artist-name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.mm-info-artist-sub { font-size: 11.5px; opacity: .55; }
+
+.mm-info-kv {
+  display: flex; justify-content: space-between; gap: 12px;
+  font-size: 12.5px; padding: 5px 0;
+}
+.mm-info-kv span { opacity: .5; flex: 0 0 auto; }
+.mm-info-kv b { font-weight: 500; text-align: right; word-break: break-all; }
+
+.mm-info-songs { list-style: none; margin: 0; padding: 0; }
+.mm-info-songs li {
+  display: flex; align-items: center; gap: 10px;
+  height: 38px; padding: 0 2px;
+  font-size: 13px; cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, .05);
+}
+.mm-info-songs li:last-child { border-bottom: 0; }
+.mm-info-songs li.is-cur { color: var(--anzhiyu-main, #fc466b); }
+.mm-info-songs li.mm-info-none { opacity: .4; }
+.mm-info-no { flex: 0 0 22px; font-size: 11px; opacity: .4; }
+.mm-info-name { flex: 1 1 auto; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mm-info-dur { flex: 0 0 auto; font-size: 11px; opacity: .4; }
+
+@media screen and (min-width: 769px) {
+  .mm-info-sheet {
+    bottom: auto; top: 50%;
+    transform: translate(-50%, -46%);
+    border-radius: 18px;
+    max-height: 76vh;
+  }
+  .mm-info.mm-info-on .mm-info-sheet { transform: translate(-50%, -50%); }
+}

@@ -69,11 +69,12 @@
     var pic = document.querySelector("#anMusic-page .aplayer-pic");
     if (!pic || pic.dataset.mmZoom === "1") return;
     pic.dataset.mmZoom = "1";
-    pic.style.cursor = "zoom-in";
+    pic.style.cursor = "pointer";
     pic.addEventListener("click", function (e) {
       e.preventDefault();
       e.stopPropagation();
-      openZoom(coverUrl(pic));
+      // 点封面改为弹出「歌曲资料」面板（脚本：music-song-info.js）
+      window.dispatchEvent(new CustomEvent("mm:songinfo"));
     }, true);
   }
 
