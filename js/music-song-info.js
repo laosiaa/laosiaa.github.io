@@ -2,7 +2,7 @@
 (function () {
   "use strict";
 
-  var API = "/music-api/play";
+  var API = "https://meting-play.laosi-see.workers.dev/play";
   var cache = {};
   var panel = null;
   var lastKey = "";
