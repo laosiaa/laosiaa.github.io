@@ -1823,7 +1823,7 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
   body[data-type="music"] #loading-box.loaded .loading-bg { display: none !important; pointer-events: none !important; }
 
   /* 曲库抽屉自己的遮罩（原来的 #menu-mask 是侧栏菜单的，不能动） */
-  body[data-type="music"] #anMusicPage .mm-drawer-mask {
+  body[data-type="music"] #anMusic-page .mm-drawer-mask {
     position: fixed;
     left: 0; right: 0; top: 0;
     bottom: calc(118px + env(safe-area-inset-bottom, 0px));
@@ -1833,7 +1833,7 @@ body:has(.alb-slides) .comment-wrap { display: none !important; }
     opacity: 0; visibility: hidden;
     transition: opacity .22s ease, visibility .22s ease;
   }
-  body[data-type="music"] #anMusicPage .mm-drawer-mask.mm-show {
+  body[data-type="music"] #anMusic-page .mm-drawer-mask.mm-show {
     opacity: 1; visibility: visible;
   }
 

@@ -16,9 +16,9 @@
   /* 曲库抽屉自己的遮罩。注意：绝对不能再用 #menu-mask —— 那是主题移动端侧栏菜单的遮罩，
      主题把它的 click 绑成了 sidebarFn.close()，我们把它挪走/隐藏后，侧栏菜单就再也关不掉了 */
   function maskEl() {
-    var m = document.querySelector("#anMusicPage .mm-drawer-mask");
+    var m = document.querySelector("#anMusic-page .mm-drawer-mask");
     if (m) return m;
-    var page = document.getElementById("anMusicPage") || document.body;
+    var page = document.getElementById("anMusic-page") || document.body;
     m = document.createElement("div");
     m.className = "mm-drawer-mask";
     m.addEventListener("click", function () { closeDrawer(); });
