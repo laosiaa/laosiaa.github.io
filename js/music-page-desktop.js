@@ -384,11 +384,25 @@
     var bodyEl = el.querySelector(".aplayer-body");
     var lrc = el.querySelector(".aplayer-lrc");
     var pic = el.querySelector(".aplayer-pic");
+    var meta = document.querySelector(".md-songmeta");
     if (!bodyEl || !lrc) return;
-    if (lrc.parentElement !== bodyEl) bodyEl.appendChild(lrc);
+    /* 右半边做成一个竖列：上面歌名，下面歌词 */
+    var col = bodyEl.querySelector(".md-col");
+    if (!col) {
+      col = document.createElement("div");
+      col.className = "md-col";
+      bodyEl.appendChild(col);
+    }
+    if (meta && meta.parentElement !== col) col.appendChild(meta);
+    if (lrc.parentElement !== col) col.appendChild(lrc);
     ["left", "top", "width", "height"].forEach(function (p) {
       lrc.style.removeProperty(p);
     });
+    if (meta) {
+      ["left", "top", "right", "position"].forEach(function (p) {
+        meta.style.removeProperty(p);
+      });
+    }
     if (pic) {
       ["left", "top", "transform"].forEach(function (p) {
         pic.style.removeProperty(p);
