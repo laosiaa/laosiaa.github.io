@@ -419,9 +419,20 @@
     if (e.key === "Escape") document.body.classList.remove("md-queue-open");
   });
 
+  /* 歌词文字居中：APlayer 会重建 <p>，所以持续补内联样式 */
+  function centerLyrics() {
+    if (!isDesktop()) return;
+    var ps = document.querySelectorAll("#anMusic-page .aplayer-lrc p");
+    for (var i = 0; i < ps.length; i++) {
+      ps[i].style.setProperty("text-align", "center", "important");
+    }
+  }
+  setInterval(centerLyrics, 800);
+
   var n = 0;
   var t = setInterval(function () {
     n++;
+    centerLyrics();
     tick();
     if (n > 75) clearInterval(t);
   }, 400);

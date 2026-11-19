@@ -3583,3 +3583,11 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   }
   body[data-type="music"] .md-download { display: none !important; }
 }
+
+/* 歌词居中（覆盖 .aplayer-body > .aplayer-lrc p 的 left !important） */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc p,
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc .aplayer-lrc-contents p {
+    text-align: center !important;
+  }
+}
