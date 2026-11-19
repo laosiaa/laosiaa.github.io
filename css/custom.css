@@ -2945,3 +2945,35 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     font-size: 13px; line-height: 38px; text-align: center;
   }
 }
+
+/* 音乐馆 桌面端 第二轮：改成「左封面+歌词 / 右曲库」的网易云布局 */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer {
+    flex-direction: row !important;
+    align-items: stretch !important;
+    gap: 26px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body {
+    order: 1;
+    flex: 1 1 auto !important;
+    width: auto !important;
+    max-width: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-list {
+    order: 2;
+    flex: 0 0 42% !important;
+    height: 100% !important;
+    margin: 0 !important;
+  }
+  /* 手机抽屉遗留下来的「曲库 · N 首 ×」头部，桌面不要 */
+  body[data-type="music"] #anMusic-page .mm-list-head { display: none !important; }
+  body[data-type="music"] #anMusic-page .aplayer-list ol {
+    max-height: none !important;
+    height: auto !important;
+    flex: 1 1 auto !important;
+  }
+}
