@@ -2914,6 +2914,8 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     transition: background .14s ease;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol li:hover { background: rgba(255, 255, 255, .06) !important; }
+  /* 搜索过滤用：必须带 !important，否则被上面的 display:grid !important 覆盖 */
+  body[data-type="music"] #anMusic-page .aplayer-list ol li.md-hidden { display: none !important; }
 
   body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-cur { display: none !important; }
   body[data-type="music"] #anMusic-page .aplayer-list ol li .aplayer-list-index {

@@ -177,7 +177,8 @@
       var t = (li.querySelector(".aplayer-list-title") || {}).textContent || "";
       var a = (li.querySelector(".aplayer-list-author") || {}).textContent || "";
       var hit = !ql || (t + " " + a).toLowerCase().indexOf(ql) >= 0;
-      li.style.display = hit ? "" : "none";
+      if (hit) li.classList.remove("md-hidden");
+      else li.classList.add("md-hidden");
       if (hit) shown++;
     }
     var ol = list.querySelector("ol");
