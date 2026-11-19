@@ -3563,3 +3563,23 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     margin-right: auto !important;
   }
 }
+
+/* ================= 第十轮：封面 320 + 歌词在右，二者作为整体居中；下载按钮已从 DOM 删除 ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    flex: 0 0 320px !important;
+    width: 320px !important;
+    height: 320px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc {
+    height: 320px !important;
+    flex: 0 0 500px !important;
+    width: 500px !important;
+    margin-left: 48px !important;
+  }
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-lrc .aplayer-lrc-contents {
+    padding-top: 140px !important;
+    padding-bottom: 140px !important;
+  }
+  body[data-type="music"] .md-download { display: none !important; }
+}

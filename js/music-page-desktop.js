@@ -67,16 +67,20 @@
       '<path d="M4 7h11"/><path d="M4 12h11"/><path d="M4 17h7"/><path d="M18 6.5v8"/><circle cx="16.4" cy="16.4" r="2.2"/></svg>'
   };
 
-  /* ---------- 右上角：歌手 - 歌名 + 下载 ---------- */
+  /* ---------- 右上角：歌手 - 歌名（下载按钮已移除） ---------- */
   function paintTopMeta(ap) {
     var el = document.querySelector(".md-songmeta");
     if (!el) {
       el = document.createElement("div");
       el.className = "md-songmeta";
-      el.innerHTML = '<div class="md-sm-title"></div><a class="md-download" rel="noopener">下载这首歌</a>';
+      el.innerHTML = '<div class="md-sm-title"></div>';
       document.body.appendChild(el);
     }
-    // 位置交给 CSS（固定在右上角），这里只清掉可能残留的内联坐标
+    /* 下载按钮不要了：直接把节点从 DOM 里删掉，不是隐藏 */
+    var kill = el.querySelectorAll(".md-download");
+    for (var i = 0; i < kill.length; i++) {
+      if (kill[i].parentNode) kill[i].parentNode.removeChild(kill[i]);
+    }
     try {
       el.style.removeProperty("left");
       el.style.removeProperty("top");
@@ -85,12 +89,6 @@
     var a = curAudio(ap);
     var t = el.querySelector(".md-sm-title");
     if (t) t.textContent = (a.artist ? a.artist + " - " : "") + (a.name || "");
-    var dl = el.querySelector(".md-download");
-    var href = downloadHref(ap);
-    if (dl && href) {
-      dl.href = href;
-      dl.setAttribute("download", (a.name || "song") + ".mp3");
-    }
   }
 
   /* ---------- 底栏 ---------- */
@@ -225,11 +223,6 @@
     });
     modePaint();
 
-    var dl = document.createElement("a");
-    dl.className = "md-icon md-download";
-    dl.title = "下载这首歌";
-    dl.innerHTML = SVG.download;
-
     var share = document.createElement("button");
     share.type = "button";
     share.className = "md-icon md-share";
@@ -269,7 +262,7 @@
       }
     });
 
-    [vol, mode, dl, share, queue].forEach(function (n) {
+    [vol, mode, share, queue].forEach(function (n) {
       tools.appendChild(n);
     });
 
@@ -281,11 +274,6 @@
       var a = curAudio(ap);
       thumb.style.backgroundImage = "url('" + String(picUrl(ap)).replace(/'/g, "%27") + "')";
       title.textContent = (a.artist ? a.artist + " - " : "") + (a.name || "");
-      var href = downloadHref(ap);
-      if (href) {
-        dl.href = href;
-        dl.setAttribute("download", (a.name || "song") + ".mp3");
-      }
       var badge = queue.querySelector(".md-badge");
       if (badge) badge.textContent = String(ap.list && ap.list.audios ? ap.list.audios.length : 0);
       paintTopMeta(ap);
