@@ -474,7 +474,11 @@
   }
 
   function tick() {
-    if (!isDesktop()) return;
+    if (!isDesktop()) {
+      /* 移动端（或从桌面缩回来）：还原 DOM，别留桌面那套 */
+      placeLrc();
+      return;
+    }
     var _ap = getAp();
     if (_ap && !_ap.__mdFollow) {
       _ap.__mdFollow = true;
