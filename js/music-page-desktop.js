@@ -415,9 +415,12 @@
       });
     }
     if (pic) {
-      ["left", "top", "transform", "margin", "margin-left", "margin-right", "position"].forEach(function (p) {
+      ["left", "top", "transform", "position"].forEach(function (p) {
         pic.style.removeProperty(p);
       });
+      /* 有样式表把封面写成 margin-left:178px !important，内联 important 才能压住 */
+      pic.style.setProperty("margin-left", "0", "important");
+      pic.style.setProperty("margin-right", "0", "important");
     }
   }
 
