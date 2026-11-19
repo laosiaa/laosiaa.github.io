@@ -3694,3 +3694,38 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .md-col { width: 300px !important; }
   body[data-type="music"] #anMusic-page .md-col .aplayer-lrc { width: 300px !important; }
 }
+
+/* ================= 第十三轮：整组真正居中 + 歌名与歌词左对齐、上下边对齐 ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body {
+    align-items: flex-start !important;
+    justify-content: center !important;
+  }
+  /* 封面被别处加了 margin-left:160px，会把整组推右，这里清掉 */
+  body[data-type="music"] #anMusic-page .aplayer-body > .aplayer-pic {
+    margin: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    flex: 0 0 320px !important;
+    width: 320px !important;
+    height: 320px !important;
+  }
+  /* 右列总高与封面一致：歌名 + 14 + 歌词(285) = 320 */
+  body[data-type="music"] #anMusic-page .aplayer-body > .md-col {
+    height: 320px !important;
+    justify-content: flex-start !important;
+    margin-left: 48px !important;
+    flex: 0 0 500px !important;
+    width: 500px !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc {
+    flex: 0 0 285px !important;
+    height: 285px !important;
+    width: 500px !important;
+    margin: 0 !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc .aplayer-lrc-contents {
+    padding-top: 122px !important;
+    padding-bottom: 122px !important;
+  }
+}
