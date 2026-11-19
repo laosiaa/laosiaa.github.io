@@ -86,7 +86,7 @@
           el.style.top = Math.round(r.top + 12) + "px";
           // 「封面 + 右侧文字」整组居中：封面左移半个文字块宽度
           var mw = el.getBoundingClientRect().width || 0;
-          pic.style.marginLeft = mw ? Math.round(-(mw + 30) / 2) + "px" : "0px";
+          pic.style.setProperty("margin-left", mw ? Math.round(-(mw + 30) / 2) + "px" : "0px", "important");
         }
       }
     } catch (e) {}
