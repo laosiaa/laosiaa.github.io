@@ -489,6 +489,47 @@
     if (open) open.classList.remove("mm-open");
   }
 
+  /* ---------- 3.5 点空白处 / 按 Esc 关闭曲库 ---------- */
+  function listIsOpen() {
+    var l = listEl();
+    if (!l) return false;
+    // 桌面：没有 hide 类表示列表展开；手机：抽屉展开时反而带着 hide 类（历史原因）
+    return isMobile() ? l.classList.contains("aplayer-list-hide")
+                      : !l.classList.contains("aplayer-list-hide");
+  }
+
+  function closeList() {
+    var l = listEl();
+    if (!l) return;
+    if (isMobile()) {
+      closeDrawer();
+    } else {
+      l.classList.add("aplayer-list-hide");
+      l.style.opacity = "";
+    }
+    var v = document.querySelector("#anMusic-page .mm-vol.mm-open");
+    if (v) v.classList.remove("mm-open");
+  }
+
+  function bindBlankClose() {
+    if (document.__mmBlankBound) return;
+    document.__mmBlankBound = true;
+
+    document.addEventListener("click", function (e) {
+      if (!listIsOpen()) return;
+      var t = e.target;
+      if (!t || !t.closest) return;
+      // 点列表本身（选歌）、点菜单按钮（它自己会切换）、点抽屉遮罩（自己的 handler）都不管
+      if (t.closest(".aplayer-list") || t.closest(".aplayer-icon-menu") || t.closest(".mm-drawer-mask")) return;
+      closeList();
+    }, true);
+
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && listIsOpen()) closeList();
+    });
+  }
+
+
   /* ---------- 4. 位置兜底：个别机型 fixed 会算偏，按实测差位移回来 ---------- */
   function ensureBottom() {
     var c = document.querySelector("#anMusic-page .aplayer-controller");
@@ -543,6 +584,7 @@
     return ok;
   }
   function boot() {
+    bindBlankClose();
     var n = 0;
     var t = setInterval(function () {
       n++;
