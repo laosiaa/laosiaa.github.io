@@ -2885,10 +2885,11 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     scrollbar-color: rgba(255, 255, 255, .28) transparent;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar {
-    width: 8px !important; display: block !important;
+    width: 10px !important; display: block !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, .26) !important; border-radius: 4px !important;
+    background: rgba(255, 255, 255, .3) !important; border-radius: 5px !important;
+    border: 2px solid transparent; background-clip: padding-box;
   }
   body[data-type="music"] #anMusic-page .aplayer-list ol:hover::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, .42) !important;
