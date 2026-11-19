@@ -3653,3 +3653,44 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     margin-left: 160px !important;
   }
 }
+
+/* ================= 第十二轮：竖列顺序（歌名在上、歌词在下）+ 歌词行高对齐 ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .aplayer-body > .md-col > .md-songmeta { order: 1 !important; }
+  body[data-type="music"] #anMusic-page .aplayer-body > .md-col > .aplayer-lrc { order: 2 !important; }
+
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc {
+    position: static !important;
+    left: auto !important;
+    top: auto !important;
+    display: block !important;
+    flex: 0 0 320px !important;
+    width: 500px !important;
+    height: 320px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    z-index: auto !important;
+    background: none !important;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 16%, #000 84%, transparent 100%);
+  }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc .aplayer-lrc-contents {
+    width: 100% !important;
+    padding-top: 140px !important;
+    padding-bottom: 140px !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc p,
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc p.aplayer-lrc-current {
+    height: 40px !important;
+    line-height: 40px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    text-align: left !important;
+    text-shadow: none !important;
+  }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc p { font-size: 15px !important; color: rgba(255, 255, 255, .4) !important; }
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc p.aplayer-lrc-current {
+    font-size: 16px !important; color: #fff !important; font-weight: 600 !important;
+  }
+}

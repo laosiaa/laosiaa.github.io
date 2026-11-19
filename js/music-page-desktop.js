@@ -223,6 +223,11 @@
     });
     modePaint();
 
+    var dl = document.createElement("a");
+    dl.className = "md-icon md-download";
+    dl.title = "下载这首歌";
+    dl.innerHTML = SVG.download;
+
     var share = document.createElement("button");
     share.type = "button";
     share.className = "md-icon md-share";
@@ -262,7 +267,7 @@
       }
     });
 
-    [vol, mode, share, queue].forEach(function (n) {
+    [vol, mode, dl, share, queue].forEach(function (n) {
       tools.appendChild(n);
     });
 
@@ -274,6 +279,11 @@
       var a = curAudio(ap);
       thumb.style.backgroundImage = "url('" + String(picUrl(ap)).replace(/'/g, "%27") + "')";
       title.textContent = (a.artist ? a.artist + " - " : "") + (a.name || "");
+      var href = downloadHref(ap);
+      if (href && dl) {
+        dl.href = href;
+        dl.setAttribute("download", (a.name || "song") + ".mp3");
+      }
       var badge = queue.querySelector(".md-badge");
       if (badge) badge.textContent = String(ap.list && ap.list.audios ? ap.list.audios.length : 0);
       paintTopMeta(ap);
@@ -393,8 +403,9 @@
       col.className = "md-col";
       bodyEl.appendChild(col);
     }
-    if (meta && meta.parentElement !== col) col.appendChild(meta);
+    if (meta && meta.parentElement !== col) col.insertBefore(meta, col.firstChild);
     if (lrc.parentElement !== col) col.appendChild(lrc);
+    if (meta && col.firstElementChild !== meta) col.insertBefore(meta, col.firstChild);
     ["left", "top", "width", "height"].forEach(function (p) {
       lrc.style.removeProperty(p);
     });
