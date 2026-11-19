@@ -63,7 +63,9 @@
   function checkGone() {
     if (!pending) return;
     var v = pending.video;
-    if (!v || !v.isConnected || v.paused || v.ended || v.offsetParent === null) {
+    // 注意：position:fixed 的 video 其 offsetParent 恒为 null，不能用它判断可见性
+    var gone = !v || !v.isConnected || v.paused || v.ended || v.getClientRects().length === 0;
+    if (gone) {
       setTimeout(function () { resume("hidden"); }, 200);
     }
   }
@@ -73,4 +75,14 @@
     mo.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ["style", "class", "hidden"] });
   });
   setInterval(checkGone, 1200);
+
+  /* 站内 pjax 翻页（比如从视频文章离开）也当成视频关掉 */
+  document.addEventListener("pjax:complete", function () {
+    setTimeout(checkGone, 400);
+  });
+
+  /* 调试用：控制台里 __mvState() 能看到待恢复状态 */
+  window.__mvState = function () {
+    return pending ? { video: pending.video && pending.video.tagName, pausedByMutex: pending.pausedByMutex } : null;
+  };
 })();
