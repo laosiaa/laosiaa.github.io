@@ -3045,10 +3045,12 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   body[data-type="music"] #anMusic-page .aplayer-lrc-contents { height: 100% !important; }
   body[data-type="music"] #anMusic-page .aplayer-lrc p {
     font-size: 14px !important; line-height: 26px !important;
-    color: rgba(255, 255, 255, .62) !important;
+    color: rgba(255, 255, 255, .78) !important;
+    opacity: 1 !important;
   }
   body[data-type="music"] #anMusic-page .aplayer-lrc p.aplayer-lrc-current {
     font-size: 15px !important; color: #fff !important; font-weight: 600 !important;
+    opacity: 1 !important;
     text-shadow: 0 2px 12px rgba(0, 0, 0, .45);
   }
 
