@@ -76,16 +76,10 @@
       el.innerHTML = '<div class="md-sm-title"></div><a class="md-download" rel="noopener">下载这首歌</a>';
       document.body.appendChild(el);
     }
-    // 贴着封面右侧放（封面现在是居中的），这样整体视觉重心在屏幕中间
+    // 位置交给 CSS（固定在右上角），这里只清掉可能残留的内联坐标
     try {
-      var pic = document.querySelector("#anMusic-page .aplayer-pic");
-      if (pic) {
-        var r = pic.getBoundingClientRect();
-        if (r.width) {
-          el.style.left = Math.round(r.right + 30) + "px";
-          el.style.top = Math.round(r.top + 12) + "px";
-        }
-      }
+      el.style.removeProperty("left");
+      el.style.removeProperty("top");
     } catch (e) {}
 
     var a = curAudio(ap);
@@ -401,11 +395,17 @@
     if (!el) return;
     var bodyEl = el.querySelector(".aplayer-body");
     var lrc = el.querySelector(".aplayer-lrc");
+    var pic = el.querySelector(".aplayer-pic");
     if (!bodyEl || !lrc) return;
     if (lrc.parentElement !== bodyEl) bodyEl.appendChild(lrc);
     ["left", "top", "width", "height"].forEach(function (p) {
       lrc.style.removeProperty(p);
     });
+    if (pic) {
+      ["left", "top", "transform"].forEach(function (p) {
+        pic.style.removeProperty(p);
+      });
+    }
   }
 
   function tick() {
