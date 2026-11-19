@@ -82,6 +82,8 @@
       try { ap.list.switch(idx); } catch (e) {}
     }
     function resume() {
+      // 打开页面不自动播放（用户要求），只恢复曲目/进度/音量/模式，按播放键从上次位置继续
+      return;
       if (!st.playing) return;
       var go = function () {
         try {
