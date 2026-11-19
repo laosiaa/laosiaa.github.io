@@ -153,6 +153,25 @@ async function handle(request) {
     return json(got ? { ok: true, ...got } : { ok: false, sid }, got ? 200 : 404);
   }
 
+  // 诊断用：把上游的原始响应暴露出来，排查"整库 404"这类问题
+  if (path === "/debug") {
+    const sid = (u.searchParams.get("sid") || "190449").trim();
+    const out = { sid, colo: request.cf && request.cf.colo, tries: [] };
+    for (const br of ["320", "192"]) {
+      try {
+        const r = await fetch(`${GD}?types=url&source=netease&id=${encodeURIComponent(sid)}&br=${br}`, {
+          headers: { "User-Agent": UA, Referer: "https://music.gdstudio.xyz/" },
+          cf: { cacheTtl: 0 },
+        });
+        const body = await r.text();
+        out.tries.push({ br, status: r.status, ct: r.headers.get("content-type"), body: body.slice(0, 300) });
+      } catch (e) {
+        out.tries.push({ br, error: String(e).slice(0, 200) });
+      }
+    }
+    return json(out);
+  }
+
   return json({ ok: false, error: "not found" }, 404);
 }
 
