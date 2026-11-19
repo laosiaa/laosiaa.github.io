@@ -3781,3 +3781,12 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     line-height: 40px !important;
   }
 }
+
+/* ================= 第十六轮：歌词统一左对齐（与上方歌名同一起始线） ================= */
+@media screen and (min-width: 769px) {
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc .aplayer-lrc-contents,
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc .aplayer-lrc-contents p,
+  body[data-type="music"] #anMusic-page .md-col > .aplayer-lrc .aplayer-lrc-contents p.aplayer-lrc-current {
+    text-align: left !important;
+  }
+}
