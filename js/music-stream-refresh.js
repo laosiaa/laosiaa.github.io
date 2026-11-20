@@ -80,6 +80,8 @@
     });
     au.addEventListener("play", function () {
       clearTimeout(timer);
+      stallAttempts = 0;
+      watchdog(au, 0);
     });
     au.addEventListener("ended", function () {
       clearTimeout(timer);
@@ -88,6 +90,7 @@
     try {
       ap.on("listswitch", function () {
         clearTimeout(timer);
+        stallAttempts = 0;
         if (au.paused) schedule();
       });
     } catch (e) {}
@@ -102,6 +105,62 @@
     });
 
     if (au.paused) schedule();
+  }
+
+  /* 播放卡死看门狗：点了播放但进度不走 → 重新解析直链再来一次
+   * （App 冷启动恢复上次曲目后，媒体元素有时停在“已加载但不动”的状态，刷新页面才好） */
+  var stallAttempts = 0;
+  var lastRecoverAt = 0;
+
+  function watchdog(au, round) {
+    var t0 = au.currentTime || 0;
+    setTimeout(function () {
+      if (au.paused) return;
+      if (Math.abs((au.currentTime || 0) - t0) > 0.3) return; // 在走，正常
+      if (round === 0 && au.readyState < 2) {
+        watchdog(au, 1); // 还在下载，再给 2.5 秒
+        return;
+      }
+      if (round === 0 && au.networkState !== 1) {
+        watchdog(au, 1);
+        return;
+      }
+      recover();
+    }, round === 0 ? 1800 : 2500);
+  }
+
+  function recover() {
+    var now = Date.now();
+    if (now - lastRecoverAt < 12000) return;
+    if (stallAttempts >= 2) return;
+    lastRecoverAt = now;
+    stallAttempts++;
+
+    var ap = getAplayer();
+    if (!ap || !ap.audio) return;
+    var item = cur(ap);
+    if (!item.url) return;
+    var au = ap.audio;
+    var t = au.currentTime || 0;
+
+    try {
+      au.src = item.url + (item.url.indexOf("?") >= 0 ? "&" : "?") + "_r=" + now;
+      au.load();
+    } catch (e) {
+      return;
+    }
+    var go = function () {
+      try {
+        if (t > 0.5 && Math.abs((au.currentTime || 0) - t) > 1) au.currentTime = t;
+      } catch (e) {}
+      try {
+        var p = au.play();
+        if (p && p.catch) p.catch(function () {});
+      } catch (e) {}
+      au.removeEventListener("loadedmetadata", go);
+    };
+    au.addEventListener("loadedmetadata", go);
+    setTimeout(go, 1500);
   }
 
   if (document.readyState === "loading") {

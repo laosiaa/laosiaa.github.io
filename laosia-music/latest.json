@@ -1,1 +1,1 @@
-{"versionCode":9,"versionName":"1.2.4","url":"https://blog.521251.xyz/laosia-music/Laosia-music.apk","size":2634756,"sha256":"49877069f3a91984bb8970c235aa7e3d929f6e319c72120b9c5fd81b4374b38a","notes":"1. 恢复歌曲缓存：播过的歌会自动存到手机，再听不走流量\n2. 未缓存的歌照常联网播放，不会卡住\n3. 菜单里能看到已缓存首数与占用，可随时清理"}
+{"versionCode":10,"versionName":"1.2.5","url":"https://blog.521251.xyz/laosia-music/Laosia-music.apk","size":2635104,"sha256":"d5da7068b74d338cce9cf5046d120921535693f2c71e4170aea40bf414cd85fc","notes":"1. 修复重开 App 后点播放进度不走（缓存文件分片读取更严谨）\n2. 新增播放卡死自动重连（点了播放 2 秒不走就重新拉流）\n3. 暂停太久再播的音频报错也已修"}
