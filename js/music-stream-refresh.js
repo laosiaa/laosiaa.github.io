@@ -39,8 +39,9 @@
 
     var t = au.currentTime || 0;
     try {
-      au.preload = "auto";
-      au.src = item.url;
+      au.preload = "metadata";
+      // 加时间戳确保一定重新走一次 302（Worker 的跳转是 no-store，但媒体元素可能复用旧解析结果）
+      au.src = item.url + (item.url.indexOf("?") >= 0 ? "&" : "?") + "_r=" + Date.now();
       au.load();
     } catch (e) {
       return false;
