@@ -12,6 +12,7 @@
 
   var REFRESH_MS = 6 * 60 * 1000; // 暂停超过这么久就换一次直链
   var timer = null;
+  var lastPauseAt = 0;
 
   function getAplayer() {
     var host = document.querySelector("#anMusic-page meting-js");
@@ -74,6 +75,7 @@
     var au = ap.audio;
 
     au.addEventListener("pause", function () {
+      lastPauseAt = Date.now();
       schedule();
     });
     au.addEventListener("play", function () {
@@ -89,6 +91,15 @@
         if (au.paused) schedule();
       });
     } catch (e) {}
+
+    // 手机端：App 切后台后定时器会被冻结，回到前台先补一次刷新
+    document.addEventListener("visibilitychange", function () {
+      if (document.visibilityState !== "visible") return;
+      if (!au.paused) return;
+      if (Date.now() - lastPauseAt < 120000) return;
+      refreshSrc();
+      schedule();
+    });
 
     if (au.paused) schedule();
   }
