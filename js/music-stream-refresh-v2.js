@@ -20,6 +20,7 @@
   var stallAttempts = 0;
   var lastRecoverAt = 0;
   var undo = null;                  // 报错后要切回来的曲目
+  var wantPlay = false;             // 用户当前是否「想播放」——所有自动续播都必须先问它
 
   function getAplayer() {
     var host = document.querySelector("#anMusic-page meting-js");
@@ -76,18 +77,22 @@
     return true;
   }
 
-  /* 包一层 play：链接太旧就先换链再播（锁屏/通知栏触发也走这里） */
+  /* 包一层 play / pause：记录「用户到底想不想播放」。
+     注意：内部恢复一律用 __srfOrigPlay，绕开这层，避免把自动续播当成用户意图。 */
   function wrapPlay(au) {
     if (au.__srfPlay || typeof au.play !== "function") return;
     au.__srfPlay = true;
     var orig = au.play;
+    au.__srfOrigPlay = orig;
 
     au.play = function () {
+      wantPlay = true;                     // 走到这里 = 有人真的要播（按钮/锁屏/APlayer 切歌）
       try {
         if (lastLoadAt && Date.now() - lastLoadAt > STALE_MS && !au.__srfReloading) {
           au.__srfReloading = true;
           var ok = reload(function () {
             au.__srfReloading = false;
+            if (!wantPlay) return;         // 换链这一两秒里用户按了暂停 → 就别出声
             try {
               var p = orig.call(au);
               if (p && p.catch) p.catch(function () {});
@@ -99,6 +104,16 @@
       } catch (e) {}
       return orig.apply(au, arguments);
     };
+
+    if (typeof au.pause === "function" && !au.__srfPause) {
+      au.__srfPause = true;
+      var opause = au.pause;
+      au.__srfOrigPause = opause;
+      au.pause = function () {
+        wantPlay = false;                  // 明确的暂停 = 不想播了
+        return opause.apply(au, arguments);
+      };
+    }
   }
 
   /* 暂停期间定时换链 */
@@ -117,8 +132,9 @@
     if (!ap) return;
     undo = { idx: ap.list.index, t: au.currentTime || 0, at: Date.now() };
     reload(function () {
+      if (!wantPlay) return;               // 暂停状态下报错 → 只换链，不出声
       try {
-        var p = au.play();
+        var p = au.__srfOrigPlay ? au.__srfOrigPlay.call(au) : au.play();
         if (p && p.catch) p.catch(function () {});
       } catch (e) {}
     });
@@ -139,8 +155,9 @@
       lastRecoverAt = now;
       stallAttempts++;
       reload(function () {
+        if (!wantPlay) return;             // 卡死恢复期间用户暂停了 → 不再出声
         try {
-          var p = au.play();
+          var p = au.__srfOrigPlay ? au.__srfOrigPlay.call(au) : au.play();
           if (p && p.catch) p.catch(function () {});
         } catch (e) {}
       });
@@ -189,7 +206,8 @@
               setTimeout(function () {
                 try {
                   if (t > 0.5) ap.audio.currentTime = t;
-                  var p = ap.audio.play();
+                  if (!wantPlay) return;   // 用户已经暂停 → 只回位，不自动出声
+                  var p = ap.audio.__srfOrigPlay ? ap.audio.__srfOrigPlay.call(ap.audio) : ap.audio.play();
                   if (p && p.catch) p.catch(function () {});
                 } catch (e) {}
               }, 500);
@@ -222,4 +240,6 @@
   // 调试钩子
   window.__mmRefreshStream = function () { return reload(); };
   window.__mmForceStale = function () { lastLoadAt = Date.now() - STALE_MS - 1000; return true; };
+  window.__mmWantPlay = function () { return wantPlay; };
+  window.__mmSetWantPlay = function (v) { wantPlay = !!v; return wantPlay; };
 })();

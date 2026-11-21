@@ -30,7 +30,8 @@
       if (!t || t.tagName !== "VIDEO") return;
       var ap = playingNow();
       if (!ap) return; // 本来就没在放歌，不用管
-      pending = { ap: ap, video: t, pausedByMutex: false };
+      pending = { ap: ap, video: t, pausedByMutex: false,
+                  wantWas: (typeof window.__mmWantPlay === "function" ? window.__mmWantPlay() : true) };
       setTimeout(function () {
         if (pending && pending.video === t && ap.audio && ap.audio.paused) pending.pausedByMutex = true;
       }, 260);
@@ -52,7 +53,10 @@
   function resume(reason) {
     if (!pending || !pending.pausedByMutex) return;
     var ap = pending.ap;
+    var wantWas = pending.wantWas;
     pending = null;
+    // 视频开始时音乐本来就是暂停的（用户不想听）→ 别替他恢复
+    if (wantWas === false) return;
     try {
       // 用户手动暂停过就别硬放：只在 audio 仍是暂停态时恢复
       if (ap.audio && ap.audio.paused) ap.play();

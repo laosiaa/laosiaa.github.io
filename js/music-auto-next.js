@@ -28,6 +28,8 @@
   function kick(ap, tries) {
     tries = tries || 0;
     if (!ap || !ap.audio || !ap.audio.paused) return;
+    // 用户已经暂停（例如在最后一秒按了暂停）→ 不要自动接下一首
+    if (typeof window.__mmWantPlay === "function" && !window.__mmWantPlay()) return;
     try {
       var p = ap.play();
       if (p && typeof p.catch === "function") {
