@@ -4005,3 +4005,12 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
     max-height: 360px !important;
   }
 }
+
+/* 加载动画：主题的 .loaded 只把 opacity 置 0、z-index -1000，这里补一刀彻底不挡点击 */
+#loading-box.loaded .loading-bg,
+#loading-box.loaded .loading-bg .loading-img,
+#loading-box.loaded .loading-bg .loading-image-dot {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  visibility: hidden !important;
+}
