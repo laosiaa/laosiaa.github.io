@@ -2945,7 +2945,7 @@
 
     var head =
       '<div class="mm-info-hero">' +
-      '<div class="mm-info-cover" style="background-image:url(\'' + esc(al.picUrl || cur.pic || "").replace(/'/g, "%27") + '\')"></div>' +
+      '<div class="mm-info-cover" style="background-image:url(\'' + esc(cur.pic || al.picUrl || "").replace(/'/g, "%27") + '\')"></div>' +
       '<div class="mm-info-meta">' +
       "<h3>" + esc(s.name || curName) + "</h3>" +
       (s.alias && s.alias.length ? '<p class="mm-info-alias">' + esc(s.alias.join(" / ")) + "</p>" : "") +
