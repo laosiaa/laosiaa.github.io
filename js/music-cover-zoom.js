@@ -4,7 +4,9 @@
 
   /* ---------- 1. 删除 .aplayer-button 节点 ---------- */
   function killButton() {
-    var btns = document.querySelectorAll("#anMusic-page .aplayer-pic .aplayer-button, .aplayer-pic .aplayer-button");
+    // 只删音乐馆自己的按钮！之前漏了作用域，把左下角迷你播放器的 .aplayer-button 也删了，
+    // 导致主题的 musicBindEvent() 拿到 null 抛错，点「播放音乐」没反应。
+    var btns = document.querySelectorAll("#anMusic-page .aplayer-pic .aplayer-button");
     for (var i = 0; i < btns.length; i++) {
       var b = btns[i];
       if (b && b.parentNode) b.parentNode.removeChild(b);
