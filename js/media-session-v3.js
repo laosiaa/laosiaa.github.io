@@ -30,6 +30,26 @@
     return null;
   }
 
+  /* 把所有实例都停掉：锁屏/通知栏点暂停时，不能只停 active 那一个
+     （音乐页播放器 + 左下角迷你播放器是两个 APlayer 实例，
+      只停其中一个就会出现「已经暂停了但还有声音」） */
+  function pauseAll(except) {
+    for (var i = 0; i < players.length; i++) {
+      var p = players[i];
+      if (!p || p === except || !p.audio || p.audio.paused) continue;
+      try { p.pause(); } catch (e) {}
+    }
+  }
+
+  /* 同时只允许一个实例出声（主题没开 mutex 时靠这里兜住） */
+  function soloPlay(winner) {
+    for (var i = 0; i < players.length; i++) {
+      var p = players[i];
+      if (!p || p === winner || !p.audio || p.audio.paused) continue;
+      try { p.pause(); } catch (e) {}
+    }
+  }
+
   function paintMeta(ap) {
     var a = trackOf(ap);
     var pic = bigPic(a.pic || "");
@@ -92,7 +112,7 @@
         var a = active; if (a) a.play();
       });
       navigator.mediaSession.setActionHandler("pause", function () {
-        var a = active; if (a) a.pause();
+        pauseAll(null);          // 所有实例一起停，避免另一个播放器还在响
       });
       navigator.mediaSession.setActionHandler("previoustrack", function () {
         var a = active; if (a) a.skipBack();
@@ -123,6 +143,7 @@
     if (ap.audio) {
       ap.audio.addEventListener("play", function () {
         active = ap;
+        soloPlay(ap);            // 同时只让一个实例出声
         // 等一拍，等 APlayer 把 index / src 切好
         setTimeout(function () { sync(true); }, 120);
       }, { passive: true });

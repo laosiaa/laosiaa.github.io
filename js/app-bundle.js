@@ -1,4 +1,4 @@
-/*! Laosia app bundle (27 files) */
+/*! Laosia app bundle (28 files) */
 /* ---- tech-canvas.js ---- */
 /*! 科技风粒子画布：接管首页 #peoplecanvas，绘制电路网格 + 流动光点 + 扫描线 */
 (function () {
@@ -4464,6 +4464,26 @@
     return null;
   }
 
+  /* 把所有实例都停掉：锁屏/通知栏点暂停时，不能只停 active 那一个
+     （音乐页播放器 + 左下角迷你播放器是两个 APlayer 实例，
+      只停其中一个就会出现「已经暂停了但还有声音」） */
+  function pauseAll(except) {
+    for (var i = 0; i < players.length; i++) {
+      var p = players[i];
+      if (!p || p === except || !p.audio || p.audio.paused) continue;
+      try { p.pause(); } catch (e) {}
+    }
+  }
+
+  /* 同时只允许一个实例出声（主题没开 mutex 时靠这里兜住） */
+  function soloPlay(winner) {
+    for (var i = 0; i < players.length; i++) {
+      var p = players[i];
+      if (!p || p === winner || !p.audio || p.audio.paused) continue;
+      try { p.pause(); } catch (e) {}
+    }
+  }
+
   function paintMeta(ap) {
     var a = trackOf(ap);
     var pic = bigPic(a.pic || "");
@@ -4526,7 +4546,7 @@
         var a = active; if (a) a.play();
       });
       navigator.mediaSession.setActionHandler("pause", function () {
-        var a = active; if (a) a.pause();
+        pauseAll(null);          // 所有实例一起停，避免另一个播放器还在响
       });
       navigator.mediaSession.setActionHandler("previoustrack", function () {
         var a = active; if (a) a.skipBack();
@@ -4557,6 +4577,7 @@
     if (ap.audio) {
       ap.audio.addEventListener("play", function () {
         active = ap;
+        soloPlay(ap);            // 同时只让一个实例出声
         // 等一拍，等 APlayer 把 index / src 切好
         setTimeout(function () { sync(true); }, 120);
       }, { passive: true });
@@ -4630,4 +4651,71 @@
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
   else boot();
   document.addEventListener("pjax:complete", function () { setTimeout(boot, 400); });
+})();
+
+;
+/* ---- music-native-bridge.js ---- */
+/*! APK 原生桥：通知栏 / 耳机按键 / 锁屏 发来的指令落到网页播放器
+ *
+ * Android 端 PlayerService 的 MediaSession 回调会执行
+ *   window.__laosiaNative && window.__laosiaNative('play'|'pause'|'next'|'prev'|'seek:12.3')
+ * 之前网页侧根本没定义这个函数（`&&` 直接短路），所以通知栏点暂停完全没反应，
+ * 音乐继续响——这就是「apk 暂停了还有声音」的根源之一。
+ */
+(function () {
+  "use strict";
+
+  function list() {
+    var out = [];
+    var host = document.querySelector("#anMusic-page meting-js");
+    if (host && host.aplayer) out.push(host.aplayer);
+    document.querySelectorAll("meting-js").forEach(function (m) {
+      if (m.aplayer && out.indexOf(m.aplayer) === -1) out.push(m.aplayer);
+    });
+    if (window.aplayers && window.aplayers.length) {
+      for (var i = 0; i < window.aplayers.length; i++) {
+        if (out.indexOf(window.aplayers[i]) === -1) out.push(window.aplayers[i]);
+      }
+    }
+    return out;
+  }
+
+  function sounding() {
+    var all = list();
+    for (var i = 0; i < all.length; i++) {
+      var p = all[i];
+      if (p.audio && !p.audio.paused) return p;
+    }
+    return null;
+  }
+
+  function current() {
+    return sounding() || list()[0] || null;
+  }
+
+  function pauseAll() {
+    list().forEach(function (p) {
+      try { if (p.audio && !p.audio.paused) p.pause(); } catch (e) {}
+    });
+  }
+
+  window.__laosiaNative = function (cmd) {
+    cmd = String(cmd || "");
+    try {
+      if (cmd === "pause") { pauseAll(); return "ok"; }   // 暂停必须停掉所有实例
+      var ap = current();
+      if (!ap) return "no-player";
+      if (cmd === "play") { ap.play(); return "ok"; }
+      if (cmd === "next") { ap.skipForward ? ap.skipForward() : ap.list.switch((ap.list.index + 1) % ap.list.audios.length); return "ok"; }
+      if (cmd === "prev") { ap.skipBack ? ap.skipBack() : ap.list.switch((ap.list.index - 1 + ap.list.audios.length) % ap.list.audios.length); return "ok"; }
+      if (cmd.indexOf("seek:") === 0) {
+        var s = parseFloat(cmd.slice(5));
+        if (isFinite(s)) ap.seek(s);
+        return "ok";
+      }
+    } catch (e) {
+      return "err:" + e.message;
+    }
+    return "unknown";
+  };
 })();
