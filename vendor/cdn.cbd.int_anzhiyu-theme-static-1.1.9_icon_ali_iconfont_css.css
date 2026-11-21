@@ -1,10 +1,10 @@
 @font-face {
   font-family: "anzhiyufont"; /* Project id 2508400 */
-  src: url('./font_2508400_fpn9ui60u6q.eot?t=1690446183540'); /* IE9 */
-  src: url('./font_2508400_fpn9ui60u6q.eot?t=1690446183540#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('./font_2508400_fpn9ui60u6q.woff2?t=1690446183540') format('woff2'),
-       url('./font_2508400_fpn9ui60u6q.woff?t=1690446183540') format('woff'),
-       url('./font_2508400_fpn9ui60u6q.ttf?t=1690446183540') format('truetype'),
+  src: url('font_2508400_fpn9ui60u6q.eot'); /* IE9 */
+  src: url('font_2508400_fpn9ui60u6q.eot') format('embedded-opentype'), /* IE6-IE8 */
+       url('font_2508400_fpn9ui60u6q.woff2') format('woff2'),
+       url('font_2508400_fpn9ui60u6q.woff') format('woff'),
+       url('font_2508400_fpn9ui60u6q.ttf') format('truetype'),
        url('./font_2508400_fpn9ui60u6q.svg?t=1690446183540#anzhiyufont') format('svg');
 }
 .anzhiyufont {
