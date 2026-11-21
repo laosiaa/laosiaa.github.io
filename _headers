@@ -1,0 +1,29 @@
+# Cloudflare Pages 缓存策略
+# 静态资源缓存一天（配合 app-bundle 的短缓存），HTML 始终回源校验
+
+/js/app-bundle.js
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
+
+/js/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/css/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/img/*
+  Cache-Control: public, max-age=604800
+
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/music/meting.json
+  Cache-Control: public, max-age=3600
+
+/*.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/*
+  Cache-Control: public, max-age=0, must-revalidate
