@@ -65,17 +65,53 @@
     return !!(t && t.closest && t.closest(CONTROL));
   }
 
-  // click 与 pointerup 都会触发（顺序 pointerup → click），用时间戳去重，保证一次点击只切一次
-  var lastToggle = 0;
+  // 随机切一首（尽量避开当前这首）
+  function randomSong() {
+    var ap = getAp();
+    if (!ap || !ap.list || !ap.list.audios || !ap.list.audios.length) return;
+    var n = ap.list.audios.length;
+    var cur = ap.list.index;
+    var idx = cur;
+    if (n > 1) {
+      do {
+        idx = Math.floor(Math.random() * n);
+      } while (idx === cur);
+    }
+    try {
+      ap.list.switch(idx);
+    } catch (e) {}
+    try {
+      var p = ap.play();
+      if (p && p.catch) p.catch(function () {});
+    } catch (e) {}
+    sync(true);
+  }
+
+  /* 单击 = 播放/暂停，双击 = 随机换一首。
+     pointerup 与 click 是同一手势（相隔 ~1ms），100ms 内只算一次；
+     单击动作延迟 280ms 执行，等第二击；300ms 内来第二击就当双击。 */
+  var lastEvt = 0;
+  var pending = null;
+
   function handle(e) {
     if (!hitWidget(e) || isControl(e.target)) return;
     // 一律拦截：否则主题那个 <a> 上的 onclick 会再切一次，等于没切
     e.preventDefault();
     e.stopPropagation();
     var now = Date.now();
-    if (now - lastToggle < 600) return;
-    lastToggle = now;
-    toggle();
+    if (now - lastEvt < 100) return; // pointerup + click 同一次手势
+    lastEvt = now;
+
+    if (pending) {
+      clearTimeout(pending);
+      pending = null;
+      randomSong();
+      return;
+    }
+    pending = setTimeout(function () {
+      pending = null;
+      toggle();
+    }, 280);
   }
 
   document.addEventListener("click", handle, true);

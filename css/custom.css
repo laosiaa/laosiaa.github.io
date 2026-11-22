@@ -4021,3 +4021,6 @@ body > div.heart,
 body > div[class*="click-heart"] {
   pointer-events: none !important;
 }
+
+/* 左下角悬浮播放器：双击随机换歌，禁掉移动端双击缩放 */
+#nav-music { touch-action: manipulation; }
