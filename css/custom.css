@@ -4014,3 +4014,10 @@ body[data-type="music"] #anMusic-page .aplayer-list ol > li.mm-hide {
   pointer-events: none !important;
   visibility: hidden !important;
 }
+
+/* ===== 点击特效（文字/爱心）不该拦截鼠标：它们盖在右下角音乐按钮上，会导致“能播放不能暂停” ===== */
+body > span[style*="z-index: 150"],
+body > div.heart,
+body > div[class*="click-heart"] {
+  pointer-events: none !important;
+}
