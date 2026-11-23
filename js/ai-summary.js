@@ -10,8 +10,8 @@
   if (!ENDPOINT) return; // 未配置 Worker 地址时静默不工作
 
   function isPostPage() {
-    // /YYYY/MM/DD/slug/ 才算文章页
-    return /^\/\d{4}\/\d{2}\/\d{2}\/[^\/]+\/?$/.test(location.pathname);
+    // /s/<slug>/ 是现在的文章地址；旧日期路径 /YYYY/MM/DD/<slug>/ 也认（跳转页兜底）
+    return /^\/(?:s\/[^\/]+|\d{4}\/\d{2}\/\d{2}\/[^\/]+)\/?$/.test(location.pathname);
   }
 
   function articleText() {
