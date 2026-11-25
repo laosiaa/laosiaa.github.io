@@ -4024,3 +4024,26 @@ body > div[class*="click-heart"] {
 
 /* 左下角悬浮播放器：双击随机换歌，禁掉移动端双击缩放 */
 #nav-music { touch-action: manipulation; }
+
+/* ===== 图文教程类文章：截图按原始比例完整显示（不裁切、不限高） ===== */
+body:has(#page-header.post-bg) #article-container img.dsh-shot,
+body:has(#page-header.post-bg) #article-container img.dsh-shot:not(.emoji):not(.keep-full) {
+  height: auto !important;
+  max-height: none !important;
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  margin: 14px auto 6px !important;
+  display: block !important;
+  border-radius: 12px !important;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, .35);
+  cursor: zoom-in;
+}
+@media screen and (max-width: 768px) {
+  body:has(#page-header.post-bg) #article-container img.dsh-shot,
+  body:has(#page-header.post-bg) #article-container img.dsh-shot:not(.emoji):not(.keep-full) {
+    height: auto !important;
+    max-height: none !important;
+  }
+}
