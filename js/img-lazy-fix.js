@@ -14,6 +14,12 @@
     img.removeAttribute("data-lazy-src");
   }
 
+  function loadEager() {
+    // 图文教程里的截图（.dsh-shot）一律立即加载，避免 1px 占位把版式撑错、滚动时才忽然变高
+    var e = document.querySelectorAll("img.dsh-shot[data-lazy-src]");
+    for (var i = 0; i < e.length; i++) load(e[i]);
+  }
+
   function scan() {
     var imgs = document.querySelectorAll("img[data-lazy-src]");
     if (!imgs.length) return;
@@ -35,13 +41,15 @@
 
   var beats = 0;
   function boot() {
+    loadEager();
     scan();
-    setTimeout(scan, 300);
-    setTimeout(scan, 1200);
+    setTimeout(function () { loadEager(); scan(); }, 300);
+    setTimeout(function () { loadEager(); scan(); }, 1200);
     // 兜底轮询：不依赖 scroll 事件（某些内嵌/后台环境里 scroll 不派发）
     if (!window.__llTimer) {
       window.__llTimer = setInterval(function () {
         beats++;
+        loadEager();
         scan();
         if (beats > 150 || !document.querySelector("img[data-lazy-src]")) {
           clearInterval(window.__llTimer);
