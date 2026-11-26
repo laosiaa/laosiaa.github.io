@@ -1,0 +1,934 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Caddy 从零上手：自动 HTTPS 的 Web 服务器 | Laosia</title><meta name="keywords" content="Caddy,反向代理,HTTPS,Web服务器,教程"><meta name="author" content="Laosia"><meta name="copyright" content="Laosia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#18171d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Caddy 从零上手：自动 HTTPS 的 Web 服务器"><meta name="application-name" content="Caddy 从零上手：自动 HTTPS 的 Web 服务器"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#18171d"><meta property="og:type" content="article"><meta property="og:title" content="Caddy 从零上手：自动 HTTPS 的 Web 服务器"><meta property="og:url" content="https://blog.521251.xyz/s/caddy-beginner-guide/index.html"><meta property="og:site_name" content="Laosia"><meta property="og:description" content="从安装到反向代理再到自动 HTTPS，用一份能直接抄的 Caddyfile 讲清楚 Caddy 怎么用：Windows&amp;#x2F;Linux&amp;#x2F;Docker 三种装法、七条语法规则、二十条常用指令、内网自签证书、以及那些第一次一定会踩的报错。"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="/img/mirror/85b72696_8sH5NlK6.jpg"><meta property="article:author" content="Laosia"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="/img/mirror/85b72696_8sH5NlK6.jpg"><meta name="description" content="从安装到反向代理再到自动 HTTPS，用一份能直接抄的 Caddyfile 讲清楚 Caddy 怎么用：Windows&amp;#x2F;Linux&amp;#x2F;Docker 三种装法、七条语法规则、二十条常用指令、内网自签证书、以及那些第一次一定会踩的报错。"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://blog.521251.xyz/s/caddy-beginner-guide/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/cdn.cbd.int_node-snackbar-0.1.16_dist_snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/vendor/cdn.cbd.int_-fancyapps_ui-5.0.28_dist_fancybox_fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/vendor/npm.elemecdn.com_anzhiyu-theme-static-1.0.0_swiper_swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"/img/mirror/38cd9061_1794558626349_tech-emblem.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: {"apiurl":null},
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: Laosia","link":"链接: ","source":"来源: Laosia","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: '/vendor/cdn.cbd.int_flickr-justified-gallery-2.1.2_dist_fjGallery.min.js',
+      css: '/vendor/cdn.cbd.int_flickr-justified-gallery-2.1.2_dist_fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Laosia',
+  title: 'Caddy 从零上手：自动 HTTPS 的 Web 服务器',
+  postAI: '',
+  pageFillDescription: 'Caddy 从零上手：自动 HTTPS 的 Web 服务器, 一、Caddy 和 Nginx 差在哪, 二、先搞懂三件事不然会一直懵, 三、装 Caddy, Windows, Debian x2F Ubuntu（推荐用官方源能用 systemd 托管）, Docker, 四、十分钟跑起第一个站, 五、自动 HTTPS：它到底做了什么, 内网、本机、没有公网 IP 怎么办, 六、反向代理：最常用的功能, 同一个域名按路径分流, 多个网站, 单页应用（Vue x2F React x2F Hexo 这类）, 七、Caddyfile 的语法七条就够, 八、常用指令速查, 九、一份能直接用的完整配置, 十、加个密码：基础认证, 十一、日志：看清楚谁在访问, 十二、内网服务放出来（自建服务标配）, 十三、新手必踩的坑（对照排查）, 十四、从 Nginx 迁移：对照着改, 十五、日常运维, 十六、小结从零上手自动的服务器如果你只是想让一个网页一个一个自建服务能从浏览器打开那大概是目前最省事的选择一个可执行文件一个十来行的配置文件证书自动申请自动续期不用再折腾不用记的括号和分号这篇写给完全没用过的人所有配置片段都用实际跑过命令也实际执行验证过可以放心抄一和差在哪对比项证书自己装写续期改配置自动申请自动续期自动跳转全自动配置文件分号大括号嵌套缩进错了就报错十来行按行读就懂的静态文件一行反向代理一堆一行要单独编译默认开启安装装包编译各种依赖单文件解压就能跑代价也要说清楚的内存占用比略高几十对十几生态和第三方模块没多用写的要扩展得用重新编译对个人站小项目自建服务来说这些都不重要省下来的运维时间更重要二先搞懂三件事不然会一直懵新手卡住九成不是的问题是这三件事没理清域名你在域名商那里把的记录指向服务器公网浏览器才能找到这台机器没生效或者指错了申请证书一定失败它只能通过访问这个域名来证明你是这台机器的管理者和两个端口明文加密默认会同时监听这两个端口上跑你的站上只做一件事把用户跳到所以服务器防火墙云厂商安全组必须放行和还有那是这一条没做症状就是证书申请一直卡着翻到本篇第十三节有排错清单反向代理是什么你的应用写的通常监听在这种高位端口上外网访问不到反向代理就是这个门房外面访问门房收到后转给里面的端口再把结果原样返回这样证书压缩限流都由门房统一处理应用本身不用管干的就是这个门房而且它是自动配好的门房三装到下的也可以解压得到一个放在任意目录进到该目录后上的数据目录是证书密钥自动保存的配置都在这里无需手动创建推荐用官方源能用托管装完会自动注册成开机自启的服务配置文件在日志用看三点必须照做否则证书每次重启都要重新申请很快会撞上的限流必须挂卷证书就存在这里建议挂卷自动保存的配置要映射不然不生效不影响只是少了点速度四十分钟跑起第一个站新建一个目录里面放两样东西内容随便写点然后在里执行打开就能看到页面这就是最小的完整配置表示监听端口不区分域名是所有请求的站点根目录是把文件发出去四个命令认全日常够用命令作用前台运行日志直接打在屏幕上停后台常驻上就是留在后台生产环境用停掉后台那个实例改完配置热加载不断现有连接最常用还有两个检查用的只检查语法不启动自动整理缩进和空格改了配置不要去是平滑切换网站不掉线生产环境更不该重启服务这是用得比舒服的一个细节五自动它到底做了什么把上面的换成一个真实域名重新会自己完成这些事向或会自动挑选可用的申请的证书通过访问一个特定来证明域名确实指向这台机器挑战它在端口临时放一个验证文件从公网来取拿到证书后存在本地数据目录端口开始提供把端口的请求跳到到期前约天自动续期续期失败会重试你什么都不用做证书位置系统路径运行普通用户容器内挂卷就到宿主机了一个新域名从到能访问通常十几秒但如果还没生效或者没放行就会卡住这就是新手最容易踩的坑见第十三节内网本机没有公网怎么办会自动识别内网这类名字它会用自己内置的签发本地证书而不是去找你手动指定也可以用的是自建的本地默认浏览器不认它会提示不安全让系统信任它的命令是把的本地根证书装进系统信任库可能需要管理员权限反悔就把装进去的删掉装完之后内网域名在浏览器里就是正常的小绿锁了效果和公网证书一样只是仅限你自己的设备信任六反向代理最常用的功能把端口的应用暴露出去就这一行就这一行证书升级全部自动处理不需要像那样手写这是最省心的地方同一个域名按路径分流前端在后端在会把前缀剥掉再转给后端后端收到如果后端自己就带前缀改用前缀会保留是按顺序匹配的互斥逻辑命中一个就不再往下走最后一个兜底写法比的优先级好懂太多多个网站一个里写多个块就行各自独立单页应用这类刷新页面会是因为服务器上根本没有这个文件加一行意思是文件存在就发文件不存在就发剩下的交给前端路由七的语法七条就够每行一条指令指令和参数之间用空格分开花括号包起来的叫块块里的指令只对这个块这个站生效缩进用空格也能跑但会改成不写端口只写域名自动上写只跑开头的全局选项块不写站点名只写以开头是注释参数里可以用占位符全局选项块长这样写在文件最上面是给发通知用的证书快过期账户问题建议写上出事能收到邮件常用的全局选项还有选项作用证书通知邮箱全站不自动上纯内网纯场景打开调试日志排错时临时加关掉本地管理接口默认在八常用指令速查指令写法示例说明站点根目录是匹配器匹配所有发文件打开目录列表反向代理压缩响应加删改响应头表示删掉跳转内部重写路径地址栏不变依次尝试文件基础认证密码用生成访问日志手动指定证书策略按路径分流维护中直接返回内容复用片段写一次多处引需编译模块限流不是内置的注意别照抄网上的配置九一份能直接用的完整配置把前面所有东西合起来一个静态站反代压缩安全头日志的完整配置几个说明会把响应头里的删掉少暴露一点信息告诉浏览器以后都用访问我建议先不加加了会被浏览器硬记一年出问题很难回退日志目录要先并给用户写权限否则启动就报错十加个密码基础认证给后台临时页面加一层密码两步你的密码输出类似把输出贴进配置注意在配置文件里不用转义但在里用写配置时要小心是用户名后面那串是密码的哈希配置里永远不要写明文密码想加几个人就写几行旧版本里这条指令叫起改名看到老教程写不用慌新版仍然接受只是建议统一用新名字十一日志看清楚谁在访问单个文件就切最多留个自带日志轮转不需要格式方便用统计今天访问量最高的个路径不看日志的话把所有去掉更省磁盘高流量站点一天能写几百十二内网服务放出来自建服务标配你家里服务器上跑了一堆面板路由器后台它们都是都不带证书用加一层要点内网名字拿不到公网证书用本地签上游自己用的是自签证书比如默认那样不校验它否则握手失败记得一次让电脑和手机信任本地否则浏览器还是提示不安全如果你有域名并且解析到了公网那这些服务可以直接用子域名走自动比内网自签省事得多只是要把服务暴露到公网注意设密码和访问控制十三新手必踩的坑对照排查现象原因解决启动报绑非用户不能绑端口用跑或证书申请一直卡住日志里端口不通防火墙云安全组运营商封放行云服务器还得改安全组同上但域名是橙云流量经过拿不到真实验证请求关掉橙云灰云或改用挑战用的源站证书域名解析失败没生效或记录填错确认指向服务器等站点能开但显示上游服务没起端口写错监听在之外先确认应用活着浏览器提示应用自己也做了强制跳转和互相踢皮球关掉应用的跳转只让管上传大文件报默认不限但上游应用有限制改上游或应用的请求体上限上一闪就退端口被别的程序占了旧进程查占用换端口或杀进程改了配置不生效只改了文件没报错会直接打在终端触发限流反复测试导致重复申请同一注册域名每周限张同名证书每周张等一周或用测试测试期强烈建议先在本地或子域名上折腾别拿主域名反复试真要反复测把全局选项里的换成测试环境它的证书不被信任但不限流调通了再换回来十四从迁移对照着改目的静态目录反代反代并保留真实自动自动跳转路径前缀剥除单页应用回退加响应头密码保护文件访问日志一句话总结用户的迁移体验把那一堆全删掉把换把后面加个剩下的基本一一对应十五日常运维改完先验语法统一格式平滑生效装的可以这样跟着看日志备份清单只有两样以及进来的片段文件数据目录里的和的卷搬服务器时把这两样带过去证书还能继续用不用重新申请十六小结的核心价值就一句话把申请证书续期配反向代理这一整套运维动作压成了配置文件里的几行字如果这篇文章只让你记三件事有域名就用域名端口白送没域名内网本机就加改完配置永远用不要重启剩下的查第八节的指令表就够了',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-27 06:27:12',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>!function(){try{var t=localStorage.getItem("theme");if(t!=="light"){localStorage.setItem("theme","dark");document.documentElement.setAttribute("data-theme","dark");document.documentElement.classList.add("dark");}}catch(e){}}();</script><script>document.addEventListener("DOMContentLoaded",function(){function hide(){var b=document.getElementById("loading-box");if(b){b.classList.add("loaded");b.style.pointerEvents="none";var g=b.querySelector(".loading-bg");if(g){g.style.opacity="0";g.style.zIndex="-1000";g.style.pointerEvents="none";}}}hide();setTimeout(hide,700);setTimeout(hide,2000);});</script><link rel="stylesheet" href="/css/custom.css?v=20261123c"><link rel="preconnect" href="https://img.521251.xyz" crossorigin><link rel="dns-prefetch" href="https://img.521251.xyz"><link rel="preconnect" href="https://p1.music.126.net"><link rel="dns-prefetch" href="https://p2.music.126.net"><link rel="dns-prefetch" href="https://ai.sos.us.kg"><link rel="dns-prefetch" href="https://events.vercount.one"><meta name="ai-summary-endpoint" content="https://ai.sos.us.kg"><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/mirror/84d41ee8_1794542832099_head_18.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.1.10_progress_bar_progress_bar.css"/><script async="async" src="/vendor/cdn.cbd.int_pace-js-1.2.4_pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src="/img/mirror/e4616c84_1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Laosia</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="/img/reward-laugh.gif" target="_blank"><img class="post-qr-code-img" alt="大笑" src="/img/reward-laugh.gif"/></a><div class="post-qr-code-desc">大笑</div></li><li class="reward-item"><a href="/img/reward-despise.gif" target="_blank"><img class="post-qr-code-img" alt="鄙视" src="/img/reward-despise.gif"/></a><div class="post-qr-code-desc">鄙视</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AI%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">AI工具<sup>1</sup></a><a href="/tags/Caddy/" style="font-size: 1.05rem;">Caddy<sup>1</sup></a><a href="/tags/Cloudflare/" style="font-size: 1.05rem;">Cloudflare<sup>1</sup></a><a href="/tags/DAF/" style="font-size: 1.05rem;">DAF<sup>1</sup></a><a href="/tags/DNS/" style="font-size: 1.05rem;">DNS<sup>1</sup></a><a href="/tags/DNSSEC/" style="font-size: 1.05rem;">DNSSEC<sup>1</sup></a><a href="/tags/DSH/" style="font-size: 1.05rem;">DSH<sup>1</sup></a><a href="/tags/Debian11/" style="font-size: 1.05rem;">Debian11<sup>1</sup></a><a href="/tags/DeepSeek/" style="font-size: 1.05rem;">DeepSeek<sup>1</sup></a><a href="/tags/Docker/" style="font-size: 1.05rem;">Docker<sup>2</sup></a><a href="/tags/HTTPS/" style="font-size: 1.05rem;">HTTPS<sup>1</sup></a><a href="/tags/HiDNS/" style="font-size: 1.05rem;">HiDNS<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 1.05rem;">Markdown<sup>1</sup></a><a href="/tags/Mihomo/" style="font-size: 1.05rem;">Mihomo<sup>1</sup></a><a href="/tags/PVE/" style="font-size: 1.05rem;">PVE<sup>2</sup></a><a href="/tags/SSH/" style="font-size: 1.05rem;">SSH<sup>1</sup></a><a href="/tags/Vibe-Coding/" style="font-size: 1.05rem;">Vibe Coding<sup>1</sup></a><a href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.05rem;">Web服务器<sup>1</sup></a><a href="/tags/gcore/" style="font-size: 1.05rem;">gcore<sup>1</sup></a><a href="/tags/hexo/" style="font-size: 1.05rem;">hexo<sup>1</sup></a><a href="/tags/lxc/" style="font-size: 1.05rem;">lxc<sup>1</sup></a><a href="/tags/pve/" style="font-size: 1.05rem;">pve<sup>3</sup></a><a href="/tags/%E4%BC%98%E5%8C%96/" style="font-size: 1.05rem;">优化<sup>1</sup></a><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 1.05rem;">分享<sup>1</sup></a><a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 1.05rem;">反向代理<sup>1</sup></a><a href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/" style="font-size: 1.05rem;">叠螺机<sup>1</sup></a><a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 1.05rem;">命令行<sup>1</sup></a><a href="/tags/%E5%9B%9E%E6%BA%90/" style="font-size: 1.05rem;">回源<sup>1</sup></a><a href="/tags/%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">图文教程<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 1.05rem;">技术<sup>6</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>3</sup></a><a href="/tags/%E6%B0%94%E6%B5%AE%E6%9C%BA/" style="font-size: 1.05rem;">气浮机<sup>1</sup></a><a href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/" style="font-size: 1.05rem;">污水处理<sup>2</sup></a><a href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/" style="font-size: 1.05rem;">污泥脱水<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">游戏<sup>1</sup></a><a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" style="font-size: 1.05rem;">虚拟化<sup>1</sup></a><a href="/tags/%E8%AD%A6%E5%91%8A/" style="font-size: 1.05rem;">警告<sup>1</sup></a><a href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/" style="font-size: 1.05rem;">设备调试<sup>2</sup></a><a href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/" style="font-size: 1.05rem;">运行经验<sup>2</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">7</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/Caddy/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Caddy</span></a><a class="article-meta__tags" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>反向代理</span></a><a class="article-meta__tags" href="/tags/HTTPS/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>HTTPS</span></a><a class="article-meta__tags" href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>Web服务器</span></a><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Caddy 从零上手：自动 HTTPS 的 Web 服务器</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-26T10:40:00.000Z" title="发表于 2026-11-26 18:40:00">2026-11-26</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-26T22:27:12.006Z" title="更新于 2026-11-27 06:27:12">2026-11-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">3053</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为南极"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>南极</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/mirror/85b72696_8sH5NlK6.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://blog.521251.xyz/s/caddy-beginner-guide/"><header><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a><a href="/tags/Caddy/" tabindex="-1" itemprop="url">Caddy</a><a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" tabindex="-1" itemprop="url">反向代理</a><a href="/tags/HTTPS/" tabindex="-1" itemprop="url">HTTPS</a><a href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" tabindex="-1" itemprop="url">Web服务器</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><h1 id="CrawlerTitle" itemprop="name headline">Caddy 从零上手：自动 HTTPS 的 Web 服务器</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Laosia</span><time itemprop="dateCreated datePublished" datetime="2026-11-26T10:40:00.000Z" title="发表于 2026-11-26 18:40:00">2026-11-26</time><time itemprop="dateCreated datePublished" datetime="2026-11-26T22:27:12.006Z" title="更新于 2026-11-27 06:27:12">2026-11-27</time></header><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/85b72696_8sH5NlK6.jpg"></p>
+<h2 id="Caddy-从零上手：自动-HTTPS-的-Web-服务器"><a href="#Caddy-从零上手：自动-HTTPS-的-Web-服务器" class="headerlink" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器"></a>Caddy 从零上手：自动 HTTPS 的 Web 服务器</h2><p>如果你只是想让一个网页、一个 API、一个自建服务能从浏览器打开，那 Caddy 大概是目前最省事的选择：<strong>一个可执行文件、一个十来行的配置文件、证书自动申请自动续期</strong>，不用再折腾 certbot、不用记 nginx 的括号和分号。</p>
+<p>这篇写给完全没用过 Caddy 的人。所有配置片段都用 Caddy v2.11.9 实际跑过 <code>caddy validate</code>，命令也实际执行验证过，可以放心抄。</p>
+<hr>
+<h2 id="一、Caddy-和-Nginx-差在哪"><a href="#一、Caddy-和-Nginx-差在哪" class="headerlink" title="一、Caddy 和 Nginx 差在哪"></a>一、Caddy 和 Nginx 差在哪</h2><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>Nginx</th>
+<th>Caddy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>HTTPS 证书</td>
+<td>自己装 certbot，写 cron 续期，改配置 reload</td>
+<td><strong>自动申请、自动续期、自动跳转</strong>，全自动</td>
+</tr>
+<tr>
+<td>配置文件</td>
+<td>分号、大括号、<code>location</code> 嵌套，缩进错了就报错</td>
+<td>十来行、按行读就懂的 Caddyfile</td>
+</tr>
+<tr>
+<td>静态文件</td>
+<td><code>location / &#123; root ... &#125;</code></td>
+<td><code>file_server</code> 一行</td>
+</tr>
+<tr>
+<td>反向代理</td>
+<td><code>proxy_pass</code> + 一堆 <code>proxy_set_header</code></td>
+<td><code>reverse_proxy 127.0.0.1:3000</code> 一行</td>
+</tr>
+<tr>
+<td>HTTP&#x2F;3</td>
+<td>要单独编译</td>
+<td>默认开启</td>
+</tr>
+<tr>
+<td>安装</td>
+<td>装包 &#x2F; 编译 &#x2F; 各种依赖</td>
+<td>单文件，解压就能跑</td>
+</tr>
+</tbody></table>
+<p>代价也要说清楚：Caddy 的内存占用比 nginx 略高（几十 MB 对十几 MB），生态和第三方模块没 nginx 多，用 Go 写的、要扩展得用 xcaddy 重新编译。<strong>对个人站、小项目、自建服务来说，这些都不重要，省下来的运维时间更重要。</strong></p>
+<hr>
+<h2 id="二、先搞懂三件事，不然会一直懵"><a href="#二、先搞懂三件事，不然会一直懵" class="headerlink" title="二、先搞懂三件事，不然会一直懵"></a>二、先搞懂三件事，不然会一直懵</h2><p>新手卡住，九成不是 Caddy 的问题，是这三件事没理清：</p>
+<p><strong>1. 域名 → DNS → IP</strong><br>你在域名商那里把 <code>example.com</code> 的 A 记录指向服务器公网 IP，浏览器才能找到这台机器。<strong>DNS 没生效（或者指错了），Caddy 申请证书一定失败</strong>，它只能通过”访问这个域名”来证明你是这台机器的管理者。</p>
+<p><strong>2. 80 和 443 两个端口</strong></p>
+<ul>
+<li><code>80</code>：HTTP，明文。</li>
+<li><code>443</code>：HTTPS，加密。</li>
+<li>Caddy 默认会同时监听这两个端口：443 上跑你的站，80 上只做一件事——把用户 301 跳到 443。</li>
+</ul>
+<p>所以服务器防火墙、云厂商安全组<strong>必须放行 80 和 443</strong>（还有 <code>443/udp</code>，那是 HTTP&#x2F;3）。这一条没做，症状就是”证书申请一直卡着”，翻到本篇第十三节有排错清单。</p>
+<p><strong>3. 反向代理是什么</strong><br>你的应用（Node&#x2F;Python&#x2F;Go 写的）通常监听在 <code>127.0.0.1:3000</code> 这种高位端口上，外网访问不到。<strong>反向代理就是这个”门房”</strong>：外面访问 <code>https://example.com</code>，门房收到后转给里面的 <code>3000</code> 端口，再把结果原样返回。这样 HTTPS、证书、压缩、限流都由门房统一处理，应用本身不用管。</p>
+<p>Caddy 干的就是这个门房，而且它是自动配好 HTTPS 的门房。</p>
+<hr>
+<h2 id="三、装-Caddy"><a href="#三、装-Caddy" class="headerlink" title="三、装 Caddy"></a>三、装 Caddy</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h3><p>到 <a target="_blank" rel="noopener" href="https://caddyserver.com/download">caddyserver.com&#x2F;download</a> 下 <code>windows amd64</code> 的 zip（也可以 <code>choco install caddy</code>），解压得到一个 <code>caddy.exe</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 放在任意目录，进到该目录后：</span></span><br><span class="line">caddy version</span><br><span class="line"><span class="comment"># v2.11.9 h1:...</span></span><br></pre></td></tr></table></figure>
+
+<p>Windows 上 Caddy 的数据目录是 <code>%AppData%\Caddy</code>（证书、密钥、自动保存的配置都在这里），无需手动创建。</p>
+<h3 id="Debian-Ubuntu（推荐用官方源，能用-systemd-托管）"><a href="#Debian-Ubuntu（推荐用官方源，能用-systemd-托管）" class="headerlink" title="Debian &#x2F; Ubuntu（推荐用官方源，能用 systemd 托管）"></a>Debian &#x2F; Ubuntu（推荐用官方源，能用 systemd 托管）</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt install -y debian-keyring debian-archive-keyring apt-transport-https curl</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/gpg.key&#x27;</span> | <span class="built_in">sudo</span> gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg</span><br><span class="line">curl -1sLf <span class="string">&#x27;https://dl.cloudsmith.io/public/caddy/stable/debian.deb.txt&#x27;</span> | <span class="built_in">sudo</span> <span class="built_in">tee</span> /etc/apt/sources.list.d/caddy-stable.list</span><br><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt install -y caddy</span><br></pre></td></tr></table></figure>
+
+<p>装完会自动注册成开机自启的服务，配置文件在 <code>/etc/caddy/Caddyfile</code>，日志用 <code>journalctl -u caddy -f</code> 看。</p>
+<h3 id="Docker"><a href="#Docker" class="headerlink" title="Docker"></a>Docker</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name caddy \</span><br><span class="line">  -p 80:80 -p 443:443 -p 443:443/udp \</span><br><span class="line">  -v caddy_data:/data -v caddy_config:/config \</span><br><span class="line">  -v <span class="variable">$PWD</span>/Caddyfile:/etc/caddy/Caddyfile:ro \</span><br><span class="line">  caddy:2</span><br></pre></td></tr></table></figure>
+
+<p>三点必须照做，否则证书每次重启都要重新申请（很快会撞上 Let’s Encrypt 的限流）：</p>
+<ul>
+<li><code>/data</code> 必须挂卷：<strong>证书就存在这里</strong>；</li>
+<li><code>/config</code> 建议挂卷：Caddy 自动保存的配置；</li>
+<li><code>443/udp</code> 要映射，不然 HTTP&#x2F;3 不生效（不影响 HTTP&#x2F;2，只是少了点速度）。</li>
+</ul>
+<hr>
+<h2 id="四、十分钟跑起第一个站"><a href="#四、十分钟跑起第一个站" class="headerlink" title="四、十分钟跑起第一个站"></a>四、十分钟跑起第一个站</h2><p>新建一个目录，里面放两样东西：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">mysite/</span><br><span class="line">├── Caddyfile</span><br><span class="line">└── www/</span><br><span class="line">    └── index.html</span><br></pre></td></tr></table></figure>
+
+<p><code>Caddyfile</code> 内容：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:8080 &#123;</span><br><span class="line">	root * ./www</span><br><span class="line">	file_server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>www/index.html</code> 随便写点：<code>&lt;h1&gt;hello caddy&lt;/h1&gt;</code>。</p>
+<p>然后在 <code>mysite/</code> 里执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">caddy run</span><br></pre></td></tr></table></figure>
+
+<p>打开 <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> 就能看到页面。<strong>这就是 Caddy 最小的完整配置</strong>：<code>:8080</code> 表示”监听 8080 端口、不区分域名”，<code>root *</code> 是”所有请求的站点根目录”，<code>file_server</code> 是”把文件发出去”。</p>
+<p>四个命令认全，日常够用：</p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>caddy run</code></td>
+<td>前台运行，日志直接打在屏幕上，Ctrl+C 停</td>
+</tr>
+<tr>
+<td><code>caddy start</code></td>
+<td>后台常驻（Windows 上就是留在后台，Linux 生产环境用 systemd）</td>
+</tr>
+<tr>
+<td><code>caddy stop</code></td>
+<td>停掉后台那个实例</td>
+</tr>
+<tr>
+<td><code>caddy reload --config Caddyfile</code></td>
+<td><strong>改完配置热加载，不断现有连接</strong>（最常用）</td>
+</tr>
+</tbody></table>
+<p>还有两个检查用的：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">caddy validate --config Caddyfile   <span class="comment"># 只检查语法，不启动</span></span><br><span class="line">caddy <span class="built_in">fmt</span> --overwrite Caddyfile     <span class="comment"># 自动整理缩进和空格</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>改了配置<strong>不要</strong>去 stop + start。<code>caddy reload</code> 是平滑切换，网站不掉线；生产环境更不该重启服务，这是 Caddy 用得比 nginx 舒服的一个细节。</p>
+</blockquote>
+<hr>
+<h2 id="五、自动-HTTPS：它到底做了什么"><a href="#五、自动-HTTPS：它到底做了什么" class="headerlink" title="五、自动 HTTPS：它到底做了什么"></a>五、自动 HTTPS：它到底做了什么</h2><p>把上面的 <code>:8080</code> 换成一个真实域名：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">	root * /var/www/blog</span><br><span class="line">	file_server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>重新 <code>caddy reload</code>，Caddy 会自己完成这些事：</p>
+<ol>
+<li>向 Let’s Encrypt（或 ZeroSSL，会自动挑选可用的 CA）申请 <code>example.com</code> 的证书；</li>
+<li>通过”访问一个特定 URL”来证明域名确实指向这台机器（HTTP-01 挑战：它在 80 端口临时放一个验证文件，CA 从公网来取）；</li>
+<li>拿到证书后存在本地数据目录，443 端口开始提供 HTTPS；</li>
+<li>把 80 端口的请求 301 跳到 443；</li>
+<li><strong>到期前约 30 天自动续期</strong>，续期失败会重试，你什么都不用做。</li>
+</ol>
+<p>证书位置：</p>
+<table>
+<thead>
+<tr>
+<th>系统</th>
+<th>路径</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Linux（root 运行）</td>
+<td><code>/root/.local/share/caddy</code></td>
+</tr>
+<tr>
+<td>Linux（普通用户）</td>
+<td><code>~/.local/share/caddy</code></td>
+</tr>
+<tr>
+<td>Docker</td>
+<td>容器内 <code>/data</code>（挂卷就到宿主机了）</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td><code>%AppData%\Caddy</code></td>
+</tr>
+</tbody></table>
+<p><strong>一个新域名从 0 到能访问，通常十几秒。</strong> 但如果 DNS 还没生效、或者 80&#x2F;443 没放行，就会卡住——这就是新手最容易踩的坑，见第十三节。</p>
+<h3 id="内网、本机、没有公网-IP-怎么办"><a href="#内网、本机、没有公网-IP-怎么办" class="headerlink" title="内网、本机、没有公网 IP 怎么办"></a>内网、本机、没有公网 IP 怎么办</h3><p>Caddy 会自动识别：<strong><code>localhost</code>、<code>*.local</code>、内网 IP 这类名字它会用自己内置的 CA 签发本地证书</strong>，而不是去找 Let’s Encrypt。你手动指定也可以：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pve.home.lan &#123;</span><br><span class="line">	tls internal</span><br><span class="line">	reverse_proxy 192.168.1.254:8006</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>tls internal</code> 用的是 Caddy 自建的本地 CA。默认浏览器不认它，会提示”不安全”——让系统信任它的命令是：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">caddy trust      <span class="comment"># 把 Caddy 的本地根证书装进系统信任库（可能需要管理员权限）</span></span><br><span class="line">caddy untrust    <span class="comment"># 反悔就把装进去的删掉</span></span><br></pre></td></tr></table></figure>
+
+<p>装完之后，内网域名在浏览器里就是正常的小绿锁了，效果和公网证书一样，只是仅限你自己的设备信任。</p>
+<hr>
+<h2 id="六、反向代理：最常用的功能"><a href="#六、反向代理：最常用的功能" class="headerlink" title="六、反向代理：最常用的功能"></a>六、反向代理：最常用的功能</h2><p>把 <code>3000</code> 端口的应用暴露出去，就这一行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">app.example.com &#123;</span><br><span class="line">	reverse_proxy 127.0.0.1:3000</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>就这一行，HTTPS、证书、<code>X-Forwarded-For</code>、<code>X-Forwarded-Proto</code>、WebSocket 升级<strong>全部自动处理</strong>。不需要像 nginx 那样手写 <code>proxy_set_header Upgrade</code>、<code>proxy_http_version 1.1</code>——这是 Caddy 最省心的地方。</p>
+<h3 id="同一个域名，按路径分流"><a href="#同一个域名，按路径分流" class="headerlink" title="同一个域名，按路径分流"></a>同一个域名，按路径分流</h3><p>前端在 3000，后端 API 在 8000：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">	handle_path /api/* &#123;</span><br><span class="line">		reverse_proxy 127.0.0.1:8000</span><br><span class="line">	&#125;</span><br><span class="line">	handle &#123;</span><br><span class="line">		reverse_proxy 127.0.0.1:3000</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>handle_path /api/*</code> 会<strong>把 <code>/api</code> 前缀剥掉</strong>再转给后端：<code>/api/users</code> → 后端收到 <code>/users</code>。</li>
+<li>如果后端自己就带 <code>/api</code> 前缀，改用 <code>handle /api/*</code>，前缀会保留。</li>
+<li><code>handle</code> 是按顺序匹配的<strong>互斥</strong>逻辑，命中一个就不再往下走；最后一个 <code>handle</code> 兜底，写法比 nginx 的 <code>location</code> 优先级好懂太多。</li>
+</ul>
+<h3 id="多个网站"><a href="#多个网站" class="headerlink" title="多个网站"></a>多个网站</h3><p>一个 Caddyfile 里写多个块就行，各自独立：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">	reverse_proxy 127.0.0.1:3000</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">blog.example.com &#123;</span><br><span class="line">	root * /var/www/blog</span><br><span class="line">	file_server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="单页应用（Vue-React-Hexo-这类）"><a href="#单页应用（Vue-React-Hexo-这类）" class="headerlink" title="单页应用（Vue &#x2F; React &#x2F; Hexo 这类）"></a>单页应用（Vue &#x2F; React &#x2F; Hexo 这类）</h3><p>刷新页面会 404，是因为服务器上根本没有 <code>/about</code> 这个文件。加一行 <code>try_files</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">	root * /var/www/app</span><br><span class="line">	try_files &#123;path&#125; /index.html</span><br><span class="line">	file_server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>意思是”文件存在就发文件，不存在就发 <code>index.html</code>，剩下的交给前端路由”。</p>
+<hr>
+<h2 id="七、Caddyfile-的语法，七条就够"><a href="#七、Caddyfile-的语法，七条就够" class="headerlink" title="七、Caddyfile 的语法，七条就够"></a>七、Caddyfile 的语法，七条就够</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">1. 每行一条指令，指令和参数之间用空格分开</span><br><span class="line">2. 花括号 &#123; &#125; 包起来的叫&quot;块&quot;，块里的指令只对这个块/这个站生效</span><br><span class="line">3. 缩进用 Tab（空格也能跑，但 caddy fmt 会改成 Tab）</span><br><span class="line">4. 不写端口只写域名 → 自动上 HTTPS；写 :8080 → 只跑 HTTP</span><br><span class="line">5. 开头的全局选项块不写站点名，只写 &#123; ... &#125;</span><br><span class="line">6. 以 # 开头是注释</span><br><span class="line">7. 参数里可以用占位符：&#123;host&#125; &#123;path&#125; &#123;uri&#125; &#123;remote_host&#125; &#123;scheme&#125;</span><br></pre></td></tr></table></figure>
+
+<p>全局选项块长这样，写在文件最上面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	email admin@example.com</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>email</code> 是给 CA 发通知用的（证书快过期、账户问题），<strong>建议写上</strong>，出事能收到邮件。</p>
+<p>常用的全局选项还有：</p>
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>email you@example.com</code></td>
+<td>证书通知邮箱</td>
+</tr>
+<tr>
+<td><code>auto_https off</code></td>
+<td>全站不自动上 HTTPS（纯内网、纯 HTTP 场景）</td>
+</tr>
+<tr>
+<td><code>debug</code></td>
+<td>打开调试日志，排错时临时加</td>
+</tr>
+<tr>
+<td><code>admin off</code></td>
+<td>关掉本地管理接口（默认在 <code>localhost:2019</code>）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="八、常用指令速查"><a href="#八、常用指令速查" class="headerlink" title="八、常用指令速查"></a>八、常用指令速查</h2><table>
+<thead>
+<tr>
+<th>指令</th>
+<th>写法示例</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>root</code></td>
+<td><code>root * /var/www</code></td>
+<td>站点根目录，<code>*</code> 是匹配器（匹配所有）</td>
+</tr>
+<tr>
+<td><code>file_server</code></td>
+<td><code>file_server browse</code></td>
+<td>发文件；<code>browse</code> 打开目录列表</td>
+</tr>
+<tr>
+<td><code>reverse_proxy</code></td>
+<td><code>reverse_proxy 127.0.0.1:3000</code></td>
+<td>反向代理</td>
+</tr>
+<tr>
+<td><code>encode</code></td>
+<td><code>encode zstd gzip</code></td>
+<td>压缩响应</td>
+</tr>
+<tr>
+<td><code>header</code></td>
+<td><code>header X-Frame-Options DENY</code></td>
+<td>加&#x2F;删&#x2F;改响应头，<code>-Server</code> 表示删掉</td>
+</tr>
+<tr>
+<td><code>redir</code></td>
+<td><code>redir https://example.com&#123;uri&#125; permanent</code></td>
+<td>跳转（301）</td>
+</tr>
+<tr>
+<td><code>rewrite</code></td>
+<td><code>rewrite * /index.html</code></td>
+<td>内部重写路径（地址栏不变）</td>
+</tr>
+<tr>
+<td><code>try_files</code></td>
+<td><code>try_files &#123;path&#125; /index.html</code></td>
+<td>依次尝试文件</td>
+</tr>
+<tr>
+<td><code>basic_auth</code></td>
+<td><code>basic_auth &#123; user $2a$... &#125;</code></td>
+<td>基础认证，密码用 <code>caddy hash-password</code> 生成</td>
+</tr>
+<tr>
+<td><code>log</code></td>
+<td><code>log &#123; format json &#125;</code></td>
+<td>访问日志</td>
+</tr>
+<tr>
+<td><code>tls</code></td>
+<td><code>tls internal</code> &#x2F; <code>tls you@mail.com</code></td>
+<td>手动指定证书策略</td>
+</tr>
+<tr>
+<td><code>handle</code> &#x2F; <code>handle_path</code></td>
+<td><code>handle_path /api/* &#123; ... &#125;</code></td>
+<td>按路径分流</td>
+</tr>
+<tr>
+<td><code>respond</code></td>
+<td><code>respond &quot;维护中&quot; 503</code></td>
+<td>直接返回内容</td>
+</tr>
+<tr>
+<td><code>import</code></td>
+<td><code>import common.conf</code></td>
+<td>复用片段（写一次，多处引）</td>
+</tr>
+<tr>
+<td><code>rate_limit</code></td>
+<td>需 xcaddy 编译模块</td>
+<td>限流不是内置的，注意别照抄网上的配置</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="九、一份能直接用的完整配置"><a href="#九、一份能直接用的完整配置" class="headerlink" title="九、一份能直接用的完整配置"></a>九、一份能直接用的完整配置</h2><p>把前面所有东西合起来，一个”静态站 + API 反代 + 压缩 + 安全头 + 日志”的完整配置：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">	email admin@example.com</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">example.com &#123;</span><br><span class="line">	encode zstd gzip</span><br><span class="line"></span><br><span class="line">	header &#123;</span><br><span class="line">		Strict-Transport-Security &quot;max-age=31536000; includeSubDomains&quot;</span><br><span class="line">		X-Content-Type-Options &quot;nosniff&quot;</span><br><span class="line">		X-Frame-Options &quot;SAMEORIGIN&quot;</span><br><span class="line">		Referrer-Policy &quot;strict-origin-when-cross-origin&quot;</span><br><span class="line">		-Server</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	log &#123;</span><br><span class="line">		output file /var/log/caddy/access.log &#123;</span><br><span class="line">			roll_size 20mb</span><br><span class="line">			roll_keep 5</span><br><span class="line">		&#125;</span><br><span class="line">		format json</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	handle_path /api/* &#123;</span><br><span class="line">		reverse_proxy 127.0.0.1:8000</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	handle &#123;</span><br><span class="line">		root * /var/www/blog</span><br><span class="line">		try_files &#123;path&#125; &#123;path&#125;/ /index.html</span><br><span class="line">		file_server</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>几个说明：</p>
+<ul>
+<li><code>-Server</code> 会把响应头里的 <code>Server: Caddy</code> 删掉，少暴露一点信息；</li>
+<li><code>Strict-Transport-Security</code>（HSTS）告诉浏览器”以后都用 HTTPS 访问我”，<strong>建议先不加 <code>preload</code></strong>，加了会被浏览器硬记一年，出问题很难回退；</li>
+<li>日志目录要先 <code>mkdir -p /var/log/caddy</code> 并给 caddy 用户写权限，否则启动就报错。</li>
+</ul>
+<hr>
+<h2 id="十、加个密码：基础认证"><a href="#十、加个密码：基础认证" class="headerlink" title="十、加个密码：基础认证"></a>十、加个密码：基础认证</h2><p>给后台、临时页面加一层密码，两步：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">caddy hash-password --plaintext 你的密码</span><br><span class="line"><span class="comment"># 输出类似：$2a$14$Lh7iT3v4aI.GMLXXhZ/acug36VS90rs8ODTeePHdaxFDGTmm7zvfO</span></span><br></pre></td></tr></table></figure>
+
+<p>把输出贴进配置（注意 <code>$</code> 在配置文件里不用转义，但<strong>在 shell 里用 heredoc 写配置时要小心</strong>）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">	basic_auth &#123;</span><br><span class="line">		admin $2a$14$Lh7iT3v4aI.GMLXXhZ/acug36VS90rs8ODTeePHdaxFDGTmm7zvfO</span><br><span class="line">	&#125;</span><br><span class="line">	root * /var/www</span><br><span class="line">	file_server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>admin</code> 是用户名，后面那串是密码的 bcrypt 哈希——<strong>配置里永远不要写明文密码</strong>。想加几个人就写几行。</p>
+<blockquote>
+<p>旧版本里这条指令叫 <code>basicauth</code>，Caddy 2.8 起改名 <code>basic_auth</code>；看到老教程写 <code>basicauth</code> 不用慌，新版仍然接受，只是建议统一用新名字。</p>
+</blockquote>
+<hr>
+<h2 id="十一、日志：看清楚谁在访问"><a href="#十一、日志：看清楚谁在访问" class="headerlink" title="十一、日志：看清楚谁在访问"></a>十一、日志：看清楚谁在访问</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">example.com &#123;</span><br><span class="line">	log &#123;</span><br><span class="line">		output file /var/log/caddy/access.log &#123;</span><br><span class="line">			roll_size 20mb</span><br><span class="line">			roll_keep 5</span><br><span class="line">		&#125;</span><br><span class="line">		format json</span><br><span class="line">	&#125;</span><br><span class="line">	reverse_proxy 127.0.0.1:3000</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>roll_size 20mb</code> + <code>roll_keep 5</code>：单个文件 20MB 就切，最多留 5 个——<strong>Caddy 自带日志轮转，不需要 logrotate</strong>。</li>
+<li>JSON 格式方便用 <code>jq</code> 统计：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 今天访问量最高的 10 个路径</span></span><br><span class="line">jq -r <span class="string">&#x27;select(.ts &gt; (now - 86400)) | .request.uri&#x27;</span> /var/log/caddy/access.log \</span><br><span class="line">  | <span class="built_in">sort</span> | <span class="built_in">uniq</span> -c | <span class="built_in">sort</span> -rn | <span class="built_in">head</span> -10</span><br></pre></td></tr></table></figure>
+
+<p>不看日志的话，把所有 <code>log</code> 去掉更省磁盘——高流量站点一天能写几百 MB。</p>
+<hr>
+<h2 id="十二、内网服务放出来（自建服务标配）"><a href="#十二、内网服务放出来（自建服务标配）" class="headerlink" title="十二、内网服务放出来（自建服务标配）"></a>十二、内网服务放出来（自建服务标配）</h2><p>你家里&#x2F;服务器上跑了一堆面板：PVE <code>8006</code>、路由器后台、NAS、Jellyfin……它们都是 HTTP、都不带证书。用 Caddy 加一层：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">pve.home.lan &#123;</span><br><span class="line">	tls internal</span><br><span class="line">	reverse_proxy 192.168.1.254:8006 &#123;</span><br><span class="line">		transport http &#123;</span><br><span class="line">			tls_insecure_skip_verify</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>要点：</p>
+<ul>
+<li><code>tls internal</code>：内网名字拿不到公网证书，用本地 CA 签；</li>
+<li><code>tls_insecure_skip_verify</code>：上游自己用的是自签证书（比如 PVE 默认那样），不校验它，否则握手失败；</li>
+<li>记得 <code>caddy trust</code> 一次，让电脑和手机信任本地 CA，否则浏览器还是提示不安全。</li>
+</ul>
+<p>如果你<strong>有</strong>域名并且解析到了公网 IP，那这些服务可以直接用子域名（<code>pve.example.com</code>）走自动 HTTPS，比内网自签省事得多——只是要把服务暴露到公网，注意设密码和访问控制。</p>
+<hr>
+<h2 id="十三、新手必踩的坑（对照排查）"><a href="#十三、新手必踩的坑（对照排查）" class="headerlink" title="十三、新手必踩的坑（对照排查）"></a>十三、新手必踩的坑（对照排查）</h2><table>
+<thead>
+<tr>
+<th>现象</th>
+<th>原因</th>
+<th>解决</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动报 <code>permission denied</code> 绑 80&#x2F;443</td>
+<td>非 root 用户不能绑 1-1024 端口</td>
+<td>用 root &#x2F; sudo 跑，或 <code>sudo setcap cap_net_bind_service=+ep /usr/bin/caddy</code></td>
+</tr>
+<tr>
+<td>证书申请一直卡住，日志里 <code>challenge failed</code></td>
+<td>80 端口不通：防火墙、云安全组、运营商封 80</td>
+<td>放行 80&#x2F;443；云服务器还得改安全组</td>
+</tr>
+<tr>
+<td>同上，但域名是 Cloudflare 橙云</td>
+<td>流量经过 CF，Caddy 拿不到真实验证请求</td>
+<td>关掉橙云（灰云），或改用 DNS 挑战 &#x2F; 用 CF 的源站证书</td>
+</tr>
+<tr>
+<td><code>no such host</code> &#x2F; 域名解析失败</td>
+<td>DNS 没生效或 A 记录填错</td>
+<td><code>dig example.com</code> 确认指向服务器 IP，等 TTL</td>
+</tr>
+<tr>
+<td>站点能开但显示 502</td>
+<td>上游服务没起、端口写错、监听在 <code>127.0.0.1</code> 之外</td>
+<td><code>curl 127.0.0.1:3000</code> 先确认应用活着</td>
+</tr>
+<tr>
+<td>浏览器提示 <code>ERR_TOO_MANY_REDIRECTS</code></td>
+<td>应用自己也做了强制 HTTPS 跳转，和 Caddy 互相踢皮球</td>
+<td>关掉应用的 HTTPS 跳转，只让 Caddy 管</td>
+</tr>
+<tr>
+<td>上传大文件报 413</td>
+<td>默认不限，但上游（nginx&#x2F;PHP&#x2F;应用）有限制</td>
+<td>改上游或应用的请求体上限</td>
+</tr>
+<tr>
+<td>Windows 上 <code>caddy run</code> 一闪就退</td>
+<td>端口被别的程序占了（IIS、Skype、旧 Caddy 进程）</td>
+<td><code>netstat -ano | findstr :443</code> 查占用，换端口或杀进程</td>
+</tr>
+<tr>
+<td>改了配置不生效</td>
+<td>只改了文件没 reload</td>
+<td><code>caddy reload --config Caddyfile</code>，报错会直接打在终端</td>
+</tr>
+<tr>
+<td>触发 Let’s Encrypt 限流</td>
+<td>反复测试导致重复申请</td>
+<td>同一注册域名每周限 50 张、同名证书每周 5 张，等一周或用 <code>--staging</code> 测试</td>
+</tr>
+</tbody></table>
+<p><strong>测试期强烈建议</strong>：先在本地或子域名上折腾，别拿主域名反复试。真要反复测，把全局选项里的 CA 换成测试环境（<code>acme_ca https://acme-staging-v02.api.letsencrypt.org/directory</code>），它的证书不被信任，但<strong>不限流</strong>，调通了再换回来。</p>
+<hr>
+<h2 id="十四、从-Nginx-迁移：对照着改"><a href="#十四、从-Nginx-迁移：对照着改" class="headerlink" title="十四、从 Nginx 迁移：对照着改"></a>十四、从 Nginx 迁移：对照着改</h2><table>
+<thead>
+<tr>
+<th>目的</th>
+<th>Nginx</th>
+<th>Caddy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>静态目录</td>
+<td><code>root /var/www; index index.html;</code></td>
+<td><code>root * /var/www</code> + <code>file_server</code></td>
+</tr>
+<tr>
+<td>反代</td>
+<td><code>proxy_pass http://127.0.0.1:3000;</code></td>
+<td><code>reverse_proxy 127.0.0.1:3000</code></td>
+</tr>
+<tr>
+<td>反代并保留真实 IP</td>
+<td><code>proxy_set_header X-Real-IP $remote_addr;</code></td>
+<td>自动</td>
+</tr>
+<tr>
+<td>WebSocket</td>
+<td><code>proxy_set_header Upgrade $http_upgrade;</code> <code>proxy_set_header Connection &quot;upgrade&quot;;</code></td>
+<td>自动</td>
+</tr>
+<tr>
+<td>gzip</td>
+<td><code>gzip on; gzip_types ...;</code></td>
+<td><code>encode gzip</code></td>
+</tr>
+<tr>
+<td>跳转</td>
+<td><code>return 301 https://$host$request_uri;</code></td>
+<td><code>redir https://&#123;host&#125;&#123;uri&#125;</code></td>
+</tr>
+<tr>
+<td>路径前缀剥除</td>
+<td><code>location /api/ &#123; proxy_pass http://127.0.0.1:8000/; &#125;</code></td>
+<td><code>handle_path /api/* &#123; reverse_proxy 127.0.0.1:8000 &#125;</code></td>
+</tr>
+<tr>
+<td>单页应用回退</td>
+<td><code>try_files $uri /index.html;</code></td>
+<td><code>try_files &#123;path&#125; /index.html</code></td>
+</tr>
+<tr>
+<td>加响应头</td>
+<td><code>add_header X-Frame-Options DENY;</code></td>
+<td><code>header X-Frame-Options DENY</code></td>
+</tr>
+<tr>
+<td>密码保护</td>
+<td><code>auth_basic</code> + htpasswd 文件</td>
+<td><code>basic_auth &#123; user $2a$... &#125;</code></td>
+</tr>
+<tr>
+<td>访问日志</td>
+<td><code>access_log /var/log/nginx/a.log;</code></td>
+<td><code>log &#123; output file ... &#125;</code></td>
+</tr>
+</tbody></table>
+<p>一句话总结 nginx 用户的迁移体验：<strong>把 <code>proxy_set_header</code> 那一堆全删掉、把 <code>location</code> 换 <code>handle</code>、把 <code>root</code> 后面加个 <code>*</code></strong>，剩下的基本一一对应。</p>
+<hr>
+<h2 id="十五、日常运维"><a href="#十五、日常运维" class="headerlink" title="十五、日常运维"></a>十五、日常运维</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">caddy validate --config /etc/caddy/Caddyfile   <span class="comment"># 改完先验语法</span></span><br><span class="line">caddy <span class="built_in">fmt</span> --overwrite /etc/caddy/Caddyfile     <span class="comment"># 统一格式</span></span><br><span class="line">caddy reload --config /etc/caddy/Caddyfile     <span class="comment"># 平滑生效</span></span><br><span class="line">systemctl reload caddy                         <span class="comment"># apt 装的可以这样</span></span><br><span class="line">journalctl -u caddy -f                          <span class="comment"># 跟着看日志</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>备份清单</strong>只有两样：</p>
+<ol>
+<li>Caddyfile（以及 <code>import</code> 进来的片段文件）；</li>
+<li>数据目录里的 <code>pki/</code> 和 <code>certificates/</code>（Linux <code>~/.local/share/caddy</code>，Windows <code>%AppData%\Caddy</code>，Docker 的 <code>/data</code> 卷）。</li>
+</ol>
+<p>搬服务器时把这两样带过去，证书还能继续用，不用重新申请。</p>
+<hr>
+<h2 id="十六、小结"><a href="#十六、小结" class="headerlink" title="十六、小结"></a>十六、小结</h2><p>Caddy 的核心价值就一句话：<strong>把”申请证书 + 续期 + 配 HTTPS + 反向代理”这一整套运维动作，压成了配置文件里的几行字。</strong></p>
+<p>如果这篇文章只让你记三件事：</p>
+<ol>
+<li>有域名就用 <code>域名 &#123; reverse_proxy 127.0.0.1:端口 &#125;</code>，HTTPS 白送；</li>
+<li>没域名（内网&#x2F;本机）就加 <code>tls internal</code> + <code>caddy trust</code>；</li>
+<li>改完配置永远用 <code>caddy reload</code>，不要重启。</li>
+</ol>
+<p>剩下的，查第八节的指令表就够了。</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Laosia</div><div class="post-copyright__author_desc">😤Laosia😚无聊时刻😤</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://blog.521251.xyz/s/caddy-beginner-guide/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://blog.521251.xyz/s/caddy-beginner-guide/')">Caddy 从零上手：自动 HTTPS 的 Web 服务器</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="/img/reward-laugh.gif" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/reward-laugh.gif" alt="大笑"/></a><div class="post-qr-code-desc">大笑</div></li><li class="reward-item"><a href="/img/reward-despise.gif" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/reward-despise.gif" alt="鄙视"/></a><div class="post-qr-code-desc">鄙视</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://blog.521251.xyz/s/caddy-beginner-guide/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Caddy 从零上手：自动 HTTPS 的 Web 服务器&amp;url=https://blog.521251.xyz/s/caddy-beginner-guide/&amp;pic=/img/mirror/85b72696_8sH5NlK6.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.521251.xyz" target="_blank">Laosia</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/Caddy/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Caddy<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>反向代理<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/HTTPS/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>HTTPS<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>Web服务器<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E6%95%99%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>教程<span class="tagsPageCount">3</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="/img/mirror/85b72696_8sH5NlK6.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_sharejs_dist_css_share.min.css" media="print" onload="this.media='all'"/><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_sharejs_dist_js_social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/s/dsh-beginner-guide/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/dsh/11-whale-wallpaper.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">DSH 零基础全流程教学 · 图文版</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/s/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/fb2fbb13_bIYPMJOY.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-13</div><div class="title">Linux 入门必会命令：从登录到排障的 30 个基本功</div></div></a></div><div><a href="/s/pve-8-optimization-guide/" title="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/15da2dbf_KZX3GFQP.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-12</div><div class="title">Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/status-dog.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.5;margin:0.6rem 0;text-align:justify;font-size:0.92em;color:rgba(255, 255, 255, 0.82);">人生活在<b style="color:#fff">希望</b>之中，旧的希望实现了，或者泯灭了，新的希望的烈焰随之燃烧起来。如果一个人只管活一天算一天，什么希望也没有，他的生命实际上也就停止了</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Laosia</h1><div class="author-info__desc">😤Laosia😚无聊时刻😤</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/laosiaa" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/233882124" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="card-widget card-countdown"><div class="item-headline"><i></i><span></span></div><div class="item-content"><div class="cd-count-left">
+  <span class="cd-text">距离</span>
+  <span class="cd-name" id="eventName"></span>
+  <span class="cd-time" id="daysUntil"></span>
+  <span class="cd-date" id="eventDate"></span>
+</div>
+<div id="countRight" class="cd-count-right"></div>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Caddy-%E4%BB%8E%E9%9B%B6%E4%B8%8A%E6%89%8B%EF%BC%9A%E8%87%AA%E5%8A%A8-HTTPS-%E7%9A%84-Web-%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-number">1.</span> <span class="toc-text">Caddy 从零上手：自动 HTTPS 的 Web 服务器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81Caddy-%E5%92%8C-Nginx-%E5%B7%AE%E5%9C%A8%E5%93%AA"><span class="toc-number">2.</span> <span class="toc-text">一、Caddy 和 Nginx 差在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%85%88%E6%90%9E%E6%87%82%E4%B8%89%E4%BB%B6%E4%BA%8B%EF%BC%8C%E4%B8%8D%E7%84%B6%E4%BC%9A%E4%B8%80%E7%9B%B4%E6%87%B5"><span class="toc-number">3.</span> <span class="toc-text">二、先搞懂三件事，不然会一直懵</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%A3%85-Caddy"><span class="toc-number">4.</span> <span class="toc-text">三、装 Caddy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Windows"><span class="toc-number">4.1.</span> <span class="toc-text">Windows</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Debian-Ubuntu%EF%BC%88%E6%8E%A8%E8%8D%90%E7%94%A8%E5%AE%98%E6%96%B9%E6%BA%90%EF%BC%8C%E8%83%BD%E7%94%A8-systemd-%E6%89%98%E7%AE%A1%EF%BC%89"><span class="toc-number">4.2.</span> <span class="toc-text">Debian &#x2F; Ubuntu（推荐用官方源，能用 systemd 托管）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Docker"><span class="toc-number">4.3.</span> <span class="toc-text">Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%8D%81%E5%88%86%E9%92%9F%E8%B7%91%E8%B5%B7%E7%AC%AC%E4%B8%80%E4%B8%AA%E7%AB%99"><span class="toc-number">5.</span> <span class="toc-text">四、十分钟跑起第一个站</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%87%AA%E5%8A%A8-HTTPS%EF%BC%9A%E5%AE%83%E5%88%B0%E5%BA%95%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">6.</span> <span class="toc-text">五、自动 HTTPS：它到底做了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E3%80%81%E6%9C%AC%E6%9C%BA%E3%80%81%E6%B2%A1%E6%9C%89%E5%85%AC%E7%BD%91-IP-%E6%80%8E%E4%B9%88%E5%8A%9E"><span class="toc-number">6.1.</span> <span class="toc-text">内网、本机、没有公网 IP 怎么办</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%9A%E6%9C%80%E5%B8%B8%E7%94%A8%E7%9A%84%E5%8A%9F%E8%83%BD"><span class="toc-number">7.</span> <span class="toc-text">六、反向代理：最常用的功能</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA%E5%9F%9F%E5%90%8D%EF%BC%8C%E6%8C%89%E8%B7%AF%E5%BE%84%E5%88%86%E6%B5%81"><span class="toc-number">7.1.</span> <span class="toc-text">同一个域名，按路径分流</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E7%BD%91%E7%AB%99"><span class="toc-number">7.2.</span> <span class="toc-text">多个网站</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E9%A1%B5%E5%BA%94%E7%94%A8%EF%BC%88Vue-React-Hexo-%E8%BF%99%E7%B1%BB%EF%BC%89"><span class="toc-number">7.3.</span> <span class="toc-text">单页应用（Vue &#x2F; React &#x2F; Hexo 这类）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81Caddyfile-%E7%9A%84%E8%AF%AD%E6%B3%95%EF%BC%8C%E4%B8%83%E6%9D%A1%E5%B0%B1%E5%A4%9F"><span class="toc-number">8.</span> <span class="toc-text">七、Caddyfile 的语法，七条就够</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4%E9%80%9F%E6%9F%A5"><span class="toc-number">9.</span> <span class="toc-text">八、常用指令速查</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E4%B8%80%E4%BB%BD%E8%83%BD%E7%9B%B4%E6%8E%A5%E7%94%A8%E7%9A%84%E5%AE%8C%E6%95%B4%E9%85%8D%E7%BD%AE"><span class="toc-number">10.</span> <span class="toc-text">九、一份能直接用的完整配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%8A%A0%E4%B8%AA%E5%AF%86%E7%A0%81%EF%BC%9A%E5%9F%BA%E7%A1%80%E8%AE%A4%E8%AF%81"><span class="toc-number">11.</span> <span class="toc-text">十、加个密码：基础认证</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E6%97%A5%E5%BF%97%EF%BC%9A%E7%9C%8B%E6%B8%85%E6%A5%9A%E8%B0%81%E5%9C%A8%E8%AE%BF%E9%97%AE"><span class="toc-number">12.</span> <span class="toc-text">十一、日志：看清楚谁在访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%86%85%E7%BD%91%E6%9C%8D%E5%8A%A1%E6%94%BE%E5%87%BA%E6%9D%A5%EF%BC%88%E8%87%AA%E5%BB%BA%E6%9C%8D%E5%8A%A1%E6%A0%87%E9%85%8D%EF%BC%89"><span class="toc-number">13.</span> <span class="toc-text">十二、内网服务放出来（自建服务标配）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E6%96%B0%E6%89%8B%E5%BF%85%E8%B8%A9%E7%9A%84%E5%9D%91%EF%BC%88%E5%AF%B9%E7%85%A7%E6%8E%92%E6%9F%A5%EF%BC%89"><span class="toc-number">14.</span> <span class="toc-text">十三、新手必踩的坑（对照排查）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E4%BB%8E-Nginx-%E8%BF%81%E7%A7%BB%EF%BC%9A%E5%AF%B9%E7%85%A7%E7%9D%80%E6%94%B9"><span class="toc-number">15.</span> <span class="toc-text">十四、从 Nginx 迁移：对照着改</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%94%E3%80%81%E6%97%A5%E5%B8%B8%E8%BF%90%E7%BB%B4"><span class="toc-number">16.</span> <span class="toc-text">十五、日常运维</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%85%AD%E3%80%81%E5%B0%8F%E7%BB%93"><span class="toc-number">17.</span> <span class="toc-text">十六、小结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/s/caddy-beginner-guide/" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/85b72696_8sH5NlK6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Caddy 从零上手：自动 HTTPS 的 Web 服务器"/></a><div class="content"><a class="title" href="/s/caddy-beginner-guide/" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器">Caddy 从零上手：自动 HTTPS 的 Web 服务器</a><time datetime="2026-11-26T10:40:00.000Z" title="发表于 2026-11-26 18:40:00">2026-11-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-beginner-guide/" title="DSH 零基础全流程教学 · 图文版"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/dsh/11-whale-wallpaper.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DSH 零基础全流程教学 · 图文版"/></a><div class="content"><a class="title" href="/s/dsh-beginner-guide/" title="DSH 零基础全流程教学 · 图文版">DSH 零基础全流程教学 · 图文版</a><time datetime="2026-11-25T06:40:00.000Z" title="发表于 2026-11-25 14:40:00">2026-11-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/duoluoji-guide/" title="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/e8de8388_14nwO9kL.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验"/></a><div class="content"><a class="title" href="/s/duoluoji-guide/" title="叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验">叠螺式污泥脱水机使用心得与注意事项：从选型到长期运行的真实经验</a><time datetime="2026-11-14T10:30:00.000Z" title="发表于 2026-11-14 18:30:00">2026-11-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/daf-machine-guide/" title="气溶式气浮机使用攻略与实战心得：从安装调试到长期运行"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/ce62a76d_uHvLAzUq.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="气溶式气浮机使用攻略与实战心得：从安装调试到长期运行"/></a><div class="content"><a class="title" href="/s/daf-machine-guide/" title="气溶式气浮机使用攻略与实战心得：从安装调试到长期运行">气溶式气浮机使用攻略与实战心得：从安装调试到长期运行</a><time datetime="2026-11-13T10:00:00.000Z" title="发表于 2026-11-13 18:00:00">2026-11-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/fb2fbb13_bIYPMJOY.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux 入门必会命令：从登录到排障的 30 个基本功"/></a><div class="content"><a class="title" href="/s/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功">Linux 入门必会命令：从登录到排障的 30 个基本功</a><time datetime="2026-11-13T02:16:19.000Z" title="发表于 2026-11-13 10:16:19">2026-11-13</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/9157d46c_1776658920718_Laosia-_E4_B8_8A_E7_8F_AD_.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 - 2026 By <a class="footer-bar-link" href="/" title="Laosia" target="_blank">Laosia</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="备案号">备案号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">19</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">45</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/e4616c84_1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="/vendor/cdn.cbd.int_-fancyapps_ui-5.0.28_dist_fancybox_fancybox.umd.js"></script><script src="/vendor/cdn.cbd.int_instant.page-5.2.0_instantpage.js" type="module"></script><script src="/vendor/cdn.cbd.int_vanilla-lazyload-17.8.5_dist_lazyload.iife.min.js"></script><script src="/vendor/cdn.cbd.int_node-snackbar-0.1.16_dist_snackbar.min.js"></script><script>var meting_api = "https://blog.521251.xyz/music/meting.json?server=:server&type=:type&id=:id&r=:r";
+</script><canvas id="universe"></canvas><script async src="/vendor/npm.elemecdn.com_anzhiyu-theme-static-1.0.0_dark_dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/07/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Laosia 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("04/07/2025 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "/img/mirror/85df0051_1776659150666_Laosia-_E4_B8_8B_E7_8F_AD_.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'laosiaa/blog_comments',
+      'data-repo-id': 'R_kgDOSL7O8A',
+      'data-category-id': 'DIC_kwDOSL7O8M4C7oiZ',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-lang":"zh-CN","data-mapping":"pathname","data-category":"Announcements","data-input-position":"top","data-reactions-enabled":1,"data-emit-metadata":1,"data-theme":"preferred_color_scheme","data-loading":"lazy"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  anzhiyu.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.0.0_waterfall_waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/static/countdown.js"></script><script src="/js/app-bundle.js?v=dc699146" defer></script><script src="/js/nav-music-toggle-fix.js?v=20261123c" defer></script><canvas class="fireworks" mobile="false"></canvas><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_fireworks.min.js"></script><script defer="defer" id="ribbon" src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_canvas-fluttering-ribbon.min.js"></script><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.0.0_aplayer_APlayer.min.css" media="print" onload="this.media='all'"><script src="/vendor/cdn.cbd.int_anzhiyu-blog-static-1.0.1_js_APlayer.min.js"></script><script src="/vendor/cdn.cbd.int_hexo-anzhiyu-music-1.0.1_assets_js_Meting2.min.js"></script><script src="/vendor/cdn.cbd.int_pjax-0.2.8_pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.1.5_accesskey_accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
