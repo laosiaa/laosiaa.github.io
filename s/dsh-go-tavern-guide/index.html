@@ -1,0 +1,658 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>DSH Go 酒馆：从入门到精通 | Laosia</title><meta name="keywords" content="教程,DSH,DeepSeek,酒馆,SillyTavern,角色扮演"><meta name="author" content="Laosia"><meta name="copyright" content="Laosia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#18171d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="DSH Go 酒馆：从入门到精通"><meta name="application-name" content="DSH Go 酒馆：从入门到精通"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#18171d"><meta property="og:type" content="article"><meta property="og:title" content="DSH Go 酒馆：从入门到精通"><meta property="og:url" content="https://blog.521251.xyz/s/dsh-go-tavern-guide/index.html"><meta property="og:site_name" content="Laosia"><meta property="og:description" content="DSH Go 内置酒馆的完整攻略：它不跑网页版 SillyTavern，是原生实现但能吃 ST 的角色卡&amp;#x2F;世界书&amp;#x2F;预设&amp;#x2F;正则&amp;#x2F;聊天记录；从进入、导入、开始对话、换回答与分支、舞台四栏、状态与自动导演、群聊、排版、安全开关，到备份、导出与成本控制。"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="/img/mirror/32291b0d_lsTdfXiS.jpg"><meta property="article:author" content="Laosia"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="/img/mirror/32291b0d_lsTdfXiS.jpg"><meta name="description" content="DSH Go 内置酒馆的完整攻略：它不跑网页版 SillyTavern，是原生实现但能吃 ST 的角色卡&amp;#x2F;世界书&amp;#x2F;预设&amp;#x2F;正则&amp;#x2F;聊天记录；从进入、导入、开始对话、换回答与分支、舞台四栏、状态与自动导演、群聊、排版、安全开关，到备份、导出与成本控制。"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://blog.521251.xyz/s/dsh-go-tavern-guide/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/cdn.cbd.int_node-snackbar-0.1.16_dist_snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/vendor/cdn.cbd.int_-fancyapps_ui-5.0.28_dist_fancybox_fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/vendor/npm.elemecdn.com_anzhiyu-theme-static-1.0.0_swiper_swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"/img/mirror/38cd9061_1794558626349_tech-emblem.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: {"apiurl":null},
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: Laosia","link":"链接: ","source":"来源: Laosia","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: '/vendor/cdn.cbd.int_flickr-justified-gallery-2.1.2_dist_fjGallery.min.js',
+      css: '/vendor/cdn.cbd.int_flickr-justified-gallery-2.1.2_dist_fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Laosia',
+  title: 'DSH Go 酒馆：从入门到精通',
+  postAI: '',
+  pageFillDescription: 'DSH Go 酒馆：从入门到精通, 一、进酒馆：三条路, 二、模型与连接：Flash 还是 V4 Pro, 三、导入：一个入口认所有文件, 从 DeepSeek 把长对话接回来, 四、书架、角色页、群聊, 五、开始对话：输入条上那几个键, 六、换回答、分支、消息菜单, 七、舞台四栏：本局 x2F 状态 x2F 导演 x2F 本回合, 本局, 状态, 导演, 本回合, 八、排版：气泡 x2F 小说 x2F 视觉小说, 九、安全：两个默认关着的开关, 十、备份、导出与用量, 数据在哪, 备份与恢复, 导出, 十一、资源库：把设定和格式攒起来, 十二、按水平分层的用法酒馆从入门到精通先把一个最常见的误会说清楚的酒馆不是把的网页塞进手机跑它是里原生实现的一个角色扮演区不装本机运行环境不连远程主机直接用你在设置里填的调模型但它在数据格式上跟是打通的角色卡世界书预设正则快速回复主题聊天记录都能导进来所以你以前的卡和预设不会白攒三个前提角色卡对话设置全部只存在这台手机上卸载重置前必须备份酒馆不审查卡和模型的内容卡里的和脚本会在消息里跑所以它给了两个安全开关后文有上下文越长每回合越贵长对话要自己控制节奏一进酒馆三条路方式操作切换模式对话列表切换模式模式酒馆返回键回到工作开机直进酒馆首页我的启动时进入设成酒馆首次引导第一次打开时选和角色聊天会跳过安装直接进酒馆并自动把启动时进入设好第三条是新手最省事的它跳过了的运行环境安装因为酒馆根本不依赖本机引擎进去第一件事不是导卡是填酒馆我的酒馆设置模型与连接这里和对话共用同一个没填时页面会提示去填写二模型与连接还是酒馆我的酒馆设置模型与连接主模型与二选一日常陪聊大量短回合用要它稳定守住人设处理长设定和复杂状态时换思考一个开关开着更想得深但每回合的耗时和都会涨纯角色扮演多数时候没必要开填一次酒馆和对话共用生成里还有默认预设的回复上限和温度注意这句自带预设的对话以它自己的为准也就是说卡或预设里写了参数全局默认就不生效了想按对话单独调去舞台本局那里列着这段对话正在用的模型思考人设预设世界书排版和背景图三导入一个入口认所有文件酒馆导入从文件导入会自动判别类型角色卡世界书预设正则快速回复的聊天记录一次可以选多个文件会逐个提示结果如果不是角色卡它会打开导入报告把导入时注意到的问题列出来这份报告别跳过卡里字段丢失正则不兼容通常都写在这里从链接导入粘贴角色卡站点的角色页地址或者卡文件直链几个容易忽略的聊天记录要的可以一次选几个主题不在导入里在酒馆设置显示导入主题角色页的配置页签里能回看这张卡的导入报告随时复查从把长对话接回来这个功能挺特别在官方里聊不下去的长对话可以搬到酒馆接着聊先在的设置里导出全部历史对话得到一个二选一文件管理器里把分享给或者酒馆导入从接回来再选这个文件接回后的行为要提前知道列表按聊得多少排序最长的那段已经勾好点底部按钮就直接打开发下一句每段对话会变成书架上的一个角色原来重新生成修改留下的分支都在被撤回或没写完的回复会保留但不会再发给模型重复导入同一段不会重复点它直接打开接回的对话用更大的上下文至少和更长的回复上限超出上下文的早期内容模型看不到所以最开头两条不算撤回没写完的会被塞进角色描述每条最多字这里就是费用提醒接回一段很长的对话每回合都在为上下文付费四书架角色页群聊书架顶部是最近聊过的对话点继续接着上次下面是角色网格角色多了能搜索按标签筛选切排序点卡进角色页三个页签页签里面有什么对话左右滑选开场白点开始或继续上次设定卡面与角色设定配置这张卡的世界书形象导入报告编辑角色只改能改的字段卡里改不了的内容保存时原样保留而且已有对话不会变不会因为改了卡把历史重写一遍对话一栏列出全部聊天最新在上长按可删顶部新建群聊要书架上至少两个角色才可点群聊的规矩在谁在里面按点选顺序排第一个是主持故事共用的状态导演和秘密都记在主持的卡上主持可以不在发言名单里进群后能看到谁在说也能让大家接着说发言名单和顺序在群聊设置里改五开始对话输入条上那几个键对话页上面是舞台故事与消息下面是输入条除了正常打字长按发送键选以旁白身份发自己当旁白推进剧情或只发不回复只落一条消息不催模型帮我写让模型替你写这一句接着写让最后一条继续往下输入条上方还有快速回复和掷骰选好骰子结果先放进输入框你确认后再发送不会直接替你摇完就发六换回答分支消息菜单这部分是酒馆真正的骨架任何一条角色回复都能左右滑在上一个回答下一个回答之间切最后一条向左滑到头重新生成滑到别的备选时顶部会提示切到了另一条分支可以撤销长按消息出菜单复制编辑从这里分叉重新生成接着写加书签对模型隐藏只删这一条删除这条及以后看看发了什么两个菜单项值得单独说对模型隐藏消息还留在你眼前但不进上下文这是在不破坏阅读连续性的前提下省的主要手段看看发了什么直接把这一回合实际发给模型的内容摊开排查它为什么忘了设定为什么不按格式回答时先看这里比猜快得多分支页把整段对话的岔路画成一棵树缩进的行是从上一行末尾岔出的另一条路点一行可以切过去给它起名没在走的那条也能删七舞台四栏本局状态导演本回合对话页右上角舞台打开侧栏本局这段对话正在用的模型思考人设预设世界书排版背景图以及书签分支在对话里搜索导出聊天记录导出成故事书长图状态卡定义的状态显示到当前这条消息为止这回合变了的会标这样的记号点一项能看全部或直接改改动记在这条消息上所以换回答切分支时会跟着回退不会出现状态和剧情对不上没定义状态的老卡这里会列出它的变量导演打开自动导演后它每隔几回合在后台读一遍剧情记下导演笔记默认藏着怕剧透再给你几条建议回复也能手动让导演想一想后台记录里能看到每次状态改动和导演运行最新的在上最多条本回合这一回合实际发出去的内容完整检视和长按菜单里的看看发了什么是同一类信息区别在于这里是按回合组织的八排版气泡小说视觉小说每段对话可以在舞台本局单独换排版全局在酒馆设置显示排版适合气泡常规对话谁说什么一眼分清小说长段叙述沉浸阅读界面上少一层壳视觉小说有大背景图想看画面信息的时候同一组里还有正文字号配色是否用卡自带的样式导入主题以及面板和整页画布的开关用卡自带的样式卡里带了就生效观感更接近作者想要的样子但也可能和你的配色打架看着别扭就关掉面板整页画布卡里的富交互状态面板小游戏要靠它们渲染不需要就关掉省性能也少一层风险九安全两个默认关着的开关酒馆设置安全网页里不运行卡的脚本网页不联网默认都关闭也就是默认允许卡的脚本运行允许页面联网这在追完卡作者的炫技效果时很爽但代价是卡来自第三方脚本和网络请求都不受你控制建议的用法平时开着这两项只在你信任的卡并且确实需要那个效果时临时关掉试一次酒馆本身也明确说了它不审查卡和模型的内容十备份导出与用量数据在哪角色卡对话世界书预设人设设置形象全在这台手机上备份与恢复酒馆设置数据备份整个酒馆打成一个从备份恢复存储占用按角色对话预设等分项统计突然变大会看到是对话涨了还是资源涨了用量统计每段对话用了多少包括缓存命中换手机重置卸载前先备份这一条是硬提醒删除角色会连它的对话一起删删前会确认但不能撤销导出舞台本局里导出聊天记录导出成故事书纯文本或长图长图适合发给人看适合自己留着读适合再加工十一资源库把设定和格式攒起来酒馆资源库里面是世界书预设正则默认人设快速回复世界书预设正则都能从文件导入也能编辑命中测试世界书看哪些条目会被命中正则看替换前后导入别人写的正则后先跑一次比在对话里出问题再回头查省事得多世界书设为全局后对所有对话生效卡自带的世界书跟着卡走默认人设是你在对话里扮演的人长按可以设默认或删除十二按水平分层的用法层级会做什么入门进酒馆填导一张卡选开场白开始聊熟练左右滑换回答用对模型隐藏省会看看看发了什么定位设定丢失按对话换排版定期备份精通用世界书预设正则把人设格式触发拆开管理并做命中测试用分支树管理剧情岔路用状态自动导演维持长线的连贯群聊里安排主持与发言顺序用接回迁移老对话靠用量统计含缓存命中和上下文控制把每回合成本压住几条实操经验先备份再折腾改预设导卡接回长对话之前打个整库卡里的脚本默认别放行需要时再开用完关回去长对话要主动瘦身对早期消息用对模型隐藏或另起一段把关键设定留在世界书里回了奇怪的格式先看本回合的完整输入再决定是改正则还是改预设状态和剧情对不上去舞台状态看看是不是切了分支没跟上它是跟着消息走的版本说明本文依据仓库内的酒馆使用指南与其实现说明整理核对时间该功能仍在快速迭代按钮位置与文案可能变动遇到不一致以内当前页面为准',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-27 15:15:05',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>!function(){try{var raw=localStorage.getItem("theme"),v=null;if(raw){try{var o=JSON.parse(raw);v=(o&&typeof o==="object")?o.value:o;}catch(e){v=raw;}}var keep=Date.now()+315360000000;if(v==="light"){document.documentElement.setAttribute("data-theme","light");document.documentElement.classList.remove("dark");localStorage.setItem("theme",JSON.stringify({value:"light",expiry:keep}));return;}document.documentElement.setAttribute("data-theme","dark");document.documentElement.classList.add("dark");if(v!=="dark"){localStorage.setItem("theme",JSON.stringify({value:"dark",expiry:keep}));}}catch(e){}}();</script><script>document.addEventListener("DOMContentLoaded",function(){function hide(){var b=document.getElementById("loading-box");if(b){b.classList.add("loaded");b.style.pointerEvents="none";var g=b.querySelector(".loading-bg");if(g){g.style.opacity="0";g.style.zIndex="-1000";g.style.pointerEvents="none";}}}hide();setTimeout(hide,700);setTimeout(hide,2000);});</script><link rel="stylesheet" href="/css/custom.css?v=20261123c"><link rel="preconnect" href="https://img.521251.xyz" crossorigin><link rel="dns-prefetch" href="https://img.521251.xyz"><link rel="preconnect" href="https://p1.music.126.net"><link rel="dns-prefetch" href="https://p2.music.126.net"><link rel="dns-prefetch" href="https://ai.sos.us.kg"><link rel="dns-prefetch" href="https://events.vercount.one"><meta name="ai-summary-endpoint" content="https://ai.sos.us.kg"><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/mirror/84d41ee8_1794542832099_head_18.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.1.10_progress_bar_progress_bar.css"/><script async="async" src="/vendor/cdn.cbd.int_pace-js-1.2.4_pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src="/img/mirror/e4616c84_1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Laosia</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="/img/reward-laugh.gif" target="_blank"><img class="post-qr-code-img" alt="大笑" src="/img/reward-laugh.gif"/></a><div class="post-qr-code-desc">大笑</div></li><li class="reward-item"><a href="/img/reward-despise.gif" target="_blank"><img class="post-qr-code-img" alt="鄙视" src="/img/reward-despise.gif"/></a><div class="post-qr-code-desc">鄙视</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AI%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">AI工具<sup>2</sup></a><a href="/tags/Agent/" style="font-size: 1.05rem;">Agent<sup>2</sup></a><a href="/tags/Android/" style="font-size: 1.05rem;">Android<sup>1</sup></a><a href="/tags/Caddy/" style="font-size: 1.05rem;">Caddy<sup>1</sup></a><a href="/tags/Cloudflare/" style="font-size: 1.05rem;">Cloudflare<sup>1</sup></a><a href="/tags/DAF/" style="font-size: 1.05rem;">DAF<sup>1</sup></a><a href="/tags/DNS/" style="font-size: 1.05rem;">DNS<sup>1</sup></a><a href="/tags/DNSSEC/" style="font-size: 1.05rem;">DNSSEC<sup>1</sup></a><a href="/tags/DSH/" style="font-size: 1.05rem;">DSH<sup>4</sup></a><a href="/tags/Debian11/" style="font-size: 1.05rem;">Debian11<sup>1</sup></a><a href="/tags/DeepSeek/" style="font-size: 1.05rem;">DeepSeek<sup>4</sup></a><a href="/tags/HTTPS/" style="font-size: 1.05rem;">HTTPS<sup>1</sup></a><a href="/tags/HiDNS/" style="font-size: 1.05rem;">HiDNS<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>1</sup></a><a href="/tags/Mihomo/" style="font-size: 1.05rem;">Mihomo<sup>1</sup></a><a href="/tags/SSH/" style="font-size: 1.05rem;">SSH<sup>1</sup></a><a href="/tags/SillyTavern/" style="font-size: 1.05rem;">SillyTavern<sup>1</sup></a><a href="/tags/Vibe-Coding/" style="font-size: 1.05rem;">Vibe Coding<sup>1</sup></a><a href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.05rem;">Web服务器<sup>1</sup></a><a href="/tags/gcore/" style="font-size: 1.05rem;">gcore<sup>1</sup></a><a href="/tags/hexo/" style="font-size: 1.05rem;">hexo<sup>1</sup></a><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 1.05rem;">分享<sup>1</sup></a><a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 1.05rem;">反向代理<sup>1</sup></a><a href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/" style="font-size: 1.05rem;">叠螺机<sup>1</sup></a><a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 1.05rem;">命令行<sup>1</sup></a><a href="/tags/%E5%9B%9E%E6%BA%90/" style="font-size: 1.05rem;">回源<sup>1</sup></a><a href="/tags/%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">图文教程<sup>1</sup></a><a href="/tags/%E6%89%8B%E6%9C%BA%E7%AB%AF/" style="font-size: 1.05rem;">手机端<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 1.05rem;">技术<sup>6</sup></a><a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 1.05rem;">插件<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>6</sup></a><a href="/tags/%E6%B0%94%E6%B5%AE%E6%9C%BA/" style="font-size: 1.05rem;">气浮机<sup>1</sup></a><a href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/" style="font-size: 1.05rem;">污水处理<sup>2</sup></a><a href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/" style="font-size: 1.05rem;">污泥脱水<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">游戏<sup>1</sup></a><a href="/tags/%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94/" style="font-size: 1.05rem;">角色扮演<sup>1</sup></a><a href="/tags/%E8%AD%A6%E5%91%8A/" style="font-size: 1.05rem;">警告<sup>1</sup></a><a href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/" style="font-size: 1.05rem;">设备调试<sup>2</sup></a><a href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/" style="font-size: 1.05rem;">运行经验<sup>2</sup></a><a href="/tags/%E9%85%92%E9%A6%86/" style="font-size: 1.05rem;">酒馆<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">10</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>教程</span></a><a class="article-meta__tags" href="/tags/DSH/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>DSH</span></a><a class="article-meta__tags" href="/tags/DeepSeek/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>DeepSeek</span></a><a class="article-meta__tags" href="/tags/%E9%85%92%E9%A6%86/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>酒馆</span></a><a class="article-meta__tags" href="/tags/SillyTavern/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>SillyTavern</span></a><a class="article-meta__tags" href="/tags/%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>角色扮演</span></a></span></div></div><h1 class="post-title" itemprop="name headline">DSH Go 酒馆：从入门到精通</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-27T11:10:00.000Z" title="发表于 2026-11-27 19:10:00">2026-11-27</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-27T07:15:05.656Z" title="更新于 2026-11-27 15:15:05">2026-11-27</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">3156</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>9分钟</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为南极"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>南极</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="/img/mirror/32291b0d_lsTdfXiS.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://blog.521251.xyz/s/dsh-go-tavern-guide/"><header><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a><a href="/tags/%E6%95%99%E7%A8%8B/" tabindex="-1" itemprop="url">教程</a><a href="/tags/DSH/" tabindex="-1" itemprop="url">DSH</a><a href="/tags/DeepSeek/" tabindex="-1" itemprop="url">DeepSeek</a><a href="/tags/%E9%85%92%E9%A6%86/" tabindex="-1" itemprop="url">酒馆</a><a href="/tags/SillyTavern/" tabindex="-1" itemprop="url">SillyTavern</a><a href="/tags/%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94/" tabindex="-1" itemprop="url">角色扮演</a><h1 id="CrawlerTitle" itemprop="name headline">DSH Go 酒馆：从入门到精通</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Laosia</span><time itemprop="dateCreated datePublished" datetime="2026-11-27T11:10:00.000Z" title="发表于 2026-11-27 19:10:00">2026-11-27</time><time itemprop="dateCreated datePublished" datetime="2026-11-27T07:15:05.656Z" title="更新于 2026-11-27 15:15:05">2026-11-27</time></header><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/32291b0d_lsTdfXiS.jpg"></p>
+<h2 id="DSH-Go-酒馆：从入门到精通"><a href="#DSH-Go-酒馆：从入门到精通" class="headerlink" title="DSH Go 酒馆：从入门到精通"></a>DSH Go 酒馆：从入门到精通</h2><p>先把一个最常见的误会说清楚：<strong>DSH Go 的酒馆不是把 SillyTavern 的网页塞进手机跑</strong>，它是 App 里原生实现的一个角色扮演区——不装本机运行环境、不连远程主机，直接用你在设置里填的 DeepSeek API Key 调模型。</p>
+<p>但它在<strong>数据格式上跟 SillyTavern 是打通的</strong>：角色卡（PNG &#x2F; JSON &#x2F; CHARX）、世界书、预设、正则、快速回复、ST 主题、<code>.jsonl</code> 聊天记录，都能导进来。所以你以前的卡和预设不会白攒。</p>
+<p>三个前提：</p>
+<ol>
+<li>角色卡、对话、设置<strong>全部只存在这台手机上</strong>，卸载&#x2F;重置前必须备份；</li>
+<li>酒馆<strong>不审查</strong>卡和模型的内容，卡里的 HTML 和脚本会在消息里跑——所以它给了两个安全开关（后文有）；</li>
+<li>上下文越长每回合越贵，长对话要自己控制节奏。</li>
+</ol>
+<hr>
+<h2 id="一、进酒馆：三条路"><a href="#一、进酒馆：三条路" class="headerlink" title="一、进酒馆：三条路"></a>一、进酒馆：三条路</h2><table>
+<thead>
+<tr>
+<th>方式</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>切换模式</td>
+<td><code>对话列表 › 切换模式 › 模式 › 酒馆</code>，返回键回到工作</td>
+</tr>
+<tr>
+<td>开机直进</td>
+<td>酒馆首页 <strong>我的</strong> → <strong>启动时进入</strong> 设成酒馆</td>
+</tr>
+<tr>
+<td>首次引导</td>
+<td>第一次打开 App 时选 <strong>和角色聊天</strong>，会跳过安装直接进酒馆，并自动把「启动时进入」设好</td>
+</tr>
+</tbody></table>
+<p>第三条是新手最省事的：<strong>它跳过了 1 GB 的运行环境安装</strong>，因为酒馆根本不依赖本机引擎。</p>
+<p>进去第一件事不是导卡，是<strong>填 Key</strong>：<code>酒馆 › 我的 › 酒馆设置 › 模型与连接</code>。这里和对话共用同一个 Key；没填时页面会提示去填写。</p>
+<hr>
+<h2 id="二、模型与连接：Flash-还是-V4-Pro"><a href="#二、模型与连接：Flash-还是-V4-Pro" class="headerlink" title="二、模型与连接：Flash 还是 V4 Pro"></a>二、模型与连接：Flash 还是 V4 Pro</h2><p><code>酒馆 ‹ 我的 › 酒馆设置 › 模型与连接</code></p>
+<ul>
+<li><strong>主模型</strong>：<code>Flash</code> 与 <code>V4 Pro</code> 二选一。日常陪聊、大量短回合用 Flash；要它稳定守住人设、处理长设定和复杂状态时换 V4 Pro。</li>
+<li><strong>思考</strong>：一个开关。开着更”想得深”，但每回合的耗时和 token 都会涨；纯角色扮演多数时候没必要开。</li>
+<li><strong>DeepSeek API Key</strong>：填一次，酒馆和对话共用。</li>
+</ul>
+<p><code>生成</code> 里还有默认预设的<strong>回复上限</strong>和<strong>温度</strong>——注意这句：<strong>自带预设的对话以它自己的为准</strong>，也就是说卡或预设里写了参数，全局默认就不生效了。</p>
+<p>想按对话单独调，去 <code>舞台 › 本局</code>，那里列着这段对话正在用的模型、思考、人设、预设、世界书、排版和背景图。</p>
+<hr>
+<h2 id="三、导入：一个入口认所有文件"><a href="#三、导入：一个入口认所有文件" class="headerlink" title="三、导入：一个入口认所有文件"></a>三、导入：一个入口认所有文件</h2><p><code>酒馆 › 导入</code></p>
+<p><strong>从文件导入</strong>会自动判别类型：角色卡（PNG &#x2F; JSON &#x2F; CHARX）、世界书、预设、正则、快速回复、SillyTavern 的聊天记录。<strong>一次可以选多个文件</strong>，会逐个提示结果；如果不是角色卡，它会打开<strong>导入报告</strong>，把导入时注意到的问题列出来——这份报告别跳过，卡里字段丢失、正则不兼容通常都写在这里。</p>
+<p><strong>从链接导入</strong>：粘贴角色卡站点的角色页地址，或者卡文件直链。</p>
+<p>几个容易忽略的：</p>
+<ul>
+<li><strong>聊天记录</strong>要 SillyTavern 的 <code>.jsonl</code>，可以一次选几个；</li>
+<li><strong>ST 主题</strong>不在导入里，在 <code>酒馆设置 › 显示 › 导入 ST 主题</code>；</li>
+<li>角色页的 <strong>配置</strong> 页签里能回看这张卡的<strong>导入报告</strong>，随时复查。</li>
+</ul>
+<h3 id="从-DeepSeek-把长对话接回来"><a href="#从-DeepSeek-把长对话接回来" class="headerlink" title="从 DeepSeek 把长对话接回来"></a>从 DeepSeek 把长对话接回来</h3><p>这个功能挺特别：在 DeepSeek 官方 App 里聊不下去的长对话，可以搬到酒馆接着聊。</p>
+<ol>
+<li>先在 DeepSeek 的设置里<strong>导出全部历史对话</strong>，得到一个 ZIP；</li>
+<li>二选一：文件管理器里把 ZIP <strong>分享给 dsh-Go</strong>，或者 <code>酒馆 › 导入 › 从 DeepSeek 接回来</code> 再选这个文件。</li>
+</ol>
+<p>接回后的行为要提前知道：</p>
+<ul>
+<li>列表按聊得多少排序，<strong>最长的那段已经勾好</strong>，点底部按钮就直接打开、发下一句；</li>
+<li>每段对话会变成<strong>书架上的一个角色</strong>，原来「重新生成&#x2F;修改」留下的<strong>分支都在</strong>；</li>
+<li>被撤回或没写完的回复<strong>会保留</strong>，但不会再发给模型；</li>
+<li>重复导入同一段<strong>不会重复</strong>，点它直接打开；</li>
+<li>接回的对话用更大的上下文（<strong>至少 64K</strong>）和更长的回复上限；</li>
+<li>超出上下文的早期内容模型看不到，所以<strong>最开头两条</strong>（不算撤回&#x2F;没写完的）会被塞进角色描述，<strong>每条最多 4000 字</strong>。</li>
+</ul>
+<p>这里就是费用提醒：接回一段很长的对话，每回合都在为 64K 上下文付费。</p>
+<hr>
+<h2 id="四、书架、角色页、群聊"><a href="#四、书架、角色页、群聊" class="headerlink" title="四、书架、角色页、群聊"></a>四、书架、角色页、群聊</h2><p><strong>书架</strong>顶部是最近聊过的对话，点 <strong>继续</strong> 接着上次；下面是角色网格，角色多了能搜索、按标签筛选、切排序。</p>
+<p>点卡进<strong>角色页</strong>，三个页签：</p>
+<table>
+<thead>
+<tr>
+<th>页签</th>
+<th>里面有什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>对话</strong></td>
+<td>左右滑选<strong>开场白</strong>，点 <strong>开始</strong> 或 <strong>继续上次</strong></td>
+</tr>
+<tr>
+<td><strong>设定</strong></td>
+<td>卡面与角色设定</td>
+</tr>
+<tr>
+<td><strong>配置</strong></td>
+<td>这张卡的世界书、Live2D 形象、导入报告</td>
+</tr>
+</tbody></table>
+<p><strong>编辑角色</strong>只改能改的字段——卡里改不了的内容，保存时<strong>原样保留</strong>，而且<strong>已有对话不会变</strong>（不会因为改了卡把历史重写一遍）。</p>
+<p><strong>对话一栏</strong>列出全部聊天，最新在上，长按可删。顶部 <strong>新建群聊</strong> 要书架上至少两个角色才可点。</p>
+<p>群聊的规矩：在 <strong>谁在里面</strong> 按点选顺序排，<strong>第一个是主持</strong>；故事共用的状态、导演和秘密都记在主持的卡上；<strong>主持可以不在发言名单里</strong>。进群后能看到谁在说，也能 <strong>让大家接着说</strong>；发言名单和顺序在 <strong>群聊设置</strong> 里改。</p>
+<hr>
+<h2 id="五、开始对话：输入条上那几个键"><a href="#五、开始对话：输入条上那几个键" class="headerlink" title="五、开始对话：输入条上那几个键"></a>五、开始对话：输入条上那几个键</h2><p>对话页上面是舞台（故事与消息），下面是输入条。除了正常打字：</p>
+<ul>
+<li><strong>长按发送键</strong>：选 <strong>以旁白身份发</strong>（自己当旁白推进剧情）或 <strong>只发，不回复</strong>（只落一条消息，不催模型）；</li>
+<li><strong>帮我写</strong>：让模型替你写这一句；</li>
+<li><strong>接着写</strong>：让最后一条继续往下；</li>
+<li>输入条上方还有 <strong>快速回复</strong> 和 <strong>掷骰</strong>——选好骰子，结果<strong>先放进输入框</strong>，你确认后再发送（不会直接替你摇完就发）。</li>
+</ul>
+<hr>
+<h2 id="六、换回答、分支、消息菜单"><a href="#六、换回答、分支、消息菜单" class="headerlink" title="六、换回答、分支、消息菜单"></a>六、换回答、分支、消息菜单</h2><p>这部分是酒馆真正的骨架。</p>
+<p><strong>任何一条角色回复都能左右滑</strong>，在「上一个回答 &#x2F; 下一个回答」之间切；<strong>最后一条向左滑到头 &#x3D; 重新生成</strong>。滑到别的备选时，顶部会提示「切到了另一条分支」，<strong>可以撤销</strong>。</p>
+<p><strong>长按消息</strong>出菜单：复制、编辑、<strong>从这里分叉</strong>、重新生成、接着写、加书签、<strong>对模型隐藏</strong>、只删这一条、删除这条及以后、<strong>看看发了什么</strong>。</p>
+<p>两个菜单项值得单独说：</p>
+<ul>
+<li><strong>对模型隐藏</strong>：消息还留在你眼前，但不进上下文——这是在不破坏阅读连续性的前提下省 token 的主要手段；</li>
+<li><strong>看看发了什么</strong>：直接把这一回合实际发给模型的内容摊开，排查「它为什么忘了设定&#x2F;为什么不按格式回答」时，先看这里，比猜快得多。</li>
+</ul>
+<p><strong>分支页</strong>把整段对话的岔路画成一棵树：缩进的行是从上一行末尾岔出的另一条路；点一行可以切过去、给它起名；<strong>没在走的那条也能删</strong>。</p>
+<hr>
+<h2 id="七、舞台四栏：本局-状态-导演-本回合"><a href="#七、舞台四栏：本局-状态-导演-本回合" class="headerlink" title="七、舞台四栏：本局 &#x2F; 状态 &#x2F; 导演 &#x2F; 本回合"></a>七、舞台四栏：本局 &#x2F; 状态 &#x2F; 导演 &#x2F; 本回合</h2><p>对话页右上角 <strong>舞台</strong> 打开侧栏：</p>
+<h3 id="本局"><a href="#本局" class="headerlink" title="本局"></a>本局</h3><p>这段对话正在用的模型、思考、人设、预设、世界书、排版、背景图；以及 <strong>书签</strong>、<strong>分支</strong>、<strong>在对话里搜索</strong>、<strong>导出聊天记录</strong>、<strong>导出成故事书</strong>（EPUB &#x2F; TXT &#x2F; <strong>长图</strong>）。</p>
+<h3 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h3><p>卡定义的状态，显示到当前这条消息为止。这回合变了的会标 <strong>「+5」</strong> 这样的记号；<strong>点一项能看全部或直接改</strong>，改动记在这条消息上——所以<strong>换回答、切分支时会跟着回退</strong>，不会出现「状态和剧情对不上」。没定义状态的老卡，这里会列出它的变量。</p>
+<h3 id="导演"><a href="#导演" class="headerlink" title="导演"></a>导演</h3><p>打开 <strong>自动导演</strong> 后，它每隔几回合在后台读一遍剧情，记下 <strong>导演笔记</strong>（默认藏着怕剧透），再给你几条建议回复；也能手动 <strong>让导演想一想</strong>。<strong>后台记录</strong> 里能看到每次状态改动和导演运行，最新的在上，<strong>最多 100 条</strong>。</p>
+<h3 id="本回合"><a href="#本回合" class="headerlink" title="本回合"></a>本回合</h3><p>这一回合实际发出去的内容，完整检视——和长按菜单里的「看看发了什么」是同一类信息，区别在于这里是按回合组织的。</p>
+<hr>
+<h2 id="八、排版：气泡-小说-视觉小说"><a href="#八、排版：气泡-小说-视觉小说" class="headerlink" title="八、排版：气泡 &#x2F; 小说 &#x2F; 视觉小说"></a>八、排版：气泡 &#x2F; 小说 &#x2F; 视觉小说</h2><p>每段对话可以在 <code>舞台 › 本局</code> 单独换排版，全局在 <code>酒馆设置 › 显示</code>：</p>
+<table>
+<thead>
+<tr>
+<th>排版</th>
+<th>适合</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>气泡</strong></td>
+<td>常规对话，谁说什么一眼分清</td>
+</tr>
+<tr>
+<td><strong>小说</strong></td>
+<td>长段叙述、沉浸阅读，界面上少一层壳</td>
+</tr>
+<tr>
+<td><strong>视觉小说</strong></td>
+<td>有大背景图、想看画面信息的时候</td>
+</tr>
+</tbody></table>
+<p>同一组里还有 <strong>正文字号</strong>、<strong>配色</strong>、是否 <strong>用卡自带的样式</strong>、<strong>导入 ST 主题</strong>，以及 <strong>HTML 面板</strong> 和 <strong>整页画布</strong> 的开关。</p>
+<ul>
+<li><strong>用卡自带的样式</strong>：卡里带了 CSS 就生效，观感更接近作者想要的样子，但也可能和你的配色打架，看着别扭就关掉；</li>
+<li><strong>HTML 面板 &#x2F; 整页画布</strong>：卡里的富交互（状态面板、小游戏）要靠它们渲染，不需要就关掉，省性能也少一层风险。</li>
+</ul>
+<hr>
+<h2 id="九、安全：两个默认关着的开关"><a href="#九、安全：两个默认关着的开关" class="headerlink" title="九、安全：两个默认关着的开关"></a>九、安全：两个默认关着的开关</h2><p><code>酒馆设置 › 安全</code></p>
+<ul>
+<li><strong>网页里不运行卡的脚本</strong></li>
+<li><strong>网页不联网</strong></li>
+</ul>
+<p>默认<strong>都关闭</strong>，也就是默认允许卡的脚本运行、允许页面联网。这在追完卡作者的炫技效果时很爽，但代价是：卡来自第三方，脚本和网络请求都不受你控制。</p>
+<p>建议的用法：<strong>平时开着这两项</strong>，只在你信任的卡、并且确实需要那个效果时，临时关掉试一次。酒馆本身也明确说了——它不审查卡和模型的内容。</p>
+<hr>
+<h2 id="十、备份、导出与用量"><a href="#十、备份、导出与用量" class="headerlink" title="十、备份、导出与用量"></a>十、备份、导出与用量</h2><h3 id="数据在哪"><a href="#数据在哪" class="headerlink" title="数据在哪"></a>数据在哪</h3><p>角色卡、对话、世界书、预设、人设、设置、Live2D 形象，<strong>全在这台手机上</strong>。</p>
+<h3 id="备份与恢复"><a href="#备份与恢复" class="headerlink" title="备份与恢复"></a>备份与恢复</h3><p><code>酒馆设置 › 数据</code>：</p>
+<ul>
+<li><strong>备份整个酒馆</strong> —— 打成一个 zip；</li>
+<li><strong>从备份恢复</strong>；</li>
+<li><strong>存储占用</strong> —— 按角色、对话、预设等分项统计，突然变大会看到是对话涨了还是资源涨了；</li>
+<li><strong>用量统计</strong> —— 每段对话用了多少 token，<strong>包括缓存命中</strong>。</li>
+</ul>
+<p><strong>换手机、重置、卸载前先备份。</strong> 这一条是硬提醒：删除角色会连它的对话一起删，删前会确认，但<strong>不能撤销</strong>。</p>
+<h3 id="导出"><a href="#导出" class="headerlink" title="导出"></a>导出</h3><p><code>舞台 › 本局</code> 里：</p>
+<ul>
+<li><strong>导出聊天记录</strong>；</li>
+<li><strong>导出成故事书</strong> —— <strong>EPUB</strong>、<strong>纯文本 TXT</strong>、或 <strong>长图</strong>。</li>
+</ul>
+<p>长图适合发给人看，EPUB 适合自己留着读，TXT 适合再加工。</p>
+<hr>
+<h2 id="十一、资源库：把设定和格式攒起来"><a href="#十一、资源库：把设定和格式攒起来" class="headerlink" title="十一、资源库：把设定和格式攒起来"></a>十一、资源库：把设定和格式攒起来</h2><p><code>酒馆 › 资源库</code></p>
+<p>里面是 <strong>世界书</strong>、<strong>预设</strong>、<strong>正则</strong>、<strong>默认人设</strong>、<strong>快速回复</strong>。</p>
+<ul>
+<li>世界书、预设、正则都能<strong>从文件导入</strong>，也能<strong>编辑</strong>；</li>
+<li><strong>命中测试</strong>：世界书看哪些条目会被命中，正则看替换前后——导入别人写的正则后先跑一次，比在对话里出问题再回头查省事得多；</li>
+<li><strong>世界书设为全局</strong>后对所有对话生效；<strong>卡自带的世界书跟着卡走</strong>；</li>
+<li><strong>默认人设</strong>是你在对话里扮演的人，<strong>长按可以设默认或删除</strong>。</li>
+</ul>
+<hr>
+<h2 id="十二、按水平分层的用法"><a href="#十二、按水平分层的用法" class="headerlink" title="十二、按水平分层的用法"></a>十二、按水平分层的用法</h2><table>
+<thead>
+<tr>
+<th>层级</th>
+<th>会做什么</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>入门</strong></td>
+<td>进酒馆、填 Key、导一张卡、选开场白开始聊</td>
+</tr>
+<tr>
+<td><strong>熟练</strong></td>
+<td>左右滑换回答、用「对模型隐藏」省 token、会看「看看发了什么」定位设定丢失、按对话换排版、定期备份</td>
+</tr>
+<tr>
+<td><strong>精通</strong></td>
+<td>用世界书 + 预设 + 正则把「人设&#x2F;格式&#x2F;触发」拆开管理并做命中测试；用分支树管理剧情岔路；用状态 + 自动导演维持长线的连贯；群聊里安排主持与发言顺序；用 DeepSeek 接回迁移老对话；靠用量统计（含缓存命中）和上下文控制把每回合成本压住</td>
+</tr>
+</tbody></table>
+<p>几条实操经验：</p>
+<ol>
+<li><strong>先备份再折腾</strong>——改预设、导卡、接回长对话之前，打个整库 zip；</li>
+<li><strong>卡里的脚本默认别放行</strong>，需要时再开，用完关回去；</li>
+<li><strong>长对话要主动瘦身</strong>：对早期消息用「对模型隐藏」，或另起一段、把关键设定留在世界书里；</li>
+<li><strong>回了奇怪的格式</strong>，先看 <code>本回合</code> 的完整输入，再决定是改正则还是改预设；</li>
+<li><strong>状态和剧情对不上</strong>，去 <code>舞台 › 状态</code> 看看是不是切了分支没跟上——它是跟着消息走的。</li>
+</ol>
+<blockquote>
+<p>版本说明：本文依据 DSH Go 仓库内的酒馆使用指南（<code>docs/guide/zh/13-tavern.md</code>）与其实现说明整理，核对时间 2026-11-27；该功能仍在快速迭代，按钮位置与文案可能变动，遇到不一致以 App 内当前页面为准。</p>
+</blockquote>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Laosia</div><div class="post-copyright__author_desc">😤Laosia😚无聊时刻😤</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://blog.521251.xyz/s/dsh-go-tavern-guide/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://blog.521251.xyz/s/dsh-go-tavern-guide/')">DSH Go 酒馆：从入门到精通</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="/img/reward-laugh.gif" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/reward-laugh.gif" alt="大笑"/></a><div class="post-qr-code-desc">大笑</div></li><li class="reward-item"><a href="/img/reward-despise.gif" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/reward-despise.gif" alt="鄙视"/></a><div class="post-qr-code-desc">鄙视</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://blog.521251.xyz/s/dsh-go-tavern-guide/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=DSH Go 酒馆：从入门到精通&amp;url=https://blog.521251.xyz/s/dsh-go-tavern-guide/&amp;pic=/img/mirror/32291b0d_lsTdfXiS.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.521251.xyz" target="_blank">Laosia</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/%E6%95%99%E7%A8%8B/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>教程<span class="tagsPageCount">6</span></a><a class="post-meta__box__tags" href="/tags/DSH/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>DSH<span class="tagsPageCount">4</span></a><a class="post-meta__box__tags" href="/tags/DeepSeek/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>DeepSeek<span class="tagsPageCount">4</span></a><a class="post-meta__box__tags" href="/tags/%E9%85%92%E9%A6%86/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>酒馆<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/SillyTavern/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>SillyTavern<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>角色扮演<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="/img/mirror/32291b0d_lsTdfXiS.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_sharejs_dist_css_share.min.css" media="print" onload="this.media='all'"/><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_sharejs_dist_js_social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/s/dsh-go-android-guide/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/0bca9477_YKx5L5zY.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">DSH Go 安卓端：从入门到精通</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/s/dsh-go-android-guide/" title="DSH Go 安卓端：从入门到精通"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/0bca9477_YKx5L5zY.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-27</div><div class="title">DSH Go 安卓端：从入门到精通</div></div></a></div><div><a href="/s/dsh-from-basics-to-mastery/" title="DeepSeek Harness 从入门到精通"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/a9b6b37d_SJ0Ty4dp.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-27</div><div class="title">DeepSeek Harness 从入门到精通</div></div></a></div><div><a href="/s/dsh-beginner-guide/" title="DSH 零基础全流程教学 · 图文版"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/dsh/11-whale-wallpaper.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-25</div><div class="title">DSH 零基础全流程教学 · 图文版</div></div></a></div><div><a href="/s/caddy-beginner-guide/" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/85b72696_8sH5NlK6.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-26</div><div class="title">Caddy 从零上手：自动 HTTPS 的 Web 服务器</div></div></a></div><div><a href="/s/linux-beginner-commands/" title="Linux 入门必会命令：从登录到排障的 30 个基本功"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/fb2fbb13_bIYPMJOY.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-13</div><div class="title">Linux 入门必会命令：从登录到排障的 30 个基本功</div></div></a></div><div><a href="/s/pve-8-optimization-guide/" title="Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/15da2dbf_KZX3GFQP.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2026-11-12</div><div class="title">Proxmox VE 8.x 性能优化实战：从装完系统到跑满硬件</div></div></a></div></div></div><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/status-dog.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.5;margin:0.6rem 0;text-align:justify;font-size:0.92em;color:rgba(255, 255, 255, 0.82);">人生活在<b style="color:#fff">希望</b>之中，旧的希望实现了，或者泯灭了，新的希望的烈焰随之燃烧起来。如果一个人只管活一天算一天，什么希望也没有，他的生命实际上也就停止了</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Laosia</h1><div class="author-info__desc">😤Laosia😚无聊时刻😤</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/laosiaa" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/233882124" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="card-widget card-countdown"><div class="item-headline"><i></i><span></span></div><div class="item-content"><div class="cd-count-left">
+  <span class="cd-text">距离</span>
+  <span class="cd-name" id="eventName"></span>
+  <span class="cd-time" id="daysUntil"></span>
+  <span class="cd-date" id="eventDate"></span>
+</div>
+<div id="countRight" class="cd-count-right"></div>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#DSH-Go-%E9%85%92%E9%A6%86%EF%BC%9A%E4%BB%8E%E5%85%A5%E9%97%A8%E5%88%B0%E7%B2%BE%E9%80%9A"><span class="toc-number">1.</span> <span class="toc-text">DSH Go 酒馆：从入门到精通</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%BF%9B%E9%85%92%E9%A6%86%EF%BC%9A%E4%B8%89%E6%9D%A1%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">一、进酒馆：三条路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%BF%9E%E6%8E%A5%EF%BC%9AFlash-%E8%BF%98%E6%98%AF-V4-Pro"><span class="toc-number">3.</span> <span class="toc-text">二、模型与连接：Flash 还是 V4 Pro</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%AF%BC%E5%85%A5%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%85%A5%E5%8F%A3%E8%AE%A4%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6"><span class="toc-number">4.</span> <span class="toc-text">三、导入：一个入口认所有文件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E-DeepSeek-%E6%8A%8A%E9%95%BF%E5%AF%B9%E8%AF%9D%E6%8E%A5%E5%9B%9E%E6%9D%A5"><span class="toc-number">4.1.</span> <span class="toc-text">从 DeepSeek 把长对话接回来</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B9%A6%E6%9E%B6%E3%80%81%E8%A7%92%E8%89%B2%E9%A1%B5%E3%80%81%E7%BE%A4%E8%81%8A"><span class="toc-number">5.</span> <span class="toc-text">四、书架、角色页、群聊</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BC%80%E5%A7%8B%E5%AF%B9%E8%AF%9D%EF%BC%9A%E8%BE%93%E5%85%A5%E6%9D%A1%E4%B8%8A%E9%82%A3%E5%87%A0%E4%B8%AA%E9%94%AE"><span class="toc-number">6.</span> <span class="toc-text">五、开始对话：输入条上那几个键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%8D%A2%E5%9B%9E%E7%AD%94%E3%80%81%E5%88%86%E6%94%AF%E3%80%81%E6%B6%88%E6%81%AF%E8%8F%9C%E5%8D%95"><span class="toc-number">7.</span> <span class="toc-text">六、换回答、分支、消息菜单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%88%9E%E5%8F%B0%E5%9B%9B%E6%A0%8F%EF%BC%9A%E6%9C%AC%E5%B1%80-%E7%8A%B6%E6%80%81-%E5%AF%BC%E6%BC%94-%E6%9C%AC%E5%9B%9E%E5%90%88"><span class="toc-number">8.</span> <span class="toc-text">七、舞台四栏：本局 &#x2F; 状态 &#x2F; 导演 &#x2F; 本回合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%B1%80"><span class="toc-number">8.1.</span> <span class="toc-text">本局</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8A%B6%E6%80%81"><span class="toc-number">8.2.</span> <span class="toc-text">状态</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E6%BC%94"><span class="toc-number">8.3.</span> <span class="toc-text">导演</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E5%9B%9E%E5%90%88"><span class="toc-number">8.4.</span> <span class="toc-text">本回合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%8E%92%E7%89%88%EF%BC%9A%E6%B0%94%E6%B3%A1-%E5%B0%8F%E8%AF%B4-%E8%A7%86%E8%A7%89%E5%B0%8F%E8%AF%B4"><span class="toc-number">9.</span> <span class="toc-text">八、排版：气泡 &#x2F; 小说 &#x2F; 视觉小说</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%AE%89%E5%85%A8%EF%BC%9A%E4%B8%A4%E4%B8%AA%E9%BB%98%E8%AE%A4%E5%85%B3%E7%9D%80%E7%9A%84%E5%BC%80%E5%85%B3"><span class="toc-number">10.</span> <span class="toc-text">九、安全：两个默认关着的开关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E5%A4%87%E4%BB%BD%E3%80%81%E5%AF%BC%E5%87%BA%E4%B8%8E%E7%94%A8%E9%87%8F"><span class="toc-number">11.</span> <span class="toc-text">十、备份、导出与用量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%9C%A8%E5%93%AA"><span class="toc-number">11.1.</span> <span class="toc-text">数据在哪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%87%E4%BB%BD%E4%B8%8E%E6%81%A2%E5%A4%8D"><span class="toc-number">11.2.</span> <span class="toc-text">备份与恢复</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E5%87%BA"><span class="toc-number">11.3.</span> <span class="toc-text">导出</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E8%B5%84%E6%BA%90%E5%BA%93%EF%BC%9A%E6%8A%8A%E8%AE%BE%E5%AE%9A%E5%92%8C%E6%A0%BC%E5%BC%8F%E6%94%92%E8%B5%B7%E6%9D%A5"><span class="toc-number">12.</span> <span class="toc-text">十一、资源库：把设定和格式攒起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E6%8C%89%E6%B0%B4%E5%B9%B3%E5%88%86%E5%B1%82%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">13.</span> <span class="toc-text">十二、按水平分层的用法</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-go-tavern-guide/" title="DSH Go 酒馆：从入门到精通"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/32291b0d_lsTdfXiS.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DSH Go 酒馆：从入门到精通"/></a><div class="content"><a class="title" href="/s/dsh-go-tavern-guide/" title="DSH Go 酒馆：从入门到精通">DSH Go 酒馆：从入门到精通</a><time datetime="2026-11-27T11:10:00.000Z" title="发表于 2026-11-27 19:10:00">2026-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-go-android-guide/" title="DSH Go 安卓端：从入门到精通"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/0bca9477_YKx5L5zY.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DSH Go 安卓端：从入门到精通"/></a><div class="content"><a class="title" href="/s/dsh-go-android-guide/" title="DSH Go 安卓端：从入门到精通">DSH Go 安卓端：从入门到精通</a><time datetime="2026-11-27T07:40:00.000Z" title="发表于 2026-11-27 15:40:00">2026-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-from-basics-to-mastery/" title="DeepSeek Harness 从入门到精通"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/a9b6b37d_SJ0Ty4dp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek Harness 从入门到精通"/></a><div class="content"><a class="title" href="/s/dsh-from-basics-to-mastery/" title="DeepSeek Harness 从入门到精通">DeepSeek Harness 从入门到精通</a><time datetime="2026-11-27T02:20:00.000Z" title="发表于 2026-11-27 10:20:00">2026-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/caddy-beginner-guide/" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/85b72696_8sH5NlK6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Caddy 从零上手：自动 HTTPS 的 Web 服务器"/></a><div class="content"><a class="title" href="/s/caddy-beginner-guide/" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器">Caddy 从零上手：自动 HTTPS 的 Web 服务器</a><time datetime="2026-11-26T10:40:00.000Z" title="发表于 2026-11-26 18:40:00">2026-11-26</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-beginner-guide/" title="DSH 零基础全流程教学 · 图文版"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/dsh/11-whale-wallpaper.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DSH 零基础全流程教学 · 图文版"/></a><div class="content"><a class="title" href="/s/dsh-beginner-guide/" title="DSH 零基础全流程教学 · 图文版">DSH 零基础全流程教学 · 图文版</a><time datetime="2026-11-25T06:40:00.000Z" title="发表于 2026-11-25 14:40:00">2026-11-25</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/9157d46c_1776658920718_Laosia-_E4_B8_8A_E7_8F_AD_.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 - 2026 By <a class="footer-bar-link" href="/" title="Laosia" target="_blank">Laosia</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="备案号">备案号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">22</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">52</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/e4616c84_1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="/vendor/cdn.cbd.int_-fancyapps_ui-5.0.28_dist_fancybox_fancybox.umd.js"></script><script src="/vendor/cdn.cbd.int_instant.page-5.2.0_instantpage.js" type="module"></script><script src="/vendor/cdn.cbd.int_vanilla-lazyload-17.8.5_dist_lazyload.iife.min.js"></script><script src="/vendor/cdn.cbd.int_node-snackbar-0.1.16_dist_snackbar.min.js"></script><script>var meting_api = "https://blog.521251.xyz/music/meting.json?server=:server&type=:type&id=:id&r=:r";
+</script><canvas id="universe"></canvas><script async src="/vendor/npm.elemecdn.com_anzhiyu-theme-static-1.0.0_dark_dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/07/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Laosia 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("04/07/2025 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "/img/mirror/85df0051_1776659150666_Laosia-_E4_B8_8B_E7_8F_AD_.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'laosiaa/blog_comments',
+      'data-repo-id': 'R_kgDOSL7O8A',
+      'data-category-id': 'DIC_kwDOSL7O8M4C7oiZ',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-lang":"zh-CN","data-mapping":"pathname","data-category":"Announcements","data-input-position":"top","data-reactions-enabled":1,"data-emit-metadata":1,"data-theme":"preferred_color_scheme","data-loading":"lazy"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  anzhiyu.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.0.0_waterfall_waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/static/countdown.js"></script><script src="/js/app-bundle.js?v=6d26ff4f" defer></script><script src="/js/nav-music-toggle-fix.js?v=20261123c" defer></script><canvas class="fireworks" mobile="false"></canvas><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_fireworks.min.js"></script><script defer="defer" id="ribbon" src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_canvas-fluttering-ribbon.min.js"></script><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.0.0_aplayer_APlayer.min.css" media="print" onload="this.media='all'"><script src="/vendor/cdn.cbd.int_anzhiyu-blog-static-1.0.1_js_APlayer.min.js"></script><script src="/vendor/cdn.cbd.int_hexo-anzhiyu-music-1.0.1_assets_js_Meting2.min.js"></script><script src="/vendor/cdn.cbd.int_pjax-0.2.8_pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.1.5_accesskey_accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
