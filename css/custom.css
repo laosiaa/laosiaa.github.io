@@ -4047,3 +4047,39 @@ body:has(#page-header.post-bg) #article-container img.dsh-shot:not(.emoji):not(.
     max-height: none !important;
   }
 }
+
+/* ===== 白天模式对比度修复（2026-11）=====
+   问题：主题把强调色 #f2b94b 当底色时配白字，白底时又拿亮黄当文字色，
+   实测对比度只有 1.5~1.8（"首页"胶囊、文章标签、原创角标、行内代码、当前页码）。
+   做法：黄底上的白字统一改深棕字；亮黄文字色改成深琥珀。不动版式，只改颜色。 */
+[data-theme="light"] {
+  --btn-color: #3d2e05;            /* 黄底按钮的白字 -> 深字 */
+  --anzhiyu-lighttext: #a06a00;    /* 亮黄强调文字 -> 深琥珀（白底可读） */
+}
+
+/* 首页分类栏：选中的胶囊（黄底白字） */
+[data-theme="light"] #catalog-list .catalog-list-item a,
+[data-theme="light"] #catalog-list .catalog-list-item.select a,
+[data-theme="light"] #catalog-list .catalog-list-item:hover a,
+[data-theme="light"] #catalog-list .catalog-list-item.select:hover a { color: #3d2e05 !important; }
+
+/* 首页横幅 hover（黄底上原本是白/浅蓝字） */
+[data-theme="light"] #random-banner:hover .bannerText,
+[data-theme="light"] a#random-hover:hover .bannerText,
+[data-theme="light"] #random-hover .bannerText { color: #3d2e05 !important; }
+
+/* 文章页：原创角标 / 标签胶囊（黄底白字） */
+[data-theme="light"] .post-copyright__original,
+[data-theme="light"] .post-copyright__type,
+[data-theme="light"] .post-meta__box__tags,
+[data-theme="light"] #page-header .post-meta__tags a,
+[data-theme="light"] .post-meta__tags { color: #3d2e05 !important; }
+
+/* 行内代码（黄底白字）；不影响代码块里的高亮 */
+[data-theme="light"] #article-container :not(pre) > code { color: #3d2e05 !important; }
+
+/* 分页：当前页（黄底白字） */
+[data-theme="light"] #pagination .page-number.current { color: #3d2e05 !important; }
+
+/* 打赏按钮：白字压在 #ff3842 上只有 3.56，加深底色 */
+[data-theme="light"] .reward-button { background: #d92030 !important; }
