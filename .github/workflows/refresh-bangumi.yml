@@ -1,0 +1,57 @@
+# 追番 / 好番推荐 / 红果 数据每日刷新
+#
+# 只更新仓库里的三个 JSON（页面是运行时 fetch 这几个文件的），不跑 hexo 构建。
+# 数据源全部是公开接口，不需要任何 secret；用仓库自带的 GITHUB_TOKEN 提交。
+#
+# 注意：这个文件由本地 Hexo 源里的 gh/.github/ 复制而来（scripts/copy_gh.js），
+# 本地 hexo deploy 会 force push 整个 public/，所以改它要改本地 gh/.github/ 那一份。
+
+name: 追番数据刷新
+
+on:
+  schedule:
+    - cron: "10 0 * * *"        # UTC 00:10 = 北京 08:10
+  workflow_dispatch:            # 手动触发，方便验收
+  push:                         # 本地部署 push 上来时也顺手刷一次
+    paths:
+      - "bangumis/data.json"
+      - "bangumis/recommend.json"
+      - "bangumis/hongguo.json"
+      - ".github/workflows/refresh-bangumi.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-bangumi
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    # 自己提交的那次 push 不再触发，避免自我循环
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 安装依赖
+        run: pip install --quiet requests
+
+      - name: 抓取数据
+        run: python .github/scripts/refresh_bangumi.py --out bangumis
+
+      - name: 有变化才提交
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add bangumis/data.json bangumis/recommend.json bangumis/hongguo.json
+          if git diff --cached --quiet; then
+            echo "数据无变化，跳过提交"
+            exit 0
+          fi
+          git commit -m "data(bangumi): 自动刷新 $(date -u '+%Y-%m-%d %H:%M UTC')"
+          git push
