@@ -1306,17 +1306,24 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 /* 白天模式：所有追番元素改用深色文字 */
 [data-theme="light"] .bgm-tab { color: #4b4453; background: rgba(0, 0, 0, .05); }
 [data-theme="light"] .bgm-tab:hover { color: #222; background: rgba(0, 0, 0, .09); }
-[data-theme="light"] .bgm-tab.active { color: #fff; }
+/* 选中态：原来只写 color:#fff，底色被上面那条 rgba(0,0,0,.05) 抢走 -> 白字浅底看不见。
+   浅色模式统一成琥珀底 + 深字（对比度 ≈ 8:1）。 */
+[data-theme="light"] .bgm-tab.active {
+  color: #3d2e05;
+  background: #f2b94b;
+  box-shadow: 0 4px 14px rgba(242, 185, 75, .45);
+}
+[data-theme="light"] .bgm-tab.active .bgm-tab-n { background: rgba(0, 0, 0, .14); color: #3d2e05; }
 [data-theme="light"] .bgm-card { background: #fff; border-color: rgba(0, 0, 0, .07); }
 [data-theme="light"] .bgm-cover { background: #eef1f6; }
 [data-theme="light"] .bgm-score {
   color: #c0392b; border-color: rgba(192, 57, 43, .28); background: rgba(255, 255, 255, .9);
 }
-[data-theme="light"] .bgm-score.dim { color: rgba(0, 0, 0, .42); border-color: rgba(0, 0, 0, .12); }
-[data-theme="light"] .bgm-empty { color: rgba(0, 0, 0, .42); }
+[data-theme="light"] .bgm-score.dim { color: rgba(0, 0, 0, .56); border-color: rgba(0, 0, 0, .16); }
+[data-theme="light"] .bgm-empty { color: rgba(0, 0, 0, .56); }
 [data-theme="light"] .bgm-sec-head h2 { color: #1f2430 !important; }
-[data-theme="light"] .bgm-sec-head span { color: rgba(0, 0, 0, .5) !important; }
-[data-theme="light"] .bgm-sec-sub { color: rgba(0, 0, 0, .5); }
+[data-theme="light"] .bgm-sec-head span { color: rgba(0, 0, 0, .62) !important; }
+[data-theme="light"] .bgm-sec-sub { color: rgba(0, 0, 0, .62); }
 [data-theme="light"] .bgm-more {
   color: #425aef; border-color: rgba(66, 90, 239, .3); background: rgba(66, 90, 239, .08);
 }
@@ -1324,7 +1331,7 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
   color: #333; border-color: rgba(0, 0, 0, .12); background: rgba(0, 0, 0, .04);
 }
 [data-theme="light"] .bgm-pg:hover:not(:disabled) { background: rgba(0, 0, 0, .09); }
-[data-theme="light"] .bgm-pg.active { color: #fff; background: #f76b8a; border-color: #f76b8a; }
+[data-theme="light"] .bgm-pg.active { color: #fff; background: #d63b58; border-color: #d63b58; }
 
 /* 追番页引言在白天模式下不可见 → 用正文色 */
 [data-theme="light"] #page #article-container blockquote {
@@ -1337,7 +1344,7 @@ body:has(#page-header.post-bg) #article-container img.keep-full {
 
 /* 追番页白天模式：文字与引言统一深色 */
 [data-theme="light"] .bgm-title { color: #1f2430 !important; }
-[data-theme="light"] .bgm-sub { color: rgba(0, 0, 0, .55) !important; }
+[data-theme="light"] .bgm-sub { color: rgba(0, 0, 0, .66) !important; }
 [data-theme="light"] .bgm-tab-n { background: rgba(0, 0, 0, .12); }
 [data-theme="light"] #page #article-container blockquote * { color: #40454f !important; }
 
