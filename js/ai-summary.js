@@ -4,7 +4,7 @@
 
   var meta = document.querySelector('meta[name="ai-summary-endpoint"]');
   var ENDPOINT = (meta && meta.getAttribute("content")) || "";
-  var LS_PREFIX = "ai-summary:v5:";
+  var LS_PREFIX = "ai-summary:v6:";
   var TTL = 7 * 24 * 3600 * 1000;
 
   if (!ENDPOINT) return; // 未配置 Worker 地址时静默不工作
@@ -87,9 +87,9 @@
     fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ key: key, content: text.slice(0, 6000) }),
+      body: JSON.stringify({ key: key, content: text.slice(0, 12000) }),
       signal: (function () {
-        try { var c = new AbortController(); window.__aiSummaryAbort = c; setTimeout(function () { c.abort(); }, 25000); return c.signal; }
+        try { var c = new AbortController(); window.__aiSummaryAbort = c; setTimeout(function () { c.abort(); }, 45000); return c.signal; }
         catch (e) { return undefined; }
       })(),
     })
