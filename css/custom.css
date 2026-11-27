@@ -4066,7 +4066,19 @@ body:has(#page-header.post-bg) #article-container img.dsh-shot:not(.emoji):not(.
 [data-theme="light"] {
   --btn-color: #3d2e05;            /* 黄底按钮上的白字 -> 深字 */
   --anzhiyu-lighttext: #a06a00;    /* 亮黄强调文字 -> 深琥珀（白底可读） */
+  /* 次级文字：原来 rgba(60,60,67,.8) 在纯白上只有 ~5.9:1，12px 字号看着很淡；
+     加深到 ~9:1，日期/标签/统计小字一眼能读，不改变任何布局。 */
+  --anzhiyu-secondtext: rgba(45, 48, 58, .88);
+  --anzhiyu-gray: #667085;
 }
+
+/* 首页卡片上最小的那几行（分类 / 未读 / 时间）单独再加深一档 */
+[data-theme="light"] .article-categories-original,
+[data-theme="light"] .article-categories-original a,
+[data-theme="light"] .unvisited-post,
+[data-theme="light"] #recent-posts .article-meta-wrap,
+[data-theme="light"] #recent-posts .article-meta-wrap a,
+[data-theme="light"] #recent-posts .article-meta-wrap i { color: rgba(32, 34, 42, .92) !important; }
 
 /* 文章页：标签胶囊 + 原创角标（随机底色 -> 统一浅琥珀底 + 深琥珀字） */
 [data-theme="light"] .post-meta__box__tags,
