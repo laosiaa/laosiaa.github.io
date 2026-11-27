@@ -123,7 +123,7 @@
 
   var meta = document.querySelector('meta[name="ai-summary-endpoint"]');
   var ENDPOINT = (meta && meta.getAttribute("content")) || "";
-  var LS_PREFIX = "ai-summary:v6:";
+  var LS_PREFIX = "ai-summary:v7:";
   var TTL = 7 * 24 * 3600 * 1000;
 
   if (!ENDPOINT) return; // 未配置 Worker 地址时静默不工作
