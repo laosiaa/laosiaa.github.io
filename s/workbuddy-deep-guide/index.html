@@ -1,0 +1,849 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事 | Laosia</title><meta name="keywords" content="WorkBuddy,AI Agent,腾讯,办公自动化,效率工具"><meta name="author" content="Laosia"><meta name="copyright" content="Laosia"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#18171d"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事"><meta name="application-name" content="WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#18171d"><meta property="og:type" content="article"><meta property="og:title" content="WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事"><meta property="og:url" content="https://blog.521251.xyz/s/workbuddy-deep-guide/index.html"><meta property="og:site_name" content="Laosia"><meta property="og:description" content="腾讯 WorkBuddy 到底能干什么、怎么用才不出错：五层能力模型、三种工作模式、三层记忆、积分计费的真实成本结构，加上十几个踩坑点和一份可直接抄的任务描述公式。"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://img.521251.xyz/file/文章封面/1795829700130_workbuddy-cover.jpg"><meta property="article:author" content="Laosia"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://img.521251.xyz/file/文章封面/1795829700130_workbuddy-cover.jpg"><meta name="description" content="腾讯 WorkBuddy 到底能干什么、怎么用才不出错：五层能力模型、三种工作模式、三层记忆、积分计费的真实成本结构，加上十几个踩坑点和一份可直接抄的任务描述公式。"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="https://blog.521251.xyz/s/workbuddy-deep-guide/"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="/vendor/cdn.cbd.int_node-snackbar-0.1.16_dist_snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/vendor/cdn.cbd.int_-fancyapps_ui-5.0.28_dist_fancybox_fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/vendor/npm.elemecdn.com_anzhiyu-theme-static-1.0.0_swiper_swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: {"enable":true,"img":"/img/mirror/38cd9061_1794558626349_tech-emblem.png"},
+  postHeadAiDescription: {"enable":true,"gptName":"AnZhiYu","mode":"local","switchBtn":false,"btnLink":"https://afdian.net/item/886a79d4db6711eda42a52540025c377","randomNum":3,"basicWordCount":1000,"key":"xxxx","Referer":"https://xx.xx/"},
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  music_page_default: "nav_music",
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: {"apiurl":null},
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: {"skills":["🤖️ 数码科技爱好者","🔍 分享与热心帮助","🏠 智能家居小能手","🔨 设计开发一条龙","🤝 专修交互与设计","🏃 脚踏实地行动派","🧱 团队小组发动机","💢 壮汉人狠话不多"]},
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"languages":{"hits_empty":"找不到您查询的内容：${query}"}},
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"copy":true,"copyrightEbable":false,"limitCount":50,"languages":{"author":"作者: Laosia","link":"链接: ","source":"来源: Laosia","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。","copySuccess":"复制成功，复制和转载请标注本文地址"}},
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: '/vendor/cdn.cbd.int_flickr-justified-gallery-2.1.2_dist_fjGallery.min.js',
+      css: '/vendor/cdn.cbd.int_flickr-justified-gallery-2.1.2_dist_fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: 'Laosia',
+  title: 'WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事',
+  postAI: '',
+  pageFillDescription: '一、先说结论：它解决的不是回答问题是交付结果, 二、它是谁：出身与定位, 三、能力结构：五层别混着看, 四、三种工作模式：效率与安全的开关, 五、界面结构：三个区各有各的用处, 六、记忆：为什么它越用越懂你, 七、模型与计费：这是最容易被低估的成本, 7.1 模型, 7.2 积分, 7.3 积分为什么难算, 八、安全边界：它能碰你电脑这是底线问题, 九、任务怎么描述：一个能直接抄的公式, 一个额外的关键习惯：一个任务一个窗口, 十、我见过的八个高频翻车点, 十一、连接器与远程：把它的手伸出电脑, 11.1 Connectors, 11.2 MCP, 11.3 远程 Assistant, 十二、团队与企业：从个人工具变成组织能力, 12.1 项目空间, 12.2 权限与用量, 12.3 一个务实的判断, 十三、一次完整的实操：从零到交付, 十四、常见疑问, 十五、它不适合做什么, 十六、上手路线图, 十七、总结一先说结论它解决的不是回答问题是交付结果过去两年我们用的方式基本没变打开一个对话框打字读答案然后自己去执行写文案要自己复制粘贴改表格要自己动手做要自己排版给的是建议落地的那一公里永远是人在走这类产品改的就是这一公里你说把这份销售数据做成一份给老板看的三页它自己去读文件算数据画图生成最后把文件放在那儿让你验收这个差别看起来只是多了一步实际体验上是工作流的所有权变了从我指挥干活变成我验收的交付这篇不吹也不黑把它的能力结构真实边界以及我见过和踩过的坑一次性讲清楚如果你正打算装一个试试或者已经装了但用两天就搁下了应该能省你不少时间二它是谁出身与定位是腾讯云团队在年月日推出的产品定位是全场景办公工作台官方叫法是职场智能体桌面工作台同一时期字节的火山引擎也上线了对标产品两家几乎同一天发这个时间点本身就说明了赛道热度理解它的定位最好拿它跟同门师兄对比维度核心场景写代码改代码读代码库办公文档数据分析调研网页形态插件编程助手桌面客户端使用者开发者普通职场人交互入口编辑器里独立窗口手机端消息入口积分同一账号共享同一账号共享一句话记法管代码的交给管电脑的交给两者积分互通不需要分别订阅这一点很多人不知道白买了双份它跟另一个的区别更本质那些是给技术人的可编程工作台要你自己写规则配工具调参数走的是开箱即用路线装完就能用自然语言开工代价是可控性弱一些好处是上手成本接近零三能力结构五层别混着看很多人用不好这类工具根本原因是没搞清楚我这次到底在调哪一层的能力是分层的越往下越通用越往上越专业层级作用什么时候用模型理解指令推理生成内容所有任务的地基增加一种明确能力搜索表格网页制作图像生成已知任务需要某个工具领域角色方法论有一个清晰的专业问题多个专家按流程协作任务跨产品设计开发运营多个角色连接外部系统飞书任务要读写其他系统的数据记法是能力是能力加经验是多个专家加协作流程官方口径是内置领域专家市场里万独立站覆盖招聘投研前端法务营销等这个数字听起来夸张但实际用下来真正高频的其实就十来个分析生成深度调研网页制作文档处理批量文件整理剩下的你大概率一年也不会点开一次实用建议先不要逛市场先把分析和文档生成这两类跑通能覆盖的日常需求剩下的按需再装四三种工作模式效率与安全的开关这是我觉得设计得最有价值的一处细节给了不同风险等级的执行模式直接干你说它做一口气执行完适合需求明确风险低的活比如把这份按月份汇总成一张表先审计划先出一份执行计划给你看你点头它才动手改代码批量改文件批量删除这种高危场景必须开这个只答不做纯聊天不动手相当于普通对话三种模式切换零学习成本但它把效率和安全的平衡权交回给了用户这个设计看着朴素实际是这类产品里最该抄的一点说明官方文档里同时出现的是通用办公与工程任务这一组划分而第三方深度测评里描述的是三档两套说法可能是不同版本或不同入口的命名实际以你客户端里看到的为准但有办法先审计划再执行这个能力是确定存在的这也是你该主动去找的开关五界面结构三个区各有各的用处第一次打开容易被劝退因为它不像那样一个大白框而是一堆板块搞清结构就简单了左侧任务列表所有任务都在这儿可以并行开多个随时切回去看进度中间对话区补充材料确认范围提修改意见这是你唯一需要打字的地方右侧结果区真正的交付物三个视图切换概览看生成的文件工作空间文件看目录结构变更看这次改了哪些文件结果区支持直接在客户端里预览网页不用先下载再用外部工具打开网页类任务还能直接看渲染效果刷新重载这个对话区和结果区分开的设计很重要它逼你去看真正的产物而不是只看对话里的总结我见过太多人只读在对话框里的自我总结就点了验收结果文件里数据是错的六记忆为什么它越用越懂你普通每次对话都是全新开始你得反复交代我不喜欢用分号结尾文件默认放桌面写文档要用二级标题做了三层记忆云端记忆自动学习你的使用习惯和偏好用户级记忆跨项目的个人规则比如输出默认用中文代码注释写英文项目级记忆每个项目的上下文独立保留不互相污染实际效果是第一次做某类任务时你需要写一大堆约束做第三次的时候它已经记得了这是它和普通聊天窗口体验上最明显的分野用一周和用一天是两个产品反过来也有坑记忆会记错如果你某次随口说这次不用加目录它可能把不要目录当成长期偏好记下来之后所有文档都没目录了所以发现输出风格莫名其妙变了先去设置里翻记忆条目别急着改提示词七模型与计费这是最容易被低估的成本模型内置混元等国产模型可随时切换没有官方的接入但支持自定义模型提供商有的话可以自己接策略上很简单简单任务用快模型省积分复杂推理切强模型保质量但这里有个陷阱见下一节积分按积分计费个人版四档版本月付连续包月折连续包年折基础积分月限时加赠每月实得体验版免费标准版元元元高级版元元元旗舰版元元元加量包积分元有效期个月和积分共享积分为什么难算这是它被吐槽最集中的地方也是我认为你最该提前搞清楚的一点同样积分换个模型能干的活差几十倍有博主用个模型跑了笔扣费做核对结论是同样积分闲时用大约能兑换亿而用只有约万相差多倍另一份模型排行给出的口径一致平台内二十来个模型的单次倍率从到同样一句话能差出五十多倍更麻烦的是账目的事后性缓存命中输出这些明细不展示扣费经常要过很久才追加显示在对话后面你干活的时候看不到余额在掉等发现的时候已经没了界面上的快速均衡极致三档并不绑定固定模型底层换了谁扣费就跟着变所以我选了快速档应该很便宜这个假设不成立实用做法固定用一两个模型别频繁切每次切换你都在重新建立成本直觉先拿体验版的积分跑三个真实任务记住每类任务大概吃多少积分再决定买哪档积分够你摸清量级长文档大表格批量文件这类输入很重的任务最烧积分能拆就拆每日桌面登录能领约积分长期用的话这是个不小的补贴别信无限续杯的多账号切换工具官方不背书账号风险自己担八安全边界它能碰你电脑这是底线问题一个能读写你本地文件的安全性不是加分项是及格线在这块的策略偏保守这也是它的优点之一操作跑在隔离的容器或云环境里你授权了哪个文件夹它就只能碰那个文件夹高危指令删除格式化批量覆盖会被拦截或要求二次确认但真实世界里出过事有记录的情况是某次上游模型服务不可用一位用户临时切到备用模型的窗口期里自己的文件被删了还有博主让自动清理无用临时文件结果它靠文件名和扩展名判断把正在跟进的项目配置文件当垃圾删了当天工作直接停摆花几小时才恢复判断这个文件有没有用靠的是文件名和格式它不知道你在做什么项目所以三条铁律删除移动批量重命名永远先要清单再执行让它列出来你逐条看完再让它动手开了模式更好重要目录不进授权范围只开这次任务真正需要的那一个子目录工作完就撤销动手前先备份批量操作前把目标目录复制一份成本几秒钟救回来要几小时另外在安全中心把沙箱删除保护批量删除审批这几项主动打开它们的默认强度装机时会不会引导你打开公开资料里查不到别赌默认值自己去看一眼九任务怎么描述一个能直接抄的公式这是全文最有用的一节绝大多数输出全是废话的抱怨根因都在描述太笼统公式目标输入输出约束验收标准对比一下差帮我分析一下这个数据好目标找出美国站过去四周流量变化的原因输入附件里的渠道明细表输出一页中文结论三张图表一份页约束不使用缺失率超过的字段结论必须标注对应的数据范围验收每个结论都能在表里找到对应行列出三条可执行建议第二种描述里知道给谁看管理层多长一页什么格式什么不许做不用缺失字段输出质量差别是数量级的再举三个可以照抄的模板数据分析汇报检查字段和缺失值按月份和地区分析收入变化标出异常波动生成图表输出一份面向业务负责人的周报会议纪要行动项总结会议结论提取任务负责人截止时间和依赖关系标记尚未确认的信息生成可跟踪的行动清单产品资料落地页根据产品资料整理页面信息架构撰写首屏功能场景和文案再生成一个可预览的响应式落地页最后那个我建议分两步先让它确认信息架构和文案你改完再让它生成页面一次到位的话改起来要动整个页面一个额外的关键习惯一个任务一个窗口同一个对话里连着干几件不相关的事先写方案再改再分析表格会把前面的内容串到后面的任务里出现逻辑混乱重点跑偏而且越改越乱救不回来不同类型的工作新建任务十我见过的八个高频翻车点这部分全部来自真实使用反馈不是假设坑需求太笼统输出全是套话写个月度总结出来一篇网上通用模板跟你岗位毫无关系让它分析营收整篇在讲项目背景核心的收入成本差额一个没有明确字数场景写作重点要规避的内容坑同一窗口堆多个任务见上一节分开建任务坑超长文档被截断有用户反馈单篇超过约字会被自动截断一万多字的复盘上传后关键条款核心数据全漏了这个阈值我无法从官方文档确认但长文档会丢信息这个现象是多人都遇到的长文档拆段处理最后再整合上传前先问它这份文档你完整读到了吗最后一段讲什么坑复杂计算会算错而且会编理由圆谎最容易翻车的一类让它核算加班时长和调休抵扣表格看着整整齐齐数据全错跨凌晨要扣休息时间的场景能差十几分钟你去质疑它还会编个理由糊弄你比如图片比例错了它硬说平台只支持正方形凡是数据核算逻辑计算无论输出多规整必须人工逐项对核复杂规则拆成分条要求别一次性笼统丢过去坑自动清理文件误删重要文件见上一节坑长任务质量会掉任务一长它容易停在改一点跑一下能展示就算完成的循环里把一个能跑的当成工程交付有人把原因拆得更细上下文压缩太薄被丢掉的恰恰是复杂任务最关键的信息为什么这样设计哪些方案已被否决项目进行到哪一步压缩一轮下一轮质量立刻下滑长任务自己维护一份决策记录每轮开始时贴给它别指望它记得坑多协作会左边不知道右边在干嘛多并行还在打磨阶段简单分工一个查资料一个写报告能用复杂协作经常出现信息不同步需要协作时你当调度员明确每个的输入输出边界坑定时任务和推送不稳定每天早上九点给我整理资讯发到企业微信这类自动化通知体验粗糙内容偶尔有有开发者实测的结论是提醒了个寂寞定时任务只用来做容忍失败的事资讯汇总日报不要用来做不能漏的事合同到期提醒账单支付十一连接器与远程把它的手伸出电脑很多人只把当本地文件处理器忽略了它还有一层很关键的扩展能力连接器和连接器让它在获得授权后读写外部系统目前覆盖的主流服务包括国内侧则打通了微信企业微信飞书钉钉以及腾讯文档腾讯会议腾讯问卷这些腾讯系产品举几个真实有用的组合让它把本周所有状态是的汇总成一份风险清单标注对应的和最后更新时间它会自己去两个系统拉数据对齐生成表格文档给它一个文件夹让它把里面所有会议记录提取成统一的行动项清单输出读取某个数据库里的项目进展生成月度汇报让它把过去一周的客户邮件按诉求分类标出需要今天回复的草拟回信草稿不直接发关键点在于授权范围连接器给的是读或读写权限一旦给了写权限它就能真的改你的工单发你的邮件动你的仓库所以优先给只读绝大多数分析类任务根本不需要写权限写操作走生成草稿人工确认让它把要发的邮件写成草稿要建的工单写成清单你过一遍再执行定期清授权用完的连接器该撤就撤这条比什么都重要长期堆积的授权是最常见的泄露源是个通用扩展协议你可以把它理解成世界的接口任何按这个协议包装过的工具或数据源都能插进用它的价值在于把一次性的能力变成可复用的工具比如你自己写了个查库存的小服务按包一层之后就能直接对它说查一下型号现在的库存低于的列出来不用每次都贴文档对普通用户来说属于进阶内容可以先放着但如果你有自建系统内部数据库私有是把它接进来的正路而且这条路不限于同一个也能给别的支持该协议的工具用不算绑定远程这是我觉得最有未来感的一块通过你可以从手机上的企业微信飞书钉钉给电脑端的发任务结果也推回同一个渠道场景很具体你在外面吃饭突然想起来明天开会要一份材料掏出手机发一句把桌面上那份数据整理成三页做完发我回家打开电脑文件已经在桌面上了但它有硬性前提电脑必须开着机必须处于运行状态网络要稳它不是云端的是遥控你家里那台电脑所以台式机比笔记本靠谱笔记本合盖就断别指望它在你关机的时候干活涉及需要登录的网页操作电脑上的浏览器会话也得是活的如果你需要关机也能跑的能力那就得看它的云端助理那套重复性的日常任务会议纪要整理数据处理周报生成可以托管在云端持续运行关掉客户端也不中断成果直接下载这两条路要分清远程是遥控本地云端托管是交给云十二团队与企业从个人工具变成组织能力个人用和团队用是两种产品个人关心我这活能不能快一点团队关心这套流程能不能复制给别人成本能不能管住项目空间的团队能力核心是项目空间在一个项目里多个可以并行处理各自任务结果统一汇总调好的专家连接器可以沉淀到项目空间一次配置全组复用知识库和权限有统一边界成熟流程可以跨部门横向推广这个设计的价值不在多人协作而在把个人调参的经验变成组织的资产一个人花两周调出一个好用的投标文件生成流程沉淀进项目空间后全组十个人当天就能用不用各自再踩一遍坑权限与用量企业版关注三件事成员权限公共能力资产的共享以及用量与费用的统一查看这三件事恰恰是个人版完全不需要操心的也是为什么个人版能做得这么轻一个务实的判断如果你是小团队人个人版的标准版或高级版基本够用不必上企业版真正需要企业版的信号是需要按人分配权限审计谁用了什么需要共享专家和避免重复配置需要统一开票统一结算统一看成本在那之前企业版带来的管理开销会大于收益十三一次完整的实操从零到交付前面讲的都是结构这一节走一遍真实流程让你看到每一步在干什么任务手上有一份个月的销售明细要做成一份给管理层的年度复盘第一步建任务选模式新建任务模式选因为要生成多份文件想先看它打算怎么做工作空间指向那个放的文件夹只授权这一个文件夹不要图省事授权整个盘第二步写任务描述按公式来目标输入输出约束验收标准目标基于附件的个月销售明细做一份面向管理层的年度复盘输入字段包含日期区域渠道产品线销售额订单数退货额输出一份汇总表按季度区域含同比环比三张图表月度趋势区域贡献渠道结构一份页结构为整体表现区域拆解渠道拆解问题诊断明年建议约束退货额需从销售额中扣除后再计算净额缺失率超过的字段不使用所有百分比保留一位小数验收每个结论都能在汇总表里找到对应数据诊断部分必须指出至少三个具体问题不接受整体向好这类空话第三步审计划模式下它会先给步骤这时候重点看三件事它打算怎么算净额如果没提扣退货立刻纠正它的图表数据源是不是从汇总表来的还是自己另算一遍另算容易和表格对不上它读文件的方式个月明细可能几万行如果它打算一次全读提醒它先看字段和行数再分段聚合第四步执行中盯着右侧结果区会陆续出现文件这时候不用等它全部做完看到第一个文件就先打开看的表头和数据类型对不对有没有把数字读成文本图表的数据标签有没有被截断的版式是不是你要的那种是每页一张大图还是左图右文早发现早改比全做完再推翻省得多第五步局部迭代不要重做发现问题时不要说重做一遍要指到具体位置第页的区域贡献图华东和华南的颜色太接近换一组对比更强的配色另外第页的诊断只有两条补第三条聚焦退货率局部修改的成功率远高于重做重做等于让它重新走一遍所有决策很可能把原来对的部分也改错第六步验收交付物这是最容易偷懒也最不能偷懒的一步打开每一个文件看不要只看对话区的总结抽查个数字用手算或另开一个表验证图表数据点和汇总表对得上吗每页的结论和数据一致吗有没有它自己补充出来的原始数据里根本没有的说法我见过最典型的翻车就是这一步跳过做得漂亮第页写退货率同比下降而原始数据里根本没这个结论是模型根据趋势推出来的会补全它认为合理的东西这是语言模型的本性不是第七步沉淀如果这套流程你每季度都要跑一次把它存成模板任务描述存下来跑通的专家固定下来反复要交代的规则写进用户级记忆下次换个文件就能直接跑这一步做完你才真正开始省时间第一次跑这类任务通常比自己动手还慢但第二第三次就是纯赚十四常见疑问它和要不要买两份不要同一账号积分共享一个订阅两边都能用没有能用吗内置的国产模型混元覆盖绝大多数办公场景要接得自己配自定义模型提供商有就行但要额外花钱且需要一点配置能力会不会把我的文件传上去它确实需要读取你授权的文件内容来处理执行环境是隔离容器或云沙箱所以涉密涉个人隐私的资料不要交给它这不是它的缺陷是这类产品的固有属性你要它干活它就得看见材料为什么我的输出风格突然变了先查记忆它可能把你某次的临时要求当成了长期偏好记忆条目的优先级高于你当次的提示词定时任务靠谱吗做漏了也无所谓的事每日资讯周报草稿可以做漏了就出事的事到期提醒对账不行目前的通知体验和稳定性还撑不住后者免费额度够用吗积分够你跑通三到五个真实任务建立成本直觉想长期用肯定不够但足够你判断要不要买值得买哪一档先跑两周如果你每周有三个以上重复流程能交给它标准版连续包月元实得积分是最划算的起点跑到积分经常月中就见底再考虑高级版旗舰版是给重度多项目用户的普通人用不上十五它不适合做什么说清楚边界比列优点更有用场景适不适合原因分析图表周报很适合结构化任务验收标准明确文档从零生成适合有模板可循改起来快深度调研竞品分析适合能自己搜自己整理网页落地页原型适合生成快能直接预览批量文件整理重命名谨慎高危必须模式清单确认精确财务核算法务条款不适合错了代价太大人工复核成本高于自己算长期托管的复杂工程不适合上下文压缩撑不住处理敏感涉密资料不适合云端执行权限边界难保证一句话它擅长有明确验收标准的重复性脑力劳动不擅长错了要赔钱的精确计算和需要长期记忆的复杂工程十六上手路线图如果你决定试试按这个顺序走别一上来就逛功能第一天跑通一个真任务不要问你能做什么直接给它一件你现在手上真实的小活边界清晰能马上验收比如读取这份周报数据输出本周关键变化异常项和下周建议做成三页跑完你就知道它是什么了第一周建立成本直觉用体验版的积分跑个不同类型的任务记录每类大概吃多少积分同时把一个任务一个窗口高危操作开模式这两个习惯固定下来第一个月沉淀可复用的东西把跑通的流程存成模板把反复要交代的规则写进用户级记忆把常用的专家固定下来这一步做完你才真正开始省时间前三周基本都在交学费之后才考虑自动化和多定时任务手机端远程多并行这些都是锦上添花基础流程没跑顺就上自动化只会把不稳定放大十七总结这类桌面智能体把的价值从提供答案推到了交付成品这个跨越是真实的不是营销话术你确实可以一句话下去十分钟后拿到一份能直接发的但它同时把两件事推到了你面前第一验收责任回到你身上它交付得越快你越容易跳过检查而它会在复杂计算上出错会编理由圆谎会把当交付干得越多人的复核越不能省第二成本变成了隐性变量积分按模型倍率浮动几十倍账目还是事后才显示不建立成本直觉很容易一个月烧掉两三百块还不知道钱花在哪我的判断是它值得装但要用带审阅权的委托这个心态去用而不是全自动躺平把它当成一个执行力很强但需要你划边界和验收的新同事这个比喻比助手准确得多至于要不要付费先用免费额度跑够两周跑出至少三个你每周都要重复的流程再考虑标准版没有重复流程的人不需要订阅参考资料官方文档腾讯云产品页与定价页腾讯云开发者社区多篇实测与踩坑记录什么值得买产品短板分析文中标注为用户反馈的数字与现象来自第三方实测未获官方确认仅供参考',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-11-28 09:36:28',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><script>!function(){try{var raw=localStorage.getItem("theme"),v=null;if(raw){try{var o=JSON.parse(raw);v=(o&&typeof o==="object")?o.value:o;}catch(e){v=raw;}}var keep=Date.now()+315360000000;if(v==="light"){document.documentElement.setAttribute("data-theme","light");document.documentElement.classList.remove("dark");localStorage.setItem("theme",JSON.stringify({value:"light",expiry:keep}));return;}document.documentElement.setAttribute("data-theme","dark");document.documentElement.classList.add("dark");if(v!=="dark"){localStorage.setItem("theme",JSON.stringify({value:"dark",expiry:keep}));}}catch(e){}}();</script><script>document.addEventListener("DOMContentLoaded",function(){function hide(){var b=document.getElementById("loading-box");if(b){b.classList.add("loaded");b.style.pointerEvents="none";var g=b.querySelector(".loading-bg");if(g){g.style.opacity="0";g.style.zIndex="-1000";g.style.pointerEvents="none";}}}hide();setTimeout(hide,700);setTimeout(hide,2000);});</script><link rel="stylesheet" href="/css/custom.css?v=20261123c"><link rel="preconnect" href="https://img.521251.xyz" crossorigin><link rel="dns-prefetch" href="https://img.521251.xyz"><link rel="preconnect" href="https://p1.music.126.net"><link rel="dns-prefetch" href="https://p2.music.126.net"><link rel="dns-prefetch" href="https://ai.sos.us.kg"><link rel="dns-prefetch" href="https://events.vercount.one"><meta name="ai-summary-endpoint" content="https://ai.sos.us.kg"><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/img/mirror/84d41ee8_1794542832099_head_18.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.1.10_progress_bar_progress_bar.css"/><script async="async" src="/vendor/cdn.cbd.int_pace-js-1.2.4_pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src="/img/mirror/e4616c84_1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">Laosia</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><div class="nav-button" id="search-button"><a class="site-page social-icon search" href="javascript:void(0);" title="搜索🔍" accesskey="s"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span> 搜索</span></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="/img/reward-laugh.gif" target="_blank"><img class="post-qr-code-img" alt="大笑" src="/img/reward-laugh.gif"/></a><div class="post-qr-code-desc">大笑</div></li><li class="reward-item"><a href="/img/reward-despise.gif" target="_blank"><img class="post-qr-code-img" alt="鄙视" src="/img/reward-despise.gif"/></a><div class="post-qr-code-desc">鄙视</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">兴趣点</div><span class="author-content-item-title">寻找你感兴趣的领域</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/AI%E5%B7%A5%E5%85%B7/" style="font-size: 1.05rem;">AI工具<sup>2</sup></a><a href="/tags/Agent/" style="font-size: 1.05rem;">Agent<sup>2</sup></a><a href="/tags/Android/" style="font-size: 1.05rem;">Android<sup>1</sup></a><a href="/tags/Caddy/" style="font-size: 1.05rem;">Caddy<sup>1</sup></a><a href="/tags/Cloudflare/" style="font-size: 1.05rem;">Cloudflare<sup>1</sup></a><a href="/tags/DAF/" style="font-size: 1.05rem;">DAF<sup>1</sup></a><a href="/tags/DNS/" style="font-size: 1.05rem;">DNS<sup>1</sup></a><a href="/tags/DNSSEC/" style="font-size: 1.05rem;">DNSSEC<sup>1</sup></a><a href="/tags/DSH/" style="font-size: 1.05rem;">DSH<sup>4</sup></a><a href="/tags/Debian11/" style="font-size: 1.05rem;">Debian11<sup>1</sup></a><a href="/tags/DeepSeek/" style="font-size: 1.05rem;">DeepSeek<sup>4</sup></a><a href="/tags/HTTPS/" style="font-size: 1.05rem;">HTTPS<sup>1</sup></a><a href="/tags/HiDNS/" style="font-size: 1.05rem;">HiDNS<sup>1</sup></a><a href="/tags/Linux/" style="font-size: 1.05rem;">Linux<sup>1</sup></a><a href="/tags/Markdown/" style="font-size: 1.05rem;">Markdown<sup>1</sup></a><a href="/tags/SSH/" style="font-size: 1.05rem;">SSH<sup>1</sup></a><a href="/tags/SillyTavern/" style="font-size: 1.05rem;">SillyTavern<sup>1</sup></a><a href="/tags/Vibe-Coding/" style="font-size: 1.05rem;">Vibe Coding<sup>1</sup></a><a href="/tags/Web%E6%9C%8D%E5%8A%A1%E5%99%A8/" style="font-size: 1.05rem;">Web服务器<sup>1</sup></a><a href="/tags/gcore/" style="font-size: 1.05rem;">gcore<sup>1</sup></a><a href="/tags/hexo/" style="font-size: 1.05rem;">hexo<sup>1</sup></a><a href="/tags/%E5%88%86%E4%BA%AB/" style="font-size: 1.05rem;">分享<sup>1</sup></a><a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 1.05rem;">反向代理<sup>1</sup></a><a href="/tags/%E5%8F%A0%E8%9E%BA%E6%9C%BA/" style="font-size: 1.05rem;">叠螺机<sup>1</sup></a><a href="/tags/%E5%91%BD%E4%BB%A4%E8%A1%8C/" style="font-size: 1.05rem;">命令行<sup>1</sup></a><a href="/tags/%E5%9B%9E%E6%BA%90/" style="font-size: 1.05rem;">回源<sup>1</sup></a><a href="/tags/%E5%9B%BE%E6%96%87%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">图文教程<sup>1</sup></a><a href="/tags/%E6%89%8B%E6%9C%BA%E7%AB%AF/" style="font-size: 1.05rem;">手机端<sup>1</sup></a><a href="/tags/%E6%8A%80%E6%9C%AF/" style="font-size: 1.05rem;">技术<sup>6</sup></a><a href="/tags/%E6%8F%92%E4%BB%B6/" style="font-size: 1.05rem;">插件<sup>1</sup></a><a href="/tags/%E6%95%99%E7%A8%8B/" style="font-size: 1.05rem;">教程<sup>6</sup></a><a href="/tags/%E6%B0%94%E6%B5%AE%E6%9C%BA/" style="font-size: 1.05rem;">气浮机<sup>1</sup></a><a href="/tags/%E6%B1%A1%E6%B0%B4%E5%A4%84%E7%90%86/" style="font-size: 1.05rem;">污水处理<sup>2</sup></a><a href="/tags/%E6%B1%A1%E6%B3%A5%E8%84%B1%E6%B0%B4/" style="font-size: 1.05rem;">污泥脱水<sup>1</sup></a><a href="/tags/%E6%B8%B8%E6%88%8F/" style="font-size: 1.05rem;">游戏<sup>1</sup></a><a href="/tags/%E8%A7%92%E8%89%B2%E6%89%AE%E6%BC%94/" style="font-size: 1.05rem;">角色扮演<sup>1</sup></a><a href="/tags/%E8%AD%A6%E5%91%8A/" style="font-size: 1.05rem;">警告<sup>1</sup></a><a href="/tags/%E8%AE%BE%E5%A4%87%E8%B0%83%E8%AF%95/" style="font-size: 1.05rem;">设备调试<sup>2</sup></a><a href="/tags/%E8%BF%90%E8%A1%8C%E7%BB%8F%E9%AA%8C/" style="font-size: 1.05rem;">运行经验<sup>2</sup></a><a href="/tags/%E9%85%92%E9%A6%86/" style="font-size: 1.05rem;">酒馆<sup>1</sup></a></div></div><hr/></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/11/"><span class="card-archive-list-date">十一月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">11</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2026/04/"><span class="card-archive-list-date">四月 2026</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">1</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">6</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/04/"><span class="card-archive-list-date">四月 2025</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">5</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/WorkBuddy/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>WorkBuddy</span></a><a class="article-meta__tags" href="/tags/AI-Agent/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>AI Agent</span></a><a class="article-meta__tags" href="/tags/%E8%85%BE%E8%AE%AF/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>腾讯</span></a><a class="article-meta__tags" href="/tags/%E5%8A%9E%E5%85%AC%E8%87%AA%E5%8A%A8%E5%8C%96/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>办公自动化</span></a><a class="article-meta__tags" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>效率工具</span></a></span></div></div><h1 class="post-title" itemprop="name headline">WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2026-11-28T02:30:00.000Z" title="发表于 2026-11-28 10:30:00">2026-11-28</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2026-11-28T01:36:28.569Z" title="更新于 2026-11-28 09:36:28">2026-11-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">8007</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>23分钟</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为南极"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>南极</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://img.521251.xyz/file/文章封面/1795829700130_workbuddy-cover.jpg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="https://blog.521251.xyz/s/workbuddy-deep-guide/"><header><a class="post-meta-categories" href="/categories/%E6%8A%80%E6%9C%AF%E5%88%86%E4%BA%AB/" itemprop="url">技术分享</a><a href="/tags/WorkBuddy/" tabindex="-1" itemprop="url">WorkBuddy</a><a href="/tags/AI-Agent/" tabindex="-1" itemprop="url">AI Agent</a><a href="/tags/%E8%85%BE%E8%AE%AF/" tabindex="-1" itemprop="url">腾讯</a><a href="/tags/%E5%8A%9E%E5%85%AC%E8%87%AA%E5%8A%A8%E5%8C%96/" tabindex="-1" itemprop="url">办公自动化</a><a href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/" tabindex="-1" itemprop="url">效率工具</a><h1 id="CrawlerTitle" itemprop="name headline">WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">Laosia</span><time itemprop="dateCreated datePublished" datetime="2026-11-28T02:30:00.000Z" title="发表于 2026-11-28 10:30:00">2026-11-28</time><time itemprop="dateCreated datePublished" datetime="2026-11-28T01:36:28.569Z" title="更新于 2026-11-28 09:36:28">2026-11-28</time></header><p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/%E6%96%87%E7%AB%A0%E5%B0%81%E9%9D%A2/1795829700130_workbuddy-cover.jpg"></p>
+<h2 id="一、先说结论：它解决的不是”回答问题”，是”交付结果”"><a href="#一、先说结论：它解决的不是”回答问题”，是”交付结果”" class="headerlink" title="一、先说结论：它解决的不是”回答问题”，是”交付结果”"></a>一、先说结论：它解决的不是”回答问题”，是”交付结果”</h2><p>过去两年我们用 AI 的方式基本没变：打开一个对话框，打字，读答案，然后自己去执行。写文案要自己复制粘贴，改表格要自己动手，做 PPT 要自己排版。AI 给的是<strong>建议</strong>，落地的那一公里永远是人在走。</p>
+<p>WorkBuddy 这类产品改的就是这一公里。你说”把这份销售数据做成一份给老板看的三页 PPT”，它自己去读文件、算数据、画图、生成 <code>.pptx</code>，最后把文件放在那儿让你验收。这个差别看起来只是”多了一步”，实际体验上是<strong>工作流的所有权变了</strong>——从”我指挥 AI 干活”变成”我验收 AI 的交付”。</p>
+<p>这篇不吹也不黑，把它的能力结构、真实边界、以及我见过和踩过的坑一次性讲清楚。如果你正打算装一个试试，或者已经装了但用两天就搁下了，应该能省你不少时间。</p>
+<hr>
+<h2 id="二、它是谁：出身与定位"><a href="#二、它是谁：出身与定位" class="headerlink" title="二、它是谁：出身与定位"></a>二、它是谁：出身与定位</h2><p>WorkBuddy 是腾讯云 CodeBuddy 团队在 2026 年 3 月 9 日推出的产品，定位是”全场景 AI 办公工作台”，官方叫法是”职场 AI 智能体桌面工作台”。同一时期字节的火山引擎也上线了对标产品 ArkClaw，两家几乎同一天发，这个时间点本身就说明了赛道热度。</p>
+<p>理解它的定位，最好拿它跟同门师兄 CodeBuddy 对比：</p>
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>CodeBuddy</th>
+<th>WorkBuddy</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>核心场景</td>
+<td>写代码、改代码、读代码库</td>
+<td>办公文档、数据分析、调研、PPT、网页</td>
+</tr>
+<tr>
+<td>形态</td>
+<td>IDE 插件 &#x2F; 编程助手</td>
+<td>桌面客户端（Windows &#x2F; macOS）</td>
+</tr>
+<tr>
+<td>使用者</td>
+<td>开发者</td>
+<td>普通职场人</td>
+</tr>
+<tr>
+<td>交互入口</td>
+<td>编辑器里</td>
+<td>独立窗口 + 手机端消息入口</td>
+</tr>
+<tr>
+<td>积分</td>
+<td><strong>同一账号共享</strong></td>
+<td><strong>同一账号共享</strong></td>
+</tr>
+</tbody></table>
+<p>一句话记法：<strong>管代码的交给 CodeBuddy，管电脑的交给 WorkBuddy。</strong> 两者积分互通，不需要分别订阅——这一点很多人不知道，白买了双份。</p>
+<p>它跟”另一个 Codex&#x2F;Claude Code”的区别更本质：那些是给技术人的可编程工作台，要你自己写规则、配工具、调参数；WorkBuddy 走的是开箱即用路线，装完就能用自然语言开工。代价是<strong>可控性弱一些</strong>，好处是<strong>上手成本接近零</strong>。</p>
+<hr>
+<h2 id="三、能力结构：五层，别混着看"><a href="#三、能力结构：五层，别混着看" class="headerlink" title="三、能力结构：五层，别混着看"></a>三、能力结构：五层，别混着看</h2><p>很多人用不好这类工具，根本原因是没搞清楚”我这次到底在调哪一层”。WorkBuddy 的能力是分层的，越往下越通用，越往上越专业：</p>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>作用</th>
+<th>什么时候用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>模型</strong></td>
+<td>理解指令、推理、生成内容</td>
+<td>所有任务的地基</td>
+</tr>
+<tr>
+<td><strong>Skill</strong></td>
+<td>增加一种明确能力（搜索、表格、网页制作、图像生成）</td>
+<td>已知任务需要某个工具</td>
+</tr>
+<tr>
+<td><strong>Expert</strong></td>
+<td>Skill + 领域角色 + 方法论</td>
+<td>有一个清晰的专业问题</td>
+</tr>
+<tr>
+<td><strong>Expert Group</strong></td>
+<td>多个专家按流程协作</td>
+<td>任务跨产品&#x2F;设计&#x2F;开发&#x2F;运营多个角色</td>
+</tr>
+<tr>
+<td><strong>Connector &#x2F; MCP</strong></td>
+<td>连接外部系统（GitHub、Jira、飞书、Notion、Gmail）</td>
+<td>任务要读写其他系统的数据</td>
+</tr>
+</tbody></table>
+<p>记法：<strong>Skill 是能力，Expert 是能力加经验，Expert Group 是多个专家加协作流程。</strong></p>
+<p>官方口径是内置 100+ 领域专家、Skill 市场里 7 万+ Skills（SkillHub 独立站），覆盖招聘、投研、前端、法务、营销等。这个数字听起来夸张，但实际用下来，真正高频的其实就十来个：Excel 分析、PPT 生成、深度调研、网页制作、文档处理、批量文件整理。剩下的你大概率一年也不会点开一次。</p>
+<p><strong>实用建议</strong>：先不要逛 Skill 市场。先把”Excel 分析”和”文档&#x2F;PPT 生成”这两类跑通，能覆盖 80% 的日常需求，剩下的按需再装。</p>
+<hr>
+<h2 id="四、三种工作模式：效率与安全的开关"><a href="#四、三种工作模式：效率与安全的开关" class="headerlink" title="四、三种工作模式：效率与安全的开关"></a>四、三种工作模式：效率与安全的开关</h2><p>这是我觉得设计得最有价值的一处细节。WorkBuddy 给了不同风险等级的执行模式：</p>
+<ul>
+<li><strong>Craft（直接干）</strong>：你说，它做，一口气执行完。适合需求明确、风险低的活，比如”把这份 Excel 按月份汇总成一张表”。</li>
+<li><strong>Plan（先审计划）</strong>：先出一份执行计划给你看，你点头它才动手。改代码、批量改文件、批量删除这种高危场景，必须开这个。</li>
+<li><strong>Ask（只答不做）</strong>：纯聊天，不动手。相当于普通 AI 对话。</li>
+</ul>
+<p>三种模式切换零学习成本，但它把”效率”和”安全”的平衡权交回给了用户。这个设计看着朴素，实际是这类产品里最该抄的一点。</p>
+<blockquote>
+<p>说明：官方文档里同时出现的是 <strong>Work Mode</strong>（通用办公）与 <strong>Coding Mode</strong>（工程任务）这一组划分，而第三方深度测评里描述的是 Craft &#x2F; Plan &#x2F; Ask 三档。两套说法可能是不同版本或不同入口的命名，实际以你客户端里看到的为准——但”有办法先审计划再执行”这个能力是确定存在的，这也是你该主动去找的开关。</p>
+</blockquote>
+<hr>
+<h2 id="五、界面结构：三个区，各有各的用处"><a href="#五、界面结构：三个区，各有各的用处" class="headerlink" title="五、界面结构：三个区，各有各的用处"></a>五、界面结构：三个区，各有各的用处</h2><p>第一次打开容易被劝退，因为它不像 ChatGPT 那样一个大白框，而是一堆板块。搞清结构就简单了：</p>
+<ul>
+<li><strong>左侧任务列表</strong>：所有任务都在这儿，可以并行开多个，随时切回去看进度。</li>
+<li><strong>中间对话区</strong>：补充材料、确认范围、提修改意见。<strong>这是你唯一需要打字的地方。</strong></li>
+<li><strong>右侧结果区</strong>：真正的交付物。三个视图切换——「概览」看生成的文件、「工作空间文件」看目录结构、「变更」看这次改了哪些文件。</li>
+</ul>
+<p>结果区支持直接在客户端里预览 Excel、Word、PDF、网页，不用先下载再用外部工具打开。网页类任务还能直接看渲染效果、刷新重载。</p>
+<p>这个”对话区和结果区分开”的设计很重要：它逼你<strong>去看真正的产物，而不是只看对话里的总结</strong>。我见过太多人只读 AI 在对话框里的自我总结就点了验收，结果文件里数据是错的。</p>
+<hr>
+<h2 id="六、记忆：为什么它”越用越懂你”"><a href="#六、记忆：为什么它”越用越懂你”" class="headerlink" title="六、记忆：为什么它”越用越懂你”"></a>六、记忆：为什么它”越用越懂你”</h2><p>普通 AI 每次对话都是全新开始，你得反复交代”我不喜欢用分号结尾””文件默认放桌面””写文档要用二级标题”。WorkBuddy 做了三层记忆：</p>
+<ul>
+<li><strong>云端记忆</strong>：自动学习你的使用习惯和偏好；</li>
+<li><strong>用户级记忆</strong>：跨项目的个人规则，比如”输出默认用中文””代码注释写英文”；</li>
+<li><strong>项目级记忆</strong>：每个项目的上下文独立保留，不互相污染。</li>
+</ul>
+<p>实际效果是：第一次做某类任务时你需要写一大堆约束，做第三次的时候它已经记得了。这是它和普通聊天窗口体验上最明显的分野——<strong>用一周和用一天，是两个产品。</strong></p>
+<p>反过来也有坑：记忆会”记错”。如果你某次随口说”这次不用加目录”，它可能把”不要目录”当成长期偏好记下来，之后所有文档都没目录了。所以<strong>发现输出风格莫名其妙变了，先去设置里翻记忆条目，别急着改提示词。</strong></p>
+<hr>
+<h2 id="七、模型与计费：这是最容易被低估的成本"><a href="#七、模型与计费：这是最容易被低估的成本" class="headerlink" title="七、模型与计费：这是最容易被低估的成本"></a>七、模型与计费：这是最容易被低估的成本</h2><h3 id="7-1-模型"><a href="#7-1-模型" class="headerlink" title="7.1 模型"></a>7.1 模型</h3><p>内置混元、DeepSeek、GLM、Kimi、MiniMax 等国产模型，可随时切换。<strong>没有官方的 GPT &#x2F; Claude 接入</strong>，但支持自定义模型提供商，有 API key 的话可以自己接。</p>
+<p>策略上很简单：<strong>简单任务用快模型省积分，复杂推理切强模型保质量。</strong> 但这里有个陷阱，见下一节。</p>
+<h3 id="7-2-积分"><a href="#7-2-积分" class="headerlink" title="7.2 积分"></a>7.2 积分</h3><p>WorkBuddy 按积分（Credits）计费，个人版四档：</p>
+<table>
+<thead>
+<tr>
+<th>版本</th>
+<th>月付</th>
+<th>连续包月（7折）</th>
+<th>连续包年（5.6折）</th>
+<th>基础积分&#x2F;月</th>
+<th>限时加赠</th>
+<th>每月实得</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>体验版</td>
+<td>免费</td>
+<td>—</td>
+<td>—</td>
+<td>500</td>
+<td>—</td>
+<td><strong>500</strong></td>
+</tr>
+<tr>
+<td>标准版</td>
+<td>99 元</td>
+<td>70 元</td>
+<td>672 元</td>
+<td>2,000</td>
+<td>2,000</td>
+<td><strong>4,000</strong></td>
+</tr>
+<tr>
+<td>高级版</td>
+<td>199 元</td>
+<td>140 元</td>
+<td>1,344 元</td>
+<td>4,000</td>
+<td>5,000</td>
+<td><strong>9,000</strong></td>
+</tr>
+<tr>
+<td>旗舰版</td>
+<td>999 元</td>
+<td>700 元</td>
+<td>6,720 元</td>
+<td>20,000</td>
+<td>30,000</td>
+<td><strong>50,000</strong></td>
+</tr>
+</tbody></table>
+<p>加量包：1,000 积分 &#x2F; 50 元 &#x2F; 有效期 1 个月。WorkBuddy 和 CodeBuddy 积分共享。</p>
+<h3 id="7-3-积分为什么难算"><a href="#7-3-积分为什么难算" class="headerlink" title="7.3 积分为什么难算"></a>7.3 积分为什么难算</h3><p>这是它被吐槽最集中的地方，也是我认为你最该提前搞清楚的一点：</p>
+<p><strong>同样 1000 积分，换个模型，能干的活差几十倍。</strong></p>
+<p>有博主用 13 个模型跑了 555 笔扣费做核对，结论是：同样 1000 积分，闲时用 DeepSeek-V4.1-Flash 大约能兑换 8.3 亿 token，而用 Kimi-K3 只有约 1248 万——<strong>相差 60 多倍</strong>。另一份模型排行给出的口径一致：平台内二十来个模型的单次倍率从 0.03x 到 1.62x，同样一句话能差出五十多倍。</p>
+<p>更麻烦的是<strong>账目的”事后性”</strong>：缓存命中、输出 token 这些明细不展示，扣费经常要过很久才追加显示在对话后面。你干活的时候看不到余额在掉，等发现的时候已经没了。</p>
+<p>界面上的”快速 &#x2F; 均衡 &#x2F; 极致”三档<strong>并不绑定固定模型</strong>，底层换了谁，扣费就跟着变。所以”我选了快速档应该很便宜”这个假设不成立。</p>
+<p><strong>实用做法</strong>：</p>
+<ol>
+<li>固定用一两个模型，别频繁切。每次切换你都在重新建立成本直觉。</li>
+<li>先拿<strong>体验版的 500 积分</strong>跑三个真实任务，记住每类任务大概吃多少积分，再决定买哪档。500 积分够你摸清量级。</li>
+<li>长文档、大表格、批量文件这类”输入很重”的任务最烧积分，能拆就拆。</li>
+<li>每日桌面登录能领约 100 积分，长期用的话这是个不小的补贴。</li>
+<li>别信”无限续杯”的多账号切换工具——官方不背书，账号风险自己担。</li>
+</ol>
+<hr>
+<h2 id="八、安全边界：它能碰你电脑，这是底线问题"><a href="#八、安全边界：它能碰你电脑，这是底线问题" class="headerlink" title="八、安全边界：它能碰你电脑，这是底线问题"></a>八、安全边界：它能碰你电脑，这是底线问题</h2><p>一个能读写你本地文件的 AI，安全性不是加分项，是及格线。WorkBuddy 在这块的策略偏保守，这也是它的优点之一：</p>
+<ul>
+<li>操作跑在隔离的 Docker 容器或 E2B 云环境里；</li>
+<li><strong>你授权了哪个文件夹，它就只能碰那个文件夹</strong>；</li>
+<li>高危指令（删除、格式化、批量覆盖）会被拦截或要求二次确认。</li>
+</ul>
+<p>但真实世界里出过事。有记录的情况是：某次上游模型服务不可用，一位用户临时切到备用模型的窗口期里，自己的文件被删了。还有博主让 AI”自动清理无用临时文件”，结果它靠文件名和扩展名判断，把正在跟进的项目配置文件当垃圾删了，当天工作直接停摆，花几小时才恢复。</p>
+<p>AI 判断”这个文件有没有用”，靠的是文件名和格式，<strong>它不知道你在做什么项目</strong>。所以：</p>
+<p><strong>三条铁律：</strong></p>
+<ol>
+<li><strong>删除 &#x2F; 移动 &#x2F; 批量重命名，永远先要清单再执行。</strong> 让它列出来，你逐条看完，再让它动手。开了 Plan 模式更好。</li>
+<li><strong>重要目录不进授权范围。</strong> 只开这次任务真正需要的那一个子目录，工作完就撤销。</li>
+<li><strong>动手前先备份。</strong> 批量操作前把目标目录复制一份，成本几秒钟，救回来要几小时。</li>
+</ol>
+<p>另外，在安全中心把沙箱、删除保护、批量删除审批这几项主动打开。它们的默认强度、装机时会不会引导你打开，公开资料里查不到——<strong>别赌默认值，自己去看一眼。</strong></p>
+<hr>
+<h2 id="九、任务怎么描述：一个能直接抄的公式"><a href="#九、任务怎么描述：一个能直接抄的公式" class="headerlink" title="九、任务怎么描述：一个能直接抄的公式"></a>九、任务怎么描述：一个能直接抄的公式</h2><p>这是全文最有用的一节。绝大多数”AI 输出全是废话”的抱怨，根因都在描述太笼统。</p>
+<p><strong>公式：目标 + 输入 + 输出 + 约束 + 验收标准</strong></p>
+<p>对比一下：</p>
+<p>❌ 差：</p>
+<blockquote>
+<p>帮我分析一下这个数据</p>
+</blockquote>
+<p>✅ 好：</p>
+<blockquote>
+<p>目标：找出美国站过去四周流量变化的原因。<br>输入：附件里的渠道明细表。<br>输出：一页中文结论 + 三张图表 + 一份 5 页 PPT。<br>约束：不使用缺失率超过 20% 的字段；结论必须标注对应的数据范围。<br>验收：每个结论都能在表里找到对应行；列出三条可执行建议。</p>
+</blockquote>
+<p>第二种描述里，AI 知道”给谁看”（管理层）、”多长”（一页）、”什么格式”（PPT）、”什么不许做”（不用缺失字段）。输出质量差别是数量级的。</p>
+<p>再举三个可以照抄的模板：</p>
+<p><strong>数据分析 + 汇报</strong></p>
+<blockquote>
+<p>检查字段和缺失值，按月份和地区分析收入变化，标出异常波动，生成图表，输出一份面向业务负责人的周报。</p>
+</blockquote>
+<p><strong>会议纪要 → 行动项</strong></p>
+<blockquote>
+<p>总结会议结论，提取任务、负责人、截止时间和依赖关系，标记尚未确认的信息，生成可跟踪的行动清单。</p>
+</blockquote>
+<p><strong>产品资料 → 落地页</strong></p>
+<blockquote>
+<p>根据产品资料整理页面信息架构，撰写首屏、功能、场景和 FAQ 文案，再生成一个可预览的响应式落地页。</p>
+</blockquote>
+<p>最后那个我建议<strong>分两步</strong>：先让它确认信息架构和文案，你改完再让它生成页面。一次到位的话，改起来要动整个页面。</p>
+<h3 id="一个额外的关键习惯：一个任务一个窗口"><a href="#一个额外的关键习惯：一个任务一个窗口" class="headerlink" title="一个额外的关键习惯：一个任务一个窗口"></a>一个额外的关键习惯：一个任务一个窗口</h3><p>同一个对话里连着干几件不相关的事（先写方案、再改 PPT、再分析表格），AI 会把前面的内容串到后面的任务里，出现逻辑混乱、重点跑偏，而且越改越乱救不回来。<strong>不同类型的工作，新建任务。</strong></p>
+<hr>
+<h2 id="十、我见过的八个高频翻车点"><a href="#十、我见过的八个高频翻车点" class="headerlink" title="十、我见过的八个高频翻车点"></a>十、我见过的八个高频翻车点</h2><p>这部分全部来自真实使用反馈，不是假设。</p>
+<p><strong>坑 1：需求太笼统，输出全是套话</strong><br>“写个月度总结” → 出来一篇网上通用模板，跟你岗位毫无关系。让它分析营收，整篇在讲项目背景，核心的收入、成本、差额一个没有。<br>→ 明确字数、场景、写作重点、要规避的内容。</p>
+<p><strong>坑 2：同一窗口堆多个任务</strong><br>见上一节。分开建任务。</p>
+<p><strong>坑 3：超长文档被截断</strong><br>有用户反馈单篇超过约 8000 字会被自动截断，一万多字的复盘上传后关键条款、核心数据全漏了。这个阈值我无法从官方文档确认，但**”长文档会丢信息”这个现象是多人都遇到的**。<br>→ 长文档拆段处理，最后再整合。上传前先问它”这份文档你完整读到了吗，最后一段讲什么”。</p>
+<p><strong>坑 4：复杂计算会算错，而且会编理由圆谎</strong><br>最容易翻车的一类。让它核算加班时长和调休抵扣，表格看着整整齐齐，数据全错；跨凌晨、要扣休息时间的场景能差十几分钟。你去质疑，它还会编个理由糊弄你——比如图片比例错了，它硬说”平台只支持正方形”。<br>→ <strong>凡是数据核算、逻辑计算，无论输出多规整，必须人工逐项对核。</strong> 复杂规则拆成分条要求，别一次性笼统丢过去。</p>
+<p><strong>坑 5：自动清理文件误删重要文件</strong><br>见上一节。</p>
+<p><strong>坑 6：长任务质量会掉</strong><br>任务一长，它容易停在”改一点、跑一下、能展示就算完成”的循环里，把一个能跑的 Demo 当成工程交付。有人把原因拆得更细：上下文压缩”太薄”，被丢掉的恰恰是复杂任务最关键的信息——为什么这样设计、哪些方案已被否决、项目进行到哪一步。压缩一轮，下一轮质量立刻下滑。<br>→ 长任务自己维护一份”决策记录”，每轮开始时贴给它。别指望它记得。</p>
+<p><strong>坑 7：多 Agent 协作会”左边不知道右边在干嘛”</strong><br>多 Agent 并行还在打磨阶段。简单分工（一个查资料、一个写报告）能用，复杂协作经常出现信息不同步。<br>→ 需要协作时，你当调度员，明确每个 Agent 的输入输出边界。</p>
+<p><strong>坑 8：定时任务和推送不稳定</strong><br>“每天早上九点给我整理 AI 资讯发到企业微信”这类自动化，通知体验粗糙、内容偶尔有 bug。有开发者实测的结论是”提醒了个寂寞”。<br>→ 定时任务只用来做<strong>容忍失败</strong>的事（资讯汇总、日报），不要用来做<strong>不能漏</strong>的事（合同到期提醒、账单支付）。</p>
+<hr>
+<h2 id="十一、连接器与远程：把它的手伸出电脑"><a href="#十一、连接器与远程：把它的手伸出电脑" class="headerlink" title="十一、连接器与远程：把它的手伸出电脑"></a>十一、连接器与远程：把它的手伸出电脑</h2><p>很多人只把 WorkBuddy 当”本地文件处理器”，忽略了它还有一层很关键的扩展能力：<strong>连接器（Connectors）和 MCP</strong>。</p>
+<h3 id="11-1-Connectors"><a href="#11-1-Connectors" class="headerlink" title="11.1 Connectors"></a>11.1 Connectors</h3><p>连接器让它在获得授权后读写外部系统。目前覆盖的主流服务包括 GitHub、GitLab、Jira、Confluence、Google Drive、Gmail、Notion、Slack，国内侧则打通了微信、企业微信、飞书、钉钉、QQ，以及腾讯文档、腾讯会议、腾讯问卷这些腾讯系产品。</p>
+<p>举几个真实有用的组合：</p>
+<ul>
+<li><strong>Jira + GitHub</strong>：让它”把本周所有状态是 Blocked 的 issue 汇总成一份风险清单，标注对应的 PR 和最后更新时间”。它会自己去两个系统拉数据、对齐、生成表格。</li>
+<li><strong>Google Drive + 文档</strong>：给它一个 Drive 文件夹，让它把里面所有会议记录提取成统一的行动项清单，输出 Excel。</li>
+<li><strong>Notion + PPT</strong>：读取某个 Notion 数据库里的项目进展，生成月度汇报 PPT。</li>
+<li><strong>Gmail</strong>：让它把过去一周的客户邮件按诉求分类，标出需要今天回复的，草拟回信（草稿，不直接发）。</li>
+</ul>
+<p>关键点在于<strong>授权范围</strong>。连接器给的是”读”或”读写”权限，一旦给了写权限，它就能真的改你的工单、发你的邮件、动你的仓库。所以：</p>
+<ol>
+<li><strong>优先给只读</strong>。绝大多数分析类任务根本不需要写权限。</li>
+<li><strong>写操作走”生成草稿 + 人工确认”</strong>。让它把要发的邮件写成草稿、要建的工单写成清单，你过一遍再执行。</li>
+<li><strong>定期清授权</strong>。用完的连接器、API key、Webhook 该撤就撤。这条比什么都重要，长期堆积的授权是最常见的泄露源。</li>
+</ol>
+<h3 id="11-2-MCP"><a href="#11-2-MCP" class="headerlink" title="11.2 MCP"></a>11.2 MCP</h3><p>MCP（Model Context Protocol）是个通用扩展协议，你可以把它理解成”AI 世界的 USB 接口”——任何按这个协议包装过的工具或数据源，都能插进 WorkBuddy 用。</p>
+<p>它的价值在于<strong>把一次性的能力变成可复用的工具</strong>。比如你自己写了个查库存的小服务，按 MCP 包一层，之后就能直接对它说”查一下 A 型号现在的库存，低于 500 的列出来”，不用每次都贴 API 文档。</p>
+<p>对普通用户来说 MCP 属于进阶内容，可以先放着。但如果你有自建系统、内部数据库、私有 API，MCP 是把它接进来的正路——而且这条路不限于 WorkBuddy，同一个 MCP server 也能给别的支持该协议的工具用，不算绑定。</p>
+<h3 id="11-3-远程-Assistant"><a href="#11-3-远程-Assistant" class="headerlink" title="11.3 远程 Assistant"></a>11.3 远程 Assistant</h3><p>这是我觉得最有”未来感”的一块。通过 Assistant，你可以从手机上的 Slack、Telegram、Discord、企业微信、飞书、钉钉、QQ 给电脑端的 WorkBuddy 发任务，结果也推回同一个渠道。</p>
+<p>场景很具体：你在外面吃饭，突然想起来明天开会要一份材料。掏出手机发一句”把桌面上那份 Q4 数据整理成三页 PPT，做完发我”，回家打开电脑，文件已经在桌面上了。</p>
+<p><strong>但它有硬性前提</strong>：电脑必须开着机、WorkBuddy 必须处于运行状态、网络要稳。它不是云端的，是”遥控你家里那台电脑”。所以：</p>
+<ul>
+<li>台式机比笔记本靠谱（笔记本合盖就断）；</li>
+<li>别指望它在你关机的时候干活；</li>
+<li>涉及需要登录的网页操作，电脑上的浏览器会话也得是活的。</li>
+</ul>
+<p>如果你需要”关机也能跑”的能力，那就得看它的云端助理那套——重复性的日常任务（会议纪要整理、数据处理、周报生成）可以托管在云端持续运行，关掉客户端也不中断，成果直接下载。这两条路要分清：<strong>远程 Assistant 是遥控本地，云端托管是交给云</strong>。</p>
+<hr>
+<h2 id="十二、团队与企业：从个人工具变成组织能力"><a href="#十二、团队与企业：从个人工具变成组织能力" class="headerlink" title="十二、团队与企业：从个人工具变成组织能力"></a>十二、团队与企业：从个人工具变成组织能力</h2><p>个人用和团队用，是两种产品。个人关心”我这活能不能快一点”，团队关心”这套流程能不能复制给别人、成本能不能管住”。</p>
+<h3 id="12-1-项目空间"><a href="#12-1-项目空间" class="headerlink" title="12.1 项目空间"></a>12.1 项目空间</h3><p>WorkBuddy 的团队能力核心是”项目空间”。在一个项目里：</p>
+<ul>
+<li><strong>多个 Agent 可以并行</strong>处理各自任务，结果统一汇总；</li>
+<li><strong>调好的专家、Skill、连接器可以沉淀</strong>到项目空间，一次配置全组复用；</li>
+<li><strong>知识库和权限有统一边界</strong>，成熟流程可以跨部门横向推广。</li>
+</ul>
+<p>这个设计的价值不在”多人协作”，而在<strong>把个人调参的经验变成组织的资产</strong>。一个人花两周调出一个好用的”投标文件生成”流程，沉淀进项目空间后，全组十个人当天就能用，不用各自再踩一遍坑。</p>
+<h3 id="12-2-权限与用量"><a href="#12-2-权限与用量" class="headerlink" title="12.2 权限与用量"></a>12.2 权限与用量</h3><p>企业版关注三件事：成员权限、公共能力资产的共享、以及用量与费用的统一查看。这三件事恰恰是个人版完全不需要操心的——也是为什么个人版能做得这么轻。</p>
+<h3 id="12-3-一个务实的判断"><a href="#12-3-一个务实的判断" class="headerlink" title="12.3 一个务实的判断"></a>12.3 一个务实的判断</h3><p>如果你是小团队（3–5 人），个人版的标准版或高级版基本够用，不必上企业版。真正需要企业版的信号是：</p>
+<ul>
+<li>需要按人分配权限、审计谁用了什么；</li>
+<li>需要共享专家和 Skill，避免重复配置；</li>
+<li>需要统一开票、统一结算、统一看成本。</li>
+</ul>
+<p>在那之前，企业版带来的管理开销会大于收益。</p>
+<hr>
+<h2 id="十三、一次完整的实操：从零到交付"><a href="#十三、一次完整的实操：从零到交付" class="headerlink" title="十三、一次完整的实操：从零到交付"></a>十三、一次完整的实操：从零到交付</h2><p>前面讲的都是结构，这一节走一遍真实流程，让你看到每一步在干什么。</p>
+<p><strong>任务</strong>：手上有一份 12 个月的销售明细 Excel，要做成一份给管理层的年度复盘 PPT。</p>
+<p><strong>第一步：建任务，选模式</strong></p>
+<p>新建任务，模式选 <strong>Plan</strong>（因为要生成多份文件，想先看它打算怎么做）。工作空间指向那个放 Excel 的文件夹——<strong>只授权这一个文件夹</strong>，不要图省事授权整个 D 盘。</p>
+<p><strong>第二步：写任务描述</strong></p>
+<p>按公式来：目标 + 输入 + 输出 + 约束 + 验收标准。</p>
+<blockquote>
+<p>目标：基于附件的 12 个月销售明细，做一份面向管理层的年度复盘。<br>输入：<code>sales_2026.xlsx</code>，字段包含日期、区域、渠道、产品线、销售额、订单数、退货额。<br>输出：</p>
+<ol>
+<li>一份 Excel 汇总表（按季度×区域，含同比&#x2F;环比）；</li>
+<li>三张图表（月度趋势、区域贡献、渠道结构）；</li>
+<li>一份 8–10 页 PPT，结构为：整体表现 &#x2F; 区域拆解 &#x2F; 渠道拆解 &#x2F; 问题诊断 &#x2F; 明年建议。<br>约束：退货额需从销售额中扣除后再计算净额；缺失率超过 20% 的字段不使用；所有百分比保留一位小数。<br>验收：每个结论都能在汇总表里找到对应数据；诊断部分必须指出至少三个具体问题，不接受”整体向好”这类空话。</li>
+</ol>
+</blockquote>
+<p><strong>第三步：审计划</strong></p>
+<p>Plan 模式下它会先给步骤。这时候重点看三件事：</p>
+<ol>
+<li><strong>它打算怎么算净额</strong>——如果没提扣退货，立刻纠正；</li>
+<li><strong>它的图表数据源</strong>——是不是从汇总表来的，还是自己另算一遍（另算容易和表格对不上）；</li>
+<li><strong>它读文件的方式</strong>——12 个月明细可能几万行，如果它打算一次全读，提醒它先看字段和行数，再分段聚合。</li>
+</ol>
+<p><strong>第四步：执行中盯着</strong></p>
+<p>右侧结果区会陆续出现文件。这时候不用等它全部做完，看到第一个文件就先打开看：</p>
+<ul>
+<li>Excel 的表头和数据类型对不对（有没有把数字读成文本）；</li>
+<li>图表的数据标签有没有被截断；</li>
+<li>PPT 的版式是不是你要的那种（是”每页一张大图”还是”左图右文”）。</li>
+</ul>
+<p>早发现早改，比全做完再推翻省得多。</p>
+<p><strong>第五步：局部迭代，不要重做</strong></p>
+<p>发现问题时，<strong>不要</strong>说”重做一遍”。要指到具体位置：</p>
+<blockquote>
+<p>第 3 页的区域贡献图，华东和华南的颜色太接近，换一组对比更强的配色；另外第 5 页的诊断只有两条，补第三条，聚焦退货率。</p>
+</blockquote>
+<p>局部修改的成功率远高于重做。重做等于让它重新走一遍所有决策，很可能把原来对的部分也改错。</p>
+<p><strong>第六步：验收交付物</strong></p>
+<p>这是最容易偷懒也最不能偷懒的一步。<strong>打开每一个文件看，不要只看对话区的总结。</strong></p>
+<ul>
+<li>Excel：抽查 3–5 个数字，用手算或另开一个表验证；</li>
+<li>图表：数据点和汇总表对得上吗；</li>
+<li>PPT：每页的结论和数据一致吗，有没有它自己”补充”出来的、原始数据里根本没有的说法。</li>
+</ul>
+<p>我见过最典型的翻车就是这一步跳过：PPT 做得漂亮，第 6 页写”退货率同比下降 12%”，而原始数据里根本没这个结论——是模型根据趋势”推”出来的。<strong>AI 会补全它认为合理的东西，这是语言模型的本性，不是 bug。</strong></p>
+<p><strong>第七步：沉淀</strong></p>
+<p>如果这套流程你每季度都要跑一次，把它存成模板：任务描述存下来，跑通的专家固定下来，反复要交代的规则写进用户级记忆。下次换个文件就能直接跑。</p>
+<p><strong>这一步做完，你才真正开始省时间。</strong> 第一次跑这类任务，通常比自己动手还慢——但第二、第三次就是纯赚。</p>
+<hr>
+<h2 id="十四、常见疑问"><a href="#十四、常见疑问" class="headerlink" title="十四、常见疑问"></a>十四、常见疑问</h2><p><strong>Q：它和 CodeBuddy 要不要买两份？</strong><br>不要。同一账号积分共享，一个订阅两边都能用。</p>
+<p><strong>Q：没有 GPT &#x2F; Claude 能用吗？</strong><br>内置的国产模型（混元、DeepSeek、GLM、Kimi、MiniMax）覆盖绝大多数办公场景。要接 GPT &#x2F; Claude 得自己配自定义模型提供商，有 API key 就行，但要额外花钱且需要一点配置能力。</p>
+<p><strong>Q：会不会把我的文件传上去？</strong><br>它确实需要读取你授权的文件内容来处理，执行环境是隔离容器或云沙箱。所以<strong>涉密、涉个人隐私的资料不要交给它</strong>。这不是它的缺陷，是这类产品的固有属性——你要它干活，它就得看见材料。</p>
+<p><strong>Q：为什么我的输出风格突然变了？</strong><br>先查记忆。它可能把你某次的临时要求当成了长期偏好。记忆条目的优先级高于你当次的提示词。</p>
+<p><strong>Q：定时任务靠谱吗？</strong><br>做”漏了也无所谓”的事（每日资讯、周报草稿）可以；做”漏了就出事”的事（到期提醒、对账）不行。目前的通知体验和稳定性还撑不住后者。</p>
+<p><strong>Q：免费额度够用吗？</strong><br>500 积分够你跑通三到五个真实任务、建立成本直觉。想长期用肯定不够，但足够你判断”要不要买”。</p>
+<p><strong>Q：值得买哪一档？</strong><br>先跑两周。如果你每周有三个以上重复流程能交给它，标准版（连续包月 70 元，实得 4000 积分）是最划算的起点。跑到积分经常月中就见底，再考虑高级版。旗舰版是给重度多项目用户的，普通人用不上。</p>
+<hr>
+<h2 id="十五、它不适合做什么"><a href="#十五、它不适合做什么" class="headerlink" title="十五、它不适合做什么"></a>十五、它不适合做什么</h2><p>说清楚边界比列优点更有用：</p>
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>适不适合</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Excel 分析、图表、周报</td>
+<td>✅ 很适合</td>
+<td>结构化任务，验收标准明确</td>
+</tr>
+<tr>
+<td>文档&#x2F;PPT 从零生成</td>
+<td>✅ 适合</td>
+<td>有模板可循，改起来快</td>
+</tr>
+<tr>
+<td>深度调研、竞品分析</td>
+<td>✅ 适合</td>
+<td>能自己搜、自己整理</td>
+</tr>
+<tr>
+<td>网页&#x2F;落地页原型</td>
+<td>✅ 适合</td>
+<td>生成快，能直接预览</td>
+</tr>
+<tr>
+<td>批量文件整理重命名</td>
+<td>⚠️ 谨慎</td>
+<td>高危，必须 Plan 模式 + 清单确认</td>
+</tr>
+<tr>
+<td>精确财务核算、法务条款</td>
+<td>❌ 不适合</td>
+<td>错了代价太大，人工复核成本高于自己算</td>
+</tr>
+<tr>
+<td>长期托管的复杂工程</td>
+<td>❌ 不适合</td>
+<td>上下文压缩撑不住</td>
+</tr>
+<tr>
+<td>处理敏感&#x2F;涉密资料</td>
+<td>❌ 不适合</td>
+<td>云端执行，权限边界难保证</td>
+</tr>
+</tbody></table>
+<p>一句话：<strong>它擅长”有明确验收标准的重复性脑力劳动”，不擅长”错了要赔钱的精确计算”和”需要长期记忆的复杂工程”。</strong></p>
+<hr>
+<h2 id="十六、上手路线图"><a href="#十六、上手路线图" class="headerlink" title="十六、上手路线图"></a>十六、上手路线图</h2><p>如果你决定试试，按这个顺序走，别一上来就逛功能。</p>
+<p><strong>第一天：跑通一个真任务</strong><br>不要问”你能做什么”。直接给它一件你现在手上真实的小活，边界清晰、能马上验收。比如”读取这份周报数据，输出本周关键变化、异常项和下周建议，做成三页 PPT”。跑完你就知道它是什么了。</p>
+<p><strong>第一周：建立成本直觉</strong><br>用体验版的 500 积分，跑 5–8 个不同类型的任务，记录每类大概吃多少积分。同时把”一个任务一个窗口””高危操作开 Plan 模式”这两个习惯固定下来。</p>
+<p><strong>第一个月：沉淀可复用的东西</strong><br>把跑通的流程存成模板，把反复要交代的规则写进用户级记忆，把常用的专家&#x2F;Skill 固定下来。这一步做完，你才真正开始省时间——前三周基本都在交学费。</p>
+<p><strong>之后：才考虑自动化和多 Agent</strong><br>定时任务、手机端远程、多 Agent 并行，这些都是锦上添花。基础流程没跑顺就上自动化，只会把不稳定放大。</p>
+<hr>
+<h2 id="十七、总结"><a href="#十七、总结" class="headerlink" title="十七、总结"></a>十七、总结</h2><p>WorkBuddy 这类桌面智能体，把 AI 的价值从”提供答案”推到了”交付成品”。这个跨越是真实的，不是营销话术——你确实可以一句话下去，十分钟后拿到一份能直接发的 PPT。</p>
+<p>但它同时把两件事推到了你面前：</p>
+<p><strong>第一，验收责任回到你身上。</strong> 它交付得越快，你越容易跳过检查。而它会在复杂计算上出错、会编理由圆谎、会把 Demo 当交付。<strong>AI 干得越多，人的复核越不能省。</strong></p>
+<p><strong>第二，成本变成了隐性变量。</strong> 积分按模型倍率浮动几十倍，账目还是事后才显示。不建立成本直觉，很容易一个月烧掉两三百块还不知道钱花在哪。</p>
+<p>我的判断是：<strong>它值得装，但要用”带审阅权的委托”这个心态去用，而不是”全自动躺平”。</strong> 把它当成一个执行力很强、但需要你划边界和验收的新同事——这个比喻比”AI 助手”准确得多。</p>
+<p>至于要不要付费：先用免费额度跑够两周，跑出至少三个你每周都要重复的流程，再考虑标准版。<strong>没有重复流程的人，不需要订阅。</strong></p>
+<hr>
+<p><em>参考资料：WorkBuddy 官方文档（workbuddy.ai &#x2F; workbuddy.cn）、腾讯云产品页与定价页、腾讯云开发者社区多篇实测与踩坑记录、什么值得买产品短板分析。文中标注为”用户反馈”的数字与现象来自第三方实测，未获官方确认，仅供参考。</em></p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">Laosia</div><div class="post-copyright__author_desc">😤Laosia😚无聊时刻😤</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="https://blog.521251.xyz/s/workbuddy-deep-guide/">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('https://blog.521251.xyz/s/workbuddy-deep-guide/')">WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"><div class="post-reward" onclick="anzhiyu.addRewardMask()"><div class="reward-button button--animated" title="赞赏作者"><i class="anzhiyufont anzhiyu-icon-hand-heart-fill"></i>打赏作者</div><div class="reward-main"><div class="reward-all"><span class="reward-title">感谢你赐予我前进的力量</span><ul class="reward-group"><li class="reward-item"><a href="/img/reward-laugh.gif" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/reward-laugh.gif" alt="大笑"/></a><div class="post-qr-code-desc">大笑</div></li><li class="reward-item"><a href="/img/reward-despise.gif" target="_blank"><img class="post-qr-code-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/reward-despise.gif" alt="鄙视"/></a><div class="post-qr-code-desc">鄙视</div></li></ul><a class="reward-main-btn" href="/about/#about-reward" target="_blank"><div class="reward-text">赞赏者名单</div><div class="reward-dec">因为你们的支持让我意识到写文章的价值🙏</div></a></div></div></div><div id="quit-box" onclick="anzhiyu.removeRewardMask()" style="display: none"></div></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="https://blog.521251.xyz/s/workbuddy-deep-guide/"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事&amp;url=https://blog.521251.xyz/s/workbuddy-deep-guide/&amp;pic=https://img.521251.xyz/file/文章封面/1795829700130_workbuddy-cover.jpg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.521251.xyz" target="_blank">Laosia</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/WorkBuddy/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>WorkBuddy<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/AI-Agent/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>AI Agent<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E8%85%BE%E8%AE%AF/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>腾讯<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E5%8A%9E%E5%85%AC%E8%87%AA%E5%8A%A8%E5%8C%96/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>办公自动化<span class="tagsPageCount">1</span></a><a class="post-meta__box__tags" href="/tags/%E6%95%88%E7%8E%87%E5%B7%A5%E5%85%B7/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>效率工具<span class="tagsPageCount">1</span></a></div></div></div><div class="post_share"><div class="social-share" data-image="https://img.521251.xyz/file/文章封面/1795829700130_workbuddy-cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_sharejs_dist_css_share.min.css" media="print" onload="this.media='all'"/><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_sharejs_dist_js_social-share.min.js" defer="defer"></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/s/dsh-go-tavern-guide/"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/32291b0d_lsTdfXiS.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">DSH Go 酒馆：从入门到精通</div></div></a></div></nav><hr/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="anzhiyufont anzhiyu-icon-comments"></i><span> 评论</span></div><div class="comment-randomInfo"><a onclick="anzhiyu.addRandomCommentInfo()" href="javascript:void(0)">匿名评论</a><a href="/privacy" style="margin-left: 4px">隐私政策</a></div></div><div class="comment-wrap"><div><div id="giscus-wrap"></div></div></div></div><div class="comment-barrage"></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info__sayhi" id="author-info__sayhi" onclick="anzhiyu.changeSayHelloText()"></div><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/f9100798_1794542826537_head_16.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/><div class="author-status"><img class="g-status" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/status-dog.png" alt="status"/></div></div><div class="author-info__description"><div style="line-height:1.5;margin:0.6rem 0;text-align:justify;font-size:0.92em;color:rgba(255, 255, 255, 0.82);">人生活在<b style="color:#fff">希望</b>之中，旧的希望实现了，或者泯灭了，新的希望的烈焰随之燃烧起来。如果一个人只管活一天算一天，什么希望也没有，他的生命实际上也就停止了</div></div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">Laosia</h1><div class="author-info__desc">😤Laosia😚无聊时刻😤</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/laosiaa" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/233882124" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="card-widget card-countdown"><div class="item-headline"><i></i><span></span></div><div class="item-content"><div class="cd-count-left">
+  <span class="cd-text">距离</span>
+  <span class="cd-name" id="eventName"></span>
+  <span class="cd-time" id="daysUntil"></span>
+  <span class="cd-date" id="eventDate"></span>
+</div>
+<div id="countRight" class="cd-count-right"></div>
+</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E8%AF%B4%E7%BB%93%E8%AE%BA%EF%BC%9A%E5%AE%83%E8%A7%A3%E5%86%B3%E7%9A%84%E4%B8%8D%E6%98%AF%E2%80%9D%E5%9B%9E%E7%AD%94%E9%97%AE%E9%A2%98%E2%80%9D%EF%BC%8C%E6%98%AF%E2%80%9D%E4%BA%A4%E4%BB%98%E7%BB%93%E6%9E%9C%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text">一、先说结论：它解决的不是”回答问题”，是”交付结果”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%AE%83%E6%98%AF%E8%B0%81%EF%BC%9A%E5%87%BA%E8%BA%AB%E4%B8%8E%E5%AE%9A%E4%BD%8D"><span class="toc-number">2.</span> <span class="toc-text">二、它是谁：出身与定位</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%83%BD%E5%8A%9B%E7%BB%93%E6%9E%84%EF%BC%9A%E4%BA%94%E5%B1%82%EF%BC%8C%E5%88%AB%E6%B7%B7%E7%9D%80%E7%9C%8B"><span class="toc-number">3.</span> <span class="toc-text">三、能力结构：五层，别混着看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%89%E7%A7%8D%E5%B7%A5%E4%BD%9C%E6%A8%A1%E5%BC%8F%EF%BC%9A%E6%95%88%E7%8E%87%E4%B8%8E%E5%AE%89%E5%85%A8%E7%9A%84%E5%BC%80%E5%85%B3"><span class="toc-number">4.</span> <span class="toc-text">四、三种工作模式：效率与安全的开关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E7%95%8C%E9%9D%A2%E7%BB%93%E6%9E%84%EF%BC%9A%E4%B8%89%E4%B8%AA%E5%8C%BA%EF%BC%8C%E5%90%84%E6%9C%89%E5%90%84%E7%9A%84%E7%94%A8%E5%A4%84"><span class="toc-number">5.</span> <span class="toc-text">五、界面结构：三个区，各有各的用处</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E8%AE%B0%E5%BF%86%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E2%80%9D%E8%B6%8A%E7%94%A8%E8%B6%8A%E6%87%82%E4%BD%A0%E2%80%9D"><span class="toc-number">6.</span> <span class="toc-text">六、记忆：为什么它”越用越懂你”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E6%A8%A1%E5%9E%8B%E4%B8%8E%E8%AE%A1%E8%B4%B9%EF%BC%9A%E8%BF%99%E6%98%AF%E6%9C%80%E5%AE%B9%E6%98%93%E8%A2%AB%E4%BD%8E%E4%BC%B0%E7%9A%84%E6%88%90%E6%9C%AC"><span class="toc-number">7.</span> <span class="toc-text">七、模型与计费：这是最容易被低估的成本</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%A8%A1%E5%9E%8B"><span class="toc-number">7.1.</span> <span class="toc-text">7.1 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E7%A7%AF%E5%88%86"><span class="toc-number">7.2.</span> <span class="toc-text">7.2 积分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E7%A7%AF%E5%88%86%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9A%BE%E7%AE%97"><span class="toc-number">7.3.</span> <span class="toc-text">7.3 积分为什么难算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%AE%89%E5%85%A8%E8%BE%B9%E7%95%8C%EF%BC%9A%E5%AE%83%E8%83%BD%E7%A2%B0%E4%BD%A0%E7%94%B5%E8%84%91%EF%BC%8C%E8%BF%99%E6%98%AF%E5%BA%95%E7%BA%BF%E9%97%AE%E9%A2%98"><span class="toc-number">8.</span> <span class="toc-text">八、安全边界：它能碰你电脑，这是底线问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E4%BB%BB%E5%8A%A1%E6%80%8E%E4%B9%88%E6%8F%8F%E8%BF%B0%EF%BC%9A%E4%B8%80%E4%B8%AA%E8%83%BD%E7%9B%B4%E6%8E%A5%E6%8A%84%E7%9A%84%E5%85%AC%E5%BC%8F"><span class="toc-number">9.</span> <span class="toc-text">九、任务怎么描述：一个能直接抄的公式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E9%A2%9D%E5%A4%96%E7%9A%84%E5%85%B3%E9%94%AE%E4%B9%A0%E6%83%AF%EF%BC%9A%E4%B8%80%E4%B8%AA%E4%BB%BB%E5%8A%A1%E4%B8%80%E4%B8%AA%E7%AA%97%E5%8F%A3"><span class="toc-number">9.1.</span> <span class="toc-text">一个额外的关键习惯：一个任务一个窗口</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E6%88%91%E8%A7%81%E8%BF%87%E7%9A%84%E5%85%AB%E4%B8%AA%E9%AB%98%E9%A2%91%E7%BF%BB%E8%BD%A6%E7%82%B9"><span class="toc-number">10.</span> <span class="toc-text">十、我见过的八个高频翻车点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E8%BF%9E%E6%8E%A5%E5%99%A8%E4%B8%8E%E8%BF%9C%E7%A8%8B%EF%BC%9A%E6%8A%8A%E5%AE%83%E7%9A%84%E6%89%8B%E4%BC%B8%E5%87%BA%E7%94%B5%E8%84%91"><span class="toc-number">11.</span> <span class="toc-text">十一、连接器与远程：把它的手伸出电脑</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-Connectors"><span class="toc-number">11.1.</span> <span class="toc-text">11.1 Connectors</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-MCP"><span class="toc-number">11.2.</span> <span class="toc-text">11.2 MCP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E8%BF%9C%E7%A8%8B-Assistant"><span class="toc-number">11.3.</span> <span class="toc-text">11.3 远程 Assistant</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E5%9B%A2%E9%98%9F%E4%B8%8E%E4%BC%81%E4%B8%9A%EF%BC%9A%E4%BB%8E%E4%B8%AA%E4%BA%BA%E5%B7%A5%E5%85%B7%E5%8F%98%E6%88%90%E7%BB%84%E7%BB%87%E8%83%BD%E5%8A%9B"><span class="toc-number">12.</span> <span class="toc-text">十二、团队与企业：从个人工具变成组织能力</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E9%A1%B9%E7%9B%AE%E7%A9%BA%E9%97%B4"><span class="toc-number">12.1.</span> <span class="toc-text">12.1 项目空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E6%9D%83%E9%99%90%E4%B8%8E%E7%94%A8%E9%87%8F"><span class="toc-number">12.2.</span> <span class="toc-text">12.2 权限与用量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-3-%E4%B8%80%E4%B8%AA%E5%8A%A1%E5%AE%9E%E7%9A%84%E5%88%A4%E6%96%AD"><span class="toc-number">12.3.</span> <span class="toc-text">12.3 一个务实的判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%89%E3%80%81%E4%B8%80%E6%AC%A1%E5%AE%8C%E6%95%B4%E7%9A%84%E5%AE%9E%E6%93%8D%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%88%B0%E4%BA%A4%E4%BB%98"><span class="toc-number">13.</span> <span class="toc-text">十三、一次完整的实操：从零到交付</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%9B%9B%E3%80%81%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE"><span class="toc-number">14.</span> <span class="toc-text">十四、常见疑问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%BA%94%E3%80%81%E5%AE%83%E4%B8%8D%E9%80%82%E5%90%88%E5%81%9A%E4%BB%80%E4%B9%88"><span class="toc-number">15.</span> <span class="toc-text">十五、它不适合做什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E5%85%AD%E3%80%81%E4%B8%8A%E6%89%8B%E8%B7%AF%E7%BA%BF%E5%9B%BE"><span class="toc-number">16.</span> <span class="toc-text">十六、上手路线图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E4%B8%83%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">17.</span> <span class="toc-text">十七、总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/s/workbuddy-deep-guide/" title="WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://img.521251.xyz/file/文章封面/1795829700130_workbuddy-cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事"/></a><div class="content"><a class="title" href="/s/workbuddy-deep-guide/" title="WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事">WorkBuddy 深度上手：从一句话到能验收的成品，以及它做不到的事</a><time datetime="2026-11-28T02:30:00.000Z" title="发表于 2026-11-28 10:30:00">2026-11-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-go-tavern-guide/" title="DSH Go 酒馆：从入门到精通"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/32291b0d_lsTdfXiS.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DSH Go 酒馆：从入门到精通"/></a><div class="content"><a class="title" href="/s/dsh-go-tavern-guide/" title="DSH Go 酒馆：从入门到精通">DSH Go 酒馆：从入门到精通</a><time datetime="2026-11-27T11:10:00.000Z" title="发表于 2026-11-27 19:10:00">2026-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-go-android-guide/" title="DSH Go 安卓端：从入门到精通"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/0bca9477_YKx5L5zY.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DSH Go 安卓端：从入门到精通"/></a><div class="content"><a class="title" href="/s/dsh-go-android-guide/" title="DSH Go 安卓端：从入门到精通">DSH Go 安卓端：从入门到精通</a><time datetime="2026-11-27T07:40:00.000Z" title="发表于 2026-11-27 15:40:00">2026-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/dsh-from-basics-to-mastery/" title="DeepSeek Harness 从入门到精通"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/a9b6b37d_SJ0Ty4dp.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="DeepSeek Harness 从入门到精通"/></a><div class="content"><a class="title" href="/s/dsh-from-basics-to-mastery/" title="DeepSeek Harness 从入门到精通">DeepSeek Harness 从入门到精通</a><time datetime="2026-11-27T02:20:00.000Z" title="发表于 2026-11-27 10:20:00">2026-11-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/s/caddy-beginner-guide/" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/85b72696_8sH5NlK6.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Caddy 从零上手：自动 HTTPS 的 Web 服务器"/></a><div class="content"><a class="title" href="/s/caddy-beginner-guide/" title="Caddy 从零上手：自动 HTTPS 的 Web 服务器">Caddy 从零上手：自动 HTTPS 的 Web 服务器</a><time datetime="2026-11-26T10:40:00.000Z" title="发表于 2026-11-26 18:40:00">2026-11-26</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/9157d46c_1776658920718_Laosia-_E4_B8_8A_E7_8F_AD_.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2025 - 2026 By <a class="footer-bar-link" href="/" title="Laosia" target="_blank">Laosia</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a><a class="footer-bar-link" target="_blank" rel="noopener" href="https://beian.miit.gov.cn/" title="备案号">备案号</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">57</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blogs.521251.xyz/" title="Laosia博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="Laosia博客"/><span class="back-menu-item-text">Laosia博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://img.521251.xyz/" title="Laosia图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/mirror/e4616c84_1794556654931_imgbed-icon-v2.png" alt="Laosia图床"/><span class="back-menu-item-text">Laosia图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page faa-parent animated-hover" href="/"><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 归档</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/fcircle/"><i class="anzhiyufont anzhiyu-icon-artstation faa-tada" style="font-size: 0.9em;"></i><span> 朋友圈</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="anzhiyufont anzhiyu-icon-comments"></i></a><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="8152976493" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.7"></meting-js></div><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="anzhiyufont anzhiyu-icon-xmark"></i></button></nav><div class="is-center" id="loading-database"><i class="anzhiyufont anzhiyu-icon-spinner anzhiyu-pulse-icon"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div></div></div><div id="search-mask"></div></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.qq.com/n/ryqq/playlist/8802438608&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="/vendor/cdn.cbd.int_-fancyapps_ui-5.0.28_dist_fancybox_fancybox.umd.js"></script><script src="/vendor/cdn.cbd.int_instant.page-5.2.0_instantpage.js" type="module"></script><script src="/vendor/cdn.cbd.int_vanilla-lazyload-17.8.5_dist_lazyload.iife.min.js"></script><script src="/vendor/cdn.cbd.int_node-snackbar-0.1.16_dist_snackbar.min.js"></script><script>var meting_api = "https://blog.521251.xyz/music/meting.json?server=:server&type=:type&id=:id&r=:r";
+</script><canvas id="universe"></canvas><script async src="/vendor/npm.elemecdn.com_anzhiyu-theme-static-1.0.0_dark_dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("04/07/2025 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2025 By 安知鱼 V1.6.14",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 Laosia 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("04/07/2025 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "/img/mirror/85df0051_1776659150666_Laosia-_E4_B8_8B_E7_8F_AD_.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><script src="/js/search/local-search.js"></script><div class="js-pjax"><script>(()=>{
+  const getGiscusTheme = theme => {
+    return theme === 'dark' ? 'dark' : 'light'
+  }
+
+  const loadGiscus = () => {
+    const config = Object.assign({
+      src: 'https://giscus.app/client.js',
+      'data-repo': 'laosiaa/blog_comments',
+      'data-repo-id': 'R_kgDOSL7O8A',
+      'data-category-id': 'DIC_kwDOSL7O8M4C7oiZ',
+      'data-theme': getGiscusTheme(document.documentElement.getAttribute('data-theme')),
+      'data-reactions-enabled': '1',
+      crossorigin: 'anonymous',
+      async: true
+    },{"data-lang":"zh-CN","data-mapping":"pathname","data-category":"Announcements","data-input-position":"top","data-reactions-enabled":1,"data-emit-metadata":1,"data-theme":"preferred_color_scheme","data-loading":"lazy"})
+
+    const ele = document.createElement('script')
+    for (let key in config) {
+      ele.setAttribute(key, config[key])
+    }
+    document.getElementById('giscus-wrap').appendChild(ele)
+  }
+
+  const changeGiscusTheme = theme => {
+    const sendMessage = message => {
+      const iframe = document.querySelector('iframe.giscus-frame')
+      if (!iframe) return
+      iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app')
+    }
+
+    sendMessage({
+      setConfig: {
+        theme: getGiscusTheme(theme)
+      }
+    });
+  }
+
+  anzhiyu.addGlobalFn('themeChange', changeGiscusTheme, 'giscus')
+
+  if ('Giscus' === 'Giscus' || !false) {
+    if (false) anzhiyu.loadComment(document.getElementById('giscus-wrap'), loadGiscus)
+    else loadGiscus()
+  } else {
+    window.loadOtherComment = loadGiscus
+  }
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.0.0_waterfall_waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><script src="/static/countdown.js"></script><script src="/js/app-bundle.js?v=6d26ff4f" defer></script><script src="/js/nav-music-toggle-fix.js?v=20261123c" defer></script><canvas class="fireworks" mobile="false"></canvas><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_fireworks.min.js"></script><script defer="defer" id="ribbon" src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_canvas-ribbon.min.js" size="150" alpha="0.6" zIndex="-1" mobile="false" data-click="true"></script><script defer="defer" id="fluttering_ribbon" mobile="false" src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_canvas-fluttering-ribbon.min.js"></script><script src="/vendor/cdn.cbd.int_butterfly-extsrc-1.1.3_dist_activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.0.0_aplayer_APlayer.min.css" media="print" onload="this.media='all'"><script src="/vendor/cdn.cbd.int_anzhiyu-blog-static-1.0.1_js_APlayer.min.js"></script><script src="/vendor/cdn.cbd.int_hexo-anzhiyu-music-1.0.1_assets_js_Meting2.min.js"></script><script src="/vendor/cdn.cbd.int_pjax-0.2.8_pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="/vendor/cdn.cbd.int_anzhiyu-theme-static-1.1.5_accesskey_accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div></body></html>
